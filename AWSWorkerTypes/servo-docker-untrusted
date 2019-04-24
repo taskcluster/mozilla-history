@@ -1,0 +1,83 @@
+{
+  "workerType": "servo-docker-untrusted",
+  "minCapacity": 0,
+  "maxCapacity": 6,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "c5.2xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "regions": [
+    {
+      "region": "us-east-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-0026287f"
+      }
+    },
+    {
+      "region": "us-west-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-a45db0c7"
+      }
+    },
+    {
+      "region": "us-west-2",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-6f401817"
+      }
+    }
+  ],
+  "lastModified": "2019-03-13T13:00:37.462Z",
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0",
+    "shutdown": {
+      "afterIdleSeconds": 120
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "secrets": {},
+  "scopes": [],
+  "description": "Servo-specific worker",
+  "owner": "tools-taskcluster@mozilla.com",
+  "availabilityZones": []
+}

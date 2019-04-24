@@ -1,0 +1,89 @@
+{
+  "workerType": "win2012r2-cu",
+  "minCapacity": 0,
+  "maxCapacity": 4,
+  "scalingRatio": 0,
+  "minPrice": 4.8,
+  "maxPrice": 6,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "m3.2xlarge",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0ab4b1f53a6505938"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0f9784319bf930973"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-04ffaf0ed34550ad9"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-12T10:27:54.073Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "checkForNewDeploymentEverySecs": 120,
+        "deploymentId": "d6tjpdMtRPGIOn7JFA3Z8Q",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+        "idleTimeoutSecs": 28800,
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "openpgpSigningKeyLocation": "C:\\generic-worker\\generic-worker-gpg-signing-key.key",
+        "runTasksAsCurrentUser": true,
+        "shutdownMachineOnInternalError": false,
+        "subdomain": "taskcluster-worker.net",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "maintainer": "pmoore@mozilla.com",
+            "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/53f1d934688f9e9c6ba60db6cc9185e5c9e9c0ce/worker_types/win2012r2-cu/userdata"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only",
+      "livelog-direct"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/win2012r2-cu",
+    "assume:worker-id:*"
+  ],
+  "description": "Like win2012r2 worker type, but runs tasks as current user. Used exclusively for generic worker CI (thus maxCapacity can remain low, e.g. 1-10).",
+  "owner": "Taskcluster",
+  "availabilityZones": []
+}

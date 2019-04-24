@@ -1,0 +1,108 @@
+{
+  "workerType": "android-components-g",
+  "minCapacity": 2,
+  "maxCapacity": 500,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "c5.9xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "instanceType": "r5d.4xlarge",
+      "capacity": 2,
+      "utility": 2,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "regions": [
+    {
+      "region": "us-east-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-0dedc5db10ec003af"
+      }
+    },
+    {
+      "region": "us-west-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-06adcae0cf519fda6"
+      }
+    },
+    {
+      "region": "us-west-2",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-07a6e593eb16d27fa"
+      }
+    }
+  ],
+  "lastModified": "2019-04-18T19:32:32.277Z",
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0",
+    "shutdown": {
+      "afterIdleSeconds": 14400
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "secrets": {},
+  "scopes": [],
+  "description": "General-purpose worker for projects by android components team (to build and release a very large suite of Kotlin components)",
+  "owner": "tools-taskcluster@mozilla.com",
+  "availabilityZones": []
+}

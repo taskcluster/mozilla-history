@@ -1,0 +1,134 @@
+{
+  "workerType": "hg-worker",
+  "minCapacity": 1,
+  "maxCapacity": 250,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "r4.4xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "restrictCPU": false,
+        "billingCycleInterval": 14400,
+        "capacityManagement": {
+          "diskspaceThreshold": 20000000000
+        }
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "instanceType": "m5.4xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "restrictCPU": false,
+        "billingCycleInterval": 14400,
+        "capacityManagement": {
+          "diskspaceThreshold": 20000000000
+        }
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "instanceType": "c4.8xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "restrictCPU": false,
+        "billingCycleInterval": 14400,
+        "capacityManagement": {
+          "diskspaceThreshold": 20000000000
+        }
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "regions": [
+    {
+      "region": "us-east-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-0dedc5db10ec003af"
+      }
+    },
+    {
+      "region": "us-west-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-06adcae0cf519fda6"
+      }
+    },
+    {
+      "region": "us-west-2",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-07a6e593eb16d27fa"
+      }
+    }
+  ],
+  "lastModified": "2019-04-18T19:34:02.678Z",
+  "userData": {},
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/hg-worker",
+    "assume:worker-id:*"
+  ],
+  "description": "Worker type that can be used for hg related pushes.  This is similar to the github-worker worker type uses for taskcluser-github related tasks.",
+  "owner": "Greg Arndt <garndt@mozilla.com>",
+  "availabilityZones": []
+}

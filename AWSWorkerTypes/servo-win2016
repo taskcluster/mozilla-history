@@ -1,0 +1,86 @@
+{
+  "workerType": "servo-win2016",
+  "minCapacity": 0,
+  "maxCapacity": 1,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "c5.xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-05ac60f1cc5859386"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-12T10:27:44.990Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "checkForNewDeploymentEverySecs": 600,
+        "deploymentId": "VHiRd_GXQ_2UzZ9AHJV1fg",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+        "idleTimeoutSecs": 14400,
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "openpgpSigningKeyLocation": "C:\\generic-worker\\generic-worker-gpg-signing-key.key",
+        "shutdownMachineOnIdle": true,
+        "shutdownMachineOnInternalError": false,
+        "subdomain": "taskcluster-worker.net",
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "info": "https://github.com/servo/servo/tree/master/etc/taskcluster/windows#readme",
+            "maintainer": "ssapin@mozilla.com",
+            "script": "https://github.com/servo/servo/blob/master/etc/taskcluster/windows/first-boot.ps1"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only",
+      "livelog-direct"
+    ]
+  },
+  "secrets": {},
+  "scopes": [],
+  "description": "Servo-specific Windows Server 2016 worker",
+  "owner": "servo-ops@mozilla.com",
+  "availabilityZones": []
+}

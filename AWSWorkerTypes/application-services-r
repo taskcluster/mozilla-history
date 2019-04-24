@@ -1,0 +1,108 @@
+{
+  "workerType": "application-services-r",
+  "minCapacity": 2,
+  "maxCapacity": 30,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "c5.4xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "instanceType": "c5.9xlarge",
+      "capacity": 2,
+      "utility": 2,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "regions": [
+    {
+      "region": "us-east-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-051503b3e37cde2f0"
+      }
+    },
+    {
+      "region": "us-west-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-00a1c493cda4e96fa"
+      }
+    },
+    {
+      "region": "us-west-2",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-05fddfaf9c339f61e"
+      }
+    }
+  ],
+  "lastModified": "2019-04-23T16:31:52.200Z",
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0",
+    "shutdown": {
+      "afterIdleSeconds": 14400
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "secrets": {},
+  "scopes": [],
+  "description": "Worker for rust projects by application services team",
+  "owner": "tools-taskcluster@mozilla.com",
+  "availabilityZones": []
+}

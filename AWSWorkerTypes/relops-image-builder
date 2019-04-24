@@ -1,0 +1,133 @@
+{
+  "workerType": "relops-image-builder",
+  "minCapacity": 0,
+  "maxCapacity": 4,
+  "scalingRatio": 0,
+  "minPrice": 1.5,
+  "maxPrice": 2.5,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "c4.4xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 40,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ],
+        "IamInstanceProfile": {
+          "Arn": "arn:aws:iam::692406183521:instance-profile/windows-ami-builder"
+        }
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 0.9
+    },
+    {
+      "capacity": 1,
+      "instanceType": "c5.4xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 40,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ],
+        "IamInstanceProfile": {
+          "Arn": "arn:aws:iam::692406183521:instance-profile/windows-ami-builder"
+        }
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-01936dca43b386f7a"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-14T13:02:07.032Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "cachesDir": "Z:\\caches",
+        "cleanUpTaskDirs": true,
+        "disableReboots": true,
+        "downloadsDir": "Z:\\downloads",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogGETPort": 60023,
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "livelogPUTPort": 60022,
+        "numberOfTasksToRun": 0,
+        "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+        "runTasksAsCurrentUser": false,
+        "sentryProject": "generic-worker",
+        "shutdownMachineOnIdle": false,
+        "shutdownMachineOnInternalError": true,
+        "subdomain": "taskcluster-worker.net",
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "taskclusterProxyPort": 80,
+        "tasksDir": "Z:\\",
+        "deploymentId": "cae6a929f27c",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "manifest": "https://github.com/mozilla-releng/OpenCloudConfig/blob/cae6a929f27cd1c24b2a3a7302d25abc1e91ad4b/userdata/Manifest/relops-image-builder.json",
+            "ami-created": "2019-04-14 12:50:10.271Z"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "rdp-only",
+      "livelog-direct"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/relops-image-builder",
+    "assume:worker-id:*"
+  ],
+  "description": "Windows Image Builder for ISO to AMI continuous integration https://github.com/mozilla-platform-ops/relops_image_builder",
+  "owner": "Release Operations (grenade)",
+  "availabilityZones": []
+}

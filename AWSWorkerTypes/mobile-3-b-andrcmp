@@ -1,0 +1,85 @@
+{
+  "workerType": "mobile-3-b-andrcmp",
+  "minCapacity": 1,
+  "maxCapacity": 500,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "c5.9xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "regions": [
+    {
+      "region": "us-east-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-051503b3e37cde2f0"
+      }
+    },
+    {
+      "region": "us-west-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-00a1c493cda4e96fa"
+      }
+    },
+    {
+      "region": "us-west-2",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-05fddfaf9c339f61e"
+      }
+    }
+  ],
+  "lastModified": "2019-04-18T19:35:26.831Z",
+  "userData": {
+    "shutdown": {
+      "afterIdleSeconds": 14400
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/mobile-3-b-andrcmp",
+    "assume:worker-id:*"
+  ],
+  "description": "General-purpose worker for projects by android components team (to build and release a very large suite of Kotlin components)",
+  "owner": "tools-taskcluster@mozilla.com",
+  "availabilityZones": []
+}

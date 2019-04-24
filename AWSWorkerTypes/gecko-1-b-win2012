@@ -1,0 +1,298 @@
+{
+  "workerType": "gecko-1-b-win2012",
+  "minCapacity": 0,
+  "maxCapacity": 512,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "c4.4xlarge",
+      "capacity": 1,
+      "utility": 0.9,
+      "launchSpec": {
+        "IamInstanceProfile": {
+          "Arn": "arn:aws:iam::692406183521:instance-profile/taskcluster-level-1-sccache"
+        },
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 40,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "instanceType": "c5.4xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "launchSpec": {
+        "IamInstanceProfile": {
+          "Arn": "arn:aws:iam::692406183521:instance-profile/taskcluster-level-1-sccache"
+        },
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 40,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-07c14941bbdf1e451",
+        "SecurityGroupIds": [
+          "sg-e43d0d8f",
+          "sg-c03e0eab"
+        ]
+      },
+      "region": "eu-central-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0846d99d2e855025b",
+        "SecurityGroupIds": [
+          "sg-27d72d57",
+          "sg-0dc9337d"
+        ]
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0b83588383f9b081e",
+        "SecurityGroupIds": [
+          "sg-fee02b98",
+          "sg-5be3283d"
+        ]
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-002d5dd87e6c2c19f",
+        "SecurityGroupIds": [
+          "sg-3bd7bf41",
+          "sg-09d6be73"
+        ]
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-14T13:37:26.482Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "cachesDir": "Z:\\caches",
+        "cleanUpTaskDirs": true,
+        "disableReboots": true,
+        "downloadsDir": "Z:\\downloads",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogGETPort": 60023,
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "livelogPUTPort": 60022,
+        "numberOfTasksToRun": 0,
+        "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+        "runTasksAsCurrentUser": false,
+        "sentryProject": "generic-worker",
+        "shutdownMachineOnIdle": false,
+        "shutdownMachineOnInternalError": true,
+        "subdomain": "taskcluster-worker.net",
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "taskclusterProxyPort": 80,
+        "tasksDir": "Z:\\",
+        "deploymentId": "cae6a929f27c",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "manifest": "https://github.com/mozilla-releng/OpenCloudConfig/blob/cae6a929f27cd1c24b2a3a7302d25abc1e91ad4b/userdata/Manifest/gecko-1-b-win2012.json",
+            "ami-created": "2019-04-14 12:50:13.879Z"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {},
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/gecko-1-b-win2012",
+    "assume:worker-id:*"
+  ],
+  "description": "Firefox Try Builder",
+  "owner": "Firefox CI",
+  "availabilityZones": [
+    {
+      "region": "eu-central-1",
+      "availabilityZone": "eu-central-1a",
+      "launchSpec": {
+        "SubnetId": "subnet-935645fb"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "eu-central-1",
+      "availabilityZone": "eu-central-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-6988da13"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "eu-central-1",
+      "availabilityZone": "eu-central-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-114d525b"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1a",
+      "launchSpec": {
+        "SubnetId": "subnet-566e060c"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-f2c93496"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-c52454e9"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1d",
+      "launchSpec": {
+        "SubnetId": "subnet-e7e6ccaf"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1e",
+      "launchSpec": {
+        "SubnetId": "subnet-deb5a8e2"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1f",
+      "launchSpec": {
+        "SubnetId": "subnet-7f720d73"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-1",
+      "availabilityZone": "us-west-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-7641632e"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-1",
+      "availabilityZone": "us-west-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-48a9b82c"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-2",
+      "availabilityZone": "us-west-2a",
+      "launchSpec": {
+        "SubnetId": "subnet-d948b6bf"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-2",
+      "availabilityZone": "us-west-2b",
+      "launchSpec": {
+        "SubnetId": "subnet-2eaaba67"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-2",
+      "availabilityZone": "us-west-2c",
+      "launchSpec": {
+        "SubnetId": "subnet-540a9f0f"
+      },
+      "secrets": {},
+      "userData": {}
+    }
+  ]
+}

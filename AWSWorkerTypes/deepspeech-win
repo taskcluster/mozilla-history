@@ -1,0 +1,87 @@
+{
+  "workerType": "deepspeech-win",
+  "minCapacity": 0,
+  "maxCapacity": 30,
+  "scalingRatio": 0,
+  "minPrice": 4.5,
+  "maxPrice": 10,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "m5d.2xlarge",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0d73b72614f78daef"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-05d818a0c94727274"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0eec0d645d0e7919f"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-12T10:26:36.914Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "deploymentId": "daXgfGRgQAKO9AHVwoanKg",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "openpgpSigningKeyLocation": "C:\\generic-worker\\generic-worker-gpg-signing-key.key",
+        "shutdownMachineOnInternalError": false,
+        "subdomain": "taskcluster-worker.net",
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "maintainer": "alissy@mozilla.com",
+            "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/1c2ec9660e848b6ec8d3bae2fc2428472a5620fc/worker_types/deepspeech-win/userdata"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only",
+      "livelog-direct"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/deepspeech-win",
+    "assume:worker-id:*"
+  ],
+  "description": "DeepSpeech Windows worker; these jobs require more RAM and fewer neighbors than other tc-github tasks",
+  "owner": "deepspeech@mozilla.com",
+  "availabilityZones": []
+}

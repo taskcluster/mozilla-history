@@ -1,0 +1,134 @@
+{
+  "workerType": "gecko-t-win7-32-beta",
+  "minCapacity": 0,
+  "maxCapacity": 12,
+  "scalingRatio": 0,
+  "minPrice": 4.7,
+  "maxPrice": 4.9,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "c4.2xlarge",
+      "launchSpec": {
+        "SecurityGroups": [
+          "ssh-only",
+          "rdp-only",
+          "livelog-direct"
+        ],
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 30,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdc",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0561015c5289262c1"
+      },
+      "region": "eu-central-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0aa7e536bd9ab5872"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0e9eea2ffcb5e7a2c"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-045ffa9eb52518a24"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-14T13:23:45.890Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "cachesDir": "Z:\\caches",
+        "cleanUpTaskDirs": true,
+        "disableReboots": true,
+        "downloadsDir": "Z:\\downloads",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogGETPort": 60023,
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "livelogPUTPort": 60022,
+        "numberOfTasksToRun": 0,
+        "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+        "runTasksAsCurrentUser": false,
+        "sentryProject": "generic-worker",
+        "shutdownMachineOnIdle": false,
+        "shutdownMachineOnInternalError": true,
+        "subdomain": "taskcluster-worker.net",
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "taskclusterProxyPort": 80,
+        "tasksDir": "Z:\\",
+        "deploymentId": "cae6a929f27c",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "manifest": "https://github.com/mozilla-releng/OpenCloudConfig/blob/cae6a929f27cd1c24b2a3a7302d25abc1e91ad4b/userdata/Manifest/gecko-t-win7-32-beta.json",
+            "ami-created": "2019-04-14 12:50:10.310Z"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {},
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/gecko-t-win7-32-beta",
+    "assume:worker-id:*"
+  ],
+  "description": "Experimental Firefox Tester (Windows 7, 32 bit)",
+  "owner": "Firefox CI",
+  "availabilityZones": []
+}

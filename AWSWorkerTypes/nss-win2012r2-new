@@ -1,0 +1,89 @@
+{
+  "workerType": "nss-win2012r2-new",
+  "minCapacity": 0,
+  "maxCapacity": 10,
+  "scalingRatio": 0,
+  "minPrice": 4.5,
+  "maxPrice": 6,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "m3.2xlarge",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-091744030874b5697"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-02e60e5db664e74ff"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0cc8eccfaf482576f"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-12T10:27:37.851Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "checkForNewDeploymentEverySecs": 120,
+        "cleanUpTaskDirs": true,
+        "deploymentId": "IQ-Tc38iRFe73IthCns_Tg",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "openpgpSigningKeyLocation": "C:\\generic-worker\\generic-worker-gpg-signing-key.key",
+        "shutdownMachineOnInternalError": false,
+        "subdomain": "taskcluster-worker.net",
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "maintainer": "pmoore@mozilla.com",
+            "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/4417ccda2f2fd27361c0ad53753ddf49551a35a6/worker_types/nss-win2012r2-new/userdata"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "rdp-only",
+      "ssh-only",
+      "livelog-direct"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/nss-win2012r2-new",
+    "assume:worker-id:*"
+  ],
+  "description": "Staging environment for testting changes to nss-win2012r2 worker type.",
+  "owner": "pmoore@mozilla.com",
+  "availabilityZones": []
+}

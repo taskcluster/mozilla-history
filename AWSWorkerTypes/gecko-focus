@@ -1,0 +1,91 @@
+{
+  "workerType": "gecko-focus",
+  "minCapacity": 1,
+  "maxCapacity": 50,
+  "scalingRatio": 0,
+  "minPrice": 8,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "r3.xlarge",
+      "capacity": 2,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "restrictCPU": true
+      },
+      "launchSpec": {}
+    },
+    {
+      "instanceType": "m3.xlarge",
+      "capacity": 2,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "restrictCPU": true
+      },
+      "launchSpec": {}
+    },
+    {
+      "instanceType": "c3.xlarge",
+      "capacity": 2,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "restrictCPU": true
+      },
+      "launchSpec": {}
+    }
+  ],
+  "regions": [
+    {
+      "region": "us-east-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-02a7f804a264b7e7f"
+      }
+    },
+    {
+      "region": "us-west-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-0a0232431283656bd"
+      }
+    },
+    {
+      "region": "us-west-2",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-0e1126f4ba28898df"
+      }
+    }
+  ],
+  "lastModified": "2019-03-19T16:53:07.551Z",
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0"
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/gecko-focus",
+    "assume:worker-id:*"
+  ],
+  "description": "Default type for tasks run by tc-github",
+  "owner": "tools-taskcluster@mozilla.com",
+  "availabilityZones": []
+}

@@ -1,0 +1,69 @@
+{
+  "workerType": "taskcluster-generic",
+  "minCapacity": 0,
+  "maxCapacity": 10,
+  "scalingRatio": 0,
+  "minPrice": 4,
+  "maxPrice": 4.2,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "instanceType": "m3.large",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {
+        "restrictCPU": true
+      },
+      "launchSpec": {}
+    }
+  ],
+  "regions": [
+    {
+      "region": "us-east-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-0dedc5db10ec003af"
+      }
+    },
+    {
+      "region": "us-west-1",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-06adcae0cf519fda6"
+      }
+    },
+    {
+      "region": "us-west-2",
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
+      "launchSpec": {
+        "ImageId": "ami-07a6e593eb16d27fa"
+      }
+    }
+  ],
+  "lastModified": "2019-04-18T19:34:48.421Z",
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0"
+  },
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/taskcluster-generic",
+    "assume:worker-id:*"
+  ],
+  "description": "Generic bucket for tasks like backups and such.",
+  "owner": "tools-taskcluster@mozilla.com",
+  "availabilityZones": []
+}

@@ -1,0 +1,276 @@
+{
+  "workerType": "gecko-t-win7-32-cu",
+  "minCapacity": 0,
+  "maxCapacity": 8,
+  "scalingRatio": 0,
+  "minPrice": 4,
+  "maxPrice": 8,
+  "canUseOndemand": false,
+  "canUseSpot": true,
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "c4.2xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 30,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          },
+          {
+            "DeviceName": "/dev/sdc",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0b7f17344765e3896",
+        "SecurityGroupIds": [
+          "sg-e43d0d8f",
+          "sg-b43d0ddf",
+          "sg-c03e0eab"
+        ]
+      },
+      "region": "eu-central-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-08c3d1c8c71dd00c4",
+        "SecurityGroupIds": [
+          "sg-27d72d57",
+          "sg-48d52f38",
+          "sg-0dc9337d"
+        ]
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0e57b5a31b1bb93d7",
+        "SecurityGroupIds": [
+          "sg-fee02b98",
+          "sg-b7ef24d1",
+          "sg-5be3283d"
+        ]
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0c99ad76f304eef27",
+        "SecurityGroupIds": [
+          "sg-3bd7bf41",
+          "sg-5bd6be21",
+          "sg-09d6be73"
+        ]
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "lastModified": "2019-04-14T13:24:10.580Z",
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "cachesDir": "Z:\\caches",
+        "cleanUpTaskDirs": true,
+        "disableReboots": true,
+        "downloadsDir": "Z:\\downloads",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogGETPort": 60023,
+        "livelogKey": "C:\\generic-worker\\livelog.key",
+        "livelogPUTPort": 60022,
+        "numberOfTasksToRun": 0,
+        "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+        "runTasksAsCurrentUser": true,
+        "sentryProject": "generic-worker",
+        "shutdownMachineOnIdle": false,
+        "shutdownMachineOnInternalError": true,
+        "subdomain": "taskcluster-worker.net",
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "taskclusterProxyPort": 80,
+        "tasksDir": "Z:\\",
+        "deploymentId": "cae6a929f27c",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "manifest": "https://github.com/mozilla-releng/OpenCloudConfig/blob/cae6a929f27cd1c24b2a3a7302d25abc1e91ad4b/userdata/Manifest/gecko-t-win7-32-cu.json",
+            "ami-created": "2019-04-14 12:49:15.778Z"
+          }
+        }
+      }
+    }
+  },
+  "launchSpec": {},
+  "secrets": {},
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/gecko-t-win7-32-cu",
+    "assume:worker-id:*"
+  ],
+  "description": "Windows 7 environment for running taskcluster-worker and generic-worker CI",
+  "owner": "Firefox CI",
+  "availabilityZones": [
+    {
+      "region": "eu-central-1",
+      "availabilityZone": "eu-central-1a",
+      "launchSpec": {
+        "SubnetId": "subnet-935645fb"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "eu-central-1",
+      "availabilityZone": "eu-central-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-6988da13"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "eu-central-1",
+      "availabilityZone": "eu-central-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-114d525b"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1a",
+      "launchSpec": {
+        "SubnetId": "subnet-566e060c"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-f2c93496"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-c52454e9"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1d",
+      "launchSpec": {
+        "SubnetId": "subnet-e7e6ccaf"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1e",
+      "launchSpec": {
+        "SubnetId": "subnet-deb5a8e2"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-east-1",
+      "availabilityZone": "us-east-1f",
+      "launchSpec": {
+        "SubnetId": "subnet-7f720d73"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-1",
+      "availabilityZone": "us-west-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-7641632e"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-1",
+      "availabilityZone": "us-west-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-48a9b82c"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-2",
+      "availabilityZone": "us-west-2a",
+      "launchSpec": {
+        "SubnetId": "subnet-d948b6bf"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-2",
+      "availabilityZone": "us-west-2b",
+      "launchSpec": {
+        "SubnetId": "subnet-2eaaba67"
+      },
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "region": "us-west-2",
+      "availabilityZone": "us-west-2c",
+      "launchSpec": {
+        "SubnetId": "subnet-540a9f0f"
+      },
+      "secrets": {},
+      "userData": {}
+    }
+  ]
+}
