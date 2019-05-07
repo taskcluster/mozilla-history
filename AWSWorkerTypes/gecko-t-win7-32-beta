@@ -9,51 +9,46 @@
   "canUseSpot": true,
   "instanceTypes": [
     {
-      "capacity": 1,
       "instanceType": "c4.2xlarge",
+      "capacity": 1,
+      "utility": 1,
+      "secrets": {},
+      "scopes": [],
+      "userData": {},
       "launchSpec": {
-        "SecurityGroups": [
-          "ssh-only",
-          "rdp-only",
-          "livelog-direct"
-        ],
         "BlockDeviceMappings": [
           {
             "DeviceName": "/dev/sda1",
             "Ebs": {
-              "DeleteOnTermination": true,
+              "VolumeType": "gp2",
               "VolumeSize": 30,
-              "VolumeType": "gp2"
+              "DeleteOnTermination": true
             }
           },
           {
             "DeviceName": "/dev/sdb",
             "Ebs": {
-              "DeleteOnTermination": true,
+              "VolumeType": "gp2",
               "VolumeSize": 120,
-              "VolumeType": "gp2"
+              "DeleteOnTermination": true
             }
           },
           {
             "DeviceName": "/dev/sdc",
             "Ebs": {
-              "DeleteOnTermination": true,
+              "VolumeType": "gp2",
               "VolumeSize": 120,
-              "VolumeType": "gp2"
+              "DeleteOnTermination": true
             }
           }
         ]
-      },
-      "scopes": [],
-      "secrets": {},
-      "userData": {},
-      "utility": 1
+      }
     }
   ],
   "regions": [
     {
       "launchSpec": {
-        "ImageId": "ami-0561015c5289262c1"
+        "ImageId": "ami-052831c5c6ed3cd5f"
       },
       "region": "eu-central-1",
       "scopes": [],
@@ -62,7 +57,7 @@
     },
     {
       "launchSpec": {
-        "ImageId": "ami-0aa7e536bd9ab5872"
+        "ImageId": "ami-0e181e57ae51e13f6"
       },
       "region": "us-east-1",
       "scopes": [],
@@ -71,7 +66,7 @@
     },
     {
       "launchSpec": {
-        "ImageId": "ami-0e9eea2ffcb5e7a2c"
+        "ImageId": "ami-0a366b30202b1f78f"
       },
       "region": "us-west-1",
       "scopes": [],
@@ -80,7 +75,7 @@
     },
     {
       "launchSpec": {
-        "ImageId": "ami-045ffa9eb52518a24"
+        "ImageId": "ami-012910998cf76be8a"
       },
       "region": "us-west-2",
       "scopes": [],
@@ -88,7 +83,7 @@
       "userData": {}
     }
   ],
-  "lastModified": "2019-04-29T20:37:17.316Z",
+  "lastModified": "2019-05-07T14:12:43.043Z",
   "userData": {
     "genericWorker": {
       "config": {
@@ -97,7 +92,10 @@
         "disableReboots": true,
         "downloadsDir": "Z:\\downloads",
         "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+        "livelogCertificate": "C:\\generic-worker\\livelog.crt",
         "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "livelogGETPort": 60023,
+        "livelogKey": "C:\\generic-worker\\livelog.key",
         "livelogPUTPort": 60022,
         "numberOfTasksToRun": 0,
         "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -105,18 +103,17 @@
         "sentryProject": "generic-worker",
         "shutdownMachineOnIdle": false,
         "shutdownMachineOnInternalError": true,
+        "subdomain": "taskcluster-worker.net",
         "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
         "taskclusterProxyPort": 80,
         "tasksDir": "Z:\\",
-        "deploymentId": "cae6a929f27c",
+        "deploymentId": "b3cd7c1f23b8",
         "workerTypeMetadata": {
           "machine-setup": {
-            "manifest": "https://github.com/mozilla-releng/OpenCloudConfig/blob/cae6a929f27cd1c24b2a3a7302d25abc1e91ad4b/userdata/Manifest/gecko-t-win7-32-beta.json",
-            "ami-created": "2019-04-14 12:50:10.310Z"
+            "manifest": "https://github.com/mozilla-releng/OpenCloudConfig/blob/b3cd7c1f23b809ce76f20b10dc595cb0aee237b6/userdata/Manifest/gecko-t-win7-32-beta.json",
+            "ami-created": "2019-05-07 13:34:04.837Z"
           }
-        },
-        "wstServerURL": "https://websocktunnel.tasks.build",
-        "wstAudience": "taskcluster-net"
+        }
       }
     }
   },
