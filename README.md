@@ -17,7 +17,7 @@ This conversion avoids illegal filenames.
 
   2. `/` -> `⁄`
 
-Rather than creating nested subdirectories, this conversion avoids conflicting directory names and entity filenames.
+Rather than creating nested subdirectories, this conversion avoids directory names colliding with entity filenames.
 
 ## Entity update cadence
 
