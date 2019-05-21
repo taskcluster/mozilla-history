@@ -1,0 +1,63 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "services-production-tooltool/api-check_pending_uploads",
+  "metadata": {
+    "description": "",
+    "emailOnError": true,
+    "name": "python3.7-mozilla-tooltool-api-1.0.0_check-pending-uploads_production",
+    "owner": "rgarbas@mozilla.com"
+  },
+  "schedule": [
+    "*/10 * * * *"
+  ],
+  "task": {
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "deadline": {
+      "$fromNow": "4 hours"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "extra": {},
+    "metadata": {
+      "description": "",
+      "name": "python3.7-mozilla-tooltool-api-1.0.0_check-pending-uploads_production",
+      "owner": "rgarbas@mozilla.com",
+      "source": "https://github.com/mozilla/release-services"
+    },
+    "payload": {
+      "artifacts": {},
+      "cache": {},
+      "capabilities": {},
+      "command": [
+        "flask",
+        "check-pending-uploads"
+      ],
+      "env": {
+        "TASKCLUSTER_SECRET": "repo:github.com/mozilla-releng/services:branch:production"
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "image": "mozillareleng/services:docker-image-python3.7-mozilla-tooltool-api-1.0.0-39axfdd2jfgw6hdlwmy7q66vragazl2p",
+      "maxRunTime": 14400
+    },
+    "priority": "normal",
+    "provisionerId": "aws-provisioner-v1",
+    "retries": 5,
+    "routes": [],
+    "schedulerId": "-",
+    "scopes": [
+      "secrets:get:repo:github.com/mozilla-releng/services:branch:production",
+      "queue:create-task:aws-provisioner-v1/releng-svc"
+    ],
+    "tags": {},
+    "workerType": "releng-svc"
+  },
+  "triggerSchema": {
+    "additionalProperties": true,
+    "type": "object"
+  }
+}

@@ -1,25 +1,10 @@
 {
-  "workerType": "servo-win2016-staging",
-  "minCapacity": 0,
-  "maxCapacity": 1,
-  "scalingRatio": 0,
-  "minPrice": 8,
-  "maxPrice": 8,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Servo-specific Windows Server 2016 worker − staging",
   "instanceTypes": [
     {
-      "instanceType": "c5.xlarge",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        },
-        "restrictCPU": false
-      },
+      "instanceType": "c5.xlarge",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -31,9 +16,31 @@
             }
           }
         ]
-      }
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "utility": 1
     }
   ],
+  "lastModified": "2019-05-06T15:23:45.306Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only",
+      "livelog-direct"
+    ]
+  },
+  "maxCapacity": 1,
+  "maxPrice": 8,
+  "minCapacity": 0,
+  "minPrice": 8,
+  "owner": "servo-ops@mozilla.com",
   "regions": [
     {
       "launchSpec": {
@@ -45,7 +52,9 @@
       "userData": {}
     }
   ],
-  "lastModified": "2019-05-06T15:23:45.306Z",
+  "scalingRatio": 0,
+  "scopes": [],
+  "secrets": {},
   "userData": {
     "genericWorker": {
       "config": {
@@ -77,16 +86,5 @@
       ]
     }
   },
-  "launchSpec": {
-    "SecurityGroups": [
-      "ssh-only",
-      "rdp-only",
-      "livelog-direct"
-    ]
-  },
-  "secrets": {},
-  "scopes": [],
-  "description": "Servo-specific Windows Server 2016 worker − staging",
-  "owner": "servo-ops@mozilla.com",
-  "availabilityZones": []
+  "workerType": "servo-win2016-staging"
 }

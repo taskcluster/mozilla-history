@@ -1,0 +1,67 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "pgo",
+  "metadata": {
+    "description": "Periodic runs of Linux64",
+    "emailOnError": true,
+    "name": "pgo",
+    "owner": "mtabara@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "gecko-decision",
+    "payload": {
+      "env": {
+        "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
+        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/try/",
+        "GECKO_HEAD_REF": "tip",
+        "GECKO_HEAD_REV": "tip",
+        "DECISION_ARGS": "--pushlog-id='0' --calculate-latest-green-ref --project='try' --message='try: -b o -p linux64-pgo -u none -t none' --owner='mtabara@mozilla.com' --level='1' --base-repository='https://hg.mozilla.org/mozilla-central' --head-repository='https://hg.mozilla.org/try/' --head-ref='tip' --head-rev='tip' --revision-hash='TODO'\n"
+      },
+      "cache": {
+        "level-1-hg-shared": "/home/worker/hg-shared",
+        "level-1-try-gecko-decision": "/home/worker/workspace"
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "image": "taskcluster/decision:0.1.2",
+      "command": [
+        "/home/worker/bin/run-decision"
+      ],
+      "artifacts": {
+        "public": {
+          "type": "directory",
+          "path": "/home/worker/artifacts"
+        }
+      },
+      "maxRunTime": 1800
+    },
+    "metadata": {
+      "name": "Draft WIP Gecko Decision Task triggered from releng/pgo hook",
+      "description": "The task that creates all of the other tasks in the task graph\n",
+      "owner": "mtabara@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/"
+    },
+    "schedulerId": "-",
+    "routes": [],
+    "priority": "normal",
+    "retries": 5,
+    "scopes": [
+      "docker-worker:cache:level-1-*",
+      "docker-worker:cache:tooltool-cache",
+      "scheduler:extend-task-graph:*",
+      "assume:repo:hg.mozilla.org/try:*"
+    ],
+    "tags": {
+      "createdForUser": "mtabara@mozilla.com"
+    },
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

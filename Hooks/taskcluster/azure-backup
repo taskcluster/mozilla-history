@@ -1,0 +1,65 @@
+{
+  "hookGroupId": "taskcluster",
+  "hookId": "azure-backup",
+  "metadata": {
+    "description": "Backup azure tables to s3.\n\nWe skip the queue because it has so much data as to make this backup quite expensive and individual tasks are expendable anyway.",
+    "emailOnError": true,
+    "name": "azure-backup",
+    "owner": "taskcluster-notifications@mozilla.com"
+  },
+  "schedule": [
+    "30 17 * * *"
+  ],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "taskcluster-generic",
+    "payload": {
+      "image": "node:8",
+      "command": [
+        "/bin/bash",
+        "-c",
+        "git clone https://github.com/taskcluster/taskcluster-backup.git \u0026\u0026 cd taskcluster-backup \u0026\u0026 yarn global add node-gyp \u0026\u0026 yarn install \u0026\u0026 ./taskcluster-backup backup | cat"
+      ],
+      "maxRunTime": 86400,
+      "features": {
+        "taskclusterProxy": true
+      },
+      "env": {
+        "IGNORE_TABLES": "",
+        "IGNORE_ACCOUNTS": "jungle taskcluster taskclusterqueuev1",
+        "NODE_ENV": "production"
+      }
+    },
+    "metadata": {
+      "name": "Taskcluster Azure Backups",
+      "description": "Backup azure tables to s3.",
+      "owner": "bstack@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/#taskcluster/azure-backup"
+    },
+    "schedulerId": "-",
+    "routes": [
+      "index.project.taskcluster.azure-backup",
+      "notify.email.bstack@mozilla.com.on-failed",
+      "notify.email.bstack@mozilla.com.on-exception"
+    ],
+    "priority": "normal",
+    "retries": 5,
+    "scopes": [
+      "auth:aws-s3:read-write:taskcluster-backups/",
+      "auth:azure-container:list-containers:*",
+      "auth:azure-container:read-only:*",
+      "auth:azure-table:list-accounts",
+      "auth:azure-table:list-tables:*",
+      "auth:azure-table:read-only:*",
+      "auth:statsum:taskcluster-backups",
+      "auth:sentry:taskcluster-backups"
+    ],
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

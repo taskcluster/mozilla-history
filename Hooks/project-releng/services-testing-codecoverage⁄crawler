@@ -1,0 +1,71 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "services-testing-codecoverage/crawler",
+  "metadata": {
+    "description": "",
+    "emailOnError": true,
+    "name": "Bot for coverage crawler project",
+    "owner": "mcastelluccio@mozilla.com"
+  },
+  "schedule": [
+    "0 0 0 * * 0"
+  ],
+  "task": {
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "extra": {},
+    "metadata": {
+      "description": "",
+      "name": "Bot for coverage crawler project",
+      "owner": "mcastelluccio@mozilla.com",
+      "source": "https://github.com/mozilla/release-services"
+    },
+    "payload": {
+      "artifacts": {},
+      "cache": {
+        "services-testing-code-coverage-crawler": "/cache"
+      },
+      "capabilities": {},
+      "command": [
+        "/bin/code-coverage-crawler",
+        "--taskcluster-secret",
+        "repo:github.com/mozilla-releng/services:branch:testing",
+        "--cache-root",
+        "/cache"
+      ],
+      "env": {
+        "APP_CHANNEL": "testing",
+        "SSL_CERT_FILE": "/nix/store/110nnm7p0gaw7wzdf0q5dqf2ac8h6q2q-nss-cacert-3.42.1/etc/ssl/certs/ca-bundle.crt"
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "image": "mozillareleng/services:docker-image-python3.7-mozilla-codecoverage-crawler-1.0.0-lcj5fy6z4w0698kqmf6rgd5s1lj29l4i",
+      "maxRunTime": 3600
+    },
+    "priority": "normal",
+    "provisionerId": "aws-provisioner-v1",
+    "retries": 5,
+    "routes": [],
+    "schedulerId": "-",
+    "scopes": [
+      "secrets:get:repo:github.com/mozilla-releng/services:branch:testing",
+      "notify:email:mcastelluccio@mozilla.com",
+      "notify:email:akhuzyakhmetova@mozilla.com",
+      "docker-worker:cache:services-testing-code-coverage-crawler"
+    ],
+    "tags": {},
+    "workerType": "releng-svc"
+  },
+  "triggerSchema": {
+    "additionalProperties": true,
+    "type": "object"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "winstance-slayer",
+  "metadata": {
+    "description": " * https://bugzilla.mozilla.org/show_bug.cgi?id=1437973\n * https://github.com/djmitche/winstance-slayer\n * https://bugzilla.mozilla.org/show_bug.cgi?id=1509892 (schedule disabled)",
+    "emailOnError": true,
+    "name": "Windows Instance Slayer",
+    "owner": "taskcluster-notifications@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "taskcluster-generic",
+    "schedulerId": "-",
+    "routes": [
+      "notify.email.taskcluster-notifications@mozilla.com.on-failed",
+      "notify.email.taskcluster-notifications@mozilla.com.on-exception"
+    ],
+    "priority": "high",
+    "retries": 5,
+    "scopes": [
+      "secrets:get:project/releng/winstance-slayer/aws-creds",
+      "docker-worker:cache:project-releng-winstance-slayer-workspace"
+    ],
+    "payload": {
+      "image": "node:8.9",
+      "cache": {
+        "project-releng-winstance-slayer-workspace": "/cache"
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "env": {
+        "WORKERTYPE_PATTERN": "gecko*win*",
+        "ACTION": "terminate"
+      },
+      "command": [
+        "/bin/bash",
+        "-c",
+        "git clone https://github.com/djmitche/winstance-slayer \u0026\u0026 cd winstance-slayer \u0026\u0026 yarn install \u0026\u0026 node slayer.js"
+      ],
+      "maxRunTime": 6000
+    },
+    "created": {
+      "$eval": "now"
+    },
+    "expires": {
+      "$fromNow": "1 day"
+    },
+    "deadline": {
+      "$fromNow": "10 minutes"
+    },
+    "metadata": {
+      "name": "Slay Windows Instances",
+      "description": "Reboot all windows instances that are in an \"impaired\" state",
+      "owner": "dustin@mozilla.com",
+      "source": "https://github.com/djmitche/winstance-slayer"
+    },
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

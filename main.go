@@ -1,133 +1,215 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
-	"net/url"
+	"log"
 	"os"
 	"path/filepath"
-	"sync"
+	"strings"
 	"time"
 
-	"github.com/taskcluster/httpbackoff"
+	"github.com/taskcluster/mozilla-history/workerpool"
+	tcclient "github.com/taskcluster/taskcluster-client-go"
+	"github.com/taskcluster/taskcluster-client-go/tcauth"
 	"github.com/taskcluster/taskcluster-client-go/tcawsprovisioner"
+	"github.com/taskcluster/taskcluster-client-go/tchooks"
+	"github.com/taskcluster/taskcluster-client-go/tcsecrets"
 )
 
-type WorkerTypeFetcher struct {
-	Provisioner       *tcawsprovisioner.AwsProvisioner
-	RequestChannel    <-chan string
-	DownloadDirectory string
-	ProcessedChannel  chan<- string
+var (
+	auth     *tcauth.Auth   = tcauth.NewFromEnv()
+	hooks    *tchooks.Hooks = tchooks.NewFromEnv()
+	fakeDate time.Time
+)
+
+func init() {
+	var err error
+	fakeDate, err = time.Parse("Jan 2, 2006 at 3:04pm -0700", "Aug 19, 1977 at 5:00pm +0100")
+	if err != nil {
+		panic(err)
+	}
 }
 
-type WorkerPool struct {
-	Workers   []*WorkerTypeFetcher
-	WaitGroup sync.WaitGroup
+func FilenameEscape(raw string) (escaped string) {
+	return strings.ReplaceAll(strings.ReplaceAll(raw, "*", "★"), "/", "⁄")
 }
 
-// This program is a simple command line utility. When you run it, it will
-// spawn 20 go routines to download worker type defintions for
-// aws-provisioner-v1 in parallel. It will put them in a sub-directory called
-// `AWSWorkerTypes`, replacing or creating it if necessary, with each file
-// named as the workerType.
-//
-// This is called from a cron job that runs
-// https://github.com/petemoore/myscrapbook/blob/master/sync-worker-type-definitions.sh
-// every 5 mins on @petemoore's iMac, in order to refresh the worker type
-// history definitions in this repository.
 func main() {
+	wp := workerpool.New(100)
+	hookGroupsPool := workerpool.New(10)
+	hookGroupsPool.AddWork(FetchHookGroups)
+	hookGroupsPool.Done()
+	hookGroupsPool.OnComplete(func(result workerpool.Result) {
+		wp.AddWork(result.(func(*workerpool.SubmitterContext)))
+	})
+	wp.AddWork(FetchWorkerTypes)
+	wp.AddWork(FetchRoles)
+	wp.AddWork(FetchClients)
+	wp.AddWork(FetchSecrets)
+	wp.Done()
+	wp.OnComplete(func(result workerpool.Result) {
+		log.Printf("%s", result)
+	})
+}
+
+func EmptyDirectory(dir string) {
+	err := os.RemoveAll(dir)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func WriteEntityToFileAsJSON(entity interface{}, path string, result interface{}) workerpool.Work {
+	return func(workerId int) interface{} {
+		var file *os.File
+		err := os.MkdirAll(filepath.Dir(path), 0755)
+		if err != nil {
+			panic(err)
+		}
+		file, err = os.Create(path)
+		if err != nil {
+			panic(err)
+		}
+		defer func() {
+			if err == nil {
+				err = file.Close()
+			} else {
+				file.Close()
+			}
+		}()
+		encoder := json.NewEncoder(file)
+		encoder.SetIndent("", "  ")
+		encoder.Encode(entity)
+		return result
+	}
+}
+
+func FetchWorkerTypes(context *workerpool.SubmitterContext) {
+	EmptyDirectory("AWSWorkerTypes")
 	prov := tcawsprovisioner.NewFromEnv()
-	downloadDirectory := "AWSWorkerTypes"
-	requestChannel := make(chan string)
-	processedChannel := make(chan string)
-	_ = NewWorkerPool(20, requestChannel, processedChannel, prov, downloadDirectory)
 	allWorkerTypes, err := prov.ListWorkerTypes()
 	if err != nil {
 		panic(err)
 	}
-	err = os.RemoveAll(downloadDirectory)
-	if err != nil {
-		panic(err)
-	}
-	err = os.MkdirAll(downloadDirectory, 0755)
-	if err != nil {
-		panic(err)
-	}
-	go func() {
-		defer close(requestChannel)
-		for _, workerType := range *allWorkerTypes {
-			requestChannel <- workerType
-		}
-	}()
-	for completedWorkerType := range processedChannel {
-		fmt.Println(completedWorkerType)
+	for _, workerType := range *allWorkerTypes {
+		context.RequestChannel <- func(workerType string) workerpool.Work {
+			return func(workerId int) interface{} {
+				wt, err := prov.WorkerType(workerType)
+				if err != nil {
+					panic(err)
+				}
+				return WriteEntityToFileAsJSON(
+					wt,
+					filepath.Join("AWSWorkerTypes", FilenameEscape(workerType)),
+					"Fetched workerType "+workerType,
+				)(workerId)
+			}
+		}(workerType)
 	}
 }
 
-func NewWorkerPool(capacity int, requestChannel <-chan string, processedChannel chan<- string, prov *tcawsprovisioner.AwsProvisioner, downloadDirectory string) *WorkerPool {
-	wp := &WorkerPool{}
-	wp.WaitGroup.Add(capacity)
-	wp.Workers = make([]*WorkerTypeFetcher, capacity, capacity)
-	for i := 0; i < capacity; i++ {
-		wp.Workers[i] = &WorkerTypeFetcher{
-			Provisioner:       prov,
-			RequestChannel:    requestChannel,
-			DownloadDirectory: downloadDirectory,
-			ProcessedChannel:  processedChannel,
-		}
-		go func(i int) {
-			wp.Workers[i].FetchUntilDone(&wp.WaitGroup)
-		}(i)
-	}
-	go func() {
-		wp.WaitGroup.Wait()
-		close(processedChannel)
-	}()
-	return wp
-}
-
-func (wtf *WorkerTypeFetcher) FetchUntilDone(wg *sync.WaitGroup) {
-	for workerType := range wtf.RequestChannel {
-		err := wtf.fetch(workerType)
+func FetchRoles(context *workerpool.SubmitterContext) {
+	EmptyDirectory("Roles")
+	continuationToken := ""
+	for {
+		roles, err := auth.ListRoles2(continuationToken, "")
 		if err != nil {
 			panic(err)
 		}
+		for _, role := range roles.Roles {
+			context.RequestChannel <- WriteEntityToFileAsJSON(
+				role,
+				filepath.Join("Roles", FilenameEscape(role.RoleID)),
+				"Fetched role "+role.RoleID,
+			)
+		}
+		continuationToken := roles.ContinuationToken
+		if continuationToken == "" {
+			break
+		}
 	}
-	wg.Done()
 }
 
-func (wtf *WorkerTypeFetcher) fetch(workerType string) (err error) {
-	var u *url.URL
-	u, err = wtf.Provisioner.WorkerType_SignedURL(workerType, time.Minute)
-	if err != nil {
-		return
-	}
-	var resp *http.Response
-	resp, _, err = httpbackoff.Get(u.String())
-	if err != nil {
-		return
-	}
-	defer func() {
-		if err == nil {
-			err = resp.Body.Close()
-		} else {
-			resp.Body.Close()
+func FetchClients(context *workerpool.SubmitterContext) {
+	EmptyDirectory("Clients")
+	continuationToken := ""
+	for {
+		clients, err := auth.ListClients(continuationToken, "", "")
+		if err != nil {
+			panic(err)
 		}
-	}()
-	var file *os.File
-	file, err = os.Create(filepath.Join(wtf.DownloadDirectory, workerType))
-	if err != nil {
-		return
-	}
-	defer func() {
-		if err == nil {
-			err = file.Close()
-		} else {
-			file.Close()
+		for _, client := range clients.Clients {
+			client.LastDateUsed = tcclient.Time(fakeDate)
+			context.RequestChannel <- WriteEntityToFileAsJSON(
+				client,
+				filepath.Join("Clients", FilenameEscape(client.ClientID)),
+				"Fetched client "+client.ClientID,
+			)
 		}
-	}()
-	io.Copy(file, resp.Body)
-	wtf.ProcessedChannel <- workerType
-	return
+		continuationToken := clients.ContinuationToken
+		if continuationToken == "" {
+			break
+		}
+	}
+}
+
+func FetchHookGroups(context *workerpool.SubmitterContext) {
+	EmptyDirectory("Hooks")
+	allHookGroups, err := hooks.ListHookGroups()
+	if err != nil {
+		panic(err)
+	}
+	for _, hookGroup := range allHookGroups.Groups {
+		context.RequestChannel <- func(hookGroup string) workerpool.Work {
+			return func(workerId int) interface{} {
+				return func(context *workerpool.SubmitterContext) {
+					hookList, err := hooks.ListHooks(hookGroup)
+					if err != nil {
+						panic(err)
+					}
+					for _, hook := range hookList.Hooks {
+						context.RequestChannel <- WriteEntityToFileAsJSON(
+							hook,
+							filepath.Join("Hooks", hookGroup, FilenameEscape(hook.HookID)),
+							"Fetched hook "+hook.HookID,
+						)
+					}
+				}
+			}
+		}(hookGroup)
+	}
+}
+
+func FetchSecrets(context *workerpool.SubmitterContext) {
+	EmptyDirectory("Secrets")
+	ss := tcsecrets.NewFromEnv()
+	continuationToken := ""
+	for {
+		secretsList, err := ss.List(continuationToken, "")
+		if err != nil {
+			panic(err)
+		}
+		for _, secretName := range secretsList.Secrets {
+			context.RequestChannel <- func(secretName string) workerpool.Work {
+				return func(workerId int) interface{} {
+					secret, err := ss.Get(secretName)
+					if err != nil {
+						panic(err)
+					}
+					secret.Secret = json.RawMessage(fmt.Sprintf(`"%x"`, sha256.Sum256([]byte(secret.Secret))))
+					return WriteEntityToFileAsJSON(
+						secret,
+						filepath.Join("Secrets", FilenameEscape(secretName)),
+						"Fetched secret "+secretName,
+					)(workerId)
+				}
+			}(secretName)
+		}
+		continuationToken := secretsList.ContinuationToken
+		if continuationToken == "" {
+			break
+		}
+	}
 }

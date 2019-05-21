@@ -1,69 +1,67 @@
 {
-  "workerType": "taskcluster-generic",
-  "minCapacity": 0,
-  "maxCapacity": 10,
-  "scalingRatio": 0,
-  "minPrice": 4,
-  "maxPrice": 4.2,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Generic bucket for tasks like backups and such.",
   "instanceTypes": [
     {
-      "instanceType": "m3.large",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
+      "instanceType": "m3.large",
+      "launchSpec": {},
       "scopes": [],
+      "secrets": {},
       "userData": {
         "restrictCPU": true
       },
-      "launchSpec": {}
-    }
-  ],
-  "regions": [
-    {
-      "region": "us-east-1",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-0dedc5db10ec003af"
-      }
-    },
-    {
-      "region": "us-west-1",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-06adcae0cf519fda6"
-      }
-    },
-    {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-07a6e593eb16d27fa"
-      }
+      "utility": 1
     }
   ],
   "lastModified": "2019-04-18T19:34:48.421Z",
-  "userData": {
-    "dindImage": "taskcluster/dind-service:v4.0"
-  },
   "launchSpec": {
     "SecurityGroups": [
       "docker-worker"
     ]
   },
-  "secrets": {},
+  "maxCapacity": 10,
+  "maxPrice": 4.2,
+  "minCapacity": 0,
+  "minPrice": 4,
+  "owner": "tools-taskcluster@mozilla.com",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0dedc5db10ec003af"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-06adcae0cf519fda6"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-07a6e593eb16d27fa"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
   "scopes": [
     "assume:worker-type:aws-provisioner-v1/taskcluster-generic",
     "assume:worker-id:*"
   ],
-  "description": "Generic bucket for tasks like backups and such.",
-  "owner": "tools-taskcluster@mozilla.com",
-  "availabilityZones": []
+  "secrets": {},
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0"
+  },
+  "workerType": "taskcluster-generic"
 }

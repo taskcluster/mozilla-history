@@ -1,0 +1,61 @@
+{
+  "hookGroupId": "project-mobile",
+  "hookId": "focus-nightly-public",
+  "metadata": {
+    "description": "Public Nightly builds of Focus/Klar. Automatically signed and uploaded to \"nightly\" track of Google Play.\nhttps://github.com/mozilla-mobile/focus-android/wiki/Release-tracks\n",
+    "emailOnError": true,
+    "name": "Focus/Klar Nightly Builds (Public)",
+    "owner": "skaspari@mozilla.com"
+  },
+  "schedule": [
+    "0 12 * * *"
+  ],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "github-worker",
+    "expires": {
+      "$fromNow": "1 year"
+    },
+    "payload": {
+      "image": "mozillamobile/focus-android",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-cx",
+        "git fetch origin \u0026\u0026 git reset --hard origin/master \u0026\u0026 pip install json-e GitPython PyYaml \u0026\u0026 python tools/taskcluster/schedule-nightly-graph.py"
+      ],
+      "env": {
+        "CRON_TASK_ID": "${taskId}"
+      },
+      "maxRunTime": 300,
+      "expires": {
+        "$fromNow": "1 year"
+      },
+      "artifacts": {}
+    },
+    "metadata": {
+      "name": "Focus for Android - Cron task (Public Nightly)",
+      "description": "Create a decision from the main repo",
+      "owner": "skaspari@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/project-mobile/focus-nightly-public"
+    },
+    "schedulerId": "focus-nightly-sched",
+    "routes": [
+      "notify.email.sebastian@mozilla.com.on-failed"
+    ],
+    "priority": "normal",
+    "retries": 5,
+    "scopes": [
+      "assume:hook-id:project-mobile/focus-nightly-public"
+    ],
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

@@ -1,12 +1,6 @@
 {
-  "workerType": "relops-image-builder",
-  "minCapacity": 0,
-  "maxCapacity": 4,
-  "scalingRatio": 0,
-  "minPrice": 1.5,
-  "maxPrice": 2.5,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Windows Image Builder for ISO to AMI continuous integration https://github.com/mozilla-platform-ops/relops_image_builder",
   "instanceTypes": [
     {
       "capacity": 1,
@@ -71,6 +65,17 @@
       "utility": 1
     }
   ],
+  "lastModified": "2019-04-29T21:10:01.408Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "rdp-only"
+    ]
+  },
+  "maxCapacity": 4,
+  "maxPrice": 2.5,
+  "minCapacity": 0,
+  "minPrice": 1.5,
+  "owner": "Release Operations (grenade)",
   "regions": [
     {
       "launchSpec": {
@@ -82,7 +87,12 @@
       "userData": {}
     }
   ],
-  "lastModified": "2019-04-29T21:10:01.408Z",
+  "scalingRatio": 0,
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/relops-image-builder",
+    "assume:worker-id:*"
+  ],
+  "secrets": {},
   "userData": {
     "genericWorker": {
       "config": {
@@ -114,17 +124,5 @@
       }
     }
   },
-  "launchSpec": {
-    "SecurityGroups": [
-      "rdp-only"
-    ]
-  },
-  "secrets": {},
-  "scopes": [
-    "assume:worker-type:aws-provisioner-v1/relops-image-builder",
-    "assume:worker-id:*"
-  ],
-  "description": "Windows Image Builder for ISO to AMI continuous integration https://github.com/mozilla-platform-ops/relops_image_builder",
-  "owner": "Release Operations (grenade)",
-  "availabilityZones": []
+  "workerType": "relops-image-builder"
 }

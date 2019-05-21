@@ -1,12 +1,6 @@
 {
-  "workerType": "nss-win2012r2-new",
-  "minCapacity": 0,
-  "maxCapacity": 10,
-  "scalingRatio": 0,
-  "minPrice": 4.5,
-  "maxPrice": 6,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Staging environment for testting changes to nss-win2012r2 worker type.",
   "instanceTypes": [
     {
       "capacity": 1,
@@ -18,6 +12,18 @@
       "utility": 1
     }
   ],
+  "lastModified": "2019-04-29T20:38:42.272Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "rdp-only",
+      "ssh-only"
+    ]
+  },
+  "maxCapacity": 10,
+  "maxPrice": 6,
+  "minCapacity": 0,
+  "minPrice": 4.5,
+  "owner": "pmoore@mozilla.com",
   "regions": [
     {
       "launchSpec": {
@@ -47,7 +53,12 @@
       "userData": {}
     }
   ],
-  "lastModified": "2019-04-29T20:38:42.272Z",
+  "scalingRatio": 0,
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/nss-win2012r2-new",
+    "assume:worker-id:*"
+  ],
+  "secrets": {},
   "userData": {
     "genericWorker": {
       "config": {
@@ -69,18 +80,5 @@
       }
     }
   },
-  "launchSpec": {
-    "SecurityGroups": [
-      "rdp-only",
-      "ssh-only"
-    ]
-  },
-  "secrets": {},
-  "scopes": [
-    "assume:worker-type:aws-provisioner-v1/nss-win2012r2-new",
-    "assume:worker-id:*"
-  ],
-  "description": "Staging environment for testting changes to nss-win2012r2 worker type.",
-  "owner": "pmoore@mozilla.com",
-  "availabilityZones": []
+  "workerType": "nss-win2012r2-new"
 }

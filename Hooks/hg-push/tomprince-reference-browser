@@ -1,0 +1,159 @@
+{
+  "bindings": [
+    {
+      "exchange": "exchange/hgpushes/v2",
+      "routingKeyPattern": "users/mozilla_hocat.ca/reference-browser"
+    }
+  ],
+  "hookGroupId": "hg-push",
+  "hookId": "tomprince-reference-browser",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nOn-push task for repository https://hg.mozilla.org/users/mozilla_hocat.ca/reference-browser.\n\nThis hook listens to pulse messages from `hg.mozilla.org` and creates a task which\nquickly creates a decision task when such a message arrives.\n",
+    "name": "hg-push/tomprince-reference-browser",
+    "owner": "taskcluster-notifications@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "hg-push",
+    "schedulerId": "garbage-level-1",
+    "deadline": {
+      "$fromNow": "30 minutes"
+    },
+    "expires": {
+      "$fromNow": "3 days"
+    },
+    "scopes": [
+      "assume:repo:hg.mozilla.org/users/mozilla_hocat.ca/reference-browser:branch:default"
+    ],
+    "payload": {
+      "image": {
+        "type": "indexed-image",
+        "path": "public/image.tar.zst",
+        "namespace": "ci.cache.level-3.docker-images.v2.hg-push.hash.5d88330fd2c4308906720c592564199812354b443448d0bac5e3bdcb28168999"
+      },
+      "env": {
+        "PULSE_MESSAGE": {
+          "$json": {
+            "$eval": "payload"
+          }
+        },
+        "REPO_URL": "https://hg.mozilla.org/users/mozilla_hocat.ca/reference-browser",
+        "PROJECT": "tomprince-reference-browser",
+        "LEVEL": "1"
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "metadata": {
+      "$let": {
+        "description": {
+          "$if": "firedBy == \"triggerHook\"",
+          "then": "Fired by triggerHook call from ${clientId}",
+          "else": "Fired by ${firedBy}"
+        }
+      },
+      "in": {
+        "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+        "source": "https://tools.taskcluster.net/hooks/hg-push/tomprince-reference-browser",
+        "description": "${description}",
+        "name": "On-Push task for https://hg.mozilla.org/users/mozilla_hocat.ca/reference-browser"
+      }
+    },
+    "priority": "highest",
+    "retries": 5,
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "required": [
+      "payload"
+    ],
+    "properties": {
+      "payload": {
+        "type": "object",
+        "description": "Hg push payload - see https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications.",
+        "required": [
+          "type",
+          "data"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "changegroup.1"
+            ],
+            "default": "changegroup.1"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "repo_url",
+              "heads",
+              "pushlog_pushes"
+            ],
+            "properties": {
+              "repo_url": {
+                "enum": [
+                  "https://hg.mozilla.org/users/mozilla_hocat.ca/reference-browser"
+                ],
+                "default": "https://hg.mozilla.org/users/mozilla_hocat.ca/reference-browser"
+              },
+              "heads": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-z]{40}$"
+                  }
+                ]
+              },
+              "pushlog_pushes": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "time",
+                      "pushid",
+                      "user"
+                    ],
+                    "properties": {
+                      "time": {
+                        "type": "integer",
+                        "default": 0
+                      },
+                      "pushid": {
+                        "type": "integer",
+                        "default": 0
+                      },
+                      "user": {
+                        "type": "string",
+                        "format": "email",
+                        "default": "nobody@mozilla.com"
+                      },
+                      "push_json_url": {
+                        "type": "string"
+                      },
+                      "push_full_json_url": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "source": {}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "_meta": {}
+    },
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "hookGroupId": "garbage",
+  "hookId": "gecko-cinnabar-mirror",
+  "metadata": {
+    "description": "Updates git-cinnabar-based Gecko mirrors like https://github.com/mozilla/gecko",
+    "emailOnError": true,
+    "name": "Git-cinnabar mirror for Gecko (hg→git-cinnabar)",
+    "owner": "jan@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "github-worker",
+    "expires": {
+      "$fromNow": "3 months"
+    },
+    "deadline": {
+      "$fromNow": "6 hours"
+    },
+    "payload": {
+      "image": "janitortechnology/firefox-cinnabar",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-cx",
+        "export secret_url='http://taskcluster/secrets/v1/secret/garbage%2Fjkeromnes%2Fgecko-cinnabar-mirror' \u0026\u0026 export GITHUB_LOGIN=$(curl $secret_url | jq '.secret.GITHUB_LOGIN' -r) \u0026\u0026 export GITHUB_TOKEN=$(curl $secret_url | jq '.secret.GITHUB_TOKEN' -r) \u0026\u0026 printf \"github.com:\n- user: $GITHUB_LOGIN\n  oauth_token: $GITHUB_TOKEN\n  protocol: https\n\" \u003e ~/.config/hub \u0026\u0026 printf \"machine github.com\nlogin $GITHUB_LOGIN\npassword $GITHUB_TOKEN\n\" \u003e ~/.netrc \u0026\u0026 git config user.name $(curl $secret_url | jq '.secret.GIT_USER_NAME' -r) \u0026\u0026 git config user.email $(curl $secret_url | jq '.secret.GIT_USER_EMAIL' -r) \u0026\u0026 git config hub.protocol https \u0026\u0026 git fetch origin \u0026\u0026 git remote add $GITHUB_LOGIN https://github.com/$GITHUB_LOGIN/gecko \u0026\u0026 git push $GITHUB_LOGIN origin/bookmarks/central:central"
+      ],
+      "maxRunTime": 600
+    },
+    "metadata": {
+      "name": "Git-cinnabar mirror for Gecko (hg→git-cinnabar)",
+      "description": "Updates git-cinnabar-based Gecko mirrors like https://github.com/mozilla/gecko",
+      "owner": "jan@mozilla.com",
+      "source": "https://github.com/mozilla/gecko"
+    },
+    "priority": "normal",
+    "retries": 5,
+    "scopes": [
+      "secrets:get:garbage/jkeromnes/gecko-cinnabar-mirror"
+    ]
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

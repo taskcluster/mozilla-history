@@ -1,0 +1,92 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "services-staging-codecoverage/bot",
+  "metadata": {
+    "description": "",
+    "emailOnError": true,
+    "name": "Task aggregating code coverage data",
+    "owner": "mcastelluccio@mozilla.com"
+  },
+  "schedule": [
+    "0 0 0 * * *"
+  ],
+  "task": {
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "deadline": {
+      "$fromNow": "4 hours"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "extra": {},
+    "metadata": {
+      "description": "",
+      "name": "Task aggregating code coverage data",
+      "owner": "mcastelluccio@mozilla.com",
+      "source": "https://github.com/mozilla/release-services"
+    },
+    "payload": {
+      "artifacts": {
+        "public/chunk_mapping.tar.xz": {
+          "path": "/chunk_mapping.tar.xz",
+          "type": "file"
+        },
+        "public/zero_coverage_report.json": {
+          "path": "/zero_coverage_report.json",
+          "type": "file"
+        }
+      },
+      "cache": {
+        "services-staging-code-coverage-bot": "/cache"
+      },
+      "capabilities": {},
+      "command": [
+        "/bin/code-coverage-bot",
+        "--taskcluster-secret",
+        "repo:github.com/mozilla-releng/services:branch:staging",
+        "--cache-root",
+        "/cache"
+      ],
+      "env": {
+        "$merge": [
+          {
+            "APP_CHANNEL": "staging",
+            "SSL_CERT_FILE": "/nix/store/110nnm7p0gaw7wzdf0q5dqf2ac8h6q2q-nss-cacert-3.42.1/etc/ssl/certs/ca-bundle.crt"
+          },
+          {
+            "$if": "firedBy == 'triggerHook'",
+            "else": {},
+            "then": {
+              "$eval": "payload"
+            }
+          }
+        ]
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "image": "mozillareleng/services:docker-image-python3.7-mozilla-codecoverage-bot-1.0.0-x2127r54hmizzxz731381pswga41azdf",
+      "maxRunTime": 14400
+    },
+    "priority": "normal",
+    "provisionerId": "aws-provisioner-v1",
+    "retries": 5,
+    "routes": [],
+    "schedulerId": "-",
+    "scopes": [
+      "secrets:get:repo:github.com/mozilla-releng/services:branch:staging",
+      "notify:email:*",
+      "docker-worker:cache:services-staging-code-coverage-bot",
+      "index:insert-task:project.releng.services.project.staging.code_coverage_bot.*",
+      "github:create-status:marco-c/gecko-dev"
+    ],
+    "tags": {},
+    "workerType": "releng-svc-memory"
+  },
+  "triggerSchema": {
+    "additionalProperties": true,
+    "type": "object"
+  }
+}

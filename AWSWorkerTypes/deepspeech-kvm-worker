@@ -1,20 +1,10 @@
 {
-  "workerType": "deepspeech-kvm-worker",
-  "minCapacity": 0,
-  "maxCapacity": 5,
-  "scalingRatio": 0,
-  "minPrice": 0,
-  "maxPrice": 4.5,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "DeepSpeech kvm worker; these jobs require more RAM and fewer neighbors than other tc-github tasks",
   "instanceTypes": [
     {
-      "instanceType": "i3.metal",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
+      "instanceType": "i3.metal",
       "launchSpec": {
         "Placement": {
           "AvailabilityZone": "us-west-2a"
@@ -29,53 +19,61 @@
             }
           }
         ]
-      }
-    }
-  ],
-  "regions": [
-    {
-      "region": "us-east-1",
-      "secrets": {},
+      },
       "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-0a8fce99aa5b3d9e1"
-      }
-    },
-    {
-      "region": "us-west-1",
       "secrets": {},
-      "scopes": [],
       "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-0733e29ad332b4345"
-      }
-    },
-    {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-0ed64075d35d58fc7"
-      }
+      "utility": 1
     }
   ],
   "lastModified": "2019-03-13T12:57:39.896Z",
-  "userData": {
-    "dindImage": "taskcluster/dind-service:v4.0"
-  },
   "launchSpec": {
     "SecurityGroups": [
       "docker-worker"
     ]
   },
-  "secrets": {},
+  "maxCapacity": 5,
+  "maxPrice": 4.5,
+  "minCapacity": 0,
+  "minPrice": 0,
+  "owner": "dhouse@mozilla.com",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0a8fce99aa5b3d9e1"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0733e29ad332b4345"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0ed64075d35d58fc7"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
   "scopes": [
     "assume:worker-type:aws-provisioner-v1/github-worker",
     "assume:worker-id:*"
   ],
-  "description": "DeepSpeech kvm worker; these jobs require more RAM and fewer neighbors than other tc-github tasks",
-  "owner": "dhouse@mozilla.com",
-  "availabilityZones": []
+  "secrets": {},
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0"
+  },
+  "workerType": "deepspeech-kvm-worker"
 }

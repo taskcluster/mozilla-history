@@ -1,25 +1,10 @@
 {
-  "workerType": "application-services-r",
-  "minCapacity": 2,
-  "maxCapacity": 30,
-  "scalingRatio": 0,
-  "minPrice": 8,
-  "maxPrice": 8,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Worker for rust projects by application services team",
   "instanceTypes": [
     {
-      "instanceType": "c5.4xlarge",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        },
-        "restrictCPU": false
-      },
+      "instanceType": "c5.4xlarge",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -31,20 +16,20 @@
             }
           }
         ]
-      }
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "utility": 1
     },
     {
-      "instanceType": "c5.9xlarge",
       "capacity": 2,
-      "utility": 2,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        },
-        "restrictCPU": false
-      },
+      "instanceType": "c5.9xlarge",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -56,53 +41,66 @@
             }
           }
         ]
-      }
-    }
-  ],
-  "regions": [
-    {
-      "region": "us-east-1",
-      "secrets": {},
+      },
       "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-051503b3e37cde2f0"
-      }
-    },
-    {
-      "region": "us-west-1",
       "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-00a1c493cda4e96fa"
-      }
-    },
-    {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-05fddfaf9c339f61e"
-      }
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "utility": 2
     }
   ],
   "lastModified": "2019-04-23T16:31:52.200Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "maxCapacity": 30,
+  "maxPrice": 8,
+  "minCapacity": 2,
+  "minPrice": 8,
+  "owner": "tools-taskcluster@mozilla.com",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-051503b3e37cde2f0"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-00a1c493cda4e96fa"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-05fddfaf9c339f61e"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
+  "scopes": [],
+  "secrets": {},
   "userData": {
     "dindImage": "taskcluster/dind-service:v4.0",
     "shutdown": {
       "afterIdleSeconds": 14400
     }
   },
-  "launchSpec": {
-    "SecurityGroups": [
-      "docker-worker"
-    ]
-  },
-  "secrets": {},
-  "scopes": [],
-  "description": "Worker for rust projects by application services team",
-  "owner": "tools-taskcluster@mozilla.com",
-  "availabilityZones": []
+  "workerType": "application-services-r"
 }

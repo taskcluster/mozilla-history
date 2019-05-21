@@ -1,0 +1,43 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "project-releng/taskcluster-client-py/periodic-test",
+  "metadata": {
+    "description": "Run python tests periodically to find any new dependency bustage.",
+    "emailOnError": true,
+    "name": "taskcluster-client.py periodic test",
+    "owner": "asasaki@mozilla.com"
+  },
+  "schedule": [
+    "0 0 * * 1"
+  ],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "taskcluster-generic",
+    "payload": {
+      "image": "python:3.6-jessie",
+      "command": [
+        "/bin/bash",
+        "-c",
+        "git clone https://github.com/taskcluster/taskcluster-client.py repo \u0026\u0026 cd repo \u0026\u0026 pip install tox \u0026\u0026 tox -e py36"
+      ],
+      "maxRunTime": 600
+    },
+    "metadata": {
+      "name": "python 3.6 tests",
+      "description": "Python 3.6 taskcluster-client.py periodic test",
+      "owner": "asasaki@mozilla.com",
+      "source": "https://github.com/taskcluster/taskcluster-client.py"
+    },
+    "expires": {
+      "$fromNow": "3 months"
+    },
+    "deadline": {
+      "$fromNow": "6 hours"
+    }
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

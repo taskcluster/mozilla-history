@@ -1,0 +1,77 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "services-testing-bugbug/data",
+  "metadata": {
+    "description": "",
+    "emailOnError": true,
+    "name": "Bot retrieving data for Bugzilla ML",
+    "owner": "mcastelluccio@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "deadline": {
+      "$fromNow": "24 hours"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "extra": {},
+    "metadata": {
+      "description": "",
+      "name": "Bot retrieving data for Bugzilla ML",
+      "owner": "mcastelluccio@mozilla.com",
+      "source": "https://github.com/mozilla/release-services"
+    },
+    "payload": {
+      "artifacts": {
+        "public/bugs.json.xz": {
+          "path": "/data/bugs.json.xz",
+          "type": "file"
+        },
+        "public/commits.json.xz": {
+          "path": "/data/commits.json.xz",
+          "type": "file"
+        }
+      },
+      "cache": {
+        "services-testing-bugbug-data": "/cache"
+      },
+      "capabilities": {},
+      "command": [
+        "/bin/bugbug-data",
+        "--taskcluster-secret",
+        "repo:github.com/mozilla-releng/services:branch:testing",
+        "--cache-root",
+        "/cache"
+      ],
+      "env": {
+        "APP_CHANNEL": "testing",
+        "SSL_CERT_FILE": "/nix/store/110nnm7p0gaw7wzdf0q5dqf2ac8h6q2q-nss-cacert-3.42.1/etc/ssl/certs/ca-bundle.crt"
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "image": "mozillareleng/services:docker-image-python3.7-mozilla-bugbug-data-1.0.0-lg0hzwh1dfcw1hlkhpcwsmwrs3yz1ls7",
+      "maxRunTime": 86400
+    },
+    "priority": "normal",
+    "provisionerId": "aws-provisioner-v1",
+    "retries": 5,
+    "routes": [],
+    "schedulerId": "-",
+    "scopes": [
+      "secrets:get:repo:github.com/mozilla-releng/services:branch:testing",
+      "docker-worker:cache:services-testing-bugbug-data",
+      "index:insert-task:project.releng.services.project.testing.bugbug_data.*"
+    ],
+    "tags": {},
+    "workerType": "releng-svc-compute"
+  },
+  "triggerSchema": {
+    "additionalProperties": true,
+    "type": "object"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "hookGroupId": "project-comm",
+  "hookId": "releng/nightly/desktop/comm-central",
+  "metadata": {
+    "description": "Nightly Thunderbird Build",
+    "emailOnError": true,
+    "name": "Thunderbird comm-central Nightly Hook",
+    "owner": "mozilla@hocat.ca"
+  },
+  "schedule": [],
+  "task": {
+    "extra": {},
+    "retries": 5,
+    "workerType": "gecko-3-decision",
+    "schedulerId": "comm-level-3",
+    "payload": {
+      "image": "taskcluster/decision:2.1.0@sha256:6db3b697d7a3c7aba440d72f04199331b872111cefff57206b8b8b1d53230360",
+      "command": [
+        "/builds/worker/bin/run-task",
+        "--vcs-checkout=/builds/worker/checkouts/gecko",
+        "--sparse-profile=build/sparse-profiles/taskgraph",
+        "--comm-checkout=/builds/worker/checkouts/gecko/comm",
+        "--",
+        "bash",
+        "-cx",
+        "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph cron --base-repository=$GECKO_BASE_REPOSITORY --head-repository=https://hg.mozilla.org/comm-central --head-ref=$GECKO_HEAD_REF --project=comm-central --level=3 --root=comm/ --force-run nightly-desktop"
+      ],
+      "env": {
+        "GECKO_HEAD_REF": "default",
+        "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
+        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/mozilla-central",
+        "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
+        "COMM_HEAD_REF": "default",
+        "COMM_BASE_REPOSITORY": "https://hg.mozilla.org/comm-central",
+        "COMM_HEAD_REPOSITORY": "https://hg.mozilla.org/comm-central",
+        "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified"
+      },
+      "artifacts": {
+        "public": {
+          "path": "/builds/worker/artifacts",
+          "type": "directory"
+        }
+      },
+      "maxRunTime": 1800,
+      "cache": {
+        "level-3-checkouts-sparse-v2": "/builds/worker/checkouts"
+      },
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      }
+    },
+    "scopes": [
+      "assume:hook-id:project-comm/releng/nightly/desktop/comm-central"
+    ],
+    "metadata": {
+      "owner": "mozilla@hocat.ca",
+      "name": "Nightly for https://hg.mozilla.org/comm-central",
+      "source": "https://tools.taskcluster.net/hooks/project-comm/releng/nigthly/desktop/comm-central",
+      "description": "See https://tools.taskcluster.net/hooks/project-comm/releng/nigthly/desktop/comm-central"
+    },
+    "provisionerId": "aws-provisioner-v1",
+    "tags": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "hookGroupId": "project-mobile",
+  "hookId": "reference-browser-nightly-staging",
+  "metadata": {
+    "description": "(Staging) Nightly builds of the reference browser.\nUses mitchhentges' repository of reference-browser: https://github.com/mitchhentges/reference-browser/",
+    "emailOnError": true,
+    "name": "Reference Browser Nightly Builds (Staging)",
+    "owner": "mhentges@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "mobile-1-decision",
+    "schedulerId": "focus-nightly-sched",
+    "retries": 5,
+    "scopes": [
+      "assume:hook-id:project-mobile/reference-browser-nightly-staging"
+    ],
+    "payload": {
+      "image": "python:3",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-cx",
+        "pip install 'decisionlib-mhentges' \u0026\u0026 decisionlib schedule-hook --branch dsl-test https://github.com/mitchhentges/reference-browser ${taskId}"
+      ],
+      "maxRunTime": 300,
+      "expires": {
+        "$fromNow": "1 year"
+      },
+      "artifacts": {}
+    },
+    "metadata": {
+      "name": "Schedule Decision Task",
+      "description": "Reference Browser - Schedule cron decision task - Staging",
+      "owner": "mhentges@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/project-mobile/reference-browser-nightly-staging"
+    },
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

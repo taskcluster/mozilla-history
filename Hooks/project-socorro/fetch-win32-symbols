@@ -1,0 +1,43 @@
+{
+  "hookGroupId": "project-socorro",
+  "hookId": "fetch-win32-symbols",
+  "metadata": {
+    "description": "Fetch missing Windows system symbols from crash-stats crash reports from Microsoft's symbol server. The scripts it runs are in this git repository: https://github.com/marco-c/breakpad-win-update-symbols",
+    "emailOnError": true,
+    "name": "Fetch Win32 Symbols",
+    "owner": "mcastelluccio@mozilla.com"
+  },
+  "schedule": [
+    "0 0 2 * * *"
+  ],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "symbol-upload",
+    "scopes": [
+      "assume:hook-id:project-socorro/fetch-win32-symbols"
+    ],
+    "payload": {
+      "image": "luser/taskcluster-decision:0.2",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-c",
+        "git clone https://github.com/marco-c/breakpad-win-update-symbols \u0026\u0026 cd breakpad-win-update-symbols \u0026\u0026 python run-taskcluster.py"
+      ],
+      "maxRunTime": 600
+    },
+    "metadata": {
+      "name": "Win32 symbol fetching decision task",
+      "description": "Decision task to be scheduled as a Taskcluster hook to run Win32 symbol fetching tasks",
+      "owner": "mcastelluccio@mozilla.com",
+      "source": "https://github.com/marco-c/breakpad-win-update-symbols/blob/master/hook.json"
+    }
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

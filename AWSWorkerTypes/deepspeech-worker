@@ -1,22 +1,10 @@
 {
-  "workerType": "deepspeech-worker",
-  "minCapacity": 0,
-  "maxCapacity": 144,
-  "scalingRatio": 0,
-  "minPrice": 0.1,
-  "maxPrice": 4.2,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "DeepSpeech worker; these jobs require more RAM and fewer neighbors than other tc-github tasks",
   "instanceTypes": [
     {
-      "instanceType": "m5d.2xlarge",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacity": 1
-      },
+      "instanceType": "m5d.2xlarge",
       "launchSpec": {
         "Placement": {
           "AvailabilityZone": "us-west-2a"
@@ -31,53 +19,63 @@
             }
           }
         ]
-      }
-    }
-  ],
-  "regions": [
-    {
-      "region": "us-east-1",
-      "secrets": {},
+      },
       "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-0dedc5db10ec003af"
-      }
-    },
-    {
-      "region": "us-west-1",
       "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-06adcae0cf519fda6"
-      }
-    },
-    {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-07a6e593eb16d27fa"
-      }
+      "userData": {
+        "capacity": 1
+      },
+      "utility": 1
     }
   ],
   "lastModified": "2019-04-18T19:32:55.039Z",
-  "userData": {
-    "dindImage": "taskcluster/dind-service:v4.0"
-  },
   "launchSpec": {
     "SecurityGroups": [
       "docker-worker"
     ]
   },
-  "secrets": {},
+  "maxCapacity": 144,
+  "maxPrice": 4.2,
+  "minCapacity": 0,
+  "minPrice": 0.1,
+  "owner": "deepspeech@mozilla.com",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0dedc5db10ec003af"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-06adcae0cf519fda6"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-07a6e593eb16d27fa"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
   "scopes": [
     "assume:worker-type:aws-provisioner-v1/github-worker",
     "assume:worker-id:*"
   ],
-  "description": "DeepSpeech worker; these jobs require more RAM and fewer neighbors than other tc-github tasks",
-  "owner": "deepspeech@mozilla.com",
-  "availabilityZones": []
+  "secrets": {},
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0"
+  },
+  "workerType": "deepspeech-worker"
 }

@@ -1,0 +1,52 @@
+{
+  "hookGroupId": "project-mobile",
+  "hookId": "fenix-nightly-staging",
+  "metadata": {
+    "description": "",
+    "name": "Fenix Nightly Builds (staging)",
+    "owner": "fenix-eng-notifications@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "mobile-1-decision",
+    "schedulerId": "focus-nightly-sched",
+    "taskGroupId": null,
+    "retries": 5,
+    "scopes": [
+      "assume:hook-id:project-mobile/fenix-nightly-staging"
+    ],
+    "payload": {
+      "image": "mozillamobile/fenix",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-cx",
+        "export REPO_OWNER='JohanLorenzo' \u0026\u0026 export GIT_BRANCH='add-tc-on-pr' \u0026\u0026 git remote remove origin \u0026\u0026 git remote add origin https://github.com/$REPO_OWNER/fenix \u0026\u0026 git fetch origin $GIT_BRANCH \u0026\u0026 git checkout $GIT_BRANCH \u0026\u0026 pip install json-e GitPython PyYaml arrow \u0026\u0026 python automation/taskcluster/schedule_nightly_graph.py"
+      ],
+      "env": {
+        "CRON_TASK_ID": "${taskId}"
+      },
+      "maxRunTime": 300,
+      "expires": {
+        "$fromNow": "1 year"
+      },
+      "artifacts": {}
+    },
+    "metadata": {
+      "name": "Fenix Cron task (Nightly Staging)",
+      "description": "Create a decision from the staging repo",
+      "owner": "fenix-eng-notifications@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/project-mobile/fenix-nightly-staging"
+    },
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

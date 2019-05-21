@@ -1,24 +1,10 @@
 {
-  "workerType": "mobile-3-images",
-  "minCapacity": 1,
-  "maxCapacity": 30,
-  "scalingRatio": 0,
-  "minPrice": 8,
-  "maxPrice": 8,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Builds docker images for mobile projects; NOTE: capacity set to 1 instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)",
   "instanceTypes": [
     {
-      "instanceType": "c5.9xlarge",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
-      },
+      "instanceType": "c5.9xlarge",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -30,49 +16,61 @@
             }
           }
         ]
-      }
-    }
-  ],
-  "regions": [
-    {
-      "region": "us-east-1",
-      "secrets": {},
+      },
       "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-051503b3e37cde2f0"
-      }
-    },
-    {
-      "region": "us-west-1",
       "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-00a1c493cda4e96fa"
-      }
-    },
-    {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-05fddfaf9c339f61e"
-      }
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1
     }
   ],
   "lastModified": "2019-04-18T19:35:37.739Z",
-  "userData": {
-    "dindImage": "taskcluster/dind-service:v4.1"
-  },
   "launchSpec": {},
-  "secrets": {},
+  "maxCapacity": 30,
+  "maxPrice": 8,
+  "minCapacity": 1,
+  "minPrice": 8,
+  "owner": "Firefox CI",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-051503b3e37cde2f0"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-00a1c493cda4e96fa"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-05fddfaf9c339f61e"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
   "scopes": [
     "assume:worker-type:aws-provisioner-v1/mobile-3-images",
     "assume:worker-id:*"
   ],
-  "description": "Builds docker images for mobile projects; NOTE: capacity set to 1 instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)",
-  "owner": "Firefox CI",
-  "availabilityZones": []
+  "secrets": {},
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.1"
+  },
+  "workerType": "mobile-3-images"
 }

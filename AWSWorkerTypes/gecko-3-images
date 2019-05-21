@@ -1,50 +1,137 @@
 {
-  "workerType": "gecko-3-images",
-  "minCapacity": 1,
-  "maxCapacity": 30,
-  "scalingRatio": 0,
-  "minPrice": 8,
-  "maxPrice": 8,
-  "canUseOndemand": false,
+  "availabilityZones": [
+    {
+      "availabilityZone": "us-east-1a",
+      "launchSpec": {
+        "SubnetId": "subnet-566e060c"
+      },
+      "region": "us-east-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-east-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-f2c93496"
+      },
+      "region": "us-east-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-east-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-c52454e9"
+      },
+      "region": "us-east-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-east-1d",
+      "launchSpec": {
+        "SubnetId": "subnet-e7e6ccaf"
+      },
+      "region": "us-east-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-east-1e",
+      "launchSpec": {
+        "SubnetId": "subnet-deb5a8e2"
+      },
+      "region": "us-east-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-east-1f",
+      "launchSpec": {
+        "SubnetId": "subnet-7f720d73"
+      },
+      "region": "us-east-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-west-1b",
+      "launchSpec": {
+        "SubnetId": "subnet-7641632e"
+      },
+      "region": "us-west-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-west-1c",
+      "launchSpec": {
+        "SubnetId": "subnet-48a9b82c"
+      },
+      "region": "us-west-1",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-west-2a",
+      "launchSpec": {
+        "SubnetId": "subnet-d948b6bf"
+      },
+      "region": "us-west-2",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-west-2b",
+      "launchSpec": {
+        "SubnetId": "subnet-2eaaba67"
+      },
+      "region": "us-west-2",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-west-2c",
+      "launchSpec": {
+        "SubnetId": "subnet-540a9f0f"
+      },
+      "region": "us-west-2",
+      "secrets": {},
+      "userData": {}
+    }
+  ],
   "canUseSpot": true,
+  "description": "Builds docker images for gecko; NOTE: capacity set to 1 instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)",
   "instanceTypes": [
     {
+      "capacity": 1,
       "instanceType": "c5d.xlarge",
-      "capacity": 1,
-      "utility": 1.5,
-      "secrets": {},
+      "launchSpec": {},
       "scopes": [],
+      "secrets": {},
       "userData": {
         "capacityManagement": {
           "diskspaceThreshold": 30000000000
         }
       },
-      "launchSpec": {}
+      "utility": 1.5
     },
     {
+      "capacity": 1,
       "instanceType": "m5d.xlarge",
-      "capacity": 1,
-      "utility": 1.4,
-      "secrets": {},
+      "launchSpec": {},
       "scopes": [],
+      "secrets": {},
       "userData": {
         "capacityManagement": {
           "diskspaceThreshold": 30000000000
         }
       },
-      "launchSpec": {}
+      "utility": 1.4
     },
     {
-      "instanceType": "c5.xlarge",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
-      },
+      "instanceType": "c5.xlarge",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -56,158 +143,70 @@
             }
           }
         ]
-      }
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1
     }
   ],
+  "lastModified": "2019-04-18T19:35:21.490Z",
+  "launchSpec": {},
+  "maxCapacity": 30,
+  "maxPrice": 8,
+  "minCapacity": 1,
+  "minPrice": 8,
+  "owner": "Firefox CI",
   "regions": [
     {
-      "region": "us-east-1",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
       "launchSpec": {
         "ImageId": "ami-051503b3e37cde2f0",
         "SecurityGroupIds": [
           "sg-7aca300a"
         ]
-      }
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
     },
     {
-      "region": "us-west-1",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
       "launchSpec": {
         "ImageId": "ami-00a1c493cda4e96fa",
         "SecurityGroupIds": [
           "sg-5ce02b3a"
         ]
-      }
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
     },
     {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
       "launchSpec": {
         "ImageId": "ami-05fddfaf9c339f61e",
         "SecurityGroupIds": [
           "sg-a0d6beda"
         ]
-      }
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
     }
   ],
-  "lastModified": "2019-04-18T19:35:21.490Z",
-  "userData": {
-    "dindImage": "taskcluster/dind-service:v4.1"
-  },
-  "launchSpec": {},
-  "secrets": {},
+  "scalingRatio": 0,
   "scopes": [
     "assume:worker-type:aws-provisioner-v1/gecko-3-images",
     "assume:worker-id:*"
   ],
-  "description": "Builds docker images for gecko; NOTE: capacity set to 1 instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)",
-  "owner": "Firefox CI",
-  "availabilityZones": [
-    {
-      "region": "us-east-1",
-      "availabilityZone": "us-east-1a",
-      "launchSpec": {
-        "SubnetId": "subnet-566e060c"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-east-1",
-      "availabilityZone": "us-east-1b",
-      "launchSpec": {
-        "SubnetId": "subnet-f2c93496"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-east-1",
-      "availabilityZone": "us-east-1c",
-      "launchSpec": {
-        "SubnetId": "subnet-c52454e9"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-east-1",
-      "availabilityZone": "us-east-1d",
-      "launchSpec": {
-        "SubnetId": "subnet-e7e6ccaf"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-east-1",
-      "availabilityZone": "us-east-1e",
-      "launchSpec": {
-        "SubnetId": "subnet-deb5a8e2"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-east-1",
-      "availabilityZone": "us-east-1f",
-      "launchSpec": {
-        "SubnetId": "subnet-7f720d73"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-west-1",
-      "availabilityZone": "us-west-1b",
-      "launchSpec": {
-        "SubnetId": "subnet-7641632e"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-west-1",
-      "availabilityZone": "us-west-1c",
-      "launchSpec": {
-        "SubnetId": "subnet-48a9b82c"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-west-2",
-      "availabilityZone": "us-west-2a",
-      "launchSpec": {
-        "SubnetId": "subnet-d948b6bf"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-west-2",
-      "availabilityZone": "us-west-2b",
-      "launchSpec": {
-        "SubnetId": "subnet-2eaaba67"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-west-2",
-      "availabilityZone": "us-west-2c",
-      "launchSpec": {
-        "SubnetId": "subnet-540a9f0f"
-      },
-      "secrets": {},
-      "userData": {}
-    }
-  ]
+  "secrets": {},
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.1"
+  },
+  "workerType": "gecko-3-images"
 }

@@ -1,25 +1,10 @@
 {
-  "workerType": "servo-docker-worker",
-  "minCapacity": 2,
-  "maxCapacity": 12,
-  "scalingRatio": 0,
-  "minPrice": 8,
-  "maxPrice": 8,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Servo-specific worker",
   "instanceTypes": [
     {
-      "instanceType": "c5.4xlarge",
       "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        },
-        "restrictCPU": false
-      },
+      "instanceType": "c5.4xlarge",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -31,53 +16,66 @@
             }
           }
         ]
-      }
-    }
-  ],
-  "regions": [
-    {
-      "region": "us-east-1",
-      "secrets": {},
+      },
       "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-0026287f"
-      }
-    },
-    {
-      "region": "us-west-1",
       "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-a45db0c7"
-      }
-    },
-    {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-6f401817"
-      }
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        },
+        "restrictCPU": false
+      },
+      "utility": 1
     }
   ],
   "lastModified": "2019-03-13T13:00:39.984Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "docker-worker"
+    ]
+  },
+  "maxCapacity": 12,
+  "maxPrice": 8,
+  "minCapacity": 2,
+  "minPrice": 8,
+  "owner": "tools-taskcluster@mozilla.com",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0026287f"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-a45db0c7"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-6f401817"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
+  "scopes": [],
+  "secrets": {},
   "userData": {
     "dindImage": "taskcluster/dind-service:v4.0",
     "shutdown": {
       "afterIdleSeconds": 14400
     }
   },
-  "launchSpec": {
-    "SecurityGroups": [
-      "docker-worker"
-    ]
-  },
-  "secrets": {},
-  "scopes": [],
-  "description": "Servo-specific worker",
-  "owner": "tools-taskcluster@mozilla.com",
-  "availabilityZones": []
+  "workerType": "servo-docker-worker"
 }

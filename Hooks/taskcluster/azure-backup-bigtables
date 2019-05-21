@@ -1,0 +1,61 @@
+{
+  "hookGroupId": "taskcluster",
+  "hookId": "azure-backup-bigtables",
+  "metadata": {
+    "description": "**Note: This is currently disabled since it takes longer than the longest allowed task.**\n\nBackup large azure tables to s3. Runs less frequently and only has two tables.",
+    "emailOnError": true,
+    "name": "azure-backup-bigtables",
+    "owner": "bstack@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "taskcluster-generic",
+    "payload": {
+      "image": "node:7",
+      "command": [
+        "/bin/bash",
+        "-c",
+        "git clone https://github.com/taskcluster/taskcluster-backup.git \u0026\u0026 cd taskcluster-backup \u0026\u0026 yarn global add node-gyp \u0026\u0026 yarn install \u0026\u0026 npm run compile \u0026\u0026 node ./lib/main.js backup"
+      ],
+      "maxRunTime": 86400,
+      "features": {
+        "taskclusterProxy": true
+      },
+      "env": {
+        "INCLUDE_TABLES": "taskclusterqueuev1/QueueTasks taskclusterqueuev1/QueueArtifacts",
+        "INCLUDE_ACCOUNTS": "taskclusterqueuev1",
+        "NODE_ENV": "production"
+      }
+    },
+    "metadata": {
+      "name": "Taskcluster Azure Backups (Big Tables)",
+      "description": "Backup large azure tables to s3.",
+      "owner": "bstack@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/#taskcluster/azure-backup-bigtables"
+    },
+    "schedulerId": "-",
+    "routes": [
+      "index.project.taskcluster.azure-backup-bigtables",
+      "notify.email.bstack@mozilla.com.on-failed",
+      "notify.email.bstack@mozilla.com.on-exception"
+    ],
+    "priority": "normal",
+    "retries": 5,
+    "scopes": [
+      "auth:aws-s3:read-write:taskcluster-backups/",
+      "auth:azure-table:list-accounts",
+      "auth:azure-table:list-tables:*",
+      "auth:azure-table:read-only:*",
+      "auth:statsum:taskcluster-backups",
+      "auth:sentry:taskcluster-backups"
+    ],
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

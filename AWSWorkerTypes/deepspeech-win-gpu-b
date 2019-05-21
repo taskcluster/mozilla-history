@@ -1,12 +1,6 @@
 {
-  "workerType": "deepspeech-win-gpu-b",
-  "minCapacity": 0,
-  "maxCapacity": 0,
-  "scalingRatio": 0,
-  "minPrice": 4.5,
-  "maxPrice": 6,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Staging worker type for deepspeech-win-gpu",
   "instanceTypes": [
     {
       "capacity": 1,
@@ -18,6 +12,18 @@
       "utility": 1
     }
   ],
+  "lastModified": "2019-04-29T19:25:57.515Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only"
+    ]
+  },
+  "maxCapacity": 0,
+  "maxPrice": 6,
+  "minCapacity": 0,
+  "minPrice": 4.5,
+  "owner": "Taskcluster",
   "regions": [
     {
       "launchSpec": {
@@ -47,7 +53,12 @@
       "userData": {}
     }
   ],
-  "lastModified": "2019-04-29T19:25:57.515Z",
+  "scalingRatio": 0,
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/win2012r2",
+    "assume:worker-id:*"
+  ],
+  "secrets": {},
   "userData": {
     "genericWorker": {
       "config": {
@@ -67,18 +78,5 @@
       }
     }
   },
-  "launchSpec": {
-    "SecurityGroups": [
-      "ssh-only",
-      "rdp-only"
-    ]
-  },
-  "secrets": {},
-  "scopes": [
-    "assume:worker-type:aws-provisioner-v1/win2012r2",
-    "assume:worker-id:*"
-  ],
-  "description": "Staging worker type for deepspeech-win-gpu",
-  "owner": "Taskcluster",
-  "availabilityZones": []
+  "workerType": "deepspeech-win-gpu-b"
 }

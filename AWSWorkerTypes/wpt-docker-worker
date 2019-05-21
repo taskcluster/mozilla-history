@@ -1,91 +1,89 @@
 {
-  "workerType": "wpt-docker-worker",
-  "minCapacity": 0,
-  "maxCapacity": 40,
-  "scalingRatio": 0,
-  "minPrice": 8,
-  "maxPrice": 8,
-  "canUseOndemand": false,
   "canUseSpot": true,
+  "description": "Default type for tasks run by tc-github",
   "instanceTypes": [
     {
+      "capacity": 1,
       "instanceType": "r3.xlarge",
-      "capacity": 1,
-      "utility": 1,
-      "secrets": {},
+      "launchSpec": {},
       "scopes": [],
+      "secrets": {},
       "userData": {
         "restrictCPU": true
       },
-      "launchSpec": {}
+      "utility": 1
     },
     {
+      "capacity": 1,
       "instanceType": "m3.xlarge",
-      "capacity": 1,
-      "utility": 1,
-      "secrets": {},
+      "launchSpec": {},
       "scopes": [],
+      "secrets": {},
       "userData": {
         "restrictCPU": true
       },
-      "launchSpec": {}
+      "utility": 1
     },
     {
+      "capacity": 1,
       "instanceType": "c3.xlarge",
-      "capacity": 1,
-      "utility": 1,
-      "secrets": {},
+      "launchSpec": {},
       "scopes": [],
+      "secrets": {},
       "userData": {
         "restrictCPU": true
       },
-      "launchSpec": {}
-    }
-  ],
-  "regions": [
-    {
-      "region": "us-east-1",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-0dedc5db10ec003af"
-      }
-    },
-    {
-      "region": "us-west-1",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-06adcae0cf519fda6"
-      }
-    },
-    {
-      "region": "us-west-2",
-      "secrets": {},
-      "scopes": [],
-      "userData": {},
-      "launchSpec": {
-        "ImageId": "ami-07a6e593eb16d27fa"
-      }
+      "utility": 1
     }
   ],
   "lastModified": "2019-04-18T19:34:59.596Z",
-  "userData": {
-    "dindImage": "taskcluster/dind-service:v4.0"
-  },
   "launchSpec": {
     "SecurityGroups": [
       "docker-worker"
     ]
   },
-  "secrets": {},
+  "maxCapacity": 40,
+  "maxPrice": 8,
+  "minCapacity": 0,
+  "minPrice": 8,
+  "owner": "tools-taskcluster@mozilla.com",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0dedc5db10ec003af"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-06adcae0cf519fda6"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-07a6e593eb16d27fa"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
   "scopes": [
     "assume:worker-type:aws-provisioner-v1/github-worker",
     "assume:worker-id:*"
   ],
-  "description": "Default type for tasks run by tc-github",
-  "owner": "tools-taskcluster@mozilla.com",
-  "availabilityZones": []
+  "secrets": {},
+  "userData": {
+    "dindImage": "taskcluster/dind-service:v4.0"
+  },
+  "workerType": "wpt-docker-worker"
 }

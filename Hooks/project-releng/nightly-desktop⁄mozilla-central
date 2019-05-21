@@ -1,0 +1,77 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "nightly-desktop/mozilla-central",
+  "metadata": {
+    "description": "Desktop Firefox mozilla-central Nightly Hook",
+    "emailOnError": true,
+    "name": "Desktop Firefox mozilla-central Nightly Hook",
+    "owner": "jlund@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "gecko-3-decision",
+    "schedulerId": "gecko-level-3",
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "routes": [
+      "notify.email.taskcluster-notifications@mozilla.com.on-exception",
+      "notify.email.taskcluster-notifications@mozilla.com.on-failed"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/nightly-desktop/mozilla-central"
+    ],
+    "payload": {
+      "image": "taskcluster/decision:2.1.0@sha256:6db3b697d7a3c7aba440d72f04199331b872111cefff57206b8b8b1d53230360",
+      "env": {
+        "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
+        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/mozilla-central",
+        "GECKO_HEAD_REF": "default",
+        "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
+        "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
+        "CRON_ARGS": "--force-run=nightly-desktop"
+      },
+      "cache": {
+        "level-3-checkouts": "/builds/worker/checkouts"
+      },
+      "features": {
+        "taskclusterProxy": true,
+        "chainOfTrust": true
+      },
+      "maxRunTime": 1800,
+      "command": [
+        "/builds/worker/bin/run-task",
+        "--vcs-checkout=/builds/worker/checkouts/gecko",
+        "--",
+        "bash",
+        "-cx",
+        "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph cron --base-repository=$GECKO_BASE_REPOSITORY --head-repository=https://hg.mozilla.org/mozilla-central --head-ref=$GECKO_HEAD_REF --project=mozilla-central --level=3 $CRON_ARGS"
+      ],
+      "artifacts": {
+        "public": {
+          "type": "directory",
+          "path": "/builds/worker/artifacts"
+        }
+      }
+    },
+    "metadata": {
+      "owner": "release@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/#project-releng/nightly-desktop/mozilla-central",
+      "description": "See https://tools.taskcluster.net/hooks/#project-releng/nightly-desktop/mozilla-central",
+      "name": "Forced Desktop Nightly Cron task for https://hg.mozilla.org/mozilla-central"
+    },
+    "priority": "normal",
+    "retries": 0,
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "hookGroupId": "project-mobile",
+  "hookId": "android-components-publicsuffixlist-update",
+  "metadata": {
+    "description": "Hook for updating the Public Suffix List automatically.",
+    "emailOnError": true,
+    "name": "Android Components - Public Suffix List Update",
+    "owner": "skaspari@mozilla.com"
+  },
+  "schedule": [
+    "0 0 14 * * *"
+  ],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "tutorial",
+    "expires": {
+      "$fromNow": "1 year"
+    },
+    "payload": {
+      "image": "mozillamobile/android-components:1.15",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-cx",
+        "git fetch origin \u0026\u0026 git reset --hard origin/master \u0026\u0026 automation/taskcluster/action/update_publicsuffixlist.sh"
+      ],
+      "maxRunTime": 3600,
+      "expires": {
+        "$fromNow": "1 year"
+      },
+      "artifacts": {}
+    },
+    "metadata": {
+      "name": "Android Components - Public Suffix List update",
+      "description": "Update Public Suffix List automatically",
+      "owner": "skaspari@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/project-mobile/android-components-publicsuffixlist-update"
+    },
+    "schedulerId": "focus-nightly-sched",
+    "routes": [],
+    "priority": "normal",
+    "retries": 5,
+    "scopes": [
+      "secrets:get:project/mobile/github"
+    ],
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

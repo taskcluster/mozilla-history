@@ -1,139 +1,138 @@
 {
-  "workerType": "gecko-1-b-linux-usw2",
-  "minCapacity": 0,
-  "maxCapacity": 300,
-  "scalingRatio": 0,
-  "minPrice": 8,
-  "maxPrice": 8,
-  "canUseOndemand": false,
-  "canUseSpot": true,
-  "instanceTypes": [
+  "availabilityZones": [
     {
-      "instanceType": "c5d.4xlarge",
-      "capacity": 1,
-      "utility": 1.3,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
-      },
-      "launchSpec": {}
-    },
-    {
-      "instanceType": "m5d.4xlarge",
-      "capacity": 1,
-      "utility": 1.2,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
-      },
-      "launchSpec": {}
-    },
-    {
-      "instanceType": "c5.4xlarge",
-      "capacity": 1,
-      "utility": 1.1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
-      },
+      "availabilityZone": "us-west-2a",
       "launchSpec": {
-        "BlockDeviceMappings": [
-          {
-            "DeviceName": "/dev/xvdb",
-            "Ebs": {
-              "DeleteOnTermination": true,
-              "VolumeSize": 120,
-              "VolumeType": "gp2"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "instanceType": "m5.4xlarge",
-      "capacity": 1,
-      "utility": 1,
-      "secrets": {},
-      "scopes": [],
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
+        "SubnetId": "subnet-d948b6bf"
       },
-      "launchSpec": {
-        "BlockDeviceMappings": [
-          {
-            "DeviceName": "/dev/xvdb",
-            "Ebs": {
-              "DeleteOnTermination": true,
-              "VolumeSize": 120,
-              "VolumeType": "gp2"
-            }
-          }
-        ]
-      }
-    }
-  ],
-  "regions": [
-    {
       "region": "us-west-2",
       "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-west-2b",
+      "launchSpec": {
+        "SubnetId": "subnet-2eaaba67"
+      },
+      "region": "us-west-2",
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "availabilityZone": "us-west-2c",
+      "launchSpec": {
+        "SubnetId": "subnet-540a9f0f"
+      },
+      "region": "us-west-2",
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "canUseSpot": true,
+  "description": "Worker for Firefox automation, but only running in us-west-2 for https://bugzilla.mozilla.org/show_bug.cgi?id=1517615",
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "c5d.4xlarge",
+      "launchSpec": {},
       "scopes": [],
-      "userData": {},
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1.3
+    },
+    {
+      "capacity": 1,
+      "instanceType": "m5d.4xlarge",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1.2
+    },
+    {
+      "capacity": 1,
+      "instanceType": "c5.4xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1.1
+    },
+    {
+      "capacity": 1,
+      "instanceType": "m5.4xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1
+    }
+  ],
+  "lastModified": "2019-03-13T12:58:09.753Z",
+  "launchSpec": {},
+  "maxCapacity": 300,
+  "maxPrice": 8,
+  "minCapacity": 0,
+  "minPrice": 8,
+  "owner": "Firefox CI",
+  "regions": [
+    {
       "launchSpec": {
         "ImageId": "ami-6f401817",
         "SecurityGroupIds": [
           "sg-2728435d"
         ]
-      }
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
     }
   ],
-  "lastModified": "2019-03-13T12:58:09.753Z",
-  "userData": {},
-  "launchSpec": {},
-  "secrets": {},
+  "scalingRatio": 0,
   "scopes": [
     "assume:worker-type:aws-provisioner-v1/gecko-1-b-linux-usw2",
     "assume:worker-id:*"
   ],
-  "description": "Worker for Firefox automation, but only running in us-west-2 for https://bugzilla.mozilla.org/show_bug.cgi?id=1517615",
-  "owner": "Firefox CI",
-  "availabilityZones": [
-    {
-      "region": "us-west-2",
-      "availabilityZone": "us-west-2a",
-      "launchSpec": {
-        "SubnetId": "subnet-d948b6bf"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-west-2",
-      "availabilityZone": "us-west-2b",
-      "launchSpec": {
-        "SubnetId": "subnet-2eaaba67"
-      },
-      "secrets": {},
-      "userData": {}
-    },
-    {
-      "region": "us-west-2",
-      "availabilityZone": "us-west-2c",
-      "launchSpec": {
-        "SubnetId": "subnet-540a9f0f"
-      },
-      "secrets": {},
-      "userData": {}
-    }
-  ]
+  "secrets": {},
+  "userData": {},
+  "workerType": "gecko-1-b-linux-usw2"
 }
