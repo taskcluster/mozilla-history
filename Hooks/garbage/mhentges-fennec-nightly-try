@@ -1,0 +1,66 @@
+{
+  "hookGroupId": "garbage",
+  "hookId": "mhentges-fennec-nightly-try",
+  "metadata": {
+    "description": "",
+    "name": "[mhentges] Mobile Fennec try Nightly Hook",
+    "owner": "nope@later.gov"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "gecko-1-decision",
+    "schedulerId": "gecko-level-1",
+    "routes": [],
+    "scopes": [
+      "assume:hook-id:garbage/mhentges-fennec-nightly-try"
+    ],
+    "payload": {
+      "env": {
+        "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
+        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/try",
+        "GECKO_HEAD_REF": "78571bb1f20e643cdab9791f61b0aa7b6a8bdf90",
+        "HG_STORE_PATH": "/home/worker/checkouts/hg-store",
+        "CRON_ARGS": "--force-run=nightly-android"
+      },
+      "cache": {
+        "level-1-checkouts": "/home/worker/checkouts"
+      },
+      "features": {
+        "taskclusterProxy": true,
+        "chainOfTrust": true
+      },
+      "image": "taskcluster/decision:0.1.7",
+      "maxRunTime": 1800,
+      "command": [
+        "/home/worker/bin/run-task",
+        "--vcs-checkout=/home/worker/checkouts/gecko",
+        "--",
+        "bash",
+        "-cx",
+        "cd /home/worker/checkouts/gecko \u0026\u0026 ln -s /home/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph cron --base-repository=$GECKO_BASE_REPOSITORY --head-repository=$GECKO_HEAD_REPOSITORY --head-ref=$GECKO_HEAD_REF --project=try --level=1 $CRON_ARGS"
+      ],
+      "artifacts": {
+        "public": {
+          "type": "directory",
+          "path": "/home/worker/artifacts"
+        }
+      }
+    },
+    "metadata": {
+      "owner": "release@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/#garbage/jlorenzo-fennec-nightly-try",
+      "description": "See https://tools.taskcluster.net/hooks/#garbage/jlorenzo-fennec-nightly-try",
+      "name": "[jlorenzo] Forced Nightly Android Cron task for https://hg.mozilla.org/try"
+    },
+    "priority": "normal",
+    "retries": 5,
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
