@@ -33,7 +33,7 @@ func init() {
 }
 
 func FilenameEscape(raw string) (escaped string) {
-	return strings.ReplaceAll(strings.ReplaceAll(raw, "*", "★"), "/", "⁄")
+	return strings.Replace(strings.Replace(raw, "*", "★", -1), "/", "⁄", -1)
 }
 
 func main() {
