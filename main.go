@@ -61,8 +61,8 @@ func EmptyDirectory(dir string) {
 	}
 }
 
-func WriteEntityToFileAsJSON(entity interface{}, path string, result interface{}) workerpool.Work {
-	return func(workerId int) interface{} {
+func WriteEntityToFileAsJSON(entity interface{}, path string, result workerpool.Result) workerpool.Work {
+	return func(workerId int) workerpool.Result {
 		var file *os.File
 		err := os.MkdirAll(filepath.Dir(path), 0755)
 		if err != nil {
@@ -95,7 +95,7 @@ func FetchWorkerTypes(context *workerpool.SubmitterContext) {
 	}
 	for _, workerType := range *allWorkerTypes {
 		context.RequestChannel <- func(workerType string) workerpool.Work {
-			return func(workerId int) interface{} {
+			return func(workerId int) workerpool.Result {
 				wt, err := prov.WorkerType(workerType)
 				if err != nil {
 					panic(err)
@@ -163,7 +163,7 @@ func FetchHookGroups(context *workerpool.SubmitterContext) {
 	}
 	for _, hookGroup := range allHookGroups.Groups {
 		context.RequestChannel <- func(hookGroup string) workerpool.Work {
-			return func(workerId int) interface{} {
+			return func(workerId int) workerpool.Result {
 				return func(context *workerpool.SubmitterContext) {
 					hookList, err := hooks.ListHooks(hookGroup)
 					if err != nil {
@@ -193,7 +193,7 @@ func FetchSecrets(context *workerpool.SubmitterContext) {
 		}
 		for _, secretName := range secretsList.Secrets {
 			context.RequestChannel <- func(secretName string) workerpool.Work {
-				return func(workerId int) interface{} {
+				return func(workerId int) workerpool.Result {
 					secret, err := ss.Get(secretName)
 					if err != nil {
 						panic(err)

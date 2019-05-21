@@ -30,12 +30,12 @@ type WorkPipeline struct {
 	workListenerContext *workListenerContext
 }
 
-type Work func(workerId int) interface{}
+type Work func(workerId int) Result
 type Result interface{}
 
 type SubmitterContext struct {
 	RequestChannel chan<- Work
-	// WaitGroup is done when all work submitters have submitting their work
+	// WaitGroup is done when all work submitters have submitted their work
 	waitGroup sync.WaitGroup
 }
 
