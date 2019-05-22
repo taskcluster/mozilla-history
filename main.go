@@ -125,7 +125,7 @@ func FetchRoles(context *workerpool.SubmitterContext) {
 				"Fetched role "+role.RoleID,
 			)
 		}
-		continuationToken := roles.ContinuationToken
+		continuationToken = roles.ContinuationToken
 		if continuationToken == "" {
 			break
 		}
@@ -148,7 +148,7 @@ func FetchClients(context *workerpool.SubmitterContext) {
 				"Fetched client "+client.ClientID,
 			)
 		}
-		continuationToken := clients.ContinuationToken
+		continuationToken = clients.ContinuationToken
 		if continuationToken == "" {
 			break
 		}
@@ -207,7 +207,7 @@ func FetchSecrets(context *workerpool.SubmitterContext) {
 				}
 			}(secretName)
 		}
-		continuationToken := secretsList.ContinuationToken
+		continuationToken = secretsList.ContinuationToken
 		if continuationToken == "" {
 			break
 		}
