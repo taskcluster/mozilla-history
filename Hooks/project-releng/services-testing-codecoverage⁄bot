@@ -11,9 +11,6 @@
     "0 0 0 * * *"
   ],
   "task": {
-    "taskGroupId": {
-      "$eval": "payload.taskGroupId"
-    },
     "created": {
       "$fromNow": "0 seconds"
     },
@@ -26,7 +23,9 @@
     "extra": {},
     "metadata": {
       "description": "",
-      "name": "Task aggregating code coverage data",
+      "name": {
+        "$eval": "payload.taskName"
+      },
       "owner": "mcastelluccio@mozilla.com",
       "source": "https://github.com/mozilla/release-services"
     },
