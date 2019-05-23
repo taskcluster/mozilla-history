@@ -173,7 +173,7 @@ func FetchHookGroups(context *workerpool.SubmitterContext) {
 						context.RequestChannel <- WriteEntityToFileAsJSON(
 							hook,
 							filepath.Join("Hooks", hookGroup, FilenameEscape(hook.HookID)),
-							"Fetched hook "+hook.HookID,
+							"Fetched hook "+hookGroup+"/"+hook.HookID,
 						)
 					}
 				}
