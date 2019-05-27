@@ -1,0 +1,52 @@
+{
+  "hookGroupId": "project-mobile",
+  "hookId": "reference-browser-raptor",
+  "metadata": {
+    "description": "",
+    "name": "Reference Browser Raptor Performance Testing",
+    "owner": "skaspari@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "mobile-1-decision",
+    "schedulerId": "focus-nightly-sched",
+    "taskGroupId": null,
+    "retries": 5,
+    "scopes": [
+      "assume:hook-id:project-mobile/reference-browser-raptor"
+    ],
+    "payload": {
+      "image": "mozillamobile/android-components:1.15",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-cx",
+        "cd .. \u0026\u0026 git clone https://github.com/mozilla-mobile/reference-browser repository \u0026\u0026 cd repository \u0026\u0026 pip install json-e GitPython PyYaml arrow \u0026\u0026 python automation/taskcluster/schedule_nightly_graph.py raptor"
+      ],
+      "env": {
+        "CRON_TASK_ID": "${taskId}"
+      },
+      "maxRunTime": 300,
+      "expires": {
+        "$fromNow": "1 year"
+      },
+      "artifacts": {}
+    },
+    "metadata": {
+      "name": "Reference Browser Cron task (Raptor)",
+      "description": "",
+      "owner": "skaspari@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/project-mobile/reference-browser-raptor"
+    },
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
