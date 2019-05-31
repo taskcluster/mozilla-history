@@ -24,7 +24,7 @@
       "command": [
         "/bin/bash",
         "-cx",
-        "export REPO_OWNER='mitchhentges' \u0026\u0026 export GIT_BRANCH='master' \u0026\u0026 git remote remove origin \u0026\u0026 git remote add origin https://github.com/$REPO_OWNER/fenix \u0026\u0026 git pull \u0026\u0026 git fetch origin $GIT_BRANCH \u0026\u0026 git checkout $GIT_BRANCH \u0026\u0026 pip install json-e GitPython PyYaml arrow \u0026\u0026 python automation/taskcluster/schedule_nightly_graph.py nightly"
+        "export REPO_OWNER='mitchhentges' \u0026\u0026 export GIT_BRANCH='master' \u0026\u0026 cd .. \u0026\u0026 git clone https://github.com/$REPO_OWNER/fenix repo \u0026\u0026 cd repo \u0026\u0026 git checkout $GIT_BRANCH \u0026\u0026 pip install json-e GitPython PyYaml arrow \u0026\u0026 python automation/taskcluster/schedule_nightly_graph.py nightly"
       ],
       "env": {
         "CRON_TASK_ID": "${taskId}"
