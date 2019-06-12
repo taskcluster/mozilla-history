@@ -2,6 +2,7 @@
   "created": "2019-06-10T15:59:03.542Z",
   "description": "Build code-review project on branch push.",
   "expandedScopes": [
+    "assume:hook-id:project-relman/code-review-production",
     "assume:hook-id:project-relman/code-review-testing",
     "assume:project:relman:code-review/build",
     "assume:project:relman:code-review/deploy/production",
@@ -9,6 +10,7 @@
     "assume:project:taskcluster:mozilla-github-repository",
     "assume:repo:github.com/mozilla/code-review:branch:*",
     "docker-worker:capability:privileged",
+    "hooks:modify-hook:project-relman/code-review-production",
     "hooks:modify-hook:project-relman/code-review-testing",
     "hooks:trigger-hook:project-releng/services-testing-*",
     "index:insert-task:project.releng.services.project.testing.static_analysis_bot.*",
@@ -32,6 +34,7 @@
     "queue:scheduler-id:-",
     "queue:scheduler-id:taskcluster-github",
     "secrets:get:garbage/*",
+    "secrets:get:project/relman/code-review/deploy-production",
     "secrets:get:project/relman/code-review/deploy-testing",
     "secrets:get:project/relman/code-review/runtime-testing",
     "secrets:set:garbage/*"
