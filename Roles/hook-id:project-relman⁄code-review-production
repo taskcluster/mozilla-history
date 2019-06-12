@@ -1,11 +1,9 @@
 {
-  "created": "2019-06-12T13:15:42.353Z",
-  "description": "Role for the deployment of code-review on the production environment.",
+  "created": "2019-06-12T13:35:11.553Z",
+  "description": "Role assigned to code review tasks triggered by the hook.",
   "expandedScopes": [
     "assume:hook-id:project-relman/code-review-production",
-    "assume:project:relman:code-review/deploy/production",
     "assume:project:taskcluster:mozilla-github-repository",
-    "hooks:modify-hook:project-relman/code-review-production",
     "hooks:trigger-hook:project-releng/services-production-*",
     "index:insert-task:project.releng.services.project.production.static_analysis_bot.*",
     "index:insert-task:project.releng.services.tasks.*",
@@ -25,14 +23,21 @@
     "queue:route:notify.irc-user.*",
     "queue:scheduler-id:-",
     "queue:scheduler-id:taskcluster-github",
-    "secrets:get:project/relman/code-review/deploy-production",
     "secrets:get:project/relman/code-review/runtime-production"
   ],
-  "lastModified": "2019-06-12T13:15:42.353Z",
-  "roleId": "project:relman:code-review/deploy/production",
+  "lastModified": "2019-06-12T13:35:11.553Z",
+  "roleId": "hook-id:project-relman/code-review-production",
   "scopes": [
-    "assume:hook-id:project-relman/code-review-production",
-    "hooks:modify-hook:project-relman/code-review-production",
-    "secrets:get:project/relman/code-review/deploy-production"
+    "assume:project:taskcluster:mozilla-github-repository",
+    "hooks:trigger-hook:project-releng/services-production-*",
+    "index:insert-task:project.releng.services.project.production.static_analysis_bot.*",
+    "index:insert-task:project.releng.services.tasks.*",
+    "notify:email:*",
+    "queue:create-task:aws-provisioner-v1/releng-svc",
+    "queue:create-task:highest:aws-provisioner-v1/releng-svc",
+    "queue:route:index.project.releng.services.project.production.static_analysis_bot.*",
+    "queue:route:notify.email.*",
+    "queue:scheduler-id:-",
+    "secrets:get:project/relman/code-review/runtime-production"
   ]
 }
