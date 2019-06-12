@@ -37,6 +37,7 @@
     "auth:azure-table:read-write:fakeaccount/DuMmYtAbLe",
     "auth:create-client:garbage/*",
     "auth:create-client:project/deepspeech/*",
+    "auth:create-client:project/taskcluster:generic-worker-tester/TestReclaimCancelledTask",
     "auth:create-client:project/taskcluster:generic-worker-tester/TestResolveResolvedTask",
     "auth:create-role:hook-id:project-deepspeech/*",
     "auth:create-role:project:deepspeech:*",
