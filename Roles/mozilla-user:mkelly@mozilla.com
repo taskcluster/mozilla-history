@@ -27,6 +27,7 @@
     "project:releng:services/tooltool/api/download/internal",
     "project:socorro:*",
     "queue:claim-work:proj-socorro/*",
+    "queue:create-task:aws-provisioner-v1/releng-svc",
     "queue:create-task:aws-provisioner-v1/taskcluster-generic",
     "queue:create-task:aws-provisioner-v1/tutorial",
     "queue:create-task:high:proj-socorro/*",
