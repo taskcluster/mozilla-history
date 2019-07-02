@@ -1,0 +1,47 @@
+{
+  "hookGroupId": "project-relman",
+  "hookId": "bugbug-classify-patch",
+  "metadata": {
+    "description": "",
+    "emailOnError": true,
+    "name": "BugBug Classify Patch",
+    "owner": "mcastelluccio@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "taskcluster-generic",
+    "payload": {
+      "image": "mozilla/bugbug-base",
+      "command": [
+        "/bin/bash",
+        "-c",
+        "echo $PROVA"
+      ],
+      "env": {
+        "$eval": "payload"
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 7200
+    },
+    "metadata": {
+      "name": "BugBug Classify Patch",
+      "description": "",
+      "owner": "mcastelluccio@mozilla.com",
+      "source": "https://github.com/marco-c/bugbug"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "deadline": {
+      "$fromNow": "2 hours"
+    }
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": true
+  }
+}
