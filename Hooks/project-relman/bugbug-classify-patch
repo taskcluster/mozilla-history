@@ -14,9 +14,9 @@
     "payload": {
       "image": "mozilla/bugbug-base",
       "command": [
-        "/bin/bash",
-        "-c",
-        "echo $PROVA"
+        "bugbug-classify-commit",
+        "/cache/",
+        "$DIFF_ID"
       ],
       "env": {
         "$eval": "payload"
@@ -24,7 +24,10 @@
       "features": {
         "taskclusterProxy": true
       },
-      "maxRunTime": 7200
+      "maxRunTime": 7200,
+      "cache": {
+        "bugbug-mercurial-repository": "/cache"
+      }
     },
     "metadata": {
       "name": "BugBug Classify Patch",
@@ -37,7 +40,10 @@
     },
     "deadline": {
       "$fromNow": "2 hours"
-    }
+    },
+    "scopes": [
+      "docker-worker:cache:bugbug-mercurial-repository"
+    ]
   },
   "triggerSchema": {
     "type": "object",
