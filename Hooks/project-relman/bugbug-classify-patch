@@ -46,8 +46,14 @@
         "$DIFF_ID"
       ],
       "env": {
-        "$eval": "payload",
-        "TAG": "v0.0.60"
+        "$merge": [
+          {
+            "TAG": "v0.0.60"
+          },
+          {
+            "$eval": "payload"
+          }
+        ]
       },
       "features": {
         "taskclusterProxy": true
