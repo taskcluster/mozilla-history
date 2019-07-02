@@ -4,50 +4,74 @@
   "metadata": {
     "description": "",
     "emailOnError": true,
-    "name": "BugBug Classify Patch",
+    "name": "BugBug classify patch",
     "owner": "mcastelluccio@mozilla.com"
   },
   "schedule": [],
   "task": {
-    "provisionerId": "aws-provisioner-v1",
-    "workerType": "taskcluster-generic",
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "deadline": {
+      "$fromNow": "2 hours"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "extra": {},
+    "metadata": {
+      "description": "",
+      "name": "BugBug classify patch",
+      "owner": "mcastelluccio@mozilla.com",
+      "source": "https://github.com/mozilla/bugbug"
+    },
     "payload": {
-      "image": "mozilla/bugbug-base",
+      "artifacts": {
+        "public/importance.html": {
+          "path": "/importance.html",
+          "type": "file"
+        },
+        "public/probs,json": {
+          "path": "/probs.json",
+          "type": "file"
+        }
+      },
+      "cache": {
+        "bugbug-mercurial-repository": "/cache"
+      },
+      "capabilities": {},
       "command": [
         "bugbug-classify-commit",
         "/cache/",
         "$DIFF_ID"
       ],
       "env": {
-        "$eval": "payload"
+        "$eval": "payload",
+        "TAG": "v0.0.60"
       },
       "features": {
         "taskclusterProxy": true
       },
-      "maxRunTime": 7200,
-      "cache": {
-        "bugbug-mercurial-repository": "/cache"
-      }
+      "image": "mozilla/bugbug-base",
+      "maxRunTime": 7200
     },
-    "metadata": {
-      "name": "BugBug Classify Patch",
-      "description": "",
-      "owner": "mcastelluccio@mozilla.com",
-      "source": "https://github.com/marco-c/bugbug"
-    },
-    "expires": {
-      "$fromNow": "1 month"
-    },
-    "deadline": {
-      "$fromNow": "2 hours"
-    },
+    "priority": "normal",
+    "provisionerId": "aws-provisioner-v1",
+    "retries": 5,
+    "routes": [
+      "notify.email.release-mgmt-analysis@mozilla.com.on-failed",
+      "notify.irc-channel.#bugbug.on-failed"
+    ],
+    "schedulerId": "-",
     "scopes": [
-      "docker-worker:cache:bugbug-mercurial-repository"
-    ]
+      "assume:hook-id:project-relman/bugbug-classify-patch",
+      "secrets:get:project/relman/bugbug/production"
+    ],
+    "tags": {},
+    "workerType": "taskcluster-generic"
   },
   "triggerSchema": {
-    "type": "object",
-    "properties": {},
-    "additionalProperties": true
+    "additionalProperties": true,
+    "type": "object"
   }
 }
