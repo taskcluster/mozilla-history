@@ -41,19 +41,12 @@
       },
       "capabilities": {},
       "command": [
-        "/bin/bash",
-        "-c",
-        "bugbug-classify-commit /cache/ $DIFF_ID"
+        "bugbug-classify-commit",
+        "/cache/",
+        "${payload['DIFF_ID']}"
       ],
       "env": {
-        "$merge": [
-          {
-            "TAG": "v0.0.61"
-          },
-          {
-            "$eval": "payload"
-          }
-        ]
+        "TAG": "v0.0.61"
       },
       "features": {
         "taskclusterProxy": true
@@ -66,7 +59,9 @@
     "retries": 5,
     "routes": [
       "notify.email.release-mgmt-analysis@mozilla.com.on-failed",
-      "notify.irc-channel.#bugbug.on-failed"
+      "notify.irc-channel.#bugbug.on-failed",
+      "index.project.relman.bugbug.classify_patch.latest",
+      "index.project.relman.bugbug.classify_patch.diff.${payload['DIFF_ID']}"
     ],
     "schedulerId": "-",
     "scopes": [
@@ -77,7 +72,12 @@
     "workerType": "taskcluster-generic"
   },
   "triggerSchema": {
-    "additionalProperties": true,
+    "additionalProperties": false,
+    "properties": {
+      "DIFF_ID": {
+        "type": "number"
+      }
+    },
     "type": "object"
   }
 }
