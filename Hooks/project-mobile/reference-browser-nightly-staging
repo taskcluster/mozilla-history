@@ -17,14 +17,14 @@
       "assume:hook-id:project-mobile/reference-browser-nightly-staging"
     ],
     "payload": {
-      "image": "python:3",
+      "image": "mozillamobile/android-components:1.15",
       "features": {
         "taskclusterProxy": true
       },
       "command": [
         "/bin/bash",
         "-cx",
-        "pip install 'decisionlib-mhentges' \u0026\u0026 decisionlib schedule-hook --branch dsl-test https://github.com/mitchhentges/reference-browser ${taskId}"
+        "export REPO_OWNER='mitchhentges' \u0026\u0026 export GIT_BRANCH='remove-flavors' \u0026\u0026 git remote remove origin \u0026\u0026 git remote add origin https://github.com/$REPO_OWNER/reference-browser \u0026\u0026 git fetch origin $GIT_BRANCH \u0026\u0026 git checkout $GIT_BRANCH \u0026\u0026 pip install json-e GitPython PyYaml arrow \u0026\u0026 python automation/taskcluster/schedule_nightly_graph.py nightly"
       ],
       "maxRunTime": 300,
       "expires": {
