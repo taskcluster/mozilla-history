@@ -42,17 +42,23 @@
       "capabilities": {},
       "command": [
         "bugbug-classify-commit",
-        "/cache/",
+        "/cache",
         "${payload['DIFF_ID']}"
       ],
       "env": {
-        "TAG": "v0.0.61",
-        "TC_SECRET_ID": "project/relman/bugbug/production"
+        "$merge": [
+          {
+            "TC_SECRET_ID": "project/relman/bugbug/production"
+          },
+          {
+            "TAG": "v0.0.62"
+          }
+        ]
       },
       "features": {
         "taskclusterProxy": true
       },
-      "image": "mozilla/bugbug-commit-retrieval:v0.0.61",
+      "image": "mozilla/bugbug-commit-retrieval:v0.0.62",
       "maxRunTime": 7200
     },
     "priority": "normal",
