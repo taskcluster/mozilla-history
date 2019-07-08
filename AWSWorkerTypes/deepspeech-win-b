@@ -1,0 +1,83 @@
+{
+  "canUseSpot": true,
+  "description": "DeepSpeech Windows worker (beta); these jobs require more RAM and fewer neighbors than other tc-github tasks",
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "m5d.2xlarge",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "lastModified": "2019-07-08T12:15:24.042Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only"
+    ]
+  },
+  "maxCapacity": 30,
+  "maxPrice": 10,
+  "minCapacity": 0,
+  "minPrice": 4.5,
+  "owner": "deepspeech@mozilla.com",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-05ef9b21c30c0d86d"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-033eefec5cd23033a"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0065723ebc0c3e4a4"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/deepspeech-win-b",
+    "assume:worker-id:*"
+  ],
+  "secrets": {},
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "deploymentId": "Eb6OXRHmTqG2YKU-dia4Cg",
+        "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+        "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+        "shutdownMachineOnInternalError": false,
+        "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+        "sentryProject": "generic-worker",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "maintainer": "reuben@mozilla.com",
+            "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/ff8834bd97400fa3dc4bab40c457ba179ca59a6c/worker_types/deepspeech-win-b/userdata"
+          }
+        },
+        "wstServerURL": "https://websocktunnel.tasks.build",
+        "wstAudience": "taskcluster-net"
+      }
+    }
+  },
+  "workerType": "deepspeech-win-b"
+}
