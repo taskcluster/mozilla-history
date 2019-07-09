@@ -1,21 +1,21 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "services-testing-tooltool/api-replicate",
+  "hookId": "services-testing-uplift/bot",
   "metadata": {
     "description": "",
     "emailOnError": true,
-    "name": "python3.7-mozilla-tooltool-api-1.0.0_replicate_testing",
-    "owner": "rgarbas@mozilla.com"
+    "name": "Shipit bot updating bug analysis",
+    "owner": "babadie@mozilla.com"
   },
   "schedule": [
-    "0 * * * *"
+    "0 0 * * * *"
   ],
   "task": {
     "created": {
       "$fromNow": "0 seconds"
     },
     "deadline": {
-      "$fromNow": "4 hours"
+      "$fromNow": "1 hour"
     },
     "expires": {
       "$fromNow": "1 month"
@@ -23,26 +23,32 @@
     "extra": {},
     "metadata": {
       "description": "",
-      "name": "python3.7-mozilla-tooltool-api-1.0.0_replicate_testing",
-      "owner": "rgarbas@mozilla.com",
+      "name": "Shipit bot updating bug analysis",
+      "owner": "babadie@mozilla.com",
       "source": "https://github.com/mozilla/release-services"
     },
     "payload": {
       "artifacts": {},
-      "cache": {},
+      "cache": {
+        "shipit-bot-testing": "/cache"
+      },
       "capabilities": {},
       "command": [
-        "flask",
-        "replicate"
+        "/bin/uplift-bot",
+        "--taskcluster-secret",
+        "repo:github.com/mozilla-releng/services:branch:testing",
+        "--cache-root",
+        "/cache"
       ],
       "env": {
-        "TASKCLUSTER_SECRET": "repo:github.com/mozilla-releng/services:branch:testing"
+        "APP_CHANNEL": "testing",
+        "SSL_CERT_FILE": "/nix/store/110nnm7p0gaw7wzdf0q5dqf2ac8h6q2q-nss-cacert-3.42.1/etc/ssl/certs/ca-bundle.crt"
       },
       "features": {
         "taskclusterProxy": true
       },
-      "image": "mozillareleng/services:docker-image-python3.7-mozilla-tooltool-api-1.0.0-q3j9gmy4cmwg8r64npw8qgipy0mgrm18",
-      "maxRunTime": 14400
+      "image": "mozillareleng/services:docker-image-python3.7-mozilla-uplift-bot-1.0.0-02b86g387iif3gb8214lqg30j9a26388",
+      "maxRunTime": 3600
     },
     "priority": "normal",
     "provisionerId": "aws-provisioner-v1",
@@ -51,7 +57,8 @@
     "schedulerId": "-",
     "scopes": [
       "secrets:get:repo:github.com/mozilla-releng/services:branch:testing",
-      "queue:create-task:aws-provisioner-v1/releng-svc"
+      "notify:email:*",
+      "docker-worker:cache:shipit-bot-testing"
     ],
     "tags": {},
     "workerType": "releng-svc"
