@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-3-cancel-all/48938e078a",
+  "hookId": "in-tree-action-3-release-promotion/9a01d0526d",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task cancel-all at level 3, with `.taskcluster.yml` hash 48938e078a.\n\nFor project(s) mozilla-release, mozilla-esr68, oak, mozilla-beta, maple\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash 9a01d0526d.\n\nFor project(s) mozilla-inbound, mozilla-central, autoland\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-3-cancel-all/48938e078a",
+    "name": "project-gecko/in-tree-action-3-release-promotion/9a01d0526d",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:cancel-all",
-        "cb_name": "cancel-all"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "cb_name": "release-promotion"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -357,16 +357,25 @@
                 "tasks_for": "${tasks_for}"
               },
               {
-                "$if": "tasks_for == \"hg-push\" \u0026\u0026 repository.project == \"try\"",
+                "$if": "tasks_for == \"hg-push\"",
                 "then": {
                   "notify": {
                     "email": {
-                      "subject": "Thank you for your try submission of ${push.revision}. It's the best!",
-                      "content": "Your try push has been submitted. It's the best! Use the link to view the status of your jobs.",
-                      "link": {
-                        "text": "Treeherder Jobs",
-                        "href": "https://treeherder.mozilla.org/#/jobs?repo=${repository.project}\u0026revision=${push.revision}"
-                      }
+                      "$merge": [
+                        {
+                          "link": {
+                            "text": "Treeherder Jobs",
+                            "href": "https://treeherder.mozilla.org/#/jobs?repo=${repository.project}\u0026revision=${push.revision}"
+                          }
+                        },
+                        {
+                          "$if": "repository.project == \"try\"",
+                          "then": {
+                            "subject": "Thank you for your try submission of ${push.revision}. It's the best!",
+                            "content": "Your try push has been submitted. It's the best! Use the link to view the status of your jobs."
+                          }
+                        }
+                      ]
                     }
                   }
                 }
