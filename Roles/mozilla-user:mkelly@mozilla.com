@@ -46,6 +46,7 @@
     "queue:worker-id:proj-socorro/*",
     "secrets:get:garbage/*",
     "secrets:get:project/socorro/*",
+    "secrets:get:worker-pool:proj-socorro/*",
     "secrets:get:worker-type:proj-socorro/*",
     "secrets:set:garbage/*",
     "secrets:set:project/socorro/*"

@@ -42,6 +42,7 @@
     "queue:worker-id:proj-gaia/*",
     "secrets:get:garbage/*",
     "secrets:get:project/gaia/*",
+    "secrets:get:worker-pool:proj-gaia/*",
     "secrets:get:worker-type:proj-gaia/*",
     "secrets:set:garbage/*",
     "secrets:set:project/gaia/*"

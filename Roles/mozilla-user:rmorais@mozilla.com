@@ -89,6 +89,7 @@
     "queue:worker-id:proj-deepspeech/*",
     "secrets:get:garbage/*",
     "secrets:get:project/deepspeech/*",
+    "secrets:get:worker-pool:proj-deepspeech/*",
     "secrets:get:worker-type:proj-deepspeech/*",
     "secrets:set:garbage/*",
     "secrets:set:project/deepspeech/*"
