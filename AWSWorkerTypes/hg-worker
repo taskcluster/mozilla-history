@@ -1,7 +1,33 @@
 {
   "canUseSpot": true,
-  "description": "Worker type that can be used for hg related pushes.  This is similar to the github-worker worker type uses for taskcluser-github related tasks.",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nWorker type that can be used for hg related pushes.  This is similar to the github-worker worker type uses for taskcluser-github related tasks.",
   "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "r5.4xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "billingCycleInterval": 14400,
+        "capacityManagement": {
+          "diskspaceThreshold": 20000000000
+        },
+        "restrictCPU": false
+      },
+      "utility": 1
+    },
     {
       "capacity": 1,
       "instanceType": "r4.4xlarge",
@@ -20,11 +46,11 @@
       "scopes": [],
       "secrets": {},
       "userData": {
-        "restrictCPU": false,
         "billingCycleInterval": 14400,
         "capacityManagement": {
           "diskspaceThreshold": 20000000000
-        }
+        },
+        "restrictCPU": false
       },
       "utility": 1
     },
@@ -46,11 +72,37 @@
       "scopes": [],
       "secrets": {},
       "userData": {
-        "restrictCPU": false,
         "billingCycleInterval": 14400,
         "capacityManagement": {
           "diskspaceThreshold": 20000000000
-        }
+        },
+        "restrictCPU": false
+      },
+      "utility": 1
+    },
+    {
+      "capacity": 1,
+      "instanceType": "c5.9xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "billingCycleInterval": 14400,
+        "capacityManagement": {
+          "diskspaceThreshold": 20000000000
+        },
+        "restrictCPU": false
       },
       "utility": 1
     },
@@ -72,16 +124,16 @@
       "scopes": [],
       "secrets": {},
       "userData": {
-        "restrictCPU": false,
         "billingCycleInterval": 14400,
         "capacityManagement": {
           "diskspaceThreshold": 20000000000
-        }
+        },
+        "restrictCPU": false
       },
       "utility": 1
     }
   ],
-  "lastModified": "2019-04-18T19:34:02.678Z",
+  "lastModified": "2019-07-10T17:32:34.872Z",
   "launchSpec": {
     "SecurityGroups": [
       "docker-worker"
@@ -122,10 +174,7 @@
     }
   ],
   "scalingRatio": 0,
-  "scopes": [
-    "assume:worker-type:aws-provisioner-v1/hg-worker",
-    "assume:worker-id:*"
-  ],
+  "scopes": [],
   "secrets": {},
   "userData": {},
   "workerType": "hg-worker"
