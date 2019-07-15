@@ -23,6 +23,8 @@
     "secrets:get:garbage/*",
     "secrets:get:repo:github.com/mozilla/balrog:coveralls",
     "secrets:get:repo:github.com/mozilla/balrog:dockerhub",
+    "secrets:get:repo:github.com/mozilla/balrog:s3-stage-app-config",
+    "secrets:get:repo:github.com/mozilla/balrog:s3-stage-aws-creds",
     "secrets:set:garbage/*"
   ],
   "lastModified": "2016-04-21T17:23:07.553Z",
