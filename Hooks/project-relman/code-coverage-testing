@@ -1,0 +1,90 @@
+{
+  "hookGroupId": "project-relman",
+  "hookId": "code-coverage-testing",
+  "metadata": {
+    "description": "Automatically build code coverage reports",
+    "emailOnError": true,
+    "name": "Code coverage hook (testing)",
+    "owner": "mcastelluccio@mozilla.com"
+  },
+  "schedule": [
+    "0 0 0 * * *"
+  ],
+  "task": {
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "deadline": {
+      "$fromNow": "4 hours"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "extra": {},
+    "metadata": {
+      "description": "",
+      "name": "Code Coverage aggregation task (testing)",
+      "owner": "mcastelluccio@mozilla.com",
+      "source": "https://github.com/mozilla/code-coverage"
+    },
+    "payload": {
+      "artifacts": {
+        "public/chunk_mapping.tar.xz": {
+          "path": "/chunk_mapping.tar.xz",
+          "type": "file"
+        },
+        "public/zero_coverage_report.json": {
+          "path": "/zero_coverage_report.json",
+          "type": "file"
+        }
+      },
+      "cache": {
+        "code-coverage-bot-testing": "/cache"
+      },
+      "capabilities": {},
+      "command": [
+        "/bin/code-coverage-bot",
+        "--taskcluster-secret",
+        "project/relman/code-coverage/runtime-testing",
+        "--cache-root",
+        "/cache"
+      ],
+      "env": {
+        "$merge": [
+          {
+            "APP_testing": "testing"
+          },
+          {
+            "$if": "firedBy == 'triggerHook'",
+            "else": {},
+            "then": {
+              "$eval": "payload"
+            }
+          }
+        ]
+      },
+      "features": {
+        "taskclusterProxy": true
+      },
+      "image": "mozilla/code-coverage:bot-059709a589983e2c02349e13f49e7af3f832415c",
+      "maxRunTime": 14400
+    },
+    "priority": "normal",
+    "provisionerId": "aws-provisioner-v1",
+    "retries": 5,
+    "routes": [],
+    "schedulerId": "-",
+    "scopes": [
+      "secrets:get:project/relman/code-coverage/runtime-testing",
+      "notify:email:*",
+      "docker-worker:cache:code-coverage-bot-testing",
+      "index:insert-task:project.releng.services.project.testing.code_coverage_bot.*"
+    ],
+    "tags": {},
+    "workerType": "releng-svc-memory"
+  },
+  "triggerSchema": {
+    "additionalProperties": true,
+    "type": "object"
+  }
+}
