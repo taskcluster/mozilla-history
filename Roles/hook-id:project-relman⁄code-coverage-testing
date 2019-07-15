@@ -1,11 +1,9 @@
 {
-  "created": "2019-07-12T12:53:19.700Z",
-  "description": "Access rights to deploy code-coverage on testing",
+  "created": "2019-07-15T14:09:54.262Z",
+  "description": "Role assigned to code coverage tasks triggered by the hook.\n",
   "expandedScopes": [
     "assume:hook-id:project-relman/code-coverage-testing",
-    "assume:project:relman:code-coverage/deploy/testing",
     "assume:project:taskcluster:mozilla-github-repository",
-    "hooks:modify-hook:project-relman/code-coverage-testing",
     "index:insert-task:project.releng.services.project.production.code_coverage_bot.*",
     "notify:email:*",
     "notify:irc-channel:*",
@@ -22,14 +20,18 @@
     "queue:route:notify.irc-user.*",
     "queue:scheduler-id:-",
     "queue:scheduler-id:taskcluster-github",
-    "secrets:get:project/relman/code-coverage/deploy-testing",
     "secrets:get:project/relman/code-coverage/runtime-testing"
   ],
-  "lastModified": "2019-07-15T13:51:52.981Z",
-  "roleId": "project:relman:code-coverage/deploy/testing",
+  "lastModified": "2019-07-15T14:09:54.262Z",
+  "roleId": "hook-id:project-relman/code-coverage-testing",
   "scopes": [
-    "assume:hook-id:project-relman/code-coverage-testing",
-    "hooks:modify-hook:project-relman/code-coverage-testing",
-    "secrets:get:project/relman/code-coverage/deploy-testing"
+    "assume:project:taskcluster:mozilla-github-repository",
+    "index:insert-task:project.releng.services.project.production.code_coverage_bot.*",
+    "notify:email:*",
+    "queue:create-task:aws-provisioner-v1/releng-svc-memory",
+    "queue:create-task:highest:aws-provisioner-v1/releng-svc-memory",
+    "queue:route:notify.email.*",
+    "queue:scheduler-id:-",
+    "secrets:get:project/relman/code-coverage/runtime-testing"
   ]
 }
