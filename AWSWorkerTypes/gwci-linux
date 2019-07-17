@@ -1,0 +1,82 @@
+{
+  "canUseSpot": true,
+  "description": "generic-worker Linux simple engine worker for generic-worker CI",
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "m3.2xlarge",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "lastModified": "2019-07-17T13:36:21.563Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only"
+    ]
+  },
+  "maxCapacity": 5,
+  "maxPrice": 6,
+  "minCapacity": 0,
+  "minPrice": 1,
+  "owner": "Taskcluster",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-07b545e50e5502853"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0a88593bb18bcac76"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0dd548bbf292d30d6"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/gwci-linux",
+    "assume:worker-id:*"
+  ],
+  "secrets": {},
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "deploymentId": "xxxxxx",
+        "ed25519SigningKeyLocation": "/home/ubuntu/generic-worker/generic-worker-ed25519-signing-key.key",
+        "livelogExecutable": "/home/ubuntu/generic-worker/livelog",
+        "sentryProject": "generic-worker",
+        "taskclusterProxyExecutable": "/home/ubuntu/generic-worker/taskcluster-proxy",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "maintainer": "pmoore@mozilla.com",
+            "setup": "https://raw.githubusercontent.com/taskcluster/generic-worker/master/worker_types/gwci-linux"
+          }
+        },
+        "wstAudience": "taskcluster-net",
+        "wstServerURL": "https://websocktunnel.tasks.build"
+      }
+    }
+  },
+  "workerType": "gwci-linux"
+}
