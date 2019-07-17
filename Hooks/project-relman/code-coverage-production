@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-relman",
-  "hookId": "code-coverage-testing",
+  "hookId": "code-coverage-production",
   "metadata": {
     "description": "Automatically build code coverage reports",
     "emailOnError": true,
-    "name": "Code coverage hook (testing)",
+    "name": "Code coverage hook (production)",
     "owner": "mcastelluccio@mozilla.com"
   },
   "schedule": [
@@ -23,7 +23,7 @@
     "extra": {},
     "metadata": {
       "description": "",
-      "name": "Code Coverage aggregation task (testing)",
+      "name": "Code Coverage aggregation task (production)",
       "owner": "mcastelluccio@mozilla.com",
       "source": "https://github.com/mozilla/code-coverage"
     },
@@ -39,20 +39,20 @@
         }
       },
       "cache": {
-        "code-coverage-bot-testing": "/cache"
+        "code-coverage-bot-production": "/cache"
       },
       "capabilities": {},
       "command": [
         "code-coverage-bot",
         "--taskcluster-secret",
-        "project/relman/code-coverage/runtime-testing",
+        "project/relman/code-coverage/runtime-production",
         "--cache-root",
         "/cache"
       ],
       "env": {
         "$merge": [
           {
-            "APP_testing": "testing"
+            "APP_production": "production"
           },
           {
             "$if": "firedBy == 'triggerHook'",
@@ -75,10 +75,10 @@
     "routes": [],
     "schedulerId": "-",
     "scopes": [
-      "secrets:get:project/relman/code-coverage/runtime-testing",
+      "secrets:get:project/relman/code-coverage/runtime-production",
       "notify:email:*",
-      "docker-worker:cache:code-coverage-bot-testing",
-      "index:insert-task:project.releng.services.project.testing.code_coverage_bot.*"
+      "docker-worker:cache:code-coverage-bot-production",
+      "index:insert-task:project.releng.services.project.production.code_coverage_bot.*"
     ],
     "tags": {},
     "workerType": "releng-svc-memory"
