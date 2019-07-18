@@ -1,17 +1,18 @@
 {
   "hookGroupId": "garbage",
-  "hookId": "t",
+  "hookId": "testt2",
   "metadata": {
-    "description": "t",
+    "description": "",
     "emailOnError": true,
-    "name": "t",
-    "owner": "hammad13060@iiitd.ac.in"
+    "name": "test",
+    "owner": "te@gmail.com"
   },
   "schedule": [],
   "task": {
     "provisionerId": "aws-provisioner-v1",
     "workerType": "tutorial",
     "payload": {
+      "image": "ubuntu:14.04",
       "command": [
         "/bin/bash",
         "-c",
@@ -23,19 +24,18 @@
       "name": "Hook Task",
       "description": "Task Description",
       "owner": "name@example.com",
-      "source": "https://tools.taskcluster.net/hooks/"
+      "source": "https://tools.taskcluster.net/hooks"
     },
-    "schedulerId": "-",
-    "routes": [],
-    "priority": "normal",
-    "retries": 5,
-    "scopes": [],
-    "tags": {},
-    "extra": {}
+    "expires": {
+      "$fromNow": "3 months"
+    },
+    "deadline": {
+      "$fromNow": "6 hours"
+    }
   },
   "triggerSchema": {
-    "type": "objet",
+    "type": "object",
     "properties": {},
-    "additionalPropertiesxxx": false
+    "additionalProperties": false
   }
 }
