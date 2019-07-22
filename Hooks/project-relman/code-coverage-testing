@@ -11,90 +11,96 @@
     "0 0 0 * * *"
   ],
   "task": {
-    "taskGroupId": {
-      "$if": "firedBy == 'triggerHook' \u0026\u0026 'taskGroupId' in payload",
-      "else": {},
-      "then": {
-        "$eval": "payload.taskGroupId"
-      }
-    },
-    "created": {
-      "$fromNow": "0 seconds"
-    },
-    "deadline": {
-      "$fromNow": "4 hours"
-    },
-    "expires": {
-      "$fromNow": "1 month"
-    },
-    "extra": {},
-    "metadata": {
-      "description": "",
-      "name": {
+    "$merge": [
+      {
         "$if": "firedBy == 'triggerHook' \u0026\u0026 'taskGroupId' in payload",
-        "else": "Code Coverage aggregation task (testing)",
+        "else": {},
         "then": {
-          "$eval": "payload.taskGroupId"
-        }
-      },
-      "owner": "mcastelluccio@mozilla.com",
-      "source": "https://github.com/mozilla/code-coverage"
-    },
-    "payload": {
-      "artifacts": {
-        "public/chunk_mapping.tar.xz": {
-          "path": "/chunk_mapping.tar.xz",
-          "type": "file"
-        },
-        "public/zero_coverage_report.json": {
-          "path": "/zero_coverage_report.json",
-          "type": "file"
-        }
-      },
-      "cache": {
-        "code-coverage-bot-testing": "/cache"
-      },
-      "capabilities": {},
-      "command": [
-        "code-coverage-bot",
-        "--taskcluster-secret",
-        "project/relman/code-coverage/runtime-testing",
-        "--cache-root",
-        "/cache"
-      ],
-      "env": {
-        "$merge": [
-          {
-            "APP_testing": "testing"
-          },
-          {
-            "$if": "firedBy == 'triggerHook'",
-            "else": {},
-            "then": {
-              "$eval": "payload"
-            }
+          "taskGroupId": {
+            "$eval": "payload.taskGroupId"
           }
-        ]
+        }
       },
-      "features": {
-        "taskclusterProxy": true
-      },
-      "image": "mozilla/code-coverage:bot-cd30e9f0ea82d025528b3279670de88d89b06361",
-      "maxRunTime": 14400
-    },
-    "priority": "normal",
-    "provisionerId": "aws-provisioner-v1",
-    "retries": 5,
-    "routes": [],
-    "schedulerId": "-",
-    "scopes": [
-      "secrets:get:project/relman/code-coverage/runtime-testing",
-      "notify:email:*",
-      "docker-worker:cache:code-coverage-bot-testing",
-      "index:insert-task:project.releng.services.project.testing.code_coverage_bot.*"
-    ],
-    "tags": {},
-    "workerType": "releng-svc-memory"
+      {
+        "created": {
+          "$fromNow": "0 seconds"
+        },
+        "deadline": {
+          "$fromNow": "4 hours"
+        },
+        "expires": {
+          "$fromNow": "1 month"
+        },
+        "extra": {},
+        "metadata": {
+          "description": "",
+          "name": {
+            "$if": "firedBy == 'triggerHook' \u0026\u0026 'taskGroupId' in payload",
+            "else": "Code Coverage aggregation task (testing)",
+            "then": {
+              "$eval": "payload.taskName"
+            }
+          },
+          "owner": "mcastelluccio@mozilla.com",
+          "source": "https://github.com/mozilla/code-coverage"
+        },
+        "payload": {
+          "artifacts": {
+            "public/chunk_mapping.tar.xz": {
+              "path": "/chunk_mapping.tar.xz",
+              "type": "file"
+            },
+            "public/zero_coverage_report.json": {
+              "path": "/zero_coverage_report.json",
+              "type": "file"
+            }
+          },
+          "cache": {
+            "code-coverage-bot-testing": "/cache"
+          },
+          "capabilities": {},
+          "command": [
+            "code-coverage-bot",
+            "--taskcluster-secret",
+            "project/relman/code-coverage/runtime-testing",
+            "--cache-root",
+            "/cache"
+          ],
+          "env": {
+            "$merge": [
+              {
+                "APP_testing": "testing"
+              },
+              {
+                "$if": "firedBy == 'triggerHook'",
+                "else": {},
+                "then": {
+                  "$eval": "payload"
+                }
+              }
+            ]
+          },
+          "features": {
+            "taskclusterProxy": true
+          },
+          "image": "mozilla/code-coverage:bot-cd30e9f0ea82d025528b3279670de88d89b06361",
+          "maxRunTime": 14400
+        },
+        "priority": "normal",
+        "provisionerId": "aws-provisioner-v1",
+        "retries": 5,
+        "routes": [],
+        "schedulerId": "-",
+        "scopes": [
+          "secrets:get:project/relman/code-coverage/runtime-testing",
+          "notify:email:*",
+          "docker-worker:cache:code-coverage-bot-testing",
+          "index:insert-task:project.releng.services.project.testing.code_coverage_bot.*"
+        ],
+        "tags": {},
+        "workerType": "releng-svc-memory"
+      }
+    ]
   },
   "triggerSchema": {
     "additionalProperties": true,
