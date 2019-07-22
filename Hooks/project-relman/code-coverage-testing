@@ -11,6 +11,13 @@
     "0 0 0 * * *"
   ],
   "task": {
+    "taskGroupId": {
+      "$if": "firedBy == 'triggerHook' \u0026\u0026 'taskGroupId' in payload",
+      "else": {},
+      "then": {
+        "$eval": "payload.taskGroupId"
+      }
+    },
     "created": {
       "$fromNow": "0 seconds"
     },
@@ -23,7 +30,13 @@
     "extra": {},
     "metadata": {
       "description": "",
-      "name": "Code Coverage aggregation task (testing)",
+      "name": {
+        "$if": "firedBy == 'triggerHook' \u0026\u0026 'taskGroupId' in payload",
+        "else": "Code Coverage aggregation task (testing)",
+        "then": {
+          "$eval": "payload.taskGroupId"
+        }
+      },
       "owner": "mcastelluccio@mozilla.com",
       "source": "https://github.com/mozilla/code-coverage"
     },
