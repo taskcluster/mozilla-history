@@ -13,11 +13,15 @@
   "task": {
     "$merge": [
       {
-        "$if": "firedBy == 'triggerHook' \u0026\u0026 'taskGroupId' in payload",
+        "$if": "firedBy == 'triggerHook'",
         "else": {},
         "then": {
-          "taskGroupId": {
-            "$eval": "payload.taskGroupId"
+          "$if": "'taskGroupId' in payload",
+          "else": {},
+          "then": {
+            "taskGroupId": {
+              "$eval": "payload.taskGroupId"
+            }
           }
         }
       },
@@ -35,10 +39,14 @@
         "metadata": {
           "description": "",
           "name": {
-            "$if": "firedBy == 'triggerHook' \u0026\u0026 'taskName' in payload",
+            "$if": "firedBy == 'triggerHook'",
             "else": "Code Coverage aggregation task (testing)",
             "then": {
-              "$eval": "payload.taskName"
+              "$if": "'taskName' in payload",
+              "else": "Code Coverage aggregation task (testing)",
+              "then": {
+                "$eval": "payload.taskName"
+              }
             }
           },
           "owner": "mcastelluccio@mozilla.com",
@@ -67,23 +75,16 @@
             "/cache"
           ],
           "env": {
-            "$merge": [
-              {
-                "APP_testing": "testing"
-              },
-              {
-                "$if": "firedBy == 'triggerHook'",
-                "else": {},
-                "then": {
-                  "$eval": "payload"
-                }
-              }
-            ]
+            "$if": "firedBy == 'triggerHook'",
+            "else": {},
+            "then": {
+              "$eval": "payload"
+            }
           },
           "features": {
             "taskclusterProxy": true
           },
-          "image": "mozilla/code-coverage:bot-c34251e6a8b275f9e61710fcdae771d89de8d165",
+          "image": "mozilla/code-coverage:bot-2be8aa0ecb855849333037664e4c2a8724b30912",
           "maxRunTime": 14400
         },
         "priority": "normal",
