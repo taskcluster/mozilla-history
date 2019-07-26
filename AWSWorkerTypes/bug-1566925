@@ -1,0 +1,83 @@
+{
+  "canUseSpot": true,
+  "description": "generic-worker Linux simple engine worker for generic-worker CI",
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "c5.xlarge",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "lastModified": "2019-07-25T20:43:55.172Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only"
+    ]
+  },
+  "maxCapacity": 5,
+  "maxPrice": 8,
+  "minCapacity": 1,
+  "minPrice": 8,
+  "owner": "Taskcluster",
+  "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-0d1428ad8105736c7"
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-064e72d0a40cf6371"
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-0e063ee28541ac82b"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/bug-1566925",
+    "assume:worker-id:*"
+  ],
+  "secrets": {},
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "deploymentId": "aUeCPMcDRhuh7QHX4skx6w",
+        "ed25519SigningKeyLocation": "/home/ubuntu/generic-worker/ed25519.key",
+        "livelogExecutable": "/home/ubuntu/generic-worker/livelog",
+        "taskclusterProxyExecutable": "/home/ubuntu/generic-worker/taskcluster-proxy",
+        "taskclusterProxyPort": 8080,
+        "tasksDir": "/home/ubuntu/generic-worker/tasks",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "maintainer": "mcrabill@mozilla.com",
+            "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/bug-1566925/worker_types/bug-1568973/userdata"
+          }
+        },
+        "wstAudience": "taskcluster-net",
+        "wstServerURL": "https://websocktunnel.tasks.build"
+      }
+    }
+  },
+  "workerType": "bug-1566925"
+}
