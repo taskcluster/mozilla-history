@@ -5,7 +5,6 @@ Taskcluster history from https://taskcluster.net deployment for:
 * [Clients](/Clients)
 * [Hooks](/Hooks)
 * [Roles](/Roles)
-* [Secrets (hashed)](/Secrets)
 
 ## Entity filenames
 
@@ -44,4 +43,4 @@ export TASKCLUSTER_ROOT_URL='https://taskcluster.net'
 mozilla-history
 ```
 
-This will populate subdirectories `AWSWorkerTypes`, `Clients`, `Hooks`, `Roles` and `Secrets` of the current directory.
+This will populate subdirectories `AWSWorkerTypes`, `Clients`, `Hooks`, and `Roles` of the current directory.
