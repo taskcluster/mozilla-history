@@ -34,11 +34,8 @@ go get github.com/taskcluster/mozilla-history
 
 ## Running
 
-_NOTE_: You need a taskcluster client that has `secrets:get:*`.
-
 ```
-export TASKCLUSTER_CLIENT_ID='...'
-export TASKCLUSTER_ACCESS_TOKEN='...'
+unset TASKCLUSTER_CLIENT_ID TASKCLUSTER_ACCESS_TOKEN TASKCLUSTER_CERTIFICATE
 export TASKCLUSTER_ROOT_URL='https://taskcluster.net'
 mozilla-history
 ```
