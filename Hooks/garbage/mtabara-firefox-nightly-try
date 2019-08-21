@@ -1,0 +1,67 @@
+{
+  "hookGroupId": "garbage",
+  "hookId": "mtabara-firefox-nightly-try",
+  "metadata": {
+    "description": "[mtabara] Desktop Firefox try Nightly Hook",
+    "emailOnError": true,
+    "name": "[mtabara] Desktop Firefox try Nightly Hook",
+    "owner": "mtabara+tc@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "gecko-1-decision",
+    "schedulerId": "gecko-level-1",
+    "routes": [],
+    "scopes": [
+      "assume:hook-id:garbage/mtabara-firefox-nightly-try"
+    ],
+    "payload": {
+      "env": {
+        "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
+        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/try",
+        "GECKO_HEAD_REF": "107234207a849deafb6ed2affb3e926505dba459",
+        "HG_STORE_PATH": "/home/worker/checkouts/hg-store",
+        "CRON_ARGS": "--force-run=nightly-desktop"
+      },
+      "cache": {
+        "level-1-checkouts": "/home/worker/checkouts"
+      },
+      "features": {
+        "taskclusterProxy": true,
+        "chainOfTrust": true
+      },
+      "image": "taskcluster/decision:0.1.7",
+      "maxRunTime": 1800,
+      "command": [
+        "/home/worker/bin/run-task",
+        "--vcs-checkout=/home/worker/checkouts/gecko",
+        "--",
+        "bash",
+        "-cx",
+        "cd /home/worker/checkouts/gecko \u0026\u0026 ln -s /home/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph cron --base-repository=$GECKO_BASE_REPOSITORY --head-repository=$GECKO_HEAD_REPOSITORY --head-ref=$GECKO_HEAD_REF --project=try --level=1 $CRON_ARGS"
+      ],
+      "artifacts": {
+        "public": {
+          "type": "directory",
+          "path": "/home/worker/artifacts"
+        }
+      }
+    },
+    "metadata": {
+      "owner": "release@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/#garbage/mtabara-firefox-nightly-try",
+      "description": "See https://tools.taskcluster.net/hooks/#garbage/mtabara-firefox-nightly-try",
+      "name": "[mtabara] Forced Nightly Firefox Cron task for https://hg.mozilla.org/try"
+    },
+    "priority": "normal",
+    "retries": 5,
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

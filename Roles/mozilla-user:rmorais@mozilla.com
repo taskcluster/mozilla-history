@@ -47,7 +47,6 @@
     "notify:irc-user:*",
     "project:deepspeech:*",
     "purge-cache:deepspeech-provisioner/*",
-    "queue:claim-task",
     "queue:claim-work:deepspeech-provisioner/*",
     "queue:claim-work:proj-deepspeech/*",
     "queue:create-task:aws-provisioner-v1/deepspeech-*",

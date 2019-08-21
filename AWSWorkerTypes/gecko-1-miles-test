@@ -1,0 +1,86 @@
+{
+  "canUseSpot": true,
+  "description": "generic-worker Linux simple engine worker for generic-worker CI",
+  "instanceTypes": [
+    {
+      "capacity": 1,
+      "instanceType": "m5.metal",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    },
+    {
+      "capacity": 1,
+      "instanceType": "c5.large",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    },
+    {
+      "capacity": 1,
+      "instanceType": "m5d.metal",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {},
+      "utility": 1
+    }
+  ],
+  "lastModified": "2019-08-14T22:59:03.792Z",
+  "launchSpec": {
+    "SecurityGroups": [
+      "ssh-only",
+      "rdp-only"
+    ]
+  },
+  "maxCapacity": 2,
+  "maxPrice": 8,
+  "minCapacity": 2,
+  "minPrice": 8,
+  "owner": "Taskcluster",
+  "regions": [
+    {
+      "launchSpec": {
+        "SecurityGroupIds": [
+          "sg-2728435d"
+        ],
+        "ImageId": "ami-03fbf93bf341e8f73"
+      },
+      "region": "us-west-2",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    }
+  ],
+  "scalingRatio": 0,
+  "scopes": [
+    "assume:worker-type:aws-provisioner-v1/bug-1566925",
+    "assume:worker-id:*"
+  ],
+  "secrets": {},
+  "userData": {
+    "genericWorker": {
+      "config": {
+        "deploymentId": "cHlEk3k1TfSZFQyYLLvIIw",
+        "ed25519SigningKeyLocation": "/home/ubuntu/generic-worker/ed25519.key",
+        "livelogExecutable": "/home/ubuntu/generic-worker/livelog",
+        "taskclusterProxyExecutable": "/home/ubuntu/generic-worker/taskcluster-proxy",
+        "taskclusterProxyPort": 8080,
+        "tasksDir": "/home/ubuntu/generic-worker/tasks",
+        "workerTypeMetadata": {
+          "machine-setup": {
+            "maintainer": "mcrabill@mozilla.com",
+            "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/1f2b51f7b5c1dc9d49b6f0195b65cc39d5f4a9b9/worker_types/bug-1568973/userdata"
+          }
+        },
+        "wstAudience": "taskcluster-net",
+        "wstServerURL": "https://websocktunnel.tasks.build"
+      }
+    }
+  },
+  "workerType": "gecko-1-miles-test"
+}
