@@ -1,11 +1,28 @@
+// workerpool is a general purpose package for parallelising work among many
+// worker go routines.
+//
+// The package should be typically used as follows:
+//
+//  // Create a worker pool, to initialise the worker go routines
+//  wp := workerpool.New(numberOfWorkerGoRoutines)
+//  // Add work generators to the pool; the passed in functions should generate
+//  // work by writing tasks to the RequestChannel of the SubmitterContext
+//  wp.AddWork(function1(context *workerpool.SubmitterContext))
+//  wp.AddWork(function2(context *workerpool.SubmitterContext))
+//  wp.AddWork(function3(context *workerpool.SubmitterContext))
+//  // Signal that wp.AddWork(...) will not be called again
+//  wp.Done()
+//  // Mandatory: provide callback for task completion (e.g. do nothing / log
+//  // results / generate work for another worker pool)
+//  wp.OnComplete(func(result workerpool.Result) {...})
 package workerpool
 
 import "sync"
 
-func newWorkPipeline() *WorkPipeline {
+func newWorkPipeline() *workPipeline {
 	requestChannel := make(chan Work)
 	processedChannel := make(chan Result)
-	return &WorkPipeline{
+	return &workPipeline{
 		// Context for submitting work
 		SubmitterContext: &SubmitterContext{
 			RequestChannel: requestChannel,
@@ -24,7 +41,7 @@ func newWorkPipeline() *WorkPipeline {
 	}
 }
 
-type WorkPipeline struct {
+type workPipeline struct {
 	SubmitterContext    *SubmitterContext
 	workExecutorContext *workExecutorContext
 	workListenerContext *workListenerContext
@@ -53,11 +70,11 @@ type workListenerContext struct {
 type WorkSubmitter func(wsc *SubmitterContext)
 
 type WorkerPool struct {
-	Workers  []*Worker
-	pipeline *WorkPipeline
+	workers  []*worker
+	pipeline *workPipeline
 }
 
-type Worker struct {
+type worker struct {
 	context *workExecutorContext
 	id      int
 }
@@ -87,14 +104,14 @@ func New(capacity int) *WorkerPool {
 	wp := &WorkerPool{}
 	wp.pipeline = newWorkPipeline()
 	wp.pipeline.workExecutorContext.waitGroup.Add(capacity)
-	wp.Workers = make([]*Worker, capacity, capacity)
+	wp.workers = make([]*worker, capacity, capacity)
 	for i := 0; i < capacity; i++ {
-		wp.Workers[i] = &Worker{
+		wp.workers[i] = &worker{
 			context: wp.pipeline.workExecutorContext,
 			id:      i,
 		}
 		go func(i int) {
-			wp.Workers[i].WorkUntilDone()
+			wp.workers[i].workUntilDone()
 		}(i)
 	}
 	go func() {
@@ -104,9 +121,9 @@ func New(capacity int) *WorkerPool {
 	return wp
 }
 
-func (worker *Worker) WorkUntilDone() {
-	for work := range worker.context.RequestChannel {
-		worker.context.ProcessedChannel <- work(worker.id)
+func (w *worker) workUntilDone() {
+	for work := range w.context.RequestChannel {
+		w.context.ProcessedChannel <- work(w.id)
 	}
-	worker.context.waitGroup.Done()
+	w.context.waitGroup.Done()
 }
