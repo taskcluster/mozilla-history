@@ -47,7 +47,13 @@ func main() {
 	wp.AddWork(FetchWorkerTypes)
 	wp.AddWork(FetchRoles)
 	wp.AddWork(FetchClients)
-	wp.AddWork(FetchSecrets)
+	// https://bugzil.la/1572135 - ** don't ** log hashed secrets
+	// Note, secrets are json blobs rather than plain strings, so rainbow table
+	// attacks[1] are likely to be ineffective, but better to be safe than
+	// sorry.
+	// ---
+	// [1] https://blogs.getcertifiedgetahead.com/rainbow-table-attacks/
+	// wp.AddWork(FetchSecrets)
 	wp.Done()
 	wp.OnComplete(func(result workerpool.Result) {
 		log.Printf("%s", result)
@@ -182,6 +188,12 @@ func FetchHookGroups(context *workerpool.SubmitterContext) {
 	}
 }
 
+// FetchSecrets is currently not called in production, but is useful if e.g.
+// publishing to a private repo, or updating a repo just to say that a secret
+// has changed, without publishing the hash of the secret. Therefore leaving
+// the uncalled function in place so it can be adapted in the future.
+//
+// See https://bugzil.la/1572135 for more context.
 func FetchSecrets(context *workerpool.SubmitterContext) {
 	EmptyDirectory("Secrets")
 	ss := tcsecrets.NewFromEnv()
