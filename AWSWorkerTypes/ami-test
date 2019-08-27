@@ -105,7 +105,31 @@
   "instanceTypes": [
     {
       "capacity": 1,
-      "instanceType": "m5.xlarge",
+      "instanceType": "m5d.xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
+      },
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1
+    },
+    {
+      "capacity": 1,
+      "instanceType": "c5d.xlarge",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -128,7 +152,7 @@
       "utility": 1
     }
   ],
-  "lastModified": "2019-08-27T13:02:13.088Z",
+  "lastModified": "2019-08-27T13:05:50.903Z",
   "launchSpec": {},
   "maxCapacity": 2,
   "maxPrice": 8,
@@ -136,6 +160,30 @@
   "minPrice": 8,
   "owner": "Firefox CI",
   "regions": [
+    {
+      "launchSpec": {
+        "ImageId": "ami-076ac4c761929f721",
+        "SecurityGroupIds": [
+          "sg-2728435d"
+        ]
+      },
+      "region": "us-east-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
+    {
+      "launchSpec": {
+        "ImageId": "ami-080bd9e137db1049d",
+        "SecurityGroupIds": [
+          "sg-2728435d"
+        ]
+      },
+      "region": "us-west-1",
+      "scopes": [],
+      "secrets": {},
+      "userData": {}
+    },
     {
       "launchSpec": {
         "ImageId": "ami-082f3fa0ad91489a1",
