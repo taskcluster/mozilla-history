@@ -101,11 +101,37 @@
     }
   ],
   "canUseSpot": true,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nWorker for Firefox automation",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nGeneral-purpose worker for l10n automation",
   "instanceTypes": [
     {
       "capacity": 1,
-      "instanceType": "c5d.4xlarge",
+      "instanceType": "c5d.large",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1.5
+    },
+    {
+      "capacity": 1,
+      "instanceType": "m5d.large",
+      "launchSpec": {},
+      "scopes": [],
+      "secrets": {},
+      "userData": {
+        "capacityManagement": {
+          "diskspaceThreshold": 30000000000
+        }
+      },
+      "utility": 1.4
+    },
+    {
+      "capacity": 1,
+      "instanceType": "c5.large",
       "launchSpec": {
         "BlockDeviceMappings": [
           {
@@ -122,19 +148,19 @@
       "secrets": {},
       "userData": {
         "capacityManagement": {
-          "diskspaceThreshold": 50000000000
+          "diskspaceThreshold": 30000000000
         }
       },
       "utility": 1
     }
   ],
-  "lastModified": "2019-09-10T17:01:04.961Z",
+  "lastModified": "2019-09-10T17:01:02.570Z",
   "launchSpec": {},
-  "maxCapacity": 1000,
+  "maxCapacity": 10,
   "maxPrice": 8,
   "minCapacity": 0,
   "minPrice": 8,
-  "owner": "Firefox CI",
+  "owner": "release@mozilla.com",
   "regions": [
     {
       "launchSpec": {
@@ -177,5 +203,5 @@
   "scopes": [],
   "secrets": {},
   "userData": {},
-  "workerType": "gecko-2-b-linux"
+  "workerType": "l10n-3-linux"
 }
