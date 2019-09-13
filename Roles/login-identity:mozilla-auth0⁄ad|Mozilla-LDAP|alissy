@@ -20,6 +20,7 @@
     "assume:project:taskcluster:tc-client-generator-tester",
     "assume:project:taskcluster:tutorial",
     "assume:project:taskcluster:worker-test-scopes",
+    "assume:repo:github.com/JohanLorenzo/fenix:cron:raptor",
     "assume:repo:github.com/mozilla/DeepSpeech:*",
     "assume:repo:github.com/mozilla/tensorflow:*",
     "assume:repo:hg.mozilla.org/try:*",
