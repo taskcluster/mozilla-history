@@ -272,6 +272,7 @@
     "queue:scheduler-id:garbage-level-1",
     "queue:scheduler-id:gecko-level-1",
     "queue:scheduler-id:go-test-test-scheduler",
+    "queue:scheduler-id:mobile-level-1",
     "queue:scheduler-id:taskcluster-github",
     "queue:scheduler-id:test-scheduler",
     "queue:task-group-id:test-dummy-scheduler/*",
