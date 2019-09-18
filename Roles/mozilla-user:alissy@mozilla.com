@@ -293,6 +293,7 @@
     "queue:worker-id:test-worker-group/*",
     "secrets:get:garbage/*",
     "secrets:get:project/deepspeech/*",
+    "secrets:get:project/mobile/fenix/nimbledroid",
     "secrets:get:project/releng/gecko/build/level-1/*",
     "secrets:get:project/relman/coverity",
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
