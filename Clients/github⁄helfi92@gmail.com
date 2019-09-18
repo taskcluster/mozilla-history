@@ -3,7 +3,7 @@
   "created": "2018-02-01T18:36:55.228Z",
   "deleteOnExpiration": false,
   "description": "test",
-  "disabled": false,
+  "disabled": true,
   "expandedScopes": [
     "assume:test"
   ],
