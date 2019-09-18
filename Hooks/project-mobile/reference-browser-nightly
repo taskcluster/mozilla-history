@@ -2,52 +2,12 @@
   "hookGroupId": "project-mobile",
   "hookId": "reference-browser-nightly",
   "metadata": {
-    "description": "Deprecated, replaced by https://tools.taskcluster.net/hooks/project-releng/cron-task-mozilla-mobile-reference-browser\n\nNightly builds of the reference browser.\n\nhttps://github.com/mozilla-mobile/reference-browser\n",
-    "name": "Reference Browser Nightly Builds",
+    "description": "[DEPRECATED] Please use  [project-releng/cron-task-mozilla-mobile-reference-browser/nightly](https://tools.taskcluster.net/hooks/project-releng/cron-task-mozilla-mobile-reference-browser%2Fnightly)",
+    "name": "[DEPRECATED] Reference Browser Nightly Builds",
     "owner": "skaspari@mozilla.com"
   },
   "schedule": [],
-  "task": {
-    "provisionerId": "aws-provisioner-v1",
-    "workerType": "github-worker",
-    "expires": {
-      "$fromNow": "1 year"
-    },
-    "payload": {
-      "image": "mozillamobile/android-components:1.15",
-      "features": {
-        "taskclusterProxy": true
-      },
-      "command": [
-        "/bin/bash",
-        "-cx",
-        "cd .. \u0026\u0026 git clone https://github.com/mozilla-mobile/reference-browser.git \u0026\u0026 cd reference-browser \u0026\u0026 pip install json-e GitPython PyYaml arrow \u0026\u0026 python automation/taskcluster/schedule_nightly_graph.py nightly"
-      ],
-      "env": {
-        "CRON_TASK_ID": "${taskId}"
-      },
-      "maxRunTime": 300,
-      "expires": {
-        "$fromNow": "1 year"
-      },
-      "artifacts": {}
-    },
-    "metadata": {
-      "name": "decision task",
-      "description": "Reference Browser - Nightly decision task",
-      "owner": "android-components-team@mozilla.com",
-      "source": "https://tools.taskcluster.net/hooks/project-mobile/reference-browser-nightly"
-    },
-    "schedulerId": "focus-nightly-sched",
-    "routes": [],
-    "priority": "normal",
-    "retries": 5,
-    "scopes": [
-      "assume:hook-id:project-mobile/reference-browser-nightly"
-    ],
-    "tags": {},
-    "extra": {}
-  },
+  "task": {},
   "triggerSchema": {
     "type": "object",
     "properties": {},
