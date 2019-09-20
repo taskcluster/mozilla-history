@@ -1,0 +1,61 @@
+{
+  "config": {
+    "capacityPerInstance": 1,
+    "disks": [
+      {
+        "autoDelete": true,
+        "boot": true,
+        "initializeParams": {
+          "diskSizeGb": 50,
+          "sourceImage": "projects/pmoore-dev/global/images/win2012r2-xgx5flu31uwmbabyzg68"
+        },
+        "type": "PERSISTENT"
+      }
+    ],
+    "machineType": "custom-32-29440",
+    "maxCapacity": 5,
+    "minCapacity": 1,
+    "networkInterfaces": [
+      {
+        "accessConfigs": [
+          {
+            "type": "ONE_TO_ONE_NAT"
+          }
+        ]
+      }
+    ],
+    "regions": [
+      "us-east1"
+    ],
+    "scheduling": {
+      "onHostMaintenance": "terminate"
+    },
+    "userData": {},
+    "workerConfig": {
+      "genericWorker": {
+        "config": {
+          "deploymentId": "UuZe9LfdTOih_45V_sRFuw",
+          "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+          "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+          "sentryProject": "generic-worker",
+          "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+          "workerTypeMetadata": {
+            "machine-setup": {
+              "maintainer": "pmoore@mozilla.com",
+              "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/win2012r2/userdata"
+            }
+          },
+          "wstAudience": "taskcluster-net",
+          "wstServerURL": "https://websocktunnel.tasks.build"
+        }
+      }
+    }
+  },
+  "created": "2019-09-18T09:55:21.402Z",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\n[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/win2012r2 but for GCP",
+  "emailOnError": true,
+  "lastModified": "2019-09-20T08:39:51.711Z",
+  "owner": "pmoore@mozilla.com",
+  "providerId": "google",
+  "workerPoolId": "pmoore-test/win2012r2"
+}

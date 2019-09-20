@@ -1,0 +1,79 @@
+{
+  "config": {
+    "capacityPerInstance": 1,
+    "disks": [
+      {
+        "autoDelete": true,
+        "boot": true,
+        "initializeParams": {
+          "diskSizeGb": 50,
+          "sourceImage": "projects/windows-cloud/global/images/family/windows-2012-r2"
+        },
+        "type": "PERSISTENT"
+      },
+      {
+        "autoDelete": true,
+        "initializeParams": {
+          "diskSizeGb": 120
+        },
+        "type": "PERSISTENT"
+      }
+    ],
+    "machineType": "n1-highcpu-32",
+    "maxCapacity": 16,
+    "minCapacity": 0,
+    "networkInterfaces": [
+      {
+        "accessConfigs": [
+          {
+            "type": "ONE_TO_ONE_NAT"
+          }
+        ]
+      }
+    ],
+    "regions": [
+      "us-central1",
+      "us-east1",
+      "us-east4",
+      "us-west1"
+    ],
+    "scheduling": {
+      "onHostMaintenance": "terminate"
+    },
+    "userData": {},
+    "workerConfig": {
+      "genericWorker": {
+        "config": {
+          "deploymentId": "gamma",
+          "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+          "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+          "sentryProject": "generic-worker",
+          "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+          "workerTypeMetadata": {
+            "machine-setup": {
+              "maintainer": "relops@mozilla.com",
+              "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+            }
+          },
+          "wstAudience": "taskcluster-net",
+          "wstServerURL": "https://websocktunnel.tasks.build"
+        }
+      },
+      "openCloudConfig": {
+        "workerType": "gecko-3-b-win2012-gamma",
+        "source": {
+          "Organisation": "mozilla-releng",
+          "Repository": "OpenCloudConfig",
+          "Revision": "gamma"
+        }
+      }
+    }
+  },
+  "created": "2019-09-19T15:15:38.717Z",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\ngecko builder for scm level 3 on gcp",
+  "emailOnError": true,
+  "lastModified": "2019-09-20T08:39:59.728Z",
+  "owner": "relops@mozilla.com",
+  "providerId": "gecko-3",
+  "workerPoolId": "gecko-3/win2012-gamma"
+}
