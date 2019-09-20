@@ -16,6 +16,7 @@ import (
 	"github.com/taskcluster/taskcluster-client-go/tcawsprovisioner"
 	"github.com/taskcluster/taskcluster-client-go/tchooks"
 	"github.com/taskcluster/taskcluster-client-go/tcsecrets"
+	"github.com/taskcluster/taskcluster-client-go/tcworkermanager"
 )
 
 var (
@@ -47,6 +48,7 @@ func main() {
 	wp.AddWork(FetchWorkerTypes)
 	wp.AddWork(FetchRoles)
 	wp.AddWork(FetchClients)
+	wp.AddWork(FetchWorkerPools)
 	// https://bugzil.la/1572135 - ** don't ** log hashed secrets
 	// Note, secrets are json blobs rather than plain strings, so rainbow table
 	// attacks[1] are likely to be ineffective, but better to be safe than
@@ -220,6 +222,29 @@ func FetchSecrets(context *workerpool.SubmitterContext) {
 			}(secretName)
 		}
 		continuationToken = secretsList.ContinuationToken
+		if continuationToken == "" {
+			break
+		}
+	}
+}
+
+func FetchWorkerPools(context *workerpool.SubmitterContext) {
+	EmptyDirectory("WorkerPools")
+	workermanager := tcworkermanager.NewFromEnv()
+	continuationToken := ""
+	for {
+		workerPools, err := workermanager.ListWorkerPools(continuationToken, "")
+		if err != nil {
+			panic(err)
+		}
+		for _, workerPool := range workerPools.WorkerPools {
+			context.RequestChannel <- WriteEntityToFileAsJSON(
+				workerPool,
+				filepath.Join("WorkerPools", FilenameEscape(workerPool.WorkerPoolID)),
+				"Fetched worker pool "+workerPool.WorkerPoolID,
+			)
+		}
+		continuationToken = workerPools.ContinuationToken
 		if continuationToken == "" {
 			break
 		}
