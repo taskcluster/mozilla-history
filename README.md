@@ -41,4 +41,4 @@ export TASKCLUSTER_ROOT_URL='https://taskcluster.net'
 mozilla-history
 ```
 
-This will populate subdirectories `AWSWorkerTypes`, `Clients`, `Hooks`, 'Roles' and `WorkerPools` of the current directory.
+This will populate subdirectories `AWSWorkerTypes`, `Clients`, `Hooks`, `Roles` and `WorkerPools` of the current directory.
