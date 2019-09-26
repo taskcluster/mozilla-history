@@ -7,7 +7,9 @@
     "name": "project-releng/cron-task-mozilla-mobile-android-components",
     "owner": "taskcluster-notifications@mozilla.com"
   },
-  "schedule": [],
+  "schedule": [
+    "0 0,15,30,45 * * * *"
+  ],
   "task": {
     "provisionerId": "aws-provisioner-v1",
     "workerType": "mobile-3-decision",
@@ -18,7 +20,12 @@
     "expires": {
       "$fromNow": "7 days"
     },
-    "routes": [],
+    "routes": [
+      "notify.email.ciduty+failedcron@mozilla.com.on-failed",
+      "notify.email.ciduty+exceptioncron@mozilla.com.on-exception",
+      "notify.email.sheriffs+failedcron@mozilla.org.on-failed",
+      "notify.email.sheriffs+exceptioncron@mozilla.org.on-exception"
+    ],
     "scopes": [
       "assume:hook-id:project-releng/cron-task-mozilla-mobile-android-components"
     ],
