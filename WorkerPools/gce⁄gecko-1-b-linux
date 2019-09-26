@@ -1,20 +1,20 @@
 {
   "config": {
-    "minCapacity": 1,
-    "maxCapacity": 1,
+    "minCapacity": 0,
+    "maxCapacity": 20,
     "capacityPerInstance": 1,
     "disks": [
       {
         "autoDelete": true,
         "boot": true,
         "initializeParams": {
-          "diskSizeGb": 50,
+          "diskSizeGb": 100,
           "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-09-25t19-53-35z"
         },
         "type": "PERSISTENT"
       }
     ],
-    "machineType": "custom-32-29440",
+    "machineType": "custom-32-36864",
     "networkInterfaces": [
       {
         "accessConfigs": [
@@ -25,18 +25,24 @@
       }
     ],
     "regions": [
-      "us-west1"
+      "us-west1",
+      "us-east1",
+      "us-east4"
     ],
     "scheduling": {
       "onHostMaintenance": "terminate"
     },
-    "userData": {}
+    "workerConfig": {
+      "shutdown": {
+        "enabled": true
+      }
+    }
   },
-  "created": "2019-09-24T09:14:31.846Z",
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nSame as aws-provisioner-v1/win2012r2 but for GCP",
+  "created": "2019-09-25T20:47:45.537Z",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nWorker for Firefox automation.",
   "emailOnError": true,
-  "lastModified": "2019-09-25T20:47:46.972Z",
-  "owner": "mcrabill@mozilla.com",
-  "providerId": "google",
-  "workerPoolId": "monopacker/gecko-1-test-gcp"
+  "lastModified": "2019-09-25T22:54:19.361Z",
+  "owner": "bstack@mozilla.com",
+  "providerId": "gecko-1",
+  "workerPoolId": "gce/gecko-1-b-linux"
 }
