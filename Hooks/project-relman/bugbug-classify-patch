@@ -35,6 +35,10 @@
           "path": "/importances.json",
           "type": "file"
         },
+        "public/method_level.json": {
+          "path": "/method_level.json",
+          "type": "file"
+        },
         "public/probs.json": {
           "path": "/probs.json",
           "type": "file"
@@ -47,7 +51,9 @@
       "command": [
         "bugbug-classify-commit",
         "/cache",
-        "${payload['DIFF_ID']}"
+        "${payload['DIFF_ID']}",
+        "MethodDefectPredictor",
+        "gecko-dev"
       ],
       "env": {
         "$merge": [
@@ -55,14 +61,14 @@
             "TC_SECRET_ID": "project/relman/bugbug/production"
           },
           {
-            "TAG": "v0.0.114"
+            "TAG": "v0.0.115"
           }
         ]
       },
       "features": {
         "taskclusterProxy": true
       },
-      "image": "mozilla/bugbug-commit-retrieval:v0.0.114",
+      "image": "mozilla/bugbug-commit-retrieval:v0.0.115",
       "maxRunTime": 7200
     },
     "priority": "normal",
