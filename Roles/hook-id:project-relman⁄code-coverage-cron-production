@@ -1,17 +1,12 @@
 {
-  "created": "2019-07-12T13:45:27.802Z",
-  "description": "Scopes needed to deploy code-coverage in production",
+  "created": "2019-10-03T08:18:03.308Z",
+  "description": "Role assigned to code coverage tasks triggered by the hook schedule.\n",
   "expandedScopes": [
     "assume:hook-id:project-relman/code-coverage-cron-production",
-    "assume:hook-id:project-relman/code-coverage-repo-production",
-    "assume:project:relman:code-coverage/deploy/production",
     "assume:project:taskcluster:mozilla-github-repository",
     "docker-worker:cache:code-coverage-bot-production",
-    "hooks:modify-hook:project-relman/code-coverage-cron-production",
-    "hooks:modify-hook:project-relman/code-coverage-repo-production",
     "index:insert-task:project.releng.services.project.production.code_coverage_bot.*",
     "index:insert-task:project.relman.code-coverage.production.cron.*",
-    "index:insert-task:project.relman.code-coverage.production.repo.*",
     "notify:email:*",
     "notify:irc-channel:*",
     "notify:irc-user:*",
@@ -27,16 +22,20 @@
     "queue:route:notify.irc-user.*",
     "queue:scheduler-id:-",
     "queue:scheduler-id:taskcluster-github",
-    "secrets:get:project/relman/code-coverage/deploy-production",
     "secrets:get:project/relman/code-coverage/runtime-production"
   ],
-  "lastModified": "2019-10-03T08:16:00.386Z",
-  "roleId": "project:relman:code-coverage/deploy/production",
+  "lastModified": "2019-10-03T08:18:03.308Z",
+  "roleId": "hook-id:project-relman/code-coverage-cron-production",
   "scopes": [
-    "assume:hook-id:project-relman/code-coverage-cron-production",
-    "assume:hook-id:project-relman/code-coverage-repo-production",
-    "hooks:modify-hook:project-relman/code-coverage-cron-production",
-    "hooks:modify-hook:project-relman/code-coverage-repo-production",
-    "secrets:get:project/relman/code-coverage/deploy-production"
+    "assume:project:taskcluster:mozilla-github-repository",
+    "docker-worker:cache:code-coverage-bot-production",
+    "index:insert-task:project.releng.services.project.production.code_coverage_bot.*",
+    "index:insert-task:project.relman.code-coverage.production.cron.*",
+    "notify:email:*",
+    "queue:create-task:aws-provisioner-v1/releng-svc-memory",
+    "queue:create-task:highest:aws-provisioner-v1/releng-svc-memory",
+    "queue:route:notify.email.*",
+    "queue:scheduler-id:-",
+    "secrets:get:project/relman/code-coverage/runtime-production"
   ]
 }

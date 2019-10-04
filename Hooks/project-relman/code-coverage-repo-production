@@ -1,27 +1,21 @@
 {
   "hookGroupId": "project-relman",
-  "hookId": "code-coverage-production",
+  "hookId": "code-coverage-repo-production",
   "metadata": {
     "description": "Automatically build code coverage reports",
     "emailOnError": true,
     "name": "Code coverage hook (production)",
     "owner": "mcastelluccio@mozilla.com"
   },
-  "schedule": [
-    "0 0 0 * * *"
-  ],
+  "schedule": [],
   "task": {
     "$merge": [
       {
-        "$if": "firedBy == 'triggerHook'",
+        "$if": "'taskGroupId' in payload",
         "else": {},
         "then": {
-          "$if": "'taskGroupId' in payload",
-          "else": {},
-          "then": {
-            "taskGroupId": {
-              "$eval": "payload.taskGroupId"
-            }
+          "taskGroupId": {
+            "$eval": "payload.taskGroupId"
           }
         }
       },
@@ -39,14 +33,10 @@
         "metadata": {
           "description": "",
           "name": {
-            "$if": "firedBy == 'triggerHook'",
-            "else": "Code Coverage aggregation task (production)",
+            "$if": "'taskName' in payload",
+            "else": "Code Coverage aggregation task - repo (production)",
             "then": {
-              "$if": "'taskName' in payload",
-              "else": "Code Coverage aggregation task (production)",
-              "then": {
-                "$eval": "payload.taskName"
-              }
+              "$eval": "payload.taskName"
             }
           },
           "owner": "mcastelluccio@mozilla.com",
@@ -54,16 +44,11 @@
         },
         "payload": {
           "artifacts": {
-            "public/chunk_mapping.tar.xz": {
-              "path": "/chunk_mapping.tar.xz",
-              "type": "file"
-            },
-            "public/per_chunk_mapping.tar.xz": {
-              "path": "/per_chunk_mapping.tar.xz",
-              "type": "file"
-            },
-            "public/zero_coverage_report.json": {
-              "path": "/zero_coverage_report.json",
+            "public/code-coverage-report.json": {
+              "expires": {
+                "$fromNow": "2 weeks"
+              },
+              "path": "/build/ccov-reports/all.all.json",
               "type": "file"
             }
           },
@@ -72,23 +57,21 @@
           },
           "capabilities": {},
           "command": [
-            "code-coverage-bot",
+            "code-coverage-repo",
             "--taskcluster-secret",
             "project/relman/code-coverage/runtime-production",
             "--cache-root",
-            "/cache"
+            "/cache",
+            "--working-dir",
+            "/build"
           ],
           "env": {
-            "$if": "firedBy == 'triggerHook'",
-            "else": {},
-            "then": {
-              "$eval": "payload"
-            }
+            "$eval": "payload"
           },
           "features": {
             "taskclusterProxy": true
           },
-          "image": "mozilla/code-coverage:bot-648b137017014a4de7fd98164eb5ef6594b7fb59",
+          "image": "mozilla/code-coverage:bot-c0562b7d115c3dc9828e3f9f4792f5795233044f",
           "maxRunTime": 14400
         },
         "priority": "normal",
@@ -100,7 +83,7 @@
           "secrets:get:project/relman/code-coverage/runtime-production",
           "notify:email:*",
           "docker-worker:cache:code-coverage-bot-production",
-          "index:insert-task:project.releng.services.project.production.code_coverage_bot.*"
+          "index:insert-task:project.relman.code-coverage.production.repo.*"
         ],
         "tags": {},
         "workerType": "releng-svc-memory"
