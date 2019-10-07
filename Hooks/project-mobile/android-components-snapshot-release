@@ -2,52 +2,12 @@
   "hookGroupId": "project-mobile",
   "hookId": "android-components-snapshot-release",
   "metadata": {
-    "description": "To be triggered by the mobile team and on a cron basis in order to generate a snapshot release of the android-components browser.",
-    "name": "Snapshot release of android-components",
+    "description": "[DEPRECATED] Use [cron-task-mozilla-mobile-android-components/snapshot](https://tools.taskcluster.net/hooks/project-releng/cron-task-mozilla-mobile-android-components%2Fsnapshot) instead",
+    "name": "[DEPRECATED] Snapshot release of android-components",
     "owner": "android-components-team@mozilla.com"
   },
   "schedule": [],
-  "task": {
-    "provisionerId": "aws-provisioner-v1",
-    "workerType": "mobile-3-decision",
-    "expires": {
-      "$fromNow": "1 year"
-    },
-    "payload": {
-      "image": "mozillamobile/android-components:1.15",
-      "features": {
-        "taskclusterProxy": true
-      },
-      "command": [
-        "/bin/bash",
-        "-cx",
-        "git fetch origin \u0026\u0026 git reset --hard origin/master \u0026\u0026 pip install json-e GitPython PyYaml \u0026\u0026 python automation/taskcluster/schedule_snapshot_release.py"
-      ],
-      "env": {
-        "CRON_TASK_ID": "${taskId}"
-      },
-      "maxRunTime": 300,
-      "expires": {
-        "$fromNow": "1 year"
-      },
-      "artifacts": {}
-    },
-    "metadata": {
-      "name": "Snapshot release of android-components",
-      "description": "Create a decision from the main repo",
-      "owner": "mtabara@mozilla.com",
-      "source": "https://tools.taskcluster.net/hooks/project-mobile/android-components-snapshot-release"
-    },
-    "schedulerId": "focus-nightly-sched",
-    "routes": [],
-    "priority": "normal",
-    "retries": 5,
-    "scopes": [
-      "assume:hook-id:project-mobile/android-components-snapshot-release"
-    ],
-    "tags": {},
-    "extra": {}
-  },
+  "task": {},
   "triggerSchema": {
     "type": "object",
     "properties": {},
