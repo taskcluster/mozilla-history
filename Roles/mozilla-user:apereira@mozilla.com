@@ -10,9 +10,11 @@
     "auth:azure-table:read-write:jungle/*",
     "project:taskcluster:tests:tc-hooks:scope/required/for/task/1",
     "queue:create-task:aws-provisioner-v1/tutorial",
+    "queue:create-task:low:built-in/*",
     "queue:create-task:no-provisioner/test-worker",
     "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
+    "queue:scheduler-id:tutorial",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"
   ],

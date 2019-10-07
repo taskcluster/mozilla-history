@@ -12,10 +12,12 @@
     "queue:create-task:aws-provisioner-v1/tutorial",
     "queue:create-task:built-in/fail",
     "queue:create-task:built-in/succeed",
+    "queue:create-task:low:built-in/*",
     "queue:get-artifact:login-identity/mozilla-auth0/ad|Mozilla-LDAP|mikokm@gmail.com/*",
     "queue:get-artifact:private/docker-worker/*",
     "queue:rerun-task:taskcluster-github/*",
     "queue:route:index.garbage.*",
+    "queue:scheduler-id:tutorial",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"
   ],

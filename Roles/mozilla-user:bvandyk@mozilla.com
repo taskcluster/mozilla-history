@@ -6,8 +6,10 @@
     "assume:project:taskcluster:tutorial",
     "queue:create-task:aws-provisioner-v1/tutorial",
     "queue:create-task:aws-provisioner-v1/win2012r2-mediatests",
+    "queue:create-task:low:built-in/*",
     "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
+    "queue:scheduler-id:tutorial",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"
   ],

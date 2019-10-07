@@ -13,6 +13,7 @@
     "queue:create-task:high:localprovisioner/kats-*",
     "queue:create-task:highest:localprovisioner/kats-*",
     "queue:create-task:localprovisioner/kats-*",
+    "queue:create-task:low:built-in/*",
     "queue:create-task:low:localprovisioner/kats-*",
     "queue:create-task:lowest:localprovisioner/kats-*",
     "queue:create-task:medium:localprovisioner/kats-*",
@@ -20,6 +21,7 @@
     "queue:create-task:very-low:localprovisioner/kats-*",
     "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
+    "queue:scheduler-id:tutorial",
     "queue:worker-id:local-worker/kats-*",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"

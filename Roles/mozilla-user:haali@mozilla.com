@@ -43,8 +43,10 @@
     "purge-cache:aws-provisioner-v1/symbol-upload:tooltool-cache",
     "queue:cancel-task:*",
     "queue:create-task:aws-provisioner-v1/tutorial",
+    "queue:create-task:low:built-in/*",
     "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
+    "queue:scheduler-id:tutorial",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"
   ],

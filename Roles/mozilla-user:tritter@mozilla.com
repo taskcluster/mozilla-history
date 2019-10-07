@@ -9,8 +9,10 @@
     "hooks:trigger-hook:project-releng/misc-third-party-library-alert-service",
     "queue:create-task:aws-provisioner-v1/gecko-t-linux-large",
     "queue:create-task:aws-provisioner-v1/tutorial",
+    "queue:create-task:low:built-in/*",
     "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
+    "queue:scheduler-id:tutorial",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"
   ],

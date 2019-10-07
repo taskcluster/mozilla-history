@@ -5,9 +5,11 @@
     "assume:mozilla-user:mikokm@gmail.com",
     "assume:project:taskcluster:tutorial",
     "queue:create-task:aws-provisioner-v1/tutorial",
+    "queue:create-task:low:built-in/*",
     "queue:get-artifact:private/docker-worker/*",
     "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
+    "queue:scheduler-id:tutorial",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"
   ],

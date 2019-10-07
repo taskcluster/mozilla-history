@@ -12,8 +12,10 @@
     "queue:create-task:aws-provisioner-v1/tutorial",
     "queue:create-task:built-in/fail",
     "queue:create-task:built-in/succeed",
+    "queue:create-task:low:built-in/*",
     "queue:get-artifact:login-identity/mozilla-auth0/oauth2|firefoxaccounts|6de766304ad44497b89bbe624c0da144|shubham.gupta2956@gmail.com/*",
     "queue:route:index.garbage.*",
+    "queue:scheduler-id:tutorial",
     "secrets:get:garbage/*",
     "secrets:set:garbage/*"
   ],
