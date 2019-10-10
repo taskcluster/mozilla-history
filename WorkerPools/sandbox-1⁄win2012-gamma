@@ -1,97 +1,2142 @@
 {
   "config": {
-    "capacityPerInstance": 1,
-    "disks": [
-      {
-        "autoDelete": true,
-        "boot": true,
-        "initializeParams": {
-          "diskSizeGb": 50,
-          "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
-        },
-        "type": "PERSISTENT"
-      },
-      {
-        "autoDelete": true,
-        "initializeParams": {
-          "diskSizeGb": 120
-        },
-        "type": "PERSISTENT"
-      }
-    ],
-    "machineType": "n1-highcpu-32",
-    "maxCapacity": 16,
     "minCapacity": 0,
-    "networkInterfaces": [
+    "maxCapacity": 16,
+    "launchConfigs": [
       {
-        "accessConfigs": [
+        "region": "asia-east1",
+        "zone": "asia-east1-a",
+        "capacityPerInstance": 1,
+        "disks": [
           {
-            "type": "ONE_TO_ONE_NAT"
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
           }
-        ]
-      }
-    ],
-    "regions": [
-      "asia-east1",
-      "asia-northeast1",
-      "asia-southeast1",
-      "europe-west1",
-      "europe-west4",
-      "us-central1",
-      "us-east1",
-      "us-east4",
-      "us-west1"
-    ],
-    "scheduling": {
-      "onHostMaintenance": "terminate",
-      "automaticRestart": false
-    },
-    "userData": {},
-    "workerConfig": {
-      "genericWorker": {
-        "config": {
-          "cachesDir": "Z:\\caches",
-          "cleanUpTaskDirs": true,
-          "deploymentId": "gamma",
-          "disableReboots": true,
-          "downloadsDir": "Z:\\downloads",
-          "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-          "idleTimeoutSecs": 3600,
-          "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-          "numberOfTasksToRun": 0,
-          "requiredDiskSpaceMegabytes": 10240,
-          "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-          "runTasksAsCurrentUser": false,
-          "sentryProject": "generic-worker",
-          "shutdownMachineOnIdle": false,
-          "shutdownMachineOnInternalError": true,
-          "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-          "taskclusterProxyPort": 80,
-          "tasksDir": "Z:\\",
-          "workerTypeMetadata": {
-            "machine-setup": {
-              "maintainer": "relops@mozilla.com",
-              "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+        ],
+        "machineType": "zones/asia-east1-a/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
             }
           },
-          "wstAudience": "taskcluster-net",
-          "wstServerURL": "https://websocktunnel.tasks.build"
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
         }
       },
-      "openCloudConfig": {
-        "workerType": "gecko-1-b-win2012-gamma",
-        "source": {
-          "Organisation": "mozilla-releng",
-          "Repository": "OpenCloudConfig",
-          "Revision": "gamma"
+      {
+        "region": "asia-east1",
+        "zone": "asia-east1-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-east1-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "asia-east1",
+        "zone": "asia-east1-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-east1-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "asia-northeast1",
+        "zone": "asia-northeast1-a",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-northeast1-a/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "asia-northeast1",
+        "zone": "asia-northeast1-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-northeast1-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "asia-northeast1",
+        "zone": "asia-northeast1-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-northeast1-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "asia-southeast1",
+        "zone": "asia-southeast1-a",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-southeast1-a/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "asia-southeast1",
+        "zone": "asia-southeast1-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-southeast1-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "asia-southeast1",
+        "zone": "asia-southeast1-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/asia-southeast1-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "europe-west1",
+        "zone": "europe-west1-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/europe-west1-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "europe-west1",
+        "zone": "europe-west1-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/europe-west1-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "europe-west1",
+        "zone": "europe-west1-d",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/europe-west1-d/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "europe-west4",
+        "zone": "europe-west4-a",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/europe-west4-a/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "europe-west4",
+        "zone": "europe-west4-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/europe-west4-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "europe-west4",
+        "zone": "europe-west4-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/europe-west4-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-central1",
+        "zone": "us-central1-a",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-central1-a/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-central1",
+        "zone": "us-central1-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-central1-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-central1",
+        "zone": "us-central1-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-central1-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-central1",
+        "zone": "us-central1-f",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-central1-f/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-east1",
+        "zone": "us-east1-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-east1-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-east1",
+        "zone": "us-east1-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-east1-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-east1",
+        "zone": "us-east1-d",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-east1-d/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-east4",
+        "zone": "us-east4-a",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-east4-a/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-east4",
+        "zone": "us-east4-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-east4-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-east4",
+        "zone": "us-east4-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-east4-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-west1",
+        "zone": "us-west1-a",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-west1-a/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-west1",
+        "zone": "us-west1-b",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-west1-b/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
+        }
+      },
+      {
+        "region": "us-west1",
+        "zone": "us-west1-c",
+        "capacityPerInstance": 1,
+        "disks": [
+          {
+            "autoDelete": true,
+            "boot": true,
+            "initializeParams": {
+              "diskSizeGb": 50,
+              "sourceImage": "projects/image-builder-242310/global/images/family/windows-server-2012r2"
+            },
+            "type": "PERSISTENT"
+          },
+          {
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 120
+            },
+            "type": "PERSISTENT"
+          }
+        ],
+        "machineType": "zones/us-west1-c/machineTypes/n1-highcpu-32",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "scheduling": {
+          "onHostMaintenance": "terminate"
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "Z:\\caches",
+              "cleanUpTaskDirs": true,
+              "deploymentId": "gamma",
+              "disableReboots": true,
+              "downloadsDir": "Z:\\downloads",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "requiredDiskSpaceMegabytes": 10240,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "sentryProject": "generic-worker",
+              "shutdownMachineOnIdle": false,
+              "shutdownMachineOnInternalError": true,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "taskclusterProxyPort": 80,
+              "tasksDir": "Z:\\",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "relops@mozilla.com",
+                  "source": "https://github.com/mozilla-releng/OpenCloudConfig/tree/gamma"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          },
+          "openCloudConfig": {
+            "workerType": "gecko-1-b-win2012-gamma",
+            "source": {
+              "Organisation": "mozilla-releng",
+              "Repository": "OpenCloudConfig",
+              "Revision": "gamma"
+            }
+          }
         }
       }
-    }
+    ]
   },
   "created": "2019-10-02T08:39:40.299Z",
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nexperimental byol gecko builder for scm level 1 on gcp",
   "emailOnError": true,
-  "lastModified": "2019-10-03T23:45:24.596Z",
+  "lastModified": "2019-10-09T21:31:14.804Z",
   "owner": "relops@mozilla.com",
   "providerId": "sandbox-1",
   "workerPoolId": "sandbox-1/win2012-gamma"
