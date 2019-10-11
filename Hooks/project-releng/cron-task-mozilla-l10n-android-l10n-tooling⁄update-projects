@@ -1,0 +1,101 @@
+{
+  "bindings": [
+    {
+      "exchange": "exchange/taskcluster-github/v1/push",
+      "routingKeyPattern": "primary.mozilla-l10n.android-l10n"
+    }
+  ],
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-l10n-android-l10n-tooling/update-projects",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-mozilla-l10n-android-l10n-tooling/update-projects",
+    "owner": "taskcluster-notifications@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "provisionerId": "aws-provisioner-v1",
+    "workerType": "l10n-3-decision",
+    "schedulerId": "l10n-level-3",
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "routes": [
+      "notify.email.ciduty+failedcron@mozilla.com.on-failed",
+      "notify.email.ciduty+exceptioncron@mozilla.com.on-exception",
+      "notify.email.sheriffs+failedcron@mozilla.org.on-failed",
+      "notify.email.sheriffs+exceptioncron@mozilla.org.on-exception"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-l10n-android-l10n-tooling/update-projects"
+    ],
+    "payload": {
+      "image": {
+        "type": "indexed-image",
+        "namespace": "taskgraph.cache.level-3.docker-images.v2.decision.latest",
+        "path": "public/image.tar.zst"
+      },
+      "env": {
+        "VCS_HEAD_REPOSITORY": "https://github.com/mozilla-l10n/android-l10n-tooling",
+        "VCS_HEAD_REF": "master",
+        "VCS_REPOSITORY_TYPE": "git",
+        "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
+        "TASKGRAPH_HEAD_REPOSITORY": "https://hg.mozilla.org/ci/taskgraph",
+        "TASKGRAPH_HEAD_REF": "default",
+        "TASKGRAPH_REPOSITORY_TYPE": "hg",
+        "REPOSITORIES": "{\"taskgraph\":\"Taskgraph\",\"vcs\":\"Project\"}",
+        "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
+        "TASKCLUSTER_ROOT_URL": "https://taskcluster.net"
+      },
+      "cache": {
+        "l10n-level-3-checkouts-sparse-v2": "/builds/worker/checkouts"
+      },
+      "features": {
+        "taskclusterProxy": true,
+        "chainOfTrust": true
+      },
+      "maxRunTime": 1800,
+      "command": [
+        "run-task",
+        "--vcs-checkout=/builds/worker/checkouts/src",
+        "--taskgraph-checkout=/builds/worker/checkouts/taskgraph",
+        "--task-cwd=/builds/worker/checkouts/src",
+        "--",
+        "bash",
+        "-cx",
+        "PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph cron --head-repository=https://github.com/mozilla-l10n/android-l10n-tooling --head-ref=\"$VCS_HEAD_REF\" --repository-type=\"$VCS_REPOSITORY_TYPE\" --project=android-l10n-tooling --level=3 --root=. --force-run=update-projects"
+      ],
+      "retry-exit-status": [
+        72
+      ],
+      "purge-caches-exit-status": [
+        72
+      ],
+      "artifacts": {
+        "public": {
+          "type": "directory",
+          "path": "/builds/worker/artifacts"
+        }
+      }
+    },
+    "metadata": {
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-l10n-android-l10n-tooling/update-projects",
+      "description": "See https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-l10n-android-l10n-tooling/update-projects",
+      "name": "Cron task for https://github.com/mozilla-l10n/android-l10n-tooling"
+    },
+    "priority": "normal",
+    "retries": 5,
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": true
+  }
+}
