@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-release-promotion/7858dc059f",
+  "hookId": "in-tree-action-1-generic/63888805fc",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 7858dc059f.\n\nFor project(s) aki-xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 63888805fc.\n\nFor project(s) aki-xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-release-promotion/7858dc059f",
+    "name": "project-xpi/in-tree-action-1-generic/63888805fc",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "cb_name": "release-promotion"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "cb_name": "${payload.decision.action.cb_name}"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -46,7 +46,7 @@
       "$let": {
         "taskgraph": {
           "branch": "taskgraph-try",
-          "revision": "2399940112c825013225f6a384577c31c66b2f38"
+          "revision": "6f7243893e1b4a25501135b115bd0ddd3c07a5a7"
         },
         "trustDomain": "xpi"
       },
@@ -219,6 +219,13 @@
                     "$if": "tasks_for != \"github-pull-request\"",
                     "then": [
                       "tc-treeherder.v2.${project}.${head_sha}"
+                    ],
+                    "else": []
+                  },
+                  {
+                    "$if": "tasks_for == \"github-push\"",
+                    "then": [
+                      "index.${trustDomain}.v2.${project}.revision.${event.ref}.taskgraph.decision"
                     ],
                     "else": []
                   }
