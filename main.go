@@ -95,6 +95,9 @@ func WriteEntityToFileAsJSON(entity interface{}, path string, result workerpool.
 }
 
 func FetchWorkerTypes(context *workerpool.SubmitterContext) {
+	if os.Getenv("TASKCLUSTER_ROOT_URL") != "https://taskcluster.net" {
+		return
+	}
 	EmptyDirectory("AWSWorkerTypes")
 	prov := tcawsprovisioner.NewFromEnv()
 	allWorkerTypes, err := prov.ListWorkerTypes()
