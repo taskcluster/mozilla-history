@@ -23,7 +23,7 @@ Rather than creating nested subdirectories, this conversion avoids directory nam
 
 The `mozilla-history` command is run every 5 mins from a [crontab entry on
 @petemoore's
-iMac](https://github.com/petemoore/myscrapbook/blob/d38653a238112fbdc322fc54c755dd54547d176d/sync-mozilla-history.sh#L8-L9),
+iMac](https://github.com/petemoore/myscrapbook/blob/d785abaec85771728d026744650aec97ef723108/sync-mozilla-history.sh#L8-L9),
 with the results committed to this repository and pushed to github. The
 mozilla-history command takes around 4-5 seconds to run.
 
