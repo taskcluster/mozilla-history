@@ -7,6 +7,8 @@ Taskcluster history from https://taskcluster.net deployment for:
 * [Roles](/Roles)
 * [Worker Pools](/WorkerPools)
 
+For https://community-tc.services.mozilla.com history, please see [community-history](https://github.com/taskcluster/community-history).
+
 ## Entity filenames
 
 The files are named after the entities themselves, except for the following character conversions:
