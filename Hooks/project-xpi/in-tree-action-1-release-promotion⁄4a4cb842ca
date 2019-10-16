@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-release-promotion/54ef9ac2b3",
+  "hookId": "in-tree-action-1-release-promotion/4a4cb842ca",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 54ef9ac2b3.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 4a4cb842ca.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-release-promotion/54ef9ac2b3",
+    "name": "project-xpi/in-tree-action-1-release-promotion/4a4cb842ca",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -350,7 +350,7 @@
                     },
                     "in": {
                       "$if": "tasks_for == \"action\"",
-                      "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n",
+                      "then": "PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph \u0026\u0026 cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n",
                       "else": "PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$XPI_BASE_REPOSITORY\" --head-repository=\"$XPI_HEAD_REPOSITORY\" --head-ref=\"$XPI_HEAD_REF\" --head-rev=\"$XPI_HEAD_REV\" --repository-type=\"$XPI_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n"
                     }
                   }
