@@ -1,22 +1,25 @@
 {
-  "created": "2019-10-14T17:50:46.771Z",
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes associated with cron tasks for project `xpi-manifest`",
+  "created": "2019-10-16T01:58:07.076Z",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes in this role are defined in [ci-configuration/grants.yml](https://hg.mozilla.org/ci/ci-configuration/file/tip/grants.yml).",
   "expandedScopes": [
-    "assume:hook-id:project-releng/cron-task-escapewindow-xpi-manifest",
     "assume:project:taskcluster:mozilla-github-repository",
-    "assume:repo:github.com/escapewindow/xpi-manifest:cron:*",
+    "assume:repo:github.com/escapewindow/xpi-manifest:branch:*",
     "docker-worker:cache:xpi-level-1-*",
     "generic-worker:cache:xpi-level-1-*",
+    "in-tree:hook-action:project-xpi/in-tree-action-1-*",
     "index:insert-task:xpi.cache.level-1.*",
     "index:insert-task:xpi.v2.xpi-manifest.*",
     "notify:email:*",
     "notify:irc-channel:*",
     "notify:irc-user:*",
+    "project:xpi:releng:signing:cert:dep-signing",
     "queue:cancel-task:xpi-level-1/*",
     "queue:create-task:aws-provisioner-v1/github-worker",
     "queue:create-task:aws-provisioner-v1/github-worker-windows",
     "queue:create-task:aws-provisioner-v1/win2012r2",
     "queue:create-task:highest:aws-provisioner-v1/xpi-1-*",
+    "queue:create-task:highest:scriptworker-k8s/xpi-t-*",
+    "queue:create-task:highest:scriptworker-prov-v1/xpi-t-*",
     "queue:create-task:low:aws-provisioner-v1/xpi-1-*",
     "queue:create-task:low:aws-provisioner-v1/xpi-misc",
     "queue:create-task:low:aws-provisioner-v1/xpi-t-*",
@@ -53,9 +56,18 @@
     "secrets:get:project/xpi/xpi-github-clone-ssh",
     "secrets:set:garbage/*"
   ],
-  "lastModified": "2019-10-16T00:56:26.736Z",
-  "roleId": "hook-id:project-releng/cron-task-escapewindow-xpi-manifest",
+  "lastModified": "2019-10-16T01:58:07.076Z",
+  "roleId": "repo:github.com/escapewindow/xpi-manifest:branch:*",
   "scopes": [
-    "assume:repo:github.com/escapewindow/xpi-manifest:cron:*"
+    "docker-worker:cache:xpi-level-1-*",
+    "queue:create-task:highest:aws-provisioner-v1/xpi-1-*",
+    "queue:create-task:low:built-in/*",
+    "queue:route:checks",
+    "queue:route:index.project.xpi.v2.xpi-manifest.*",
+    "queue:route:index.project.xpi.xpi-manifest.cache.level-1.*",
+    "queue:route:notify.email.*",
+    "queue:route:tc-treeherder.v2.xpi-manifest.*",
+    "queue:scheduler-id:xpi-level-1",
+    "secrets:get:project/xpi/xpi-github-clone-ssh"
   ]
 }
