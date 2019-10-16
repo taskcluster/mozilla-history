@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-generic/e9dfdd2224",
+  "hookId": "in-tree-action-1-release-promotion/54ef9ac2b3",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 1, with `.taskcluster.yml` hash e9dfdd2224.\n\nFor project(s) aki-xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 54ef9ac2b3.\n\nFor project(s) aki-xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-generic/e9dfdd2224",
+    "name": "project-xpi/in-tree-action-1-release-promotion/54ef9ac2b3",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "cb_name": "${payload.decision.action.cb_name}"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "cb_name": "release-promotion"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -46,7 +46,7 @@
       "$let": {
         "taskgraph": {
           "branch": "taskgraph-try",
-          "revision": "1d286d3e73bb34a488336648d7441817cc3b8d4e"
+          "revision": "6e2c17d140f9c654bcd23f074395e5e6d52a96e7"
         },
         "trustDomain": "xpi"
       },
@@ -109,8 +109,12 @@
                 "$if": "tasks_for == \"github-push\"",
                 "then": "${event.ref}",
                 "else": {
-                  "$if": "tasks_for in [\"cron\", \"action\"]",
-                  "then": "${push.branch}"
+                  "$if": "tasks_for == \"cron\"",
+                  "then": "${push.branch}",
+                  "else": {
+                    "$if": "tasks_for == \"action\"",
+                    "then": "refs/heads/master"
+                  }
                 }
               }
             },
