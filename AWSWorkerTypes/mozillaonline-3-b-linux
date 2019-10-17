@@ -105,58 +105,30 @@
   "instanceTypes": [
     {
       "capacity": 1,
-      "instanceType": "c5.4xlarge",
-      "launchSpec": {},
-      "scopes": [],
-      "secrets": {},
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
+      "instanceType": "c5d.4xlarge",
+      "launchSpec": {
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvdb",
+            "Ebs": {
+              "DeleteOnTermination": true,
+              "VolumeSize": 120,
+              "VolumeType": "gp2"
+            }
+          }
+        ]
       },
-      "utility": 1.1
-    },
-    {
-      "capacity": 1,
-      "instanceType": "m5.4xlarge",
-      "launchSpec": {},
       "scopes": [],
       "secrets": {},
       "userData": {
         "capacityManagement": {
-          "diskspaceThreshold": 30000000000
-        }
-      },
-      "utility": 1.1
-    },
-    {
-      "capacity": 1,
-      "instanceType": "c4.4xlarge",
-      "launchSpec": {},
-      "scopes": [],
-      "secrets": {},
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 20000000000
-        }
-      },
-      "utility": 1
-    },
-    {
-      "capacity": 1,
-      "instanceType": "m4.4xlarge",
-      "launchSpec": {},
-      "scopes": [],
-      "secrets": {},
-      "userData": {
-        "capacityManagement": {
-          "diskspaceThreshold": 20000000000
+          "diskspaceThreshold": 50000000000
         }
       },
       "utility": 1
     }
   ],
-  "lastModified": "2019-10-01T12:26:02.910Z",
+  "lastModified": "2019-10-17T16:46:08.843Z",
   "launchSpec": {},
   "maxCapacity": 10,
   "maxPrice": 8,
@@ -166,20 +138,10 @@
   "regions": [
     {
       "launchSpec": {
-        "BlockDeviceMappings": [
-          {
-            "DeviceName": "/dev/xvdb",
-            "Ebs": {
-              "DeleteOnTermination": true,
-              "VolumeSize": 120,
-              "VolumeType": "gp2"
-            }
-          }
-        ],
+        "ImageId": "ami-01b7c8be957597c05",
         "SecurityGroupIds": [
           "sg-12cd3762"
-        ],
-        "ImageId": "ami-01b7c8be957597c05"
+        ]
       },
       "region": "us-east-1",
       "scopes": [],
@@ -188,20 +150,10 @@
     },
     {
       "launchSpec": {
-        "BlockDeviceMappings": [
-          {
-            "DeviceName": "/dev/xvdb",
-            "Ebs": {
-              "DeleteOnTermination": true,
-              "VolumeSize": 120,
-              "VolumeType": "gp2"
-            }
-          }
-        ],
+        "ImageId": "ami-0aa98a764dc943464",
         "SecurityGroupIds": [
           "sg-caed26ac"
-        ],
-        "ImageId": "ami-0aa98a764dc943464"
+        ]
       },
       "region": "us-west-1",
       "scopes": [],
@@ -210,20 +162,10 @@
     },
     {
       "launchSpec": {
-        "BlockDeviceMappings": [
-          {
-            "DeviceName": "/dev/xvdb",
-            "Ebs": {
-              "DeleteOnTermination": true,
-              "VolumeSize": 120,
-              "VolumeType": "gp2"
-            }
-          }
-        ],
+        "ImageId": "ami-0a6d90c9d398491a3",
         "SecurityGroupIds": [
           "sg-2728435d"
-        ],
-        "ImageId": "ami-0a6d90c9d398491a3"
+        ]
       },
       "region": "us-west-2",
       "scopes": [],
