@@ -1,0 +1,55 @@
+{
+  "config": {
+    "minCapacity": 0,
+    "maxCapacity": 10,
+    "launchConfigs": [
+      {
+        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0831813e2a02d98b0",
+          "Placement": {
+            "AvailabilityZone": "us-east-1a"
+          },
+          "SecurityGroups": [
+            "ssh-only",
+            "rdp-only"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/d68f1153a2199679db5bbbbaae3d4ab0884d21a0/worker_types/gwci-linux-beta/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "created": "2019-10-21T12:33:01.850Z",
+  "description": "generic-worker Linux simple engine worker for generic-worker CI",
+  "emailOnError": true,
+  "lastModified": "2019-10-21T12:33:01.850Z",
+  "owner": "pmoore@mozilla.com",
+  "providerId": "aws",
+  "workerPoolId": "pmoore-test/gwci-linux-beta"
+}
