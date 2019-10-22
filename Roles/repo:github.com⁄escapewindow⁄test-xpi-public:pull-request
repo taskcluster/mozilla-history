@@ -1,12 +1,11 @@
 {
-  "created": "2019-10-22T01:32:56.522Z",
+  "created": "2019-10-22T01:46:27.441Z",
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes in this role are defined in [ci-configuration/grants.yml](https://hg.mozilla.org/ci/ci-configuration/file/tip/grants.yml).",
   "expandedScopes": [
     "assume:project:taskcluster:mozilla-github-repository",
-    "assume:repo:github.com/escapewindow/test-xpi-public:branch:master",
+    "assume:repo:github.com/escapewindow/test-xpi-public:pull-request",
     "docker-worker:cache:xpi-level-1-*",
     "generic-worker:cache:xpi-level-1-*",
-    "in-tree:hook-action:project-xpi/in-tree-action-1-*",
     "index:insert-task:xpi.cache.level-1.*",
     "index:insert-task:xpi.v2.test-xpi-public.*",
     "notify:email:*",
@@ -54,9 +53,18 @@
     "secrets:get:project/xpi/xpi-github-clone-ssh",
     "secrets:set:garbage/*"
   ],
-  "lastModified": "2019-10-22T01:32:56.522Z",
-  "roleId": "repo:github.com/escapewindow/test-xpi-public:branch:master",
+  "lastModified": "2019-10-22T01:46:27.441Z",
+  "roleId": "repo:github.com/escapewindow/test-xpi-public:pull-request",
   "scopes": [
-    "in-tree:hook-action:project-xpi/in-tree-action-1-*"
+    "docker-worker:cache:xpi-level-1-*",
+    "queue:create-task:highest:aws-provisioner-v1/xpi-1-*",
+    "queue:create-task:low:built-in/*",
+    "queue:route:checks",
+    "queue:route:index.xpi.v2.test-xpi-public.*",
+    "queue:route:index.xpi.xpi-manifest.cache.level-1.*",
+    "queue:route:notify.email.*",
+    "queue:route:tc-treeherder.v2.test-xpi-public.*",
+    "queue:scheduler-id:xpi-level-1",
+    "secrets:get:project/xpi/xpi-github-clone-ssh"
   ]
 }
