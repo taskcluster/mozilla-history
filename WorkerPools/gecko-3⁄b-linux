@@ -1,21 +1,31 @@
 {
   "config": {
-    "minCapacity": 1,
-    "maxCapacity": 30,
+    "minCapacity": 0,
+    "maxCapacity": 1000,
     "launchConfigs": [
       {
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
           "SubnetId": "subnet-566e060c",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -25,9 +35,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -35,15 +44,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
           "SubnetId": "subnet-566e060c",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "m5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -53,9 +62,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -63,15 +71,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
           "SubnetId": "subnet-566e060c",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -91,7 +99,6 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -101,15 +108,25 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
           "SubnetId": "subnet-f2c93496",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -119,9 +136,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -129,15 +145,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
           "SubnetId": "subnet-f2c93496",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "m5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -147,9 +163,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -157,15 +172,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
           "SubnetId": "subnet-f2c93496",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -185,7 +200,6 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -195,71 +209,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1c"
           },
           "SubnetId": "subnet-c52454e9",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5d.xlarge",
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          },
-          "dindImage": "taskcluster/dind-service:v4.1",
-          "capacityManagement": {
-            "diskspaceThreshold": 30000000000
-          }
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-east-1",
-        "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
-          "Placement": {
-            "AvailabilityZone": "us-east-1c"
-          },
-          "SubnetId": "subnet-c52454e9",
-          "SecurityGroupIds": [
-            "sg-12cd3762"
-          ],
-          "InstanceType": "m5d.xlarge",
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          },
-          "dindImage": "taskcluster/dind-service:v4.1",
-          "capacityManagement": {
-            "diskspaceThreshold": 30000000000
-          }
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-east-1",
-        "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
-          "Placement": {
-            "AvailabilityZone": "us-east-1c"
-          },
-          "SubnetId": "subnet-c52454e9",
-          "SecurityGroupIds": [
-            "sg-12cd3762"
-          ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -279,9 +237,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -289,15 +246,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
-            "AvailabilityZone": "us-east-1d"
+            "AvailabilityZone": "us-east-1c"
           },
-          "SubnetId": "subnet-e7e6ccaf",
+          "SubnetId": "subnet-c52454e9",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -307,9 +264,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -317,43 +273,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
-            "AvailabilityZone": "us-east-1d"
+            "AvailabilityZone": "us-east-1c"
           },
-          "SubnetId": "subnet-e7e6ccaf",
+          "SubnetId": "subnet-c52454e9",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "m5d.xlarge",
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          },
-          "dindImage": "taskcluster/dind-service:v4.1",
-          "capacityManagement": {
-            "diskspaceThreshold": 30000000000
-          }
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-east-1",
-        "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
-          "Placement": {
-            "AvailabilityZone": "us-east-1d"
-          },
-          "SubnetId": "subnet-e7e6ccaf",
-          "SecurityGroupIds": [
-            "sg-12cd3762"
-          ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -373,7 +301,6 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -383,15 +310,126 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "SubnetId": "subnet-e7e6ccaf",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 50000000000
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "SubnetId": "subnet-e7e6ccaf",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "InstanceType": "c5d.4xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 50000000000
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "SubnetId": "subnet-e7e6ccaf",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "InstanceType": "m5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 30000000000
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1e"
           },
           "SubnetId": "subnet-deb5a8e2",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -401,9 +439,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -411,25 +448,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1e"
           },
           "SubnetId": "subnet-deb5a8e2",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5.xlarge",
-          "BlockDeviceMappings": [
-            {
-              "DeviceName": "/dev/xvdb",
-              "Ebs": {
-                "DeleteOnTermination": true,
-                "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
-            }
-          ],
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -439,9 +466,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -449,15 +475,25 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
           "SubnetId": "subnet-7f720d73",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -467,9 +503,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -477,15 +512,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
           "SubnetId": "subnet-7f720d73",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "m5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -495,9 +530,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -505,15 +539,15 @@
         "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-02a87fa1f6a4d9d2c",
+          "ImageId": "ami-06ecdf5b0d39fd1d3",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
           "SubnetId": "subnet-7f720d73",
           "SecurityGroupIds": [
-            "sg-12cd3762"
+            "sg-7aca300a"
           ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -533,7 +567,6 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -543,15 +576,25 @@
         "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-05bf92a940dae090d",
+          "ImageId": "ami-0094ac4ee041f24e7",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
           "SubnetId": "subnet-7641632e",
           "SecurityGroupIds": [
-            "sg-caed26ac"
+            "sg-5ce02b3a"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -561,9 +604,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -571,15 +613,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-05bf92a940dae090d",
+          "ImageId": "ami-0094ac4ee041f24e7",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
           "SubnetId": "subnet-7641632e",
           "SecurityGroupIds": [
-            "sg-caed26ac"
+            "sg-5ce02b3a"
           ],
-          "InstanceType": "m5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -589,9 +631,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -599,15 +640,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-05bf92a940dae090d",
+          "ImageId": "ami-0094ac4ee041f24e7",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
           "SubnetId": "subnet-7641632e",
           "SecurityGroupIds": [
-            "sg-caed26ac"
+            "sg-5ce02b3a"
           ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -627,7 +668,6 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -637,15 +677,25 @@
         "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-05bf92a940dae090d",
+          "ImageId": "ami-0094ac4ee041f24e7",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
           "SubnetId": "subnet-48a9b82c",
           "SecurityGroupIds": [
-            "sg-caed26ac"
+            "sg-5ce02b3a"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -655,9 +705,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -665,15 +714,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-05bf92a940dae090d",
+          "ImageId": "ami-0094ac4ee041f24e7",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
           "SubnetId": "subnet-48a9b82c",
           "SecurityGroupIds": [
-            "sg-caed26ac"
+            "sg-5ce02b3a"
           ],
-          "InstanceType": "m5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -683,9 +732,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -693,15 +741,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-05bf92a940dae090d",
+          "ImageId": "ami-0094ac4ee041f24e7",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
           "SubnetId": "subnet-48a9b82c",
           "SecurityGroupIds": [
-            "sg-caed26ac"
+            "sg-5ce02b3a"
           ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -721,7 +769,6 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -731,15 +778,25 @@
         "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
+          "ImageId": "ami-0a99e89a874cf97c1",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
           "SubnetId": "subnet-d948b6bf",
           "SecurityGroupIds": [
-            "sg-2728435d"
+            "sg-a0d6beda"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -749,9 +806,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -759,15 +815,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
+          "ImageId": "ami-0a99e89a874cf97c1",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
           "SubnetId": "subnet-d948b6bf",
           "SecurityGroupIds": [
-            "sg-2728435d"
+            "sg-a0d6beda"
           ],
-          "InstanceType": "m5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -777,9 +833,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -787,15 +842,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
+          "ImageId": "ami-0a99e89a874cf97c1",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
           "SubnetId": "subnet-d948b6bf",
           "SecurityGroupIds": [
-            "sg-2728435d"
+            "sg-a0d6beda"
           ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -815,7 +870,6 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -825,71 +879,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
+          "ImageId": "ami-0a99e89a874cf97c1",
           "Placement": {
             "AvailabilityZone": "us-west-2b"
           },
           "SubnetId": "subnet-2eaaba67",
           "SecurityGroupIds": [
-            "sg-2728435d"
+            "sg-a0d6beda"
           ],
-          "InstanceType": "c5d.xlarge",
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          },
-          "dindImage": "taskcluster/dind-service:v4.1",
-          "capacityManagement": {
-            "diskspaceThreshold": 30000000000
-          }
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-west-2",
-        "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
-          "Placement": {
-            "AvailabilityZone": "us-west-2b"
-          },
-          "SubnetId": "subnet-2eaaba67",
-          "SecurityGroupIds": [
-            "sg-2728435d"
-          ],
-          "InstanceType": "m5d.xlarge",
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          },
-          "dindImage": "taskcluster/dind-service:v4.1",
-          "capacityManagement": {
-            "diskspaceThreshold": 30000000000
-          }
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-west-2",
-        "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
-          "Placement": {
-            "AvailabilityZone": "us-west-2b"
-          },
-          "SubnetId": "subnet-2eaaba67",
-          "SecurityGroupIds": [
-            "sg-2728435d"
-          ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -909,9 +907,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -919,15 +916,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
+          "ImageId": "ami-0a99e89a874cf97c1",
           "Placement": {
-            "AvailabilityZone": "us-west-2c"
+            "AvailabilityZone": "us-west-2b"
           },
-          "SubnetId": "subnet-540a9f0f",
+          "SubnetId": "subnet-2eaaba67",
           "SecurityGroupIds": [
-            "sg-2728435d"
+            "sg-a0d6beda"
           ],
-          "InstanceType": "c5d.xlarge",
+          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
@@ -937,9 +934,8 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
           "capacityManagement": {
-            "diskspaceThreshold": 30000000000
+            "diskspaceThreshold": 50000000000
           }
         }
       },
@@ -947,43 +943,15 @@
         "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
+          "ImageId": "ami-0a99e89a874cf97c1",
           "Placement": {
-            "AvailabilityZone": "us-west-2c"
+            "AvailabilityZone": "us-west-2b"
           },
-          "SubnetId": "subnet-540a9f0f",
+          "SubnetId": "subnet-2eaaba67",
           "SecurityGroupIds": [
-            "sg-2728435d"
+            "sg-a0d6beda"
           ],
-          "InstanceType": "m5d.xlarge",
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          },
-          "dindImage": "taskcluster/dind-service:v4.1",
-          "capacityManagement": {
-            "diskspaceThreshold": 30000000000
-          }
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-west-2",
-        "launchConfig": {
-          "ImageId": "ami-03f808b14ea0e3d4a",
-          "Placement": {
-            "AvailabilityZone": "us-west-2c"
-          },
-          "SubnetId": "subnet-540a9f0f",
-          "SecurityGroupIds": [
-            "sg-2728435d"
-          ],
-          "InstanceType": "c5.xlarge",
+          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/xvdb",
@@ -1003,7 +971,107 @@
             "enabled": true,
             "afterIdleSeconds": 900
           },
-          "dindImage": "taskcluster/dind-service:v4.1",
+          "capacityManagement": {
+            "diskspaceThreshold": 30000000000
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0a99e89a874cf97c1",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "SubnetId": "subnet-540a9f0f",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "InstanceType": "c5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 50000000000
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0a99e89a874cf97c1",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "SubnetId": "subnet-540a9f0f",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "InstanceType": "c5d.4xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 50000000000
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0a99e89a874cf97c1",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "SubnetId": "subnet-540a9f0f",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "InstanceType": "m5.4xlarge",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/xvdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeSize": 120,
+                "VolumeType": "gp2"
+              }
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
           "capacityManagement": {
             "diskspaceThreshold": 30000000000
           }
@@ -1011,11 +1079,11 @@
       }
     ]
   },
-  "created": "2019-10-22T18:08:27.373Z",
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nBuilds docker images for gecko; NOTE: capacity set to 1 instead of 3 (and downgraded to xlarge) to try to avoid [issues with dind](https://bugzilla.mozilla.org/show_bug.cgi?id=1427096)",
+  "created": "2019-10-23T21:51:12.080Z",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nWorker for Firefox automation",
   "emailOnError": false,
-  "lastModified": "2019-10-23T21:51:14.890Z",
+  "lastModified": "2019-10-23T21:51:12.080Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "aws",
-  "workerPoolId": "gecko-1/images"
+  "workerPoolId": "gecko-3/b-linux"
 }
