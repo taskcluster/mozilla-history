@@ -4,40 +4,30 @@
     "maxCapacity": 10,
     "launchConfigs": [
       {
-        "region": "us-east1",
-        "zone": "us-east1-b",
         "capacityPerInstance": 1,
-        "disks": [
-          {
-            "autoDelete": true,
-            "boot": true,
-            "initializeParams": {
-              "diskSizeGb": 50,
-              "sourceImage": "projects/pmoore-dev/global/images/gwci-linux-ajwcfoqu45kyf1fu6mfj"
-            },
-            "type": "PERSISTENT"
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-000f78733862c228b",
+          "Placement": {
+            "AvailabilityZone": "us-east-1a"
+          },
+          "SubnetId": "subnet-566e060c",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
           }
-        ],
-        "displayDevice": {
-          "enableDisplay": true
-        },
-        "machineType": "zones/us-east1-b/machineTypes/custom-32-29440",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "scheduling": {
-          "onHostMaintenance": "terminate"
         },
         "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
           "genericWorker": {
             "config": {
-              "deploymentId": "dxmGKDRZQp-750fzeJt41w",
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "livelogExecutable": "/usr/local/bin/livelog",
               "runTasksAsCurrentUser": true,
@@ -48,7 +38,7 @@
               "workerTypeMetadata": {
                 "machine-setup": {
                   "maintainer": "pmoore@mozilla.com",
-                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata"
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
                 }
               },
               "wstAudience": "taskcluster-net",
@@ -58,40 +48,30 @@
         }
       },
       {
-        "region": "us-east1",
-        "zone": "us-east1-c",
         "capacityPerInstance": 1,
-        "disks": [
-          {
-            "autoDelete": true,
-            "boot": true,
-            "initializeParams": {
-              "diskSizeGb": 50,
-              "sourceImage": "projects/pmoore-dev/global/images/gwci-linux-ajwcfoqu45kyf1fu6mfj"
-            },
-            "type": "PERSISTENT"
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-000f78733862c228b",
+          "Placement": {
+            "AvailabilityZone": "us-east-1b"
+          },
+          "SubnetId": "subnet-f2c93496",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
           }
-        ],
-        "displayDevice": {
-          "enableDisplay": true
-        },
-        "machineType": "zones/us-east1-c/machineTypes/custom-32-29440",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "scheduling": {
-          "onHostMaintenance": "terminate"
         },
         "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
           "genericWorker": {
             "config": {
-              "deploymentId": "dxmGKDRZQp-750fzeJt41w",
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "livelogExecutable": "/usr/local/bin/livelog",
               "runTasksAsCurrentUser": true,
@@ -102,7 +82,7 @@
               "workerTypeMetadata": {
                 "machine-setup": {
                   "maintainer": "pmoore@mozilla.com",
-                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata"
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
                 }
               },
               "wstAudience": "taskcluster-net",
@@ -112,40 +92,30 @@
         }
       },
       {
-        "region": "us-east1",
-        "zone": "us-east1-d",
         "capacityPerInstance": 1,
-        "disks": [
-          {
-            "autoDelete": true,
-            "boot": true,
-            "initializeParams": {
-              "diskSizeGb": 50,
-              "sourceImage": "projects/pmoore-dev/global/images/gwci-linux-ajwcfoqu45kyf1fu6mfj"
-            },
-            "type": "PERSISTENT"
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-000f78733862c228b",
+          "Placement": {
+            "AvailabilityZone": "us-east-1c"
+          },
+          "SubnetId": "subnet-c52454e9",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
           }
-        ],
-        "displayDevice": {
-          "enableDisplay": true
-        },
-        "machineType": "zones/us-east1-d/machineTypes/custom-32-29440",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "scheduling": {
-          "onHostMaintenance": "terminate"
         },
         "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
           "genericWorker": {
             "config": {
-              "deploymentId": "dxmGKDRZQp-750fzeJt41w",
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "livelogExecutable": "/usr/local/bin/livelog",
               "runTasksAsCurrentUser": true,
@@ -156,7 +126,359 @@
               "workerTypeMetadata": {
                 "machine-setup": {
                   "maintainer": "pmoore@mozilla.com",
-                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/82d1085847dacedf8bb3a160bbbbf6368d35834f/worker_types/gwci-linux/userdata"
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-000f78733862c228b",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "SubnetId": "subnet-e7e6ccaf",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-000f78733862c228b",
+          "Placement": {
+            "AvailabilityZone": "us-east-1e"
+          },
+          "SubnetId": "subnet-deb5a8e2",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-000f78733862c228b",
+          "Placement": {
+            "AvailabilityZone": "us-east-1f"
+          },
+          "SubnetId": "subnet-7f720d73",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0d2bc4a97a0aaa9d3",
+          "Placement": {
+            "AvailabilityZone": "us-west-1b"
+          },
+          "SubnetId": "subnet-7641632e",
+          "SecurityGroupIds": [
+            "sg-caed26ac"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0d2bc4a97a0aaa9d3",
+          "Placement": {
+            "AvailabilityZone": "us-west-1c"
+          },
+          "SubnetId": "subnet-48a9b82c",
+          "SecurityGroupIds": [
+            "sg-caed26ac"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-00e7eeb8d7449b1ce",
+          "Placement": {
+            "AvailabilityZone": "us-west-2a"
+          },
+          "SubnetId": "subnet-d948b6bf",
+          "SecurityGroupIds": [
+            "sg-2728435d"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-00e7eeb8d7449b1ce",
+          "Placement": {
+            "AvailabilityZone": "us-west-2b"
+          },
+          "SubnetId": "subnet-2eaaba67",
+          "SecurityGroupIds": [
+            "sg-2728435d"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
+                }
+              },
+              "wstAudience": "taskcluster-net",
+              "wstServerURL": "https://websocktunnel.tasks.build"
+            }
+          }
+        }
+      },
+      {
+        "capacityPerInstance": 1,
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-00e7eeb8d7449b1ce",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "SubnetId": "subnet-540a9f0f",
+          "SecurityGroupIds": [
+            "sg-2728435d"
+          ],
+          "InstanceType": "c4.2xlarge",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "genericWorker": {
+            "config": {
+              "deploymentId": "KSjGK16ySI-A7Cs-DGAnLg",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "runTasksAsCurrentUser": true,
+              "shutdownMachineOnInternalError": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "taskclusterProxyPort": 8080,
+              "tasksDir": "/home",
+              "workerTypeMetadata": {
+                "machine-setup": {
+                  "maintainer": "pmoore@mozilla.com",
+                  "script": "https://raw.githubusercontent.com/taskcluster/generic-worker/b61e0d09401b0f4c4a8f33a5e2eb239bb90dc7ac/worker_types/gwci-linux/bootstrap.sh"
                 }
               },
               "wstAudience": "taskcluster-net",
@@ -170,8 +492,8 @@
   "created": "2019-09-20T08:39:47.166Z",
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\n[Bug 1581920](https://bugzil.la/1581920) - same as aws-provisioner-v1/gwci-linux but for GCP",
   "emailOnError": true,
-  "lastModified": "2019-10-09T21:31:09.784Z",
+  "lastModified": "2019-10-23T08:51:06.334Z",
   "owner": "pmoore@mozilla.com",
-  "providerId": "google",
+  "providerId": "aws",
   "workerPoolId": "pmoore-test/gwci-linux"
 }
