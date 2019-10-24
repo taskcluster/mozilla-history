@@ -5,13 +5,7 @@
     "assume:mozilla-user:raliiev@mozilla.com",
     "assume:project:taskcluster:tutorial",
     "index:insert-task:gecko.v2.*",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2016-07-19T02:55:47.393Z",
   "roleId": "mozilla-user:raliiev@mozilla.com",

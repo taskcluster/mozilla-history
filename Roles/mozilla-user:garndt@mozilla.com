@@ -5,13 +5,7 @@
     "assume:mozilla-user:garndt@mozilla.com",
     "assume:project:taskcluster:tutorial",
     "project:relops-hardware-controller:*",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2017-12-07T17:17:52.065Z",
   "roleId": "mozilla-user:garndt@mozilla.com",

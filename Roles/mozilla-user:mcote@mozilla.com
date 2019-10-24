@@ -8,13 +8,7 @@
     "project:shipit:analysis/use",
     "project:shipit:bugzilla",
     "project:shipit:user",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2016-12-19T16:19:05.593Z",
   "roleId": "mozilla-user:mcote@mozilla.com",

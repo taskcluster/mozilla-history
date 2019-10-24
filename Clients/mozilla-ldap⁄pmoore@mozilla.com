@@ -7,13 +7,7 @@
   "expandedScopes": [
     "assume:mozilla-user:pmoore@mozilla.com",
     "assume:project:taskcluster:tutorial",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "expires": "3017-01-31T23:00:00.000Z",
   "lastDateUsed": "1977-08-19T16:00:00.000Z",

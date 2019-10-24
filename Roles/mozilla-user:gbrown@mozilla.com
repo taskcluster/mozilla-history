@@ -6,14 +6,8 @@
     "assume:project:releng:gecko-win-test-troubleshooter",
     "assume:project:taskcluster:tutorial",
     "generic-worker:allow-rdp:releng-hardware/gecko-t-win*",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*",
-    "secrets:set:garbage/*"
+    "secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:gecko-t-win*"
   ],
   "lastModified": "2016-10-26T14:07:45.481Z",
   "roleId": "mozilla-user:gbrown@mozilla.com",

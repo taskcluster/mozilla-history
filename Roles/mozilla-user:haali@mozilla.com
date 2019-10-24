@@ -42,13 +42,8 @@
     "purge-cache:aws-provisioner-v1/symbol-upload:level-1-*",
     "purge-cache:aws-provisioner-v1/symbol-upload:tooltool-cache",
     "queue:cancel-task:*",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:index.garbage.hassan.*",
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2017-07-12T20:53:10.938Z",
   "roleId": "mozilla-user:haali@mozilla.com",

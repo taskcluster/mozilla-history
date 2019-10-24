@@ -4,15 +4,9 @@
   "expandedScopes": [
     "assume:mozilla-user:jkeromnes@mozilla.com",
     "assume:project:taskcluster:tutorial",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
     "secrets:get:repo:github.com/mozilla-releng/services:branch:production",
     "secrets:get:repo:github.com/mozilla-releng/services:branch:staging",
-    "secrets:set:garbage/*",
     "secrets:set:repo:github.com/mozilla-releng/services:branch:production",
     "secrets:set:repo:github.com/mozilla-releng/services:branch:staging"
   ],

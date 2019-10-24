@@ -5,14 +5,8 @@
     "assume:mozilla-user:jclaudius@mozilla.com",
     "assume:project:taskcluster:tutorial",
     "queue:create-task:aws-provisioner-v1/b2gtest",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
     "queue:define-task:aws-provisioner-v1/b2gtest",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2016-06-15T16:20:20.976Z",
   "roleId": "mozilla-user:jclaudius@mozilla.com",

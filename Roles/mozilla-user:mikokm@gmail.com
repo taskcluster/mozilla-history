@@ -4,14 +4,8 @@
   "expandedScopes": [
     "assume:mozilla-user:mikokm@gmail.com",
     "assume:project:taskcluster:tutorial",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
     "queue:get-artifact:private/docker-worker/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2017-04-06T12:57:32.353Z",
   "roleId": "mozilla-user:mikokm@gmail.com",

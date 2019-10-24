@@ -4,14 +4,8 @@
   "expandedScopes": [
     "assume:mozilla-user:bvandyk@mozilla.com",
     "assume:project:taskcluster:tutorial",
-    "queue:create-task:aws-provisioner-v1/tutorial",
     "queue:create-task:aws-provisioner-v1/win2012r2-mediatests",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2016-08-25T10:32:00.421Z",
   "roleId": "mozilla-user:bvandyk@mozilla.com",

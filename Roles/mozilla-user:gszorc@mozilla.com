@@ -6,15 +6,9 @@
     "assume:project:taskcluster:tutorial",
     "aws-provisioner:manage-worker-type:*",
     "aws-provisioner:view-worker-type:*",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
     "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
     "secrets:get:repo:github.com/mozilla-releng/OpenCloudConfig:*",
-    "secrets:get:repo:github.com/taskcluster/docker-worker:*",
-    "secrets:set:garbage/*"
+    "secrets:get:repo:github.com/taskcluster/docker-worker:*"
   ],
   "lastModified": "2017-12-19T18:32:08.897Z",
   "roleId": "mozilla-user:gszorc@mozilla.com",

@@ -7,13 +7,7 @@
     "assume:project:taskcluster:tutorial",
     "project:releng:treestatus/recent_changes/revert",
     "project:releng:treestatus/trees/update",
-    "queue:create-task:aws-provisioner-v1/tutorial",
-    "queue:create-task:low:built-in/*",
-    "queue:route:index.garbage.*",
-    "queue:route:notify.email.*",
-    "queue:scheduler-id:tutorial",
-    "secrets:get:garbage/*",
-    "secrets:set:garbage/*"
+    "queue:route:notify.email.*"
   ],
   "lastModified": "2017-08-25T17:49:13.349Z",
   "roleId": "mozilla-user:cdawson@mozilla.com",
