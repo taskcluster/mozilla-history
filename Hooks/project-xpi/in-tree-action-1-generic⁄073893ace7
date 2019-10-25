@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-release-promotion/d615c9f54d",
+  "hookId": "in-tree-action-1-generic/073893ace7",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash d615c9f54d.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 073893ace7.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-release-promotion/d615c9f54d",
+    "name": "project-xpi/in-tree-action-1-generic/073893ace7",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "cb_name": "release-promotion"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "cb_name": "${payload.decision.action.cb_name}"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -257,8 +257,7 @@
                     }
                   },
                   "in": [
-                    "assume:repo:${repoUrl[8:]}:branch:${short_head_branch}",
-                    "in-tree:hook-action:project-xpi/in-tree-action-1-*"
+                    "assume:repo:${repoUrl[8:]}:branch:${short_head_branch}"
                   ]
                 },
                 "else": {
