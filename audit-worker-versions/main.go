@@ -258,10 +258,10 @@ func main() {
 	}
 
 	fmt.Println("Task Group ID: " + taskGroupID)
-	fmt.Println("Now sleeping for 45 mins to wait for tasks to run...")
+	fmt.Println("Now sleeping for 90 mins to wait for tasks to run...")
 
 	// Leave plenty of time for tasks to run
-	time.Sleep(45 * time.Minute)
+	time.Sleep(90 * time.Minute)
 
 	continuationToken := ""
 	for {
