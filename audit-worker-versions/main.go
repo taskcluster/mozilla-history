@@ -223,10 +223,18 @@ func main() {
 				Owner       string `json:"owner"`
 				Source      string `json:"source"`
 			}{
-				Description: "Checking worker version on " + provisionerID + "/" + workerType,
-				Name:        "Checking worker version on " + provisionerID + "/" + workerType,
-				Owner:       "pmoore@mozilla.com",
-				Source:      "https://github.com/petemoore",
+				Name: "Checking worker version on " + provisionerID + "/" + workerType,
+				Description: strings.Join([]string{
+					`This task is a simple probe for checking the worker implementation (and version) that runs`,
+					`on this worker type. This is routinely run in order to keep track of which worker`,
+					`implementations have been deployed to which worker types, and which worker types may be`,
+					`broken. The probe that generated this task simply reads the task log to determine which`,
+					`worker implementation it is running. If this is not a generic-worker worker, this is`,
+					`likely to result in a task exception, but that is expected and not a problem. Typically`,
+					`the worker implementation can still be determined from the format of the task log file.`,
+				}, "\n"),
+				Owner:  "pmoore@mozilla.com",
+				Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
 			},
 			Payload:       *payloadJSON,
 			Priority:      "highest",
