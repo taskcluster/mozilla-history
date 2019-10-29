@@ -5,9 +5,7 @@
   "description": "Hack so I can use treeherder again",
   "disabled": false,
   "expandedScopes": [
-    "assume:mozilla-user:pmoore@mozilla.com",
-    "assume:project:taskcluster:tutorial",
-    "queue:route:notify.email.*"
+    "assume:mozilla-user:pmoore@mozilla.com"
   ],
   "expires": "3017-01-31T23:00:00.000Z",
   "lastDateUsed": "1977-08-19T16:00:00.000Z",
