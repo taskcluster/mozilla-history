@@ -72,7 +72,7 @@ func main() {
 				Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
 			},
 			Payload: json.RawMessage(`{
-					"fake": "fake arbitrary payload to cause malformed-payload exception"},
+					"fake": "fake arbitrary payload to cause malformed-payload exception",
 					"see": "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions"
 			}`),
 			Priority:      "highest",
