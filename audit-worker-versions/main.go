@@ -188,6 +188,8 @@ type (
 type Queue tcqueue.Queue
 type Provisioner tcawsprovisioner.AwsProvisioner
 
+const waitTimeMinutes = 90
+
 func FilenameEscape(raw string) (escaped string) {
 	return strings.Replace(strings.Replace(raw, "*", "★", -1), "/", "⁄", -1)
 }
@@ -232,6 +234,8 @@ func main() {
 					`worker implementation it is running. If this is not a generic-worker worker, this is`,
 					`likely to result in a task exception, but that is expected and not a problem. Typically`,
 					`the worker implementation can still be determined from the format of the task log file.`,
+					``,
+					`The resulting verdict is to be published [here](https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/` + provisionerID + `%E2%81%84` + workerType + `).`,
 				}, "\n"),
 				Owner:  "pmoore@mozilla.com",
 				Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
@@ -258,10 +262,10 @@ func main() {
 	}
 
 	fmt.Println("Task Group ID: " + taskGroupID)
-	fmt.Println("Now sleeping for 90 mins to wait for tasks to run...")
+	fmt.Printf("Now sleeping for %v mins to wait for tasks to run...\n", waitTimeMinutes)
 
 	// Leave plenty of time for tasks to run
-	time.Sleep(90 * time.Minute)
+	time.Sleep(waitTimeMinutes * time.Minute)
 
 	continuationToken := ""
 	for {
@@ -423,7 +427,7 @@ func (q *Queue) ProvisionerWorkerTypes(provisionerID string) []string {
 func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID, versionInfo string) {
 	workerPoolID = t.Task.ProvisionerID + "/" + t.Task.WorkerType
 	if t.Status.State == "pending" {
-		versionInfo = "Version not determined; probing task remains pending."
+		versionInfo = fmt.Sprintf("Version not determined; probing task remains pending after %v minutes.", waitTimeMinutes)
 		return
 	}
 	var resp *http.Response
@@ -461,9 +465,14 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 	case strings.Contains(logContent, "Worker Node Type:"):
 		versionInfo = "docker-worker - unknown version"
 	case strings.Contains(logContent, `"release": "https://github.com/taskcluster/generic-worker/releases/tag/v`):
-		re := regexp.MustCompile(`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`)
-		match := re.FindStringSubmatch(logContent)
-		versionInfo = "generic-worker " + match[1]
+		reVersion := regexp.MustCompile(`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`)
+		gwVersion := reVersion.FindStringSubmatch(logContent)
+		versionInfo = "generic-worker " + gwVersion[1]
+		reRevision := regexp.MustCompile(`"revision": "([0-9a-f]{40})"`)
+		gwRevision := reRevision.FindStringSubmatch(logContent)
+		if len(gwRevision) > 1 {
+			versionInfo += " (revision " + gwRevision[1] + ")"
+		}
 	case strings.Contains(logContent, `not allowed at task.payload.features`):
 		versionInfo = "taskcluster-worker - unknown version"
 	case strings.Contains(logContent, `raise TaskVerificationError`):
