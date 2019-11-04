@@ -3,7 +3,6 @@
   "description": "Loaner access",
   "expandedScopes": [
     "assume:login-identity:mozilla-auth0/ad|Mozilla-LDAP|mikokm@gmail.com",
-    "assume:project:taskcluster:tutorial",
     "auth:create-client:mozilla-auth0/ad|Mozilla-LDAP|mikokm@gmail.com/*",
     "auth:delete-client:mozilla-auth0/ad|Mozilla-LDAP|mikokm@gmail.com/*",
     "auth:reset-access-token:mozilla-auth0/ad|Mozilla-LDAP|mikokm@gmail.com/*",
