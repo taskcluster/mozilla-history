@@ -1,19 +1,17 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "cron-task-projects-elm",
+  "hookId": "cron-task-comm-central/nightly-desktop",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nCron task for repository https://hg.mozilla.org/projects/elm.\n\nThis hook is fired every 15 minutes, creating a task that consults .cron.yml in\nthe corresponding repository.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nFIXME",
     "emailOnError": true,
-    "name": "project-releng/cron-task-projects-elm",
+    "name": "project-releng/cron-task-comm-central/nightly-desktop",
     "owner": "taskcluster-notifications@mozilla.com"
   },
-  "schedule": [
-    "0 0,15,30,45 * * * *"
-  ],
+  "schedule": [],
   "task": {
     "provisionerId": "aws-provisioner-v1",
-    "workerType": "gecko-2-decision",
-    "schedulerId": "gecko-level-2",
+    "workerType": "gecko-3-decision",
+    "schedulerId": "comm-level-3",
     "deadline": {
       "$fromNow": "1 hour"
     },
@@ -27,20 +25,23 @@
       "notify.email.sheriffs+exceptioncron@mozilla.org.on-exception"
     ],
     "scopes": [
-      "assume:hook-id:project-releng/cron-task-projects-elm"
+      "assume:hook-id:project-releng/cron-task-comm-central/nightly-desktop"
     ],
     "payload": {
       "image": "taskcluster/decision:2.1.0@sha256:6db3b697d7a3c7aba440d72f04199331b872111cefff57206b8b8b1d53230360",
       "env": {
         "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
-        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/projects/elm",
+        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/mozilla-central",
         "GECKO_HEAD_REF": "default",
+        "COMM_BASE_REPOSITORY": "https://hg.mozilla.org/comm-central",
+        "COMM_HEAD_REPOSITORY": "https://hg.mozilla.org/comm-central",
+        "COMM_HEAD_REF": "default",
         "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
         "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
         "TASKCLUSTER_ROOT_URL": "https://taskcluster.net"
       },
       "cache": {
-        "level-2-checkouts-sparse-v2": "/builds/worker/checkouts"
+        "level-3-checkouts-sparse-v2": "/builds/worker/checkouts"
       },
       "features": {
         "taskclusterProxy": true,
@@ -50,11 +51,12 @@
       "command": [
         "/builds/worker/bin/run-task",
         "--vcs-checkout=/builds/worker/checkouts/gecko",
+        "--comm-checkout=/builds/worker/checkouts/gecko/comm",
         "--sparse-profile=build/sparse-profiles/taskgraph",
         "--",
         "bash",
         "-cx",
-        "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph cron --head-repository=https://hg.mozilla.org/projects/elm --project=elm --level=2"
+        "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph cron --head-repository=https://hg.mozilla.org/comm-central --project=comm-central --level=3 --root=comm/ --force-run=nightly-desktop"
       ],
       "retry-exit-status": [
         72
@@ -71,9 +73,9 @@
     },
     "metadata": {
       "owner": "mozilla-taskcluster-maintenance@mozilla.com",
-      "source": "https://tools.taskcluster.net/hooks/#project-releng/cron-task-projects-elm",
-      "description": "See https://tools.taskcluster.net/hooks/#project-releng/cron-task-projects-elm",
-      "name": "Cron task for https://hg.mozilla.org/projects/elm"
+      "source": "https://tools.taskcluster.net/hooks/#project-releng/cron-task-comm-central/nightly-desktop",
+      "description": "See https://tools.taskcluster.net/hooks/#project-releng/cron-task-comm-central/nightly-desktop",
+      "name": "Cron task for https://hg.mozilla.org/comm-central"
     },
     "priority": "normal",
     "retries": 5,
