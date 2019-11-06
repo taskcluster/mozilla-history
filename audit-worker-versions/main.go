@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"regexp"
 	"sort"
 	"strings"
@@ -153,6 +154,9 @@ func NewQueue() *Queue {
 }
 
 func (p *Provisioner) AllWorkerTypes() []string {
+	if os.Getenv("TASKCLUSTER_ROOT_URL") != "https://taskcluster.net" {
+		return []string{}
+	}
 	prov := tcawsprovisioner.AwsProvisioner(*p)
 	wt, err := prov.ListWorkerTypes()
 	if err != nil {
