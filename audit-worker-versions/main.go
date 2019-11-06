@@ -33,6 +33,10 @@ func FilenameEscape(raw string) (escaped string) {
 }
 
 func main() {
+	reportPrefix := os.Getenv("REPORT_PREFIX")
+	if reportPrefix == "" {
+		log.Fatal("Please export env var REPORT_PREFIX to e.g. https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/")
+	}
 	taskIDs := map[string]string{}
 	queue := tcqueue.NewFromEnv()
 	taskGroupID := slugid.Nice()
@@ -67,7 +71,7 @@ func main() {
 					"`malformed-payload`, but the log file should still contain enough information for the worker",
 					`implementation to be determined.`,
 					``,
-					`The resulting verdict will be published [here](https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/` + provisionerID + `%E2%81%84` + workerType + `).`,
+					`The resulting verdict will be published [here](` + reportPrefix + provisionerID + `%E2%81%84` + workerType + `).`,
 				}, "\n"),
 				Owner:  "pmoore@mozilla.com",
 				Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
