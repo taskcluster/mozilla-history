@@ -307,9 +307,17 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 	case strings.Contains(logContent, "Worker Node Type:"):
 		versionInfo = "docker-worker - unknown version"
 	case strings.Contains(logContent, `"release": "https://github.com/taskcluster/generic-worker/releases/tag/v`):
+		versionInfo = "generic-worker"
+		reEngine := regexp.MustCompile(`"engine": "(.*)"`)
+		gwEngine := reEngine.FindStringSubmatch(logContent)
+		if len(gwEngine) > 1 {
+			versionInfo += " " + gwEngine[1] + " engine"
+		}
 		reVersion := regexp.MustCompile(`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`)
 		gwVersion := reVersion.FindStringSubmatch(logContent)
-		versionInfo = "generic-worker " + gwVersion[1]
+		if len(gwVersion) > 1 {
+			versionInfo += " " + gwVersion[1]
+		}
 		reRevision := regexp.MustCompile(`"revision": "([0-9a-f]{40})"`)
 		gwRevision := reRevision.FindStringSubmatch(logContent)
 		if len(gwRevision) > 1 {
