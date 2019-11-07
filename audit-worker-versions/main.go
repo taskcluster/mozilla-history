@@ -308,21 +308,24 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 		versionInfo = "docker-worker - unknown version"
 	case strings.Contains(logContent, `"release": "https://github.com/taskcluster/generic-worker/releases/tag/v`):
 		versionInfo = "generic-worker"
-		for regex, text := range map[string]string{
-			`"engine": "(.*)"`: `%v engine`,
-			`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`: `%v`,
-			`"revision": "([0-9a-f]{40})"`:                                          `(revision %v)`,
-			`"go-os": "(.*)"`:                                                       `%v`,
-			`"go-arch": "(.*)"`:                                                     `%v`,
-			`"go-version": "go(.*)"`:                                                `Go %v`,
+		for _, t := range []struct {
+			regex string
+			text  string
+		}{
+			{`"engine": "(.*)"`, `%v engine`},
+			{`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`, `%v`},
+			{`"revision": "([0-9a-f]{40})"`, `(revision %v)`},
+			{`"go-os": "(.*)"`, `%v`},
+			{`"go-arch": "(.*)"`, `%v`},
+			{`"go-version": "go(.*)"`, `Go %v`},
 		} {
-			re := regexp.MustCompile(regex)
+			re := regexp.MustCompile(t.regex)
 			gw := re.FindStringSubmatch(logContent)
 			val := "<UNKNOWN>"
 			if len(gw) > 1 {
 				val = gw[1]
 			}
-			versionInfo += " " + fmt.Sprintf(text, val)
+			versionInfo += " " + fmt.Sprintf(t.text, val)
 		}
 	case strings.Contains(logContent, `not allowed at task.payload.features`):
 		versionInfo = "taskcluster-worker - unknown version"
