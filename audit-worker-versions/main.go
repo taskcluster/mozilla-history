@@ -308,20 +308,21 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 		versionInfo = "docker-worker - unknown version"
 	case strings.Contains(logContent, `"release": "https://github.com/taskcluster/generic-worker/releases/tag/v`):
 		versionInfo = "generic-worker"
-		reEngine := regexp.MustCompile(`"engine": "(.*)"`)
-		gwEngine := reEngine.FindStringSubmatch(logContent)
-		if len(gwEngine) > 1 {
-			versionInfo += " " + gwEngine[1] + " engine"
-		}
-		reVersion := regexp.MustCompile(`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`)
-		gwVersion := reVersion.FindStringSubmatch(logContent)
-		if len(gwVersion) > 1 {
-			versionInfo += " " + gwVersion[1]
-		}
-		reRevision := regexp.MustCompile(`"revision": "([0-9a-f]{40})"`)
-		gwRevision := reRevision.FindStringSubmatch(logContent)
-		if len(gwRevision) > 1 {
-			versionInfo += " (revision " + gwRevision[1] + ")"
+		for regex, text := range map[string]string{
+			`"engine": "(.*)"`: `%v engine`,
+			`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`: `%v`,
+			`"revision": "([0-9a-f]{40})"`:                                          `(revision %v)`,
+			`"go-os": "(.*)"`:                                                       `%v`,
+			`"go-arch": "(.*)"`:                                                     `%v`,
+			`"go-version": "go(.*)"`:                                                `Go %v`,
+		} {
+			re := regexp.MustCompile(regex)
+			gw := re.FindStringSubmatch(logContent)
+			val := "<UNKNOWN>"
+			if len(gw) > 1 {
+				val = gw[1]
+			}
+			versionInfo += " " + fmt.Sprintf(text, val)
 		}
 	case strings.Contains(logContent, `not allowed at task.payload.features`):
 		versionInfo = "taskcluster-worker - unknown version"
@@ -337,7 +338,7 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 		versionInfo = "scriptworker - deepspeech - unknown version"
 	default:
 		versionInfo = "UNKNOWN"
-		log.Printf("Cannot determine worker version - log: %v", logContent)
+		log.Printf("Cannot determine worker implementation from log:\n%v", logContent)
 	}
 	return
 }
