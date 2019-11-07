@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "cron-task-escapewindow-xpi-manifest",
+  "hookId": "cron-task-mozilla-extensions-xpi-manifest",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nCron task for repository https://github.com/escapewindow/xpi-manifest.\n\nThis hook is fired every 15 minutes, creating a task that consults .cron.yml in\nthe corresponding repository.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nCron task for repository https://github.com/mozilla-extensions/xpi-manifest.\n\nThis hook is fired every 15 minutes, creating a task that consults .cron.yml in\nthe corresponding repository.\n",
     "emailOnError": true,
-    "name": "project-releng/cron-task-escapewindow-xpi-manifest",
+    "name": "project-releng/cron-task-mozilla-extensions-xpi-manifest",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [
@@ -12,8 +12,8 @@
   ],
   "task": {
     "provisionerId": "aws-provisioner-v1",
-    "workerType": "xpi-1-decision",
-    "schedulerId": "xpi-level-1",
+    "workerType": "xpi-3-decision",
+    "schedulerId": "xpi-level-3",
     "deadline": {
       "$fromNow": "1 hour"
     },
@@ -25,7 +25,7 @@
       "notify.email.release+exceptioncron@mozilla.com.on-exception"
     ],
     "scopes": [
-      "assume:hook-id:project-releng/cron-task-escapewindow-xpi-manifest"
+      "assume:hook-id:project-releng/cron-task-mozilla-extensions-xpi-manifest"
     ],
     "payload": {
       "image": {
@@ -34,7 +34,7 @@
         "path": "public/image.tar.zst"
       },
       "env": {
-        "VCS_HEAD_REPOSITORY": "https://github.com/escapewindow/xpi-manifest",
+        "VCS_HEAD_REPOSITORY": "https://github.com/mozilla-extensions/xpi-manifest",
         "VCS_HEAD_REF": "master",
         "VCS_REPOSITORY_TYPE": "git",
         "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
@@ -46,7 +46,7 @@
         "TASKCLUSTER_ROOT_URL": "https://taskcluster.net"
       },
       "cache": {
-        "xpi-level-1-checkouts-sparse-v2": "/builds/worker/checkouts"
+        "xpi-level-3-checkouts-sparse-v2": "/builds/worker/checkouts"
       },
       "features": {
         "taskclusterProxy": true,
@@ -61,7 +61,7 @@
         "--",
         "bash",
         "-cx",
-        "PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph cron --head-repository=https://github.com/escapewindow/xpi-manifest --head-ref=\"$VCS_HEAD_REF\" --repository-type=\"$VCS_REPOSITORY_TYPE\" --project=xpi-manifest --level=1 --root=."
+        "PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph cron --head-repository=https://github.com/mozilla-extensions/xpi-manifest --head-ref=\"$VCS_HEAD_REF\" --repository-type=\"$VCS_REPOSITORY_TYPE\" --project=xpi-manifest --level=3 --root=."
       ],
       "retry-exit-status": [
         72
@@ -78,9 +78,9 @@
     },
     "metadata": {
       "owner": "mozilla-taskcluster-maintenance@mozilla.com",
-      "source": "https://tools.taskcluster.net/hooks/#project-releng/cron-task-escapewindow-xpi-manifest",
-      "description": "See https://tools.taskcluster.net/hooks/#project-releng/cron-task-escapewindow-xpi-manifest",
-      "name": "Cron task for https://github.com/escapewindow/xpi-manifest"
+      "source": "https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-extensions-xpi-manifest",
+      "description": "See https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-extensions-xpi-manifest",
+      "name": "Cron task for https://github.com/mozilla-extensions/xpi-manifest"
     },
     "priority": "normal",
     "retries": 5,

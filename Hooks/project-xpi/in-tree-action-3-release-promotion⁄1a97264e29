@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-generic/57ce5cef3f",
+  "hookId": "in-tree-action-3-release-promotion/1a97264e29",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 57ce5cef3f.\n\nFor project(s) test-xpi-public\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash 1a97264e29.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-generic/57ce5cef3f",
+    "name": "project-xpi/in-tree-action-3-release-promotion/1a97264e29",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "cb_name": "${payload.decision.action.cb_name}"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "cb_name": "release-promotion"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -143,7 +143,11 @@
           },
           "in": {
             "$let": {
-              "level": 1
+              "level": {
+                "$if": "tasks_for in [\"cron\", \"action\"]",
+                "then": "${repository.level}",
+                "else": 1
+              }
             },
             "in": {
               "taskId": {
@@ -191,8 +195,8 @@
                   }
                 ]
               },
-              "provisionerId": "aws-provisioner-v1",
-              "workerType": "xpi-${level}-decision",
+              "provisionerId": "xpi-${level}",
+              "workerType": "decision",
               "tags": {
                 "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
                 "then": {
