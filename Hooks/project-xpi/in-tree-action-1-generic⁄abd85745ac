@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-generic/5556bbb11c",
+  "hookId": "in-tree-action-1-generic/abd85745ac",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 5556bbb11c.\n\nFor project(s) aki-xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 1, with `.taskcluster.yml` hash abd85745ac.\n\nFor project(s) aki-xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-generic/5556bbb11c",
+    "name": "project-xpi/in-tree-action-1-generic/abd85745ac",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -144,8 +144,8 @@
           "in": {
             "$let": {
               "level": {
-                "$if": "tasks_for in [\"github-push\"] \u0026\u0026 repoUrl == \"https://github.com/escapewindow/xpitest-manifest\"",
-                "then": "1",
+                "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-extensions/xpi-manifest\"",
+                "then": "3",
                 "else": {
                   "$if": "tasks_for in [\"cron\", \"action\"]",
                   "then": "${repository.level}",

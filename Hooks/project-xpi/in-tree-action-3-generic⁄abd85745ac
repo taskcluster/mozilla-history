@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-3-release-promotion/1a97264e29",
+  "hookId": "in-tree-action-3-generic/abd85745ac",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash 1a97264e29.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 3, with `.taskcluster.yml` hash abd85745ac.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-3-release-promotion/1a97264e29",
+    "name": "project-xpi/in-tree-action-3-generic/abd85745ac",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "cb_name": "release-promotion"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "cb_name": "${payload.decision.action.cb_name}"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -144,9 +144,13 @@
           "in": {
             "$let": {
               "level": {
-                "$if": "tasks_for in [\"cron\", \"action\"]",
-                "then": "${repository.level}",
-                "else": 1
+                "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-extensions/xpi-manifest\"",
+                "then": "3",
+                "else": {
+                  "$if": "tasks_for in [\"cron\", \"action\"]",
+                  "then": "${repository.level}",
+                  "else": 1
+                }
               }
             },
             "in": {
