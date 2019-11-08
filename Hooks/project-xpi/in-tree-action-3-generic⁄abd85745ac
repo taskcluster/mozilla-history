@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-generic/57ce5cef3f",
+  "hookId": "in-tree-action-3-generic/abd85745ac",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 57ce5cef3f.\n\nFor project(s) test-xpi-public\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 3, with `.taskcluster.yml` hash abd85745ac.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-generic/57ce5cef3f",
+    "name": "project-xpi/in-tree-action-3-generic/abd85745ac",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -143,7 +143,15 @@
           },
           "in": {
             "$let": {
-              "level": 1
+              "level": {
+                "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-extensions/xpi-manifest\"",
+                "then": "3",
+                "else": {
+                  "$if": "tasks_for in [\"cron\", \"action\"]",
+                  "then": "${repository.level}",
+                  "else": 1
+                }
+              }
             },
             "in": {
               "taskId": {
@@ -191,8 +199,8 @@
                   }
                 ]
               },
-              "provisionerId": "aws-provisioner-v1",
-              "workerType": "xpi-${level}-decision",
+              "provisionerId": "xpi-${level}",
+              "workerType": "decision",
               "tags": {
                 "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
                 "then": {
