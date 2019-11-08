@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-3-release-promotion/abd85745ac",
+  "hookId": "in-tree-action-1-release-promotion/57ce5cef3f",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash abd85745ac.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 57ce5cef3f.\n\nFor project(s) test-xpi-public\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-3-release-promotion/abd85745ac",
+    "name": "project-xpi/in-tree-action-1-release-promotion/57ce5cef3f",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -143,15 +143,7 @@
           },
           "in": {
             "$let": {
-              "level": {
-                "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-extensions/xpi-manifest\"",
-                "then": "3",
-                "else": {
-                  "$if": "tasks_for in [\"cron\", \"action\"]",
-                  "then": "${repository.level}",
-                  "else": 1
-                }
-              }
+              "level": 1
             },
             "in": {
               "taskId": {
@@ -199,8 +191,8 @@
                   }
                 ]
               },
-              "provisionerId": "xpi-${level}",
-              "workerType": "decision",
+              "provisionerId": "aws-provisioner-v1",
+              "workerType": "xpi-${level}-decision",
               "tags": {
                 "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
                 "then": {
