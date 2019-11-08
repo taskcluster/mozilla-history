@@ -1,15 +1,16 @@
 {
-  "created": "2016-02-29T20:33:19.157Z",
+  "created": "2019-11-08T04:19:43.650Z",
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes in this role are defined in [ci-configuration/grants.yml](https://hg.mozilla.org/ci/ci-configuration/file/tip/grants.yml).",
   "expandedScopes": [
     "assume:project:taskcluster:mozilla-github-repository",
-    "assume:repo:github.com/mozilla/balrog:branch:master",
+    "assume:repo:github.com/mozilla/balrog:*",
     "notify:email:*",
     "notify:irc-channel:*",
     "notify:irc-user:*",
     "queue:create-task:aws-provisioner-v1/github-worker",
     "queue:create-task:aws-provisioner-v1/github-worker-windows",
     "queue:create-task:aws-provisioner-v1/win2012r2",
+    "queue:create-task:highest:releng-1/*",
     "queue:create-task:highest:releng-3/*",
     "queue:create-task:highest:releng-t/*",
     "queue:route:checks",
@@ -22,14 +23,26 @@
     "secrets:get:garbage/*",
     "secrets:get:repo:github.com/mozilla/balrog:coveralls",
     "secrets:get:repo:github.com/mozilla/balrog:dockerhub",
+    "secrets:get:repo:github.com/mozilla/balrog:s3-prod-app-config",
+    "secrets:get:repo:github.com/mozilla/balrog:s3-prod-aws-creds",
+    "secrets:get:repo:github.com/mozilla/balrog:s3-stage-app-config",
+    "secrets:get:repo:github.com/mozilla/balrog:s3-stage-aws-creds",
     "secrets:set:garbage/*"
   ],
-  "lastModified": "2019-11-05T19:44:19.216Z",
-  "roleId": "repo:github.com/mozilla/balrog:branch:master",
+  "lastModified": "2019-11-08T04:19:43.650Z",
+  "roleId": "repo:github.com/mozilla/balrog:*",
   "scopes": [
-    "queue:route:index.project.balrog.*",
-    "queue:route:notify.*",
-    "secrets:get:repo:github.com/mozilla/balrog:coveralls",
-    "secrets:get:repo:github.com/mozilla/balrog:dockerhub"
+    "notify:email:*",
+    "notify:irc-channel:*",
+    "notify:irc-user:*",
+    "queue:create-task:aws-provisioner-v1/github-worker",
+    "queue:create-task:aws-provisioner-v1/github-worker-windows",
+    "queue:create-task:aws-provisioner-v1/win2012r2",
+    "queue:route:garbage.*",
+    "queue:route:index.garbage.*",
+    "queue:route:notify.email.*",
+    "queue:route:notify.irc-channel.*",
+    "queue:route:notify.irc-user.*",
+    "queue:scheduler-id:taskcluster-github"
   ]
 }
