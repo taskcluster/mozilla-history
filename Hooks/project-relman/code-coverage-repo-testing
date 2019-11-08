@@ -2,7 +2,7 @@
   "hookGroupId": "project-relman",
   "hookId": "code-coverage-repo-testing",
   "metadata": {
-    "description": "Automatically build code coverage reports",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAutomatically build code coverage reports",
     "emailOnError": true,
     "name": "Code coverage hook (testing)",
     "owner": "mcastelluccio@mozilla.com"
@@ -12,12 +12,12 @@
     "$merge": [
       {
         "$if": "'taskGroupId' in payload",
-        "else": {},
         "then": {
           "taskGroupId": {
             "$eval": "payload.taskGroupId"
           }
-        }
+        },
+        "else": {}
       },
       {
         "created": {
@@ -29,15 +29,16 @@
         "expires": {
           "$fromNow": "1 month"
         },
-        "extra": {},
+        "provisionerId": "project-relman",
+        "workerType": "releng-svc-memory",
         "metadata": {
           "description": "",
           "name": {
             "$if": "'taskName' in payload",
-            "else": "Code Coverage aggregation task - repo (testing)",
             "then": {
               "$eval": "payload.taskName"
-            }
+            },
+            "else": "Code Coverage aggregation task - repo (testing)"
           },
           "owner": "mcastelluccio@mozilla.com",
           "source": "https://github.com/mozilla/code-coverage"
@@ -75,18 +76,14 @@
           "maxRunTime": 14400
         },
         "priority": "normal",
-        "provisionerId": "aws-provisioner-v1",
         "retries": 5,
-        "routes": [],
         "schedulerId": "-",
         "scopes": [
           "secrets:get:project/relman/code-coverage/runtime-testing",
           "notify:email:*",
           "docker-worker:cache:code-coverage-bot-testing",
           "index:insert-task:project.relman.code-coverage.testing.repo.*"
-        ],
-        "tags": {},
-        "workerType": "releng-svc-memory"
+        ]
       }
     ]
   },

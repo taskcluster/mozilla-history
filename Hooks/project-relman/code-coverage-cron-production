@@ -2,7 +2,7 @@
   "hookGroupId": "project-relman",
   "hookId": "code-coverage-cron-production",
   "metadata": {
-    "description": "Automatically build code coverage reports",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAutomatically build code coverage reports",
     "emailOnError": true,
     "name": "Code coverage hook (production)",
     "owner": "mcastelluccio@mozilla.com"
@@ -20,7 +20,8 @@
     "expires": {
       "$fromNow": "1 month"
     },
-    "extra": {},
+    "provisionerId": "project-relman",
+    "workerType": "releng-svc-memory",
     "metadata": {
       "description": "",
       "name": "Code Coverage aggregation task - cron (production)",
@@ -63,18 +64,14 @@
       "maxRunTime": 14400
     },
     "priority": "normal",
-    "provisionerId": "aws-provisioner-v1",
     "retries": 5,
-    "routes": [],
     "schedulerId": "-",
     "scopes": [
       "secrets:get:project/relman/code-coverage/runtime-production",
       "docker-worker:cache:code-coverage-bot-production",
       "index:insert-task:project.releng.services.project.production.code_coverage_bot.*",
       "index:insert-task:project.relman.code-coverage.production.cron.*"
-    ],
-    "tags": {},
-    "workerType": "releng-svc-memory"
+    ]
   },
   "triggerSchema": {
     "additionalProperties": true,
