@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-3-cancel-all/d48859b560",
+  "hookId": "in-tree-action-3-retrigger-decision/fb7d3fe2fe",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task cancel-all at level 3, with `.taskcluster.yml` hash d48859b560.\n\nFor project(s) oak, maple\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task retrigger-decision at level 3, with `.taskcluster.yml` hash fb7d3fe2fe.\n\nFor project(s) mozilla-release\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-3-cancel-all/d48859b560",
+    "name": "project-gecko/in-tree-action-3-retrigger-decision/fb7d3fe2fe",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:cancel-all",
-        "cb_name": "cancel-all"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:retrigger-decision",
+        "cb_name": "retrigger-decision"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -116,8 +116,8 @@
               }
             ]
           },
-          "provisionerId": "aws-provisioner-v1",
-          "workerType": "gecko-${repository.level}-decision",
+          "provisionerId": "gecko-${repository.level}",
+          "workerType": "decision",
           "tags": {
             "$if": "tasks_for == \"hg-push\"",
             "then": {
