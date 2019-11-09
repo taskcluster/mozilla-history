@@ -1,13 +1,15 @@
 # mozilla-history
-Taskcluster history from https://taskcluster.net deployment for:
+Taskcluster history from https://firefox-ci-tc.services.mozilla.com deployment for:
 
-* [AWS Worker Types](/AWSWorkerTypes)
 * [Clients](/Clients)
 * [Hooks](/Hooks)
 * [Roles](/Roles)
 * [Worker Pools](/WorkerPools)
 
 For https://community-tc.services.mozilla.com history, please see [community-history](https://github.com/taskcluster/community-history).
+
+Please note, until 9 November 2019 this repository stored the history for the https://taskcluster.net deployment. On 9 November 2019
+the https://taskcluster.net deployment was decommissioned and the https://firefox-ci-tc.services.mozilla.com was instated.
 
 ## Entity filenames
 
@@ -23,11 +25,9 @@ Rather than creating nested subdirectories, this conversion avoids directory nam
 
 ## Entity update cadence
 
-The `mozilla-history` command is run every 5 mins from a [crontab entry on
-@petemoore's
-iMac](https://github.com/petemoore/myscrapbook/blob/432cbedb7af093ed45c2d8440864f3d6c5c70fde/sync-mozilla-history.sh#L8-L9),
-with the results committed to this repository and pushed to github. The
-mozilla-history command takes around 4-5 seconds to run.
+The `mozilla-history` command is run every 5 mins from a raspberry pi in
+@petemoore's home network.  with the results committed to this repository and
+pushed to github.
 
 ## Installing
 
@@ -39,8 +39,8 @@ go get github.com/taskcluster/mozilla-history
 
 ```
 unset TASKCLUSTER_CLIENT_ID TASKCLUSTER_ACCESS_TOKEN TASKCLUSTER_CERTIFICATE
-export TASKCLUSTER_ROOT_URL='https://taskcluster.net'
+export TASKCLUSTER_ROOT_URL='https://firefox-ci-tc.services.mozilla.com'
 mozilla-history
 ```
 
-This will populate subdirectories `AWSWorkerTypes`, `Clients`, `Hooks`, `Roles` and `WorkerPools` of the current directory.
+This will populate subdirectories `Clients`, `Hooks`, `Roles` and `WorkerPools` of the current directory.
