@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-3-cancel-all/ea5d85cbef",
+  "hookId": "in-tree-action-3-generic/fb7d3fe2fe",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task cancel-all at level 3, with `.taskcluster.yml` hash ea5d85cbef.\n\nFor project(s) mozilla-beta, mozilla-inbound, mozilla-central, autoland\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 3, with `.taskcluster.yml` hash fb7d3fe2fe.\n\nFor project(s) mozilla-release\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-3-cancel-all/ea5d85cbef",
+    "name": "project-gecko/in-tree-action-3-generic/fb7d3fe2fe",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:cancel-all",
-        "cb_name": "cancel-all"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "cb_name": "${payload.decision.action.cb_name}"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -220,7 +220,6 @@
                   "GECKO_HEAD_REV": "${push.revision}",
                   "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
                   "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
-                  "PYTHONDONTWRITEBYTECODE": "1",
                   "TASKCLUSTER_ROOT_URL": "https://taskcluster.net",
                   "TASKCLUSTER_PROXY_URL": "http://taskcluster"
                 },

@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-3-cancel-all/ea5d85cbef",
+  "hookId": "in-tree-action-3-retrigger-decision/153f2135c6",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task cancel-all at level 3, with `.taskcluster.yml` hash ea5d85cbef.\n\nFor project(s) mozilla-beta, mozilla-inbound, mozilla-central, autoland\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task retrigger-decision at level 3, with `.taskcluster.yml` hash 153f2135c6.\n\nFor project(s) mozilla-esr68\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-3-cancel-all/ea5d85cbef",
+    "name": "project-gecko/in-tree-action-3-retrigger-decision/153f2135c6",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:cancel-all",
-        "cb_name": "cancel-all"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:retrigger-decision",
+        "cb_name": "retrigger-decision"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -220,7 +220,6 @@
                   "GECKO_HEAD_REV": "${push.revision}",
                   "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
                   "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
-                  "PYTHONDONTWRITEBYTECODE": "1",
                   "TASKCLUSTER_ROOT_URL": "https://taskcluster.net",
                   "TASKCLUSTER_PROXY_URL": "http://taskcluster"
                 },
@@ -238,7 +237,12 @@
                         "$eval": "input"
                       }
                     },
-                    "ACTION_CALLBACK": "${action.cb_name}"
+                    "ACTION_CALLBACK": "${action.cb_name}",
+                    "ACTION_PARAMETERS": {
+                      "$json": {
+                        "$eval": "parameters"
+                      }
+                    }
                   }
                 }
               ]
@@ -329,6 +333,9 @@
                       "input": {
                         "$eval": "input"
                       },
+                      "parameters": {
+                        "$eval": "parameters"
+                      },
                       "clientId": {
                         "$eval": "clientId"
                       }
@@ -350,25 +357,16 @@
                 "tasks_for": "${tasks_for}"
               },
               {
-                "$if": "tasks_for == \"hg-push\"",
+                "$if": "tasks_for == \"hg-push\" \u0026\u0026 repository.project == \"try\"",
                 "then": {
                   "notify": {
                     "email": {
-                      "$merge": [
-                        {
-                          "link": {
-                            "text": "Treeherder Jobs",
-                            "href": "https://treeherder.mozilla.org/#/jobs?repo=${repository.project}\u0026revision=${push.revision}"
-                          }
-                        },
-                        {
-                          "$if": "repository.project == \"try\"",
-                          "then": {
-                            "subject": "Thank you for your try submission of ${push.revision}. It's the best!",
-                            "content": "Your try push has been submitted. It's the best! Use the link to view the status of your jobs."
-                          }
-                        }
-                      ]
+                      "subject": "Thank you for your try submission of ${push.revision}. It's the best!",
+                      "content": "Your try push has been submitted. It's the best! Use the link to view the status of your jobs.",
+                      "link": {
+                        "text": "Treeherder Jobs",
+                        "href": "https://treeherder.mozilla.org/#/jobs?repo=${repository.project}\u0026revision=${push.revision}"
+                      }
                     }
                   }
                 }
