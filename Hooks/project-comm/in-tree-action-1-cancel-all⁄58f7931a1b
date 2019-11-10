@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-comm",
-  "hookId": "in-tree-action-3-purge-caches/6ddc13d43b",
+  "hookId": "in-tree-action-1-cancel-all/58f7931a1b",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task purge-caches at level 3, with `.taskcluster.yml` hash 6ddc13d43b.\n\nFor project(s) comm-esr68, comm-beta\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task cancel-all at level 1, with `.taskcluster.yml` hash 58f7931a1b.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-comm/in-tree-action-3-purge-caches/6ddc13d43b",
+    "name": "project-comm/in-tree-action-1-cancel-all/58f7931a1b",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:purge-caches",
-        "cb_name": "purge-caches"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:cancel-all",
+        "cb_name": "cancel-all"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -112,8 +112,8 @@
             }
           ]
         },
-        "provisionerId": "aws-provisioner-v1",
-        "workerType": "gecko-${repository.level}-decision",
+        "provisionerId": "comm-${repository.level}",
+        "workerType": "decision",
         "tags": {
           "$if": "tasks_for == \"hg-push\"",
           "then": {
