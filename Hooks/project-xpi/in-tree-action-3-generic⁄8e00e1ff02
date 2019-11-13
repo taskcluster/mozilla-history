@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-release-promotion/abd85745ac",
+  "hookId": "in-tree-action-3-generic/8e00e1ff02",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash abd85745ac.\n\nFor project(s) aki-xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 8e00e1ff02.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-release-promotion/abd85745ac",
+    "name": "project-xpi/in-tree-action-3-generic/8e00e1ff02",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "cb_name": "release-promotion"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "cb_name": "${payload.decision.action.cb_name}"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -223,13 +223,6 @@
                 "$flatten": [
                   "checks",
                   {
-                    "$if": "tasks_for != \"github-pull-request\"",
-                    "then": [
-                      "tc-treeherder.v2.${project}.${head_sha}"
-                    ],
-                    "else": []
-                  },
-                  {
                     "$if": "tasks_for == \"github-push\"",
                     "then": [
                       "index.${trustDomain}.v2.${project}.revision.${head_sha}.taskgraph.decision"
@@ -366,35 +359,6 @@
               },
               "extra": {
                 "$merge": [
-                  {
-                    "treeherder": {
-                      "$merge": [
-                        {
-                          "machine": {
-                            "platform": "gecko-decision"
-                          }
-                        },
-                        {
-                          "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
-                          "then": {
-                            "symbol": "D"
-                          },
-                          "else": {
-                            "$if": "tasks_for == \"action\"",
-                            "then": {
-                              "groupName": "action-callback",
-                              "groupSymbol": "AC",
-                              "symbol": "${action.symbol}"
-                            },
-                            "else": {
-                              "groupSymbol": "cron",
-                              "symbol": "${cron.job_symbol}"
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  },
                   {
                     "$if": "tasks_for == \"action\"",
                     "then": {
