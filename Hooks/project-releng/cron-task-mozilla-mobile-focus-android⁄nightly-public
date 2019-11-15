@@ -1,0 +1,61 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-mobile-focus-android/nightly-public",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nPublic Nightly builds of Focus/Klar. Automatically signed and uploaded to \"nightly\" track of Google Play. https://github.com/mozilla-mobile/focus-android/wiki/Release-tracks\nManaged from ci-configuration's hooks.yml for now.",
+    "emailOnError": true,
+    "name": "Focus/Klar Nightly Builds (Public)",
+    "owner": "skaspari@mozilla.com"
+  },
+  "schedule": [
+    "0 12 * * *"
+  ],
+  "task": {
+    "provisionerId": "mobile-3",
+    "workerType": "b-linux",
+    "expires": {
+      "$fromNow": "1 year"
+    },
+    "payload": {
+      "image": "mozillamobile/focus-android",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "command": [
+        "/bin/bash",
+        "-cx",
+        "git fetch origin \u0026\u0026 git reset --hard origin/master \u0026\u0026 pip install json-e GitPython PyYaml \u0026\u0026 python tools/taskcluster/schedule-nightly-graph.py"
+      ],
+      "env": {
+        "CRON_TASK_ID": "${taskId}"
+      },
+      "maxRunTime": 300,
+      "expires": {
+        "$fromNow": "1 year"
+      },
+      "artifacts": {}
+    },
+    "metadata": {
+      "name": "Focus for Android - Cron task (Public Nightly)",
+      "description": "Create a decision from the main repo",
+      "owner": "skaspari@mozilla.com",
+      "source": "https://hg.mozilla.org/ci/ci-configuration/file/tip/hooks/project-releng/cron-task-mozilla-mobile-focus-android/nightly-public.yml"
+    },
+    "schedulerId": "mobile-level-3",
+    "routes": [
+      "notify.email.sebastian@mozilla.com.on-failed"
+    ],
+    "priority": "normal",
+    "retries": 5,
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-mobile-focus-android/nightly-public"
+    ],
+    "tags": {},
+    "extra": {}
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
