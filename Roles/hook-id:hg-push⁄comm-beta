@@ -4,7 +4,7 @@
   "expandedScopes": [
     "assume:hook-id:hg-push/comm-beta",
     "assume:project:taskcluster:comm:level-3-sccache-buckets",
-    "assume:repo:hg.mozilla.org/releases/comm-beta:branch:default",
+    "assume:repo:hg.mozilla.org/releases/comm-beta:branch:*",
     "auth:aws-s3:read-write:comm-central-level-3-sccache-eu-central-1/*",
     "auth:aws-s3:read-write:comm-central-level-3-sccache-us-east-1/*",
     "auth:aws-s3:read-write:comm-central-level-3-sccache-us-west-1/*",
@@ -152,6 +152,7 @@
     "queue:route:index.comm.cache.level-3.*",
     "queue:route:index.comm.v2.comm-beta.*",
     "queue:route:index.garbage.*",
+    "queue:route:index.hg-push.v1.comm-beta.*",
     "queue:route:notify.*",
     "queue:route:tc-treeherder-stage.comm-beta.*",
     "queue:route:tc-treeherder-stage.v2.comm-beta.*",
@@ -168,10 +169,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-06T21:00:00.716Z",
+  "lastModified": "2019-11-27T01:08:34.980Z",
   "roleId": "hook-id:hg-push/comm-beta",
   "scopes": [
-    "assume:repo:hg.mozilla.org/releases/comm-beta:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/releases/comm-beta:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.comm-beta.*"
   ]
 }

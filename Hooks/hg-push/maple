@@ -24,7 +24,11 @@
       "$fromNow": "3 days"
     },
     "scopes": [
-      "assume:repo:hg.mozilla.org/projects/maple:branch:default"
+      "assume:repo:hg.mozilla.org/projects/maple:branch:*"
+    ],
+    "routes": [
+      "index.hg-push.v1.maple.revison.${payload.payload.data.heads[0]}",
+      "index.hg-push.v1.maple.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
     ],
     "payload": {
       "image": {

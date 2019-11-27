@@ -4,7 +4,7 @@
   "expandedScopes": [
     "assume:hook-id:hg-push/autoland",
     "assume:project:taskcluster:gecko:level-3-sccache-buckets",
-    "assume:repo:hg.mozilla.org/integration/autoland:branch:default",
+    "assume:repo:hg.mozilla.org/integration/autoland:branch:*",
     "auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*",
     "auth:aws-s3:read-write:taskcluster-level-3-sccache-eu-central-1/*",
     "auth:aws-s3:read-write:taskcluster-level-3-sccache-us-east-1/*",
@@ -172,6 +172,7 @@
     "queue:route:index.gecko.heavyprofile.*",
     "queue:route:index.gecko.v2.autoland.*",
     "queue:route:index.gecko.v2.trunk.revision.*",
+    "queue:route:index.hg-push.v1.autoland.*",
     "queue:route:notify.*",
     "queue:route:tc-treeherder-stage.autoland.*",
     "queue:route:tc-treeherder-stage.v2.autoland.*",
@@ -186,10 +187,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-06T21:51:47.550Z",
+  "lastModified": "2019-11-27T01:08:39.950Z",
   "roleId": "hook-id:hg-push/autoland",
   "scopes": [
-    "assume:repo:hg.mozilla.org/integration/autoland:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/integration/autoland:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.autoland.*"
   ]
 }

@@ -3,7 +3,7 @@
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes associated with hg pushes for project `ci-admin`",
   "expandedScopes": [
     "assume:hook-id:hg-push/ci-admin",
-    "assume:repo:hg.mozilla.org/ci/ci-admin:branch:default",
+    "assume:repo:hg.mozilla.org/ci/ci-admin:branch:*",
     "docker-worker:cache:ci-level-3-*",
     "generic-worker:cache:ci-level-3-*",
     "index:insert-task:ci.cache.level-3.*",
@@ -18,6 +18,7 @@
     "queue:rerun-task:ci-level-3/*",
     "queue:route:index.ci.cache.level-3.*",
     "queue:route:index.ci.v2.ci-admin.*",
+    "queue:route:index.hg-push.v1.ci-admin.*",
     "queue:route:tc-treeherder-stage.ci-admin.*",
     "queue:route:tc-treeherder-stage.v2.ci-admin.*",
     "queue:route:tc-treeherder.ci-admin.*",
@@ -27,10 +28,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-06T20:59:57.281Z",
+  "lastModified": "2019-11-27T01:08:42.206Z",
   "roleId": "hook-id:hg-push/ci-admin",
   "scopes": [
-    "assume:repo:hg.mozilla.org/ci/ci-admin:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/ci/ci-admin:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.ci-admin.*"
   ]
 }

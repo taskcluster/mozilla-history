@@ -24,7 +24,11 @@
       "$fromNow": "3 days"
     },
     "scopes": [
-      "assume:repo:hg.mozilla.org/projects/larch:branch:default"
+      "assume:repo:hg.mozilla.org/projects/larch:branch:*"
+    ],
+    "routes": [
+      "index.hg-push.v1.larch.revison.${payload.payload.data.heads[0]}",
+      "index.hg-push.v1.larch.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
     ],
     "payload": {
       "image": {

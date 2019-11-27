@@ -24,7 +24,11 @@
       "$fromNow": "3 days"
     },
     "scopes": [
-      "assume:repo:hg.mozilla.org/projects/jamun:branch:default"
+      "assume:repo:hg.mozilla.org/projects/jamun:branch:*"
+    ],
+    "routes": [
+      "index.hg-push.v1.jamun.revison.${payload.payload.data.heads[0]}",
+      "index.hg-push.v1.jamun.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
     ],
     "payload": {
       "image": {

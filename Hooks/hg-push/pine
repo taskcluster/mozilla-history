@@ -24,7 +24,11 @@
       "$fromNow": "3 days"
     },
     "scopes": [
-      "assume:repo:hg.mozilla.org/projects/pine:branch:default"
+      "assume:repo:hg.mozilla.org/projects/pine:branch:*"
+    ],
+    "routes": [
+      "index.hg-push.v1.pine.revison.${payload.payload.data.heads[0]}",
+      "index.hg-push.v1.pine.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
     ],
     "payload": {
       "image": {

@@ -4,7 +4,7 @@
   "expandedScopes": [
     "assume:hook-id:hg-push/mozilla-inbound",
     "assume:project:taskcluster:gecko:level-3-sccache-buckets",
-    "assume:repo:hg.mozilla.org/integration/mozilla-inbound:branch:default",
+    "assume:repo:hg.mozilla.org/integration/mozilla-inbound:branch:*",
     "auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*",
     "auth:aws-s3:read-write:taskcluster-level-3-sccache-eu-central-1/*",
     "auth:aws-s3:read-write:taskcluster-level-3-sccache-us-east-1/*",
@@ -172,6 +172,7 @@
     "queue:route:index.gecko.heavyprofile.*",
     "queue:route:index.gecko.v2.mozilla-inbound.*",
     "queue:route:index.gecko.v2.trunk.revision.*",
+    "queue:route:index.hg-push.v1.mozilla-inbound.*",
     "queue:route:notify.*",
     "queue:route:tc-treeherder-stage.mozilla-inbound.*",
     "queue:route:tc-treeherder-stage.v2.mozilla-inbound.*",
@@ -186,10 +187,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-06T21:51:33.058Z",
+  "lastModified": "2019-11-27T01:08:42.440Z",
   "roleId": "hook-id:hg-push/mozilla-inbound",
   "scopes": [
-    "assume:repo:hg.mozilla.org/integration/mozilla-inbound:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/integration/mozilla-inbound:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.mozilla-inbound.*"
   ]
 }

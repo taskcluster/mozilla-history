@@ -24,7 +24,11 @@
       "$fromNow": "3 days"
     },
     "scopes": [
-      "assume:repo:hg.mozilla.org/ci/taskgraph:branch:default"
+      "assume:repo:hg.mozilla.org/ci/taskgraph:branch:*"
+    ],
+    "routes": [
+      "index.hg-push.v1.taskgraph.revison.${payload.payload.data.heads[0]}",
+      "index.hg-push.v1.taskgraph.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
     ],
     "payload": {
       "image": {
