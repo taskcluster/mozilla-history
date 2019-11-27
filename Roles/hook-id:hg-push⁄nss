@@ -3,7 +3,7 @@
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes associated with hg pushes for project `nss`",
   "expandedScopes": [
     "assume:hook-id:hg-push/nss",
-    "assume:repo:hg.mozilla.org/projects/nss:branch:default",
+    "assume:repo:hg.mozilla.org/projects/nss:branch:*",
     "docker-worker:cache:nss-level-3-*",
     "docker-worker:feature:allowPtrace",
     "generic-worker:cache:nss-level-3-*",
@@ -20,6 +20,7 @@
     "queue:create-task:localprovisioner/nss-rpi",
     "queue:rerun-task:nss-level-3/*",
     "queue:route:index.docker.images.v1.nss.*",
+    "queue:route:index.hg-push.v1.nss.*",
     "queue:route:index.nss.cache.level-3.*",
     "queue:route:index.nss.v2.nss.*",
     "queue:route:tc-treeherder-stage.nss.*",
@@ -31,10 +32,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-27T09:26:45.478Z",
+  "lastModified": "2019-11-27T17:58:40.948Z",
   "roleId": "hook-id:hg-push/nss",
   "scopes": [
-    "assume:repo:hg.mozilla.org/projects/nss:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/projects/nss:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.nss.*"
   ]
 }

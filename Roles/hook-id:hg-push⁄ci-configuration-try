@@ -3,7 +3,7 @@
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes associated with hg pushes for project `ci-configuration-try`",
   "expandedScopes": [
     "assume:hook-id:hg-push/ci-configuration-try",
-    "assume:repo:hg.mozilla.org/ci/ci-configuration-try:branch:default",
+    "assume:repo:hg.mozilla.org/ci/ci-configuration-try:branch:*",
     "docker-worker:cache:ci-level-1-*",
     "generic-worker:cache:ci-level-1-*",
     "index:insert-task:ci.cache.level-1.*",
@@ -18,6 +18,7 @@
     "queue:rerun-task:ci-level-1/*",
     "queue:route:index.ci.cache.level-1.*",
     "queue:route:index.ci.v2.ci-configuration-try.*",
+    "queue:route:index.hg-push.v1.ci-configuration-try.*",
     "queue:route:tc-treeherder-stage.ci-configuration-try.*",
     "queue:route:tc-treeherder-stage.v2.ci-configuration-try.*",
     "queue:route:tc-treeherder.ci-configuration-try.*",
@@ -27,10 +28,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-27T09:26:46.708Z",
+  "lastModified": "2019-11-27T17:58:44.143Z",
   "roleId": "hook-id:hg-push/ci-configuration-try",
   "scopes": [
-    "assume:repo:hg.mozilla.org/ci/ci-configuration-try:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/ci/ci-configuration-try:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.ci-configuration-try.*"
   ]
 }

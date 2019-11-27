@@ -4,7 +4,7 @@
   "expandedScopes": [
     "assume:hook-id:hg-push/oak",
     "assume:project:taskcluster:gecko:level-3-sccache-buckets",
-    "assume:repo:hg.mozilla.org/projects/oak:branch:default",
+    "assume:repo:hg.mozilla.org/projects/oak:branch:*",
     "auth:aws-s3:read-write:public-qemu-images/repository/hg.mozilla.org/mozilla-central/*",
     "auth:aws-s3:read-write:taskcluster-level-3-sccache-eu-central-1/*",
     "auth:aws-s3:read-write:taskcluster-level-3-sccache-us-east-1/*",
@@ -173,6 +173,7 @@
     "queue:route:index.gecko.cache.level-3.*",
     "queue:route:index.gecko.heavyprofile.*",
     "queue:route:index.gecko.v2.oak.*",
+    "queue:route:index.hg-push.v1.oak.*",
     "queue:route:notify.*",
     "queue:route:tc-treeherder-stage.oak.*",
     "queue:route:tc-treeherder-stage.v2.oak.*",
@@ -187,10 +188,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-27T09:26:41.428Z",
+  "lastModified": "2019-11-27T17:58:50.515Z",
   "roleId": "hook-id:hg-push/oak",
   "scopes": [
-    "assume:repo:hg.mozilla.org/projects/oak:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/projects/oak:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.oak.*"
   ]
 }

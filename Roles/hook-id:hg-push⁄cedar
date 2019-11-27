@@ -4,7 +4,7 @@
   "expandedScopes": [
     "assume:hook-id:hg-push/cedar",
     "assume:project:taskcluster:gecko:level-2-sccache-buckets",
-    "assume:repo:hg.mozilla.org/projects/cedar:branch:default",
+    "assume:repo:hg.mozilla.org/projects/cedar:branch:*",
     "auth:aws-s3:read-write:taskcluster-level-2-sccache-eu-central-1/*",
     "auth:aws-s3:read-write:taskcluster-level-2-sccache-us-east-1/*",
     "auth:aws-s3:read-write:taskcluster-level-2-sccache-us-west-1/*",
@@ -120,6 +120,7 @@
     "queue:route:index.garbage.*",
     "queue:route:index.gecko.cache.level-2.*",
     "queue:route:index.gecko.v2.cedar.*",
+    "queue:route:index.hg-push.v1.cedar.*",
     "queue:route:notify.*",
     "queue:route:tc-treeherder-stage.cedar.*",
     "queue:route:tc-treeherder-stage.v2.cedar.*",
@@ -131,10 +132,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-27T09:26:43.623Z",
+  "lastModified": "2019-11-27T17:58:52.814Z",
   "roleId": "hook-id:hg-push/cedar",
   "scopes": [
-    "assume:repo:hg.mozilla.org/projects/cedar:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/projects/cedar:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.cedar.*"
   ]
 }

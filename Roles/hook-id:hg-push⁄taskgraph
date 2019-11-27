@@ -3,7 +3,7 @@
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nScopes associated with hg pushes for project `taskgraph`",
   "expandedScopes": [
     "assume:hook-id:hg-push/taskgraph",
-    "assume:repo:hg.mozilla.org/ci/taskgraph:branch:default",
+    "assume:repo:hg.mozilla.org/ci/taskgraph:branch:*",
     "docker-worker:cache:taskgraph-level-3-*",
     "generic-worker:cache:taskgraph-level-3-*",
     "index:insert-task:taskgraph.cache.level-3.*",
@@ -16,6 +16,7 @@
     "queue:create-task:low:aws-provisioner-v1/gecko-3-images",
     "queue:create-task:low:aws-provisioner-v1/gecko-misc",
     "queue:rerun-task:taskgraph-level-3/*",
+    "queue:route:index.hg-push.v1.taskgraph.*",
     "queue:route:index.taskgraph.cache.level-3.*",
     "queue:route:index.taskgraph.v2.taskgraph.*",
     "queue:route:tc-treeherder-stage.taskgraph.*",
@@ -27,10 +28,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-27T09:26:51.018Z",
+  "lastModified": "2019-11-27T17:58:52.180Z",
   "roleId": "hook-id:hg-push/taskgraph",
   "scopes": [
-    "assume:repo:hg.mozilla.org/ci/taskgraph:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/ci/taskgraph:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.taskgraph.*"
   ]
 }

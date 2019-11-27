@@ -4,7 +4,7 @@
   "expandedScopes": [
     "assume:hook-id:hg-push/try-comm-central",
     "assume:project:taskcluster:comm:level-1-sccache-buckets",
-    "assume:repo:hg.mozilla.org/try-comm-central:branch:default",
+    "assume:repo:hg.mozilla.org/try-comm-central:branch:*",
     "auth:aws-s3:read-write:comm-central-level-1-sccache-eu-central-1/*",
     "auth:aws-s3:read-write:comm-central-level-1-sccache-us-east-1/*",
     "auth:aws-s3:read-write:comm-central-level-1-sccache-us-west-1/*",
@@ -104,6 +104,7 @@
     "queue:route:index.comm.cache.level-1.*",
     "queue:route:index.comm.v2.try-comm-central.*",
     "queue:route:index.garbage.*",
+    "queue:route:index.hg-push.v1.try-comm-central.*",
     "queue:route:notify.*",
     "queue:route:tc-treeherder-stage.try-comm-central.*",
     "queue:route:tc-treeherder-stage.v2.try-comm-central.*",
@@ -116,10 +117,11 @@
     "secrets:get:project/taskcluster/gecko/hgfingerprint",
     "secrets:get:project/taskcluster/gecko/hgmointernal"
   ],
-  "lastModified": "2019-11-27T09:26:49.463Z",
+  "lastModified": "2019-11-27T17:58:38.550Z",
   "roleId": "hook-id:hg-push/try-comm-central",
   "scopes": [
-    "assume:repo:hg.mozilla.org/try-comm-central:branch:default",
-    "queue:create-task:highest:infra/hg-push"
+    "assume:repo:hg.mozilla.org/try-comm-central:branch:*",
+    "queue:create-task:highest:infra/hg-push",
+    "queue:route:index.hg-push.v1.try-comm-central.*"
   ]
 }
