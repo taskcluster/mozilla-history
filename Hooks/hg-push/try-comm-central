@@ -24,7 +24,11 @@
       "$fromNow": "3 days"
     },
     "scopes": [
-      "assume:repo:hg.mozilla.org/try-comm-central:branch:default"
+      "assume:repo:hg.mozilla.org/try-comm-central:branch:*"
+    ],
+    "routes": [
+      "index.hg-push.v1.try-comm-central.revison.${payload.payload.data.heads[0]}",
+      "index.hg-push.v1.try-comm-central.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
     ],
     "payload": {
       "image": {
