@@ -307,7 +307,7 @@
                     "in": {
                       "$if": "tasks_for == \"action\"",
                       "else": "PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph \u0026\u0026 PIP_IGNORE_INSTALLED=0 pip install --user arrow taskcluster pyyaml \u0026\u0026 taskcluster/scripts/install-sdk.sh \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$MOBILE_BASE_REPOSITORY\" --head-repository=\"$MOBILE_HEAD_REPOSITORY\" --head-ref=\"$MOBILE_HEAD_REF\" --head-rev=\"$MOBILE_HEAD_REV\" --repository-type=\"$MOBILE_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
-                      "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
+                      "then": "PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph \u0026\u0026 taskcluster/scripts/install-sdk.sh \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
                     }
                   }
                 ],
