@@ -1,9 +1,9 @@
 {
   "hookGroupId": "project-mobile",
-  "hookId": "in-tree-action-1-release-promotion/84108f7766",
+  "hookId": "in-tree-action-1-release-promotion/5f1268d108",
   "metadata": {
     "description": "",
-    "name": "project-mobile/in-tree-action-1-release-promotion/84108f7766",
+    "name": "project-mobile/in-tree-action-1-release-promotion/5f1268d108",
     "owner": "jlorenzo+tc@mozilla.com"
   },
   "schedule": [],
@@ -22,7 +22,7 @@
         "$eval": "payload.user.input"
       },
       "ownTaskId": {
-        "$eval": "payload.user.taskId"
+        "$eval": "taskId"
       },
       "parameters": {
         "$eval": "payload.decision['parameters']"
@@ -70,7 +70,11 @@
               "else": {
                 "$if": "tasks_for == \"github-release\"",
                 "else": {
-                  "$if": "tasks_for in [\"cron\", \"action\"]",
+                  "$if": "tasks_for == \"cron\"",
+                  "else": {
+                    "$if": "tasks_for == \"action\"",
+                    "then": "${parameters.head_ref}"
+                  },
                   "then": "${push.branch}"
                 },
                 "then": "${event.release.target_commitish}"
@@ -86,7 +90,11 @@
               "else": {
                 "$if": "tasks_for == \"github-release\"",
                 "else": {
-                  "$if": "tasks_for in [\"cron\", \"action\"]",
+                  "$if": "tasks_for == \"cron\"",
+                  "else": {
+                    "$if": "tasks_for == \"action\"",
+                    "then": "${parameters.head_rev}"
+                  },
                   "then": "${push.revision}"
                 },
                 "then": "${event.release.tag_name}"
@@ -438,6 +446,7 @@
                 "else": "${ownTaskId}",
                 "then": "${action.taskGroupId}"
               },
+              "taskId": "${ownTaskId}",
               "workerType": "decision"
             }
           }
@@ -511,10 +520,6 @@
               },
               "revision": {
                 "description": "revision of the original push",
-                "type": "string"
-              },
-              "branch": {
-                "description": "branch",
                 "type": "string"
               }
             },
