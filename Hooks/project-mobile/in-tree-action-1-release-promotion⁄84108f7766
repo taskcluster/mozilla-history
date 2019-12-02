@@ -22,7 +22,7 @@
         "$eval": "payload.user.input"
       },
       "ownTaskId": {
-        "$eval": "taskId"
+        "$eval": "payload.user.taskId"
       },
       "parameters": {
         "$eval": "payload.decision['parameters']"
@@ -98,7 +98,7 @@
           "ownTaskId": {
             "$if": "\"github\" in tasks_for",
             "else": {
-              "$if": "tasks_for == \"cron\"",
+              "$if": "tasks_for in [\"cron\", \"action\"]",
               "then": "${ownTaskId}"
             },
             "then": {
@@ -438,7 +438,6 @@
                 "else": "${ownTaskId}",
                 "then": "${action.taskGroupId}"
               },
-              "taskId": "${ownTaskId}",
               "workerType": "decision"
             }
           }
