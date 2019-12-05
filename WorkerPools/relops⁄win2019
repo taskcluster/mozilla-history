@@ -1,204 +1,204 @@
 {
   "config": {
     "minCapacity": 0,
-    "maxCapacity": 1,
+    "maxCapacity": 2,
     "launchConfigs": [
       {
-        "capacityPerInstance": 1,
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "sentryProject": "generic-worker",
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "idleTimeoutSecs": 90,
+              "livelogPUTPort": 60022,
+              "downloadsDir": "Z:\\downloads",
+              "numberOfTasksToRun": 0,
+              "cachesDir": "Z:\\caches",
+              "taskclusterProxyPort": 80,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnIdle": false,
+              "disableReboots": true,
+              "deploymentId": "f37dd7ee1cae",
+              "cleanUpTaskDirs": true,
+              "shutdownMachineOnInternalError": true,
+              "tasksDir": "Z:\\",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+            }
+          }
+        },
         "region": "us-west-2",
+        "capacityPerInstance": 1,
+        "additionalUserData": {
+          "workerType": "relops-image-builder"
+        },
         "launchConfig": {
-          "ImageId": "ami-0e5430a7c5c50e0dc",
+          "BlockDeviceMappings": [
+            {
+              "DeviceName": "/dev/sda1",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeType": "gp2",
+                "VolumeSize": 40
+              }
+            },
+            {
+              "DeviceName": "/dev/sdb",
+              "Ebs": {
+                "DeleteOnTermination": true,
+                "VolumeType": "gp2",
+                "VolumeSize": 120
+              }
+            }
+          ],
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
           "SubnetId": "subnet-d948b6bf",
+          "ImageId": "ami-0e5430a7c5c50e0dc",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          },
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-09d6be73",
             "sg-3bd7bf41"
-          ],
-          "InstanceType": "c5.4xlarge",
+          ]
+        }
+      },
+      {
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "sentryProject": "generic-worker",
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "idleTimeoutSecs": 90,
+              "livelogPUTPort": 60022,
+              "downloadsDir": "Z:\\downloads",
+              "numberOfTasksToRun": 0,
+              "cachesDir": "Z:\\caches",
+              "taskclusterProxyPort": 80,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnIdle": false,
+              "disableReboots": true,
+              "deploymentId": "f37dd7ee1cae",
+              "cleanUpTaskDirs": true,
+              "shutdownMachineOnInternalError": true,
+              "tasksDir": "Z:\\",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+            }
+          }
+        },
+        "region": "us-west-2",
+        "capacityPerInstance": 1,
+        "additionalUserData": {
+          "workerType": "relops-image-builder"
+        },
+        "launchConfig": {
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/sda1",
               "Ebs": {
                 "DeleteOnTermination": true,
-                "VolumeSize": 40,
-                "VolumeType": "gp2"
+                "VolumeType": "gp2",
+                "VolumeSize": 40
               }
             },
             {
               "DeviceName": "/dev/sdb",
               "Ebs": {
                 "DeleteOnTermination": true,
-                "VolumeSize": 120,
-                "VolumeType": "gp2"
+                "VolumeType": "gp2",
+                "VolumeSize": 120
               }
             }
           ],
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "idleTimeoutSecs": 90,
-              "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
-              "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
-              "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "livelogPUTPort": 60022,
-              "numberOfTasksToRun": 0,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
-            }
-          }
-        },
-        "additionalUserData": {
-          "workerType": "relops-image-builder"
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-west-2",
-        "launchConfig": {
-          "ImageId": "ami-0e5430a7c5c50e0dc",
           "Placement": {
             "AvailabilityZone": "us-west-2b"
           },
           "SubnetId": "subnet-2eaaba67",
+          "ImageId": "ami-0e5430a7c5c50e0dc",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          },
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-09d6be73",
             "sg-3bd7bf41"
-          ],
-          "InstanceType": "c5.4xlarge",
+          ]
+        }
+      },
+      {
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "sentryProject": "generic-worker",
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "runTasksAsCurrentUser": false,
+              "idleTimeoutSecs": 90,
+              "livelogPUTPort": 60022,
+              "downloadsDir": "Z:\\downloads",
+              "numberOfTasksToRun": 0,
+              "cachesDir": "Z:\\caches",
+              "taskclusterProxyPort": 80,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnIdle": false,
+              "disableReboots": true,
+              "deploymentId": "f37dd7ee1cae",
+              "cleanUpTaskDirs": true,
+              "shutdownMachineOnInternalError": true,
+              "tasksDir": "Z:\\",
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key"
+            }
+          }
+        },
+        "region": "us-west-2",
+        "capacityPerInstance": 1,
+        "additionalUserData": {
+          "workerType": "relops-image-builder"
+        },
+        "launchConfig": {
           "BlockDeviceMappings": [
             {
               "DeviceName": "/dev/sda1",
               "Ebs": {
                 "DeleteOnTermination": true,
-                "VolumeSize": 40,
-                "VolumeType": "gp2"
+                "VolumeType": "gp2",
+                "VolumeSize": 40
               }
             },
             {
               "DeviceName": "/dev/sdb",
               "Ebs": {
                 "DeleteOnTermination": true,
-                "VolumeSize": 120,
-                "VolumeType": "gp2"
+                "VolumeType": "gp2",
+                "VolumeSize": 120
               }
             }
           ],
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "idleTimeoutSecs": 90,
-              "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
-              "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
-              "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "livelogPUTPort": 60022,
-              "numberOfTasksToRun": 0,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
-            }
-          }
-        },
-        "additionalUserData": {
-          "workerType": "relops-image-builder"
-        }
-      },
-      {
-        "capacityPerInstance": 1,
-        "region": "us-west-2",
-        "launchConfig": {
-          "ImageId": "ami-0e5430a7c5c50e0dc",
           "Placement": {
             "AvailabilityZone": "us-west-2c"
           },
           "SubnetId": "subnet-540a9f0f",
+          "ImageId": "ami-0e5430a7c5c50e0dc",
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          },
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-09d6be73",
             "sg-3bd7bf41"
-          ],
-          "InstanceType": "c5.4xlarge",
-          "BlockDeviceMappings": [
-            {
-              "DeviceName": "/dev/sda1",
-              "Ebs": {
-                "DeleteOnTermination": true,
-                "VolumeSize": 40,
-                "VolumeType": "gp2"
-              }
-            },
-            {
-              "DeviceName": "/dev/sdb",
-              "Ebs": {
-                "DeleteOnTermination": true,
-                "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
-            }
-          ],
-          "InstanceMarketOptions": {
-            "MarketType": "spot"
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "idleTimeoutSecs": 90,
-              "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
-              "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
-              "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "livelogPUTPort": 60022,
-              "numberOfTasksToRun": 0,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
-            }
-          }
-        },
-        "additionalUserData": {
-          "workerType": "relops-image-builder"
+          ]
         }
       }
     ]
@@ -206,7 +206,7 @@
   "created": "2019-12-04T16:54:05.614Z",
   "description": "build windows cloud images for taskcluster windows workloads",
   "emailOnError": true,
-  "lastModified": "2019-12-04T18:56:15.329Z",
+  "lastModified": "2019-12-05T08:50:33.813Z",
   "owner": "grenade@mozilla.com",
   "providerId": "aws",
   "workerPoolId": "relops/win2019"
