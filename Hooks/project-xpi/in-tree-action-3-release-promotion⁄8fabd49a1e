@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-3-generic/4918dc805c",
+  "hookId": "in-tree-action-3-release-promotion/8fabd49a1e",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 4918dc805c.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash 8fabd49a1e.\n\nFor project(s) xpi-manifest\n\nThis hook is fired in response to actions defined in a Gecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-3-generic/4918dc805c",
+    "name": "project-xpi/in-tree-action-3-release-promotion/8fabd49a1e",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -17,8 +17,8 @@
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}",
         "symbol": "${payload.decision.action.symbol}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "cb_name": "${payload.decision.action.cb_name}"
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "cb_name": "release-promotion"
       },
       "push": {
         "$eval": "payload.decision.push"
@@ -46,7 +46,7 @@
       "$let": {
         "taskgraph": {
           "branch": "taskgraph",
-          "revision": "d302e95cc988706ba746bfecbf1dae31090d212f"
+          "revision": "09d4c6dec78d17beb186eef1f79c1ab712ccc433"
         },
         "trustDomain": "xpi"
       },
