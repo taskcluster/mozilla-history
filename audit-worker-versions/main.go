@@ -306,14 +306,14 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 		versionInfo = "generic-worker - unknown version"
 	case strings.Contains(logContent, "Worker Node Type:"):
 		versionInfo = "docker-worker - unknown version"
-	case strings.Contains(logContent, `"release": "https://github.com/taskcluster/generic-worker/releases/tag/v`):
+	case strings.Contains(logContent, `"generic-worker":`):
 		versionInfo = "generic-worker"
 		for _, t := range []struct {
 			regex string
 			text  string
 		}{
 			{`"engine": "(.*)"`, `%v engine`},
-			{`"https://github.com/taskcluster/generic-worker/releases/tag/v([^"]*)"`, `%v`},
+			{`"https://github.com/taskcluster/.*/releases/tag/v([^"]*)"`, `%v`},
 			{`"revision": "([0-9a-f]{40})"`, `(revision %v)`},
 			{`"go-os": "(.*)"`, `%v`},
 			{`"go-arch": "(.*)"`, `%v`},
