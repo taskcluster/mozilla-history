@@ -11,12 +11,11 @@ import (
 	"time"
 
 	"github.com/taskcluster/mozilla-history/workerpool"
-	tcclient "github.com/taskcluster/taskcluster-client-go"
-	"github.com/taskcluster/taskcluster-client-go/tcauth"
-	"github.com/taskcluster/taskcluster-client-go/tcawsprovisioner"
-	"github.com/taskcluster/taskcluster-client-go/tchooks"
-	"github.com/taskcluster/taskcluster-client-go/tcsecrets"
-	"github.com/taskcluster/taskcluster-client-go/tcworkermanager"
+	tcclient "github.com/taskcluster/taskcluster/v29/clients/client-go"
+	"github.com/taskcluster/taskcluster/v29/clients/client-go/tcauth"
+	"github.com/taskcluster/taskcluster/v29/clients/client-go/tchooks"
+	"github.com/taskcluster/taskcluster/v29/clients/client-go/tcsecrets"
+	"github.com/taskcluster/taskcluster/v29/clients/client-go/tcworkermanager"
 )
 
 var (
@@ -45,7 +44,6 @@ func main() {
 	hookGroupsPool.OnComplete(func(result workerpool.Result) {
 		wp.AddWork(result.(func(*workerpool.SubmitterContext)))
 	})
-	wp.AddWork(FetchWorkerTypes)
 	wp.AddWork(FetchRoles)
 	wp.AddWork(FetchClients)
 	wp.AddWork(FetchWorkerPools)
@@ -91,33 +89,6 @@ func WriteEntityToFileAsJSON(entity interface{}, path string, result workerpool.
 		encoder.SetIndent("", "  ")
 		encoder.Encode(entity)
 		return result
-	}
-}
-
-func FetchWorkerTypes(context *workerpool.SubmitterContext) {
-	if os.Getenv("TASKCLUSTER_ROOT_URL") != "https://taskcluster.net" {
-		return
-	}
-	EmptyDirectory("AWSWorkerTypes")
-	prov := tcawsprovisioner.NewFromEnv()
-	allWorkerTypes, err := prov.ListWorkerTypes()
-	if err != nil {
-		panic(err)
-	}
-	for _, workerType := range *allWorkerTypes {
-		context.RequestChannel <- func(workerType string) workerpool.Work {
-			return func(workerId int) workerpool.Result {
-				wt, err := prov.WorkerType(workerType)
-				if err != nil {
-					panic(err)
-				}
-				return WriteEntityToFileAsJSON(
-					wt,
-					filepath.Join("AWSWorkerTypes", FilenameEscape(workerType)),
-					"Fetched workerType "+workerType,
-				)(workerId)
-			}
-		}(workerType)
 	}
 }
 

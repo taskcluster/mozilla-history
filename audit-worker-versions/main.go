@@ -13,17 +13,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/taskcluster/httpbackoff"
+	"github.com/taskcluster/httpbackoff/v3"
 	"github.com/taskcluster/slugid-go/slugid"
-	tcclient "github.com/taskcluster/taskcluster-client-go"
-	"github.com/taskcluster/taskcluster-client-go/tcawsprovisioner"
-	"github.com/taskcluster/taskcluster-client-go/tcqueue"
-	"github.com/taskcluster/taskcluster-client-go/tcworkermanager"
+	tcclient "github.com/taskcluster/taskcluster/v29/clients/client-go"
+	"github.com/taskcluster/taskcluster/v29/clients/client-go/tcqueue"
+	"github.com/taskcluster/taskcluster/v29/clients/client-go/tcworkermanager"
 )
 
 type (
 	Queue       tcqueue.Queue
-	Provisioner tcawsprovisioner.AwsProvisioner
 )
 
 const waitTimeMinutes = 90
@@ -145,28 +143,10 @@ func fatalOnError(err error) {
 	}
 }
 
-func NewProvisioner() *Provisioner {
-	p := tcawsprovisioner.NewFromEnv()
-	P := Provisioner(*p)
-	return &P
-}
-
 func NewQueue() *Queue {
 	q := tcqueue.NewFromEnv()
 	Q := Queue(*q)
 	return &Q
-}
-
-func (p *Provisioner) AllWorkerTypes() []string {
-	if os.Getenv("TASKCLUSTER_ROOT_URL") != "https://taskcluster.net" {
-		return []string{}
-	}
-	prov := tcawsprovisioner.AwsProvisioner(*p)
-	wt, err := prov.ListWorkerTypes()
-	if err != nil {
-		panic(err)
-	}
-	return []string(*wt)
 }
 
 func AllWorkerTypes() []string {
@@ -194,13 +174,6 @@ func AllWorkerTypes() []string {
 		for _, wt := range p {
 			uniqueWorkerTypes[wt] = true
 		}
-	}
-
-	// Now merge in known worker types according to AWS provisioner
-	p := NewProvisioner()
-	provisionerWorkerTypes := p.AllWorkerTypes()
-	for _, wt := range provisionerWorkerTypes {
-		uniqueWorkerTypes["aws-provisioner-v1/"+wt] = true
 	}
 
 	// Now merge in known worker types according to Worker Manager
