@@ -277,8 +277,14 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 	}
 	logContent := string(data)
 	switch true {
-	case strings.Contains(logContent, "Task not successful due to following exception"):
-		versionInfo = "generic-worker - unknown version"
+	case strings.Contains(logContent, "Worker Version: "):
+		re := regexp.MustCompile(`(?m)Worker Version: (.*)`)
+		dw := re.FindStringSubmatch(logContent)
+		val := "<UNKNOWN>"
+		if len(dw) > 1 {
+			val = dw[1]
+		}
+		versionInfo = "docker-worker - version " + val
 	case strings.Contains(logContent, "Worker Node Type:"):
 		versionInfo = "docker-worker - unknown version"
 	case strings.Contains(logContent, `"generic-worker":`):
@@ -302,6 +308,8 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 			}
 			versionInfo += " " + fmt.Sprintf(t.text, val)
 		}
+	case strings.Contains(logContent, "Task not successful due to following exception"):
+		versionInfo = "generic-worker - unknown version"
 	case strings.Contains(logContent, `not allowed at task.payload.features`):
 		versionInfo = "taskcluster-worker - unknown version"
 	case strings.Contains(logContent, `raise TaskVerificationError`):
