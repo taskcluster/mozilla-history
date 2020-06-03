@@ -26,11 +26,19 @@ type (
 
 const waitTimeMinutes = 90
 
+var (
+	// set during build with `-ldflags "-X main.revision=$(git rev-parse HEAD)"`
+	revision string = ""
+)
+
 func FilenameEscape(raw string) (escaped string) {
 	return strings.Replace(strings.Replace(raw, "*", "★", -1), "/", "⁄", -1)
 }
 
 func main() {
+	if revision != "" {
+		log.Printf("%v built from revision %v", os.Args[0], revision)
+	}
 	reportPrefix := os.Getenv("REPORT_PREFIX")
 	if reportPrefix == "" {
 		log.Fatal("Please export env var REPORT_PREFIX to e.g. https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/")
