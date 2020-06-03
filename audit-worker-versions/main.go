@@ -21,7 +21,7 @@ import (
 )
 
 type (
-	Queue       tcqueue.Queue
+	Queue tcqueue.Queue
 )
 
 const waitTimeMinutes = 90
@@ -172,7 +172,9 @@ func AllWorkerTypes() []string {
 	wg.Wait()
 	for _, p := range workerTypes {
 		for _, wt := range p {
-			uniqueWorkerTypes[wt] = true
+			if !strings.HasPrefix(wt, "null-provisioner/test-") {
+				uniqueWorkerTypes[wt] = true
+			}
 		}
 	}
 
