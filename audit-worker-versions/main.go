@@ -86,7 +86,7 @@ func main() {
 					"fake": "fake arbitrary payload to cause malformed-payload exception",
 					"see": "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions"
 			}`),
-			Priority:      "highest",
+			Priority:      "lowest",
 			ProvisionerID: provisionerID,
 			Requires:      "all-completed",
 			Retries:       5,
