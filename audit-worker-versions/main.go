@@ -319,19 +319,19 @@ func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID
 	case strings.Contains(logContent, "Task not successful due to following exception"):
 		versionInfo = "generic-worker - unknown version"
 	case strings.Contains(logContent, `not allowed at task.payload.features`):
-		versionInfo = "taskcluster-worker - unknown version"
+		versionInfo = "Taskcluster Worker"
 	case strings.Contains(logContent, `raise TaskVerificationError`):
-		versionInfo = "scriptworker - unknown version"
+		versionInfo = "Scriptworker"
 	case strings.Contains(logContent, `KeyError: 'artifacts_deps'`):
-		versionInfo = "some kind of scriptworker - unknown version"
+		versionInfo = "Other Scriptworker"
 	case artifactFound == "":
-		versionInfo = "No artifacts found!"
+		versionInfo = "No artifacts found"
 	case artifactFound == "public/logs/chain_of_trust.log":
-		versionInfo = "scriptworker chain of trust - unknown version"
+		versionInfo = "Scriptworker Chain of Trust"
 	case strings.Contains(logContent, `os.environ.get('GITHUB_HEAD_REPO_URL', decision_json['payload']['env']['GITHUB_HEAD_REPO_URL'])`):
-		versionInfo = "scriptworker - deepspeech - unknown version"
+		versionInfo = "Scriptworker Deepspeech"
 	default:
-		versionInfo = "UNKNOWN"
+		versionInfo = "Unknown"
 		log.Printf("Cannot determine worker implementation from log:\n%v", logContent)
 	}
 	return
