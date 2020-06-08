@@ -36,6 +36,7 @@ func FilenameEscape(raw string) (escaped string) {
 }
 
 func main() {
+	submittedTasks := false
 	if revision != "" {
 		log.Printf("%v built from revision %v", os.Args[0], revision)
 	}
@@ -43,7 +44,7 @@ func main() {
 	if reportPrefix == "" {
 		log.Fatal("Please export env var REPORT_PREFIX to e.g. https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/")
 	}
-	taskIDs := map[string]string{}
+	tasks := map[string]tcqueue.TaskRun{}
 	queue := tcqueue.NewFromEnv()
 	taskGroupID := slugid.Nice()
 	created := time.Now()
@@ -52,87 +53,110 @@ func main() {
 		x := strings.Split(wt, "/")
 		provisionerID := x[0]
 		workerType := x[1]
-		taskID := slugid.Nice()
-		taskIDs[wt] = taskID
-		taskDef := &tcqueue.TaskDefinitionRequest{
-			Created:      tcclient.Time(created),
-			Deadline:     tcclient.Time(created.Add(time.Hour * 3)),
-			Dependencies: []string{},
-			Expires:      tcclient.Time(created.Add(time.Hour * 24 * 30)),
-			Extra:        json.RawMessage("{}"),
-			Metadata: struct {
-				Description string `json:"description"`
-				Name        string `json:"name"`
-				Owner       string `json:"owner"`
-				Source      string `json:"source"`
-			}{
-				Name: "Checking worker version on " + provisionerID + "/" + workerType,
-				Description: strings.Join([]string{
-					`This task is a simple probe for checking the worker implementation (and version) that runs`,
-					`on this worker type. This is routinely run in order to keep track of which worker`,
-					`implementations have been deployed to which worker types, and which worker types may be`,
-					`broken.`,
-					``,
-					`Note, the payload is intentionally invalid, so it is expected that the task resolves as`,
-					"`malformed-payload`, but the log file should still contain enough information for the worker",
-					`implementation to be determined.`,
-					``,
-					`The resulting verdict will be published [here](` + reportPrefix + provisionerID + `%E2%81%84` + workerType + `).`,
-				}, "\n"),
-				Owner:  "pmoore@mozilla.com",
-				Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
-			},
-			Payload: json.RawMessage(`{
+
+		continuationToken := ""
+		foundTask := false
+		for {
+			workers, err := queue.ListWorkers(provisionerID, workerType, continuationToken, "", "")
+			if err != nil {
+				panic(err)
+			}
+			for _, worker := range workers.Workers {
+				tasks[wt] = tcqueue.TaskRun{
+					TaskID: worker.LatestTask.TaskID,
+					RunID:  worker.LatestTask.RunID,
+				}
+				foundTask = true
+				break
+			}
+			continuationToken = workers.ContinuationToken
+			if continuationToken == "" || foundTask {
+				break
+			}
+		}
+
+		if !foundTask && os.Getenv("TASKCLUSTER_CLIENT_ID") != "" {
+			taskID := slugid.Nice()
+			tasks[wt] = tcqueue.TaskRun{
+				TaskID: taskID,
+				RunID:  0,
+			}
+			taskDef := &tcqueue.TaskDefinitionRequest{
+				Created:      tcclient.Time(created),
+				Deadline:     tcclient.Time(created.Add(time.Hour * 3)),
+				Dependencies: []string{},
+				Expires:      tcclient.Time(created.Add(time.Hour * 24 * 30)),
+				Extra:        json.RawMessage("{}"),
+				Metadata: struct {
+					Description string `json:"description"`
+					Name        string `json:"name"`
+					Owner       string `json:"owner"`
+					Source      string `json:"source"`
+				}{
+					Name: "Checking worker version on " + provisionerID + "/" + workerType,
+					Description: strings.Join([]string{
+						`This task is a simple probe for checking the worker implementation (and version) that runs`,
+						`on this worker type. This is routinely run in order to keep track of which worker`,
+						`implementations have been deployed to which worker types, and which worker types may be`,
+						`broken.`,
+						``,
+						`Note, the payload is intentionally invalid, so it is expected that the task resolves as`,
+						"`malformed-payload`, but the log file should still contain enough information for the worker",
+						`implementation to be determined.`,
+						``,
+						`The resulting verdict will be published [here](` + reportPrefix + provisionerID + `%E2%81%84` + workerType + `).`,
+					}, "\n"),
+					Owner:  "pmoore@mozilla.com",
+					Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
+				},
+				Payload: json.RawMessage(`{
 					"fake": "fake arbitrary payload to cause malformed-payload exception",
 					"see": "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions"
 			}`),
-			Priority:      "lowest",
-			ProvisionerID: provisionerID,
-			Requires:      "all-completed",
-			Retries:       5,
-			Routes:        []string{},
-			SchedulerID:   "-",
-			Scopes:        []string{},
-			Tags:          map[string]string{},
-			TaskGroupID:   taskGroupID,
-			WorkerType:    workerType,
+				Priority:      "lowest",
+				ProvisionerID: provisionerID,
+				Requires:      "all-completed",
+				Retries:       5,
+				Routes:        []string{},
+				SchedulerID:   "-",
+				Scopes:        []string{},
+				Tags:          map[string]string{},
+				TaskGroupID:   taskGroupID,
+				WorkerType:    workerType,
+			}
+			tsr, err := queue.CreateTask(taskID, taskDef)
+			fatalOnError(err)
+
+			respJSON, err := json.MarshalIndent(tsr, "", "  ")
+			fatalOnError(err)
+
+			fmt.Println(string(respJSON))
+			submittedTasks = true
 		}
-		tsr, err := queue.CreateTask(taskID, taskDef)
-		fatalOnError(err)
-
-		respJSON, err := json.MarshalIndent(tsr, "", "  ")
-		fatalOnError(err)
-
-		fmt.Println(string(respJSON))
 	}
 
 	fmt.Println("Task Group ID: " + taskGroupID)
 	fmt.Printf("Now sleeping for %v mins to wait for tasks to run...\n", waitTimeMinutes)
 
-	// Leave plenty of time for tasks to run
-	time.Sleep(waitTimeMinutes * time.Minute)
+	if submittedTasks {
+		// Leave plenty of time for tasks to run
+		time.Sleep(waitTimeMinutes * time.Minute)
+	}
 
-	continuationToken := ""
-	for {
-		tasks, err := queue.ListTaskGroup(taskGroupID, continuationToken, "")
+	for _, task := range tasks {
+		statusResponse, err := queue.Status(task.TaskID)
 		if err != nil {
 			panic(err)
 		}
-		for _, task := range tasks.Tasks {
-			workerPoolID, versionInfo := show(queue, task)
-			filename := FilenameEscape(workerPoolID)
-			err := ioutil.WriteFile(filename, append([]byte(versionInfo), '\n'), 0644)
-			if err != nil {
-				log.Fatalf("Error:\n%v", err)
-			}
-			name := workerPoolID + ":                                                                          "
-			fmt.Print(name[:75])
-			fmt.Println(versionInfo)
+		workerPoolID, versionInfo := show(queue, statusResponse)
+		filename := FilenameEscape(workerPoolID)
+		err = ioutil.WriteFile(filename, append([]byte(versionInfo), '\n'), 0644)
+		if err != nil {
+			log.Fatalf("Error:\n%v", err)
 		}
-		continuationToken = tasks.ContinuationToken
-		if continuationToken == "" {
-			break
-		}
+		name := workerPoolID + ":                                                                          "
+		fmt.Print(name[:75])
+		fmt.Println(versionInfo)
 	}
 }
 
@@ -249,8 +273,8 @@ func (q *Queue) ProvisionerWorkerTypes(provisionerID string) []string {
 	return workerTypes
 }
 
-func show(queue *tcqueue.Queue, t tcqueue.TaskDefinitionAndStatus) (workerPoolID, versionInfo string) {
-	workerPoolID = t.Task.ProvisionerID + "/" + t.Task.WorkerType
+func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID, versionInfo string) {
+	workerPoolID = t.Status.ProvisionerID + "/" + t.Status.WorkerType
 	if t.Status.State == "pending" {
 		versionInfo = fmt.Sprintf("Version not determined; probing task remains pending after %v minutes.", waitTimeMinutes)
 		return
