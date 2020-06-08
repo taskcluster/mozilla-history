@@ -48,6 +48,8 @@ func main() {
 	queue := tcqueue.NewFromEnv()
 	taskGroupID := slugid.Nice()
 	created := time.Now()
+	poolsWithTasksWithoutLogs := []string{}
+	poolsWithoutTasks := []string{}
 	for _, wt := range AllWorkerTypes() {
 		fmt.Println(wt)
 		x := strings.Split(wt, "/")
@@ -55,6 +57,7 @@ func main() {
 		workerType := x[1]
 
 		continuationToken := ""
+		foundLog := false
 		foundTask := false
 		for {
 			workers, err := queue.ListWorkers(provisionerID, workerType, continuationToken, "", "")
@@ -66,20 +69,41 @@ func main() {
 				if err != nil {
 					continue
 				}
+				foundTask = true
+				for _, artifact := range []string{
+					"public/logs/live_backing.log",
+					"public/logs/chain_of_trust.log",
+				} {
+					logURL, err := queue.GetLatestArtifact_SignedURL(worker.LatestTask.TaskID, artifact, time.Hour)
+					if err != nil {
+						panic(err)
+					}
+					_, _, err = httpbackoff.Get(logURL.String())
+					if err != nil {
+						continue
+					}
+				}
 				tasks[wt] = tcqueue.TaskRun{
 					TaskID: worker.LatestTask.TaskID,
 					RunID:  worker.LatestTask.RunID,
 				}
-				foundTask = true
+				foundLog = true
 				break
 			}
 			continuationToken = workers.ContinuationToken
-			if continuationToken == "" || foundTask {
+			if continuationToken == "" || foundLog {
 				break
 			}
 		}
 
 		if !foundTask {
+			poolsWithoutTasks = append(poolsWithoutTasks, wt)
+		}
+		if foundTask && !foundLog {
+			poolsWithTasksWithoutLogs = append(poolsWithTasksWithoutLogs, wt)
+		}
+
+		if !foundLog {
 			fmt.Println("No existing task found for " + wt)
 			if os.Getenv("TASKCLUSTER_CLIENT_ID") != "" {
 				taskID := slugid.Nice()
@@ -165,6 +189,9 @@ func main() {
 		fmt.Print(name[:75])
 		fmt.Println(versionInfo)
 	}
+
+	fmt.Printf("Worker Types without recent tasks: %v\n", poolsWithoutTasks)
+	fmt.Printf("Worker Types with recent tasks without required logs: %v\n", poolsWithTasksWithoutLogs)
 }
 
 func mustCompileToRawMessage(data interface{}) *json.RawMessage {
