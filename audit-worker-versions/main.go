@@ -74,21 +74,23 @@ func main() {
 					"public/logs/live_backing.log",
 					"public/logs/chain_of_trust.log",
 				} {
-					logURL, err := queue.GetLatestArtifact_SignedURL(worker.LatestTask.TaskID, artifact, time.Hour)
+					logURL, err := queue.GetArtifact_SignedURL(worker.LatestTask.TaskID, fmt.Sprintf("%v", worker.LatestTask.RunID), artifact, time.Hour)
 					if err != nil {
 						panic(err)
 					}
 					_, _, err = httpbackoff.Get(logURL.String())
-					if err != nil {
-						continue
+					if err == nil {
+						tasks[wt] = tcqueue.TaskRun{
+							TaskID: worker.LatestTask.TaskID,
+							RunID:  worker.LatestTask.RunID,
+						}
+						foundLog = true
+						break
 					}
 				}
-				tasks[wt] = tcqueue.TaskRun{
-					TaskID: worker.LatestTask.TaskID,
-					RunID:  worker.LatestTask.RunID,
+				if foundLog {
+					break
 				}
-				foundLog = true
-				break
 			}
 			continuationToken = workers.ContinuationToken
 			if continuationToken == "" || foundLog {
