@@ -45,6 +45,8 @@ releng-hardware⁄gecko-t-win10-64-hw:          generic-worker  multiuser  engin
 pmoore-test⁄win2012r2:                        generic-worker  multiuser  engine  16.1.0  (revision  8d3c59875b34014901e2c0d6ec3c6dd41531955b)  windows  amd64  Go  1.10.8
 pmoore-test⁄win2012r2-cu:                     generic-worker  multiuser  engine  16.1.0  (revision  8d3c59875b34014901e2c0d6ec3c6dd41531955b)  windows  amd64  Go  1.10.8
 proj-autophone⁄gecko-t-bitbar-gw-unit-p2:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
+proj-autophone⁄gecko-t-bitbar-gw-perf-p2:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
+proj-autophone⁄gecko-t-bitbar-gw-perf-g5:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
 proj-autophone⁄gecko-t-bitbar-gw-batt-p2:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
 proj-autophone⁄gecko-t-bitbar-gw-batt-g5:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
 aws-provisioner-v1⁄mpd-3-b-win2012:           generic-worker  multiuser  engine  15.1.5  (revision  542b410e7975301f8ee85ca76d5d920e08dbd3b1)  windows  amd64  Go  1.10.8
@@ -266,12 +268,8 @@ app-services-1⁄b-linux:                      docker-worker  -  unknown  versio
 ```
 built-in⁄fail
 built-in⁄succeed
-proj-autophone⁄gecko-t-bitbar-gw-perf-g5
-proj-autophone⁄gecko-t-bitbar-gw-perf-p2
 releng-hardware⁄gecko-3-t-osx-1014
 releng-hardware⁄gecko-t-osx-1014
-scriptworker-prov-v1⁄tb-mac-notarization-poller
-scriptworker-prov-v1⁄tb-signing-mac-v1
 ```
 
 # Scriptworker
@@ -281,6 +279,7 @@ scriptworker-k8s⁄comm-3-balrog
 scriptworker-k8s⁄comm-3-beetmover
 scriptworker-k8s⁄comm-3-signing
 scriptworker-k8s⁄comm-t-signing
+scriptworker-k8s⁄gecko-1-tree
 scriptworker-k8s⁄gecko-3-addon
 scriptworker-k8s⁄gecko-3-balrog
 scriptworker-k8s⁄gecko-3-beetmover
@@ -299,6 +298,7 @@ scriptworker-k8s⁄xpi-t-signing
 scriptworker-prov-v1⁄depsigning-mac-v1
 scriptworker-prov-v1⁄signing-mac-v1
 scriptworker-prov-v1⁄tb-depsigning-mac-v1
+scriptworker-prov-v1⁄tb-signing-mac-v1
 ```
 
 # Scriptworker Balrog
@@ -326,6 +326,7 @@ scriptworker-k8s⁄gecko-3-bouncer
 
 ```
 scriptworker-prov-v1⁄mac-notarization-poller
+scriptworker-prov-v1⁄tb-mac-notarization-poller
 ```
 
 # Version not determined; probing task remains pending after 90 minutes.
@@ -370,7 +371,6 @@ scriptworker-k8s⁄gecko-1-pushsnap
 scriptworker-k8s⁄gecko-1-pushsnap-dev
 scriptworker-k8s⁄gecko-1-shipit
 scriptworker-k8s⁄gecko-1-shipit-dev
-scriptworker-k8s⁄gecko-1-tree
 scriptworker-k8s⁄gecko-1-tree-dev
 scriptworker-k8s⁄gecko-3-pushapk
 scriptworker-prov-v1⁄addon-dev
