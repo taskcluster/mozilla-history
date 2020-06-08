@@ -10,7 +10,6 @@ aws-provisioner-v1⁄gecko-t-win7-32-gpu-b:     generic-worker  multiuser  engin
 aws-provisioner-v1⁄gecko-t-win7-32-cu:        generic-worker  multiuser  engine  16.5.5  (revision  2509a1f8589b0b536186f5fe8f043385bf67197f)  windows  386    Go  1.10.8
 aws-provisioner-v1⁄gecko-t-win7-32-beta:      generic-worker  multiuser  engine  16.5.5  (revision  2509a1f8589b0b536186f5fe8f043385bf67197f)  windows  386    Go  1.10.8
 aws-provisioner-v1⁄gwci-linux-beta:           generic-worker  multiuser  engine  16.5.3  (revision  122f90ed4c27f2abb0cd839e3944184312ad9590)  linux    amd64  Go  1.12.9
-releng-hardware⁄gecko-3-t-osx-1014:           generic-worker  multiuser  engine  16.5.2  (revision  580fed54c2f8e7891224e30ff43bab2c080561b7)  darwin   amd64  Go  1.10.8
 pmoore-manual⁄mac-os-x:                       generic-worker  multiuser  engine  16.5.2  (revision  580fed54c2f8e7891224e30ff43bab2c080561b7)  darwin   amd64  Go  1.10.8
 gecko-t⁄t-win10-64:                           generic-worker  multiuser  engine  16.5.1  (revision  02bc4c9cd7247a7e01bc5a7e3395e2f5c24ff24d)  windows  amd64  Go  1.10.8
 gecko-t⁄t-win10-64-source:                    generic-worker  multiuser  engine  16.5.1  (revision  02bc4c9cd7247a7e01bc5a7e3395e2f5c24ff24d)  windows  amd64  Go  1.10.8
@@ -45,7 +44,7 @@ releng-hardware⁄gecko-t-win10-64-ref-18:      generic-worker  multiuser  engin
 releng-hardware⁄gecko-t-win10-64-hw:          generic-worker  multiuser  engine  16.2.0  (revision  b321a877c8f1616d8912399f599c325171f15e95)  windows  amd64  Go  1.10.8
 pmoore-test⁄win2012r2:                        generic-worker  multiuser  engine  16.1.0  (revision  8d3c59875b34014901e2c0d6ec3c6dd41531955b)  windows  amd64  Go  1.10.8
 pmoore-test⁄win2012r2-cu:                     generic-worker  multiuser  engine  16.1.0  (revision  8d3c59875b34014901e2c0d6ec3c6dd41531955b)  windows  amd64  Go  1.10.8
-proj-autophone⁄gecko-t-bitbar-gw-perf-g5:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
+proj-autophone⁄gecko-t-bitbar-gw-unit-p2:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
 proj-autophone⁄gecko-t-bitbar-gw-batt-p2:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
 proj-autophone⁄gecko-t-bitbar-gw-batt-g5:     generic-worker  simple     engine  16.0.0  (revision  4458a2fc07483e29434f4e3c0926d59997e990fa)  linux    amd64  Go  1.10.8
 aws-provisioner-v1⁄mpd-3-b-win2012:           generic-worker  multiuser  engine  15.1.5  (revision  542b410e7975301f8ee85ca76d5d920e08dbd3b1)  windows  amd64  Go  1.10.8
@@ -70,7 +69,6 @@ aws-provisioner-v1⁄gecko-t-win10-64-gpu-a:    generic-worker  <UNKNOWN>  engin
 aws-provisioner-v1⁄gecko-t-win10-64-alpha:    generic-worker  <UNKNOWN>  engine  14.1.0  (revision  081b7c0200fb915ccc08d0cace49712ebc6e23c3)  windows  amd64  Go  1.10.8
 aws-provisioner-v1⁄gecko-3-b-win2012-c5:      generic-worker  <UNKNOWN>  engine  14.1.0  (revision  081b7c0200fb915ccc08d0cace49712ebc6e23c3)  windows  amd64  Go  1.10.8
 aws-provisioner-v1⁄gecko-3-b-win2012-c4:      generic-worker  <UNKNOWN>  engine  14.1.0  (revision  081b7c0200fb915ccc08d0cace49712ebc6e23c3)  windows  amd64  Go  1.10.8
-releng-hardware⁄gecko-t-osx-1014:             generic-worker  <UNKNOWN>  engine  13.0.3  (revision  4790b3e4a8b726daa41aa102091b53b192aa79ef)  darwin   amd64  Go  1.10.3
 releng-hardware⁄gecko-t-osx-1014-staging:     generic-worker  <UNKNOWN>  engine  13.0.3  (revision  4790b3e4a8b726daa41aa102091b53b192aa79ef)  darwin   amd64  Go  1.10.3
 releng-hardware⁄gecko-t-osx-1014-r8:          generic-worker  <UNKNOWN>  engine  13.0.3  (revision  4790b3e4a8b726daa41aa102091b53b192aa79ef)  darwin   amd64  Go  1.10.3
 releng-hardware⁄gecko-t-osx-1014-r8-qa:       generic-worker  <UNKNOWN>  engine  13.0.3  (revision  4790b3e4a8b726daa41aa102091b53b192aa79ef)  darwin   amd64  Go  1.10.3
@@ -115,6 +113,8 @@ l10n-3⁄linux:                                docker-worker  -  unknown  versio
 l10n-3⁄decision:                             docker-worker  -  unknown  version
 infra⁄hg-push:                               docker-worker  -  unknown  version
 hg-t⁄linux:                                  docker-worker  -  unknown  version
+glean-3⁄decision:                            docker-worker  -  unknown  version
+glean-3⁄b-linux:                             docker-worker  -  unknown  version
 glean-1⁄decision:                            docker-worker  -  unknown  version
 glean-1⁄b-linux:                             docker-worker  -  unknown  version
 gecko-t⁄t-linux-xlarge:                      docker-worker  -  unknown  version
@@ -266,11 +266,15 @@ app-services-1⁄b-linux:                      docker-worker  -  unknown  versio
 ```
 built-in⁄fail
 built-in⁄succeed
+proj-autophone⁄gecko-t-bitbar-gw-perf-g5
 proj-autophone⁄gecko-t-bitbar-gw-perf-p2
-proj-autophone⁄gecko-t-bitbar-gw-unit-p2
+releng-hardware⁄gecko-3-t-osx-1014
+releng-hardware⁄gecko-t-osx-1014
+scriptworker-prov-v1⁄tb-mac-notarization-poller
+scriptworker-prov-v1⁄tb-signing-mac-v1
 ```
 
-# Unknown
+# Scriptworker
 
 ```
 scriptworker-k8s⁄comm-3-balrog
@@ -293,11 +297,35 @@ scriptworker-k8s⁄mobile-3-signing
 scriptworker-k8s⁄mobile-t-signing
 scriptworker-k8s⁄xpi-t-signing
 scriptworker-prov-v1⁄depsigning-mac-v1
-scriptworker-prov-v1⁄mac-notarization-poller
 scriptworker-prov-v1⁄signing-mac-v1
 scriptworker-prov-v1⁄tb-depsigning-mac-v1
-scriptworker-prov-v1⁄tb-mac-notarization-poller
-scriptworker-prov-v1⁄tb-signing-mac-v1
+```
+
+# Scriptworker Balrog
+
+```
+scriptworker-k8s⁄comm-3-balrog
+scriptworker-k8s⁄gecko-3-balrog
+```
+
+# Scriptworker Beetmover
+
+```
+scriptworker-k8s⁄comm-3-beetmover
+scriptworker-k8s⁄gecko-3-beetmover
+scriptworker-k8s⁄mobile-3-beetmover
+```
+
+# Scriptworker Bouncer Script
+
+```
+scriptworker-k8s⁄gecko-3-bouncer
+```
+
+# Unknown
+
+```
+scriptworker-prov-v1⁄mac-notarization-poller
 ```
 
 # Version not determined; probing task remains pending after 90 minutes.
