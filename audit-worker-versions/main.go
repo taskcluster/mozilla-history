@@ -361,9 +361,17 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID, ve
 		versionInfo = "Scriptworker Chain of Trust"
 	case strings.Contains(logContent, `os.environ.get('GITHUB_HEAD_REPO_URL', decision_json['payload']['env']['GITHUB_HEAD_REPO_URL'])`):
 		versionInfo = "Scriptworker Deepspeech"
+	case strings.Contains(logContent, `balrog`):
+		versionInfo = "Scriptworker Balrog"
+	case strings.Contains(logContent, `bouncerscript`):
+		versionInfo = "Scriptworker Bouncer Script"
+	case strings.Contains(logContent, `beetmover`):
+		versionInfo = "Scriptworker Beetmover"
+	case strings.Contains(logContent, `scriptworker`):
+		versionInfo = "Scriptworker"
 	default:
 		versionInfo = "Unknown"
-		log.Printf("Cannot determine worker implementation from log:\n%v", logContent)
+		log.Printf("Cannot determine worker implementation from log:\n%v", logContent[:1024])
 	}
 	return
 }
