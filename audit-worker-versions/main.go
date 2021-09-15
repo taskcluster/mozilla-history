@@ -24,8 +24,6 @@ type (
 	Queue tcqueue.Queue
 )
 
-const waitTimeMinutes = 90
-
 var (
 	// set during build with `-ldflags "-X main.revision=$(git rev-parse HEAD)"`
 	revision string = ""
@@ -35,150 +33,110 @@ func FilenameEscape(raw string) (escaped string) {
 	return strings.Replace(strings.Replace(raw, "*", "★", -1), "/", "⁄", -1)
 }
 
+// Call with no arguments -> New task group generated
+// Call with one argument (taskGroupID) -> Report generated for previously created task group
 func main() {
-	submittedTasks := false
+
+	queue := tcqueue.NewFromEnv()
+
+	switch len(os.Args) {
+	case 1:
+		taskGroupID := slugid.Nice()
+		fmt.Println("Task Group ID: " + taskGroupID)
+		createTasks(queue, taskGroupID)
+	case 2:
+		taskGroupID := os.Args[1]
+		taskIDs := taskIDsForTaskGroup(queue, taskGroupID)
+		if len(taskIDs) == 0 {
+			log.Fatalf("No tasks with taskGroupId %q", taskGroupID)
+		}
+		inspect(queue, taskIDs)
+	default:
+		log.Fatalf("Expected zero or one program arguments, but have %v: %#s", len(os.Args)-1, os.Args[1:])
+	}
+}
+
+func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 	if revision != "" {
 		log.Printf("%v built from revision %v", os.Args[0], revision)
 	}
 	reportPrefix := os.Getenv("REPORT_PREFIX")
 	if reportPrefix == "" {
-		log.Fatal("Please export env var REPORT_PREFIX to e.g. https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/")
+		log.Print("Please export env var REPORT_PREFIX to e.g.")
+		log.Print("  https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/")
+		log.Fatal("  https://github.com/taskcluster/community-history/blob/master/WorkerVersions/")
 	}
 	tasks := map[string]tcqueue.TaskRun{}
-	queue := tcqueue.NewFromEnv()
-	taskGroupID := slugid.Nice()
 	created := time.Now()
-	poolsWithTasksWithoutLogs := []string{}
-	poolsWithoutTasks := []string{}
 	for _, wt := range AllWorkerTypes() {
 		fmt.Println(wt)
 		x := strings.Split(wt, "/")
 		provisionerID := x[0]
 		workerType := x[1]
 
-		continuationToken := ""
-		foundLog := false
-		foundTask := false
-		for {
-			workers, err := queue.ListWorkers(provisionerID, workerType, continuationToken, "", "")
-			if err != nil {
-				panic(err)
-			}
-			for _, worker := range workers.Workers {
-				_, err := queue.Status(worker.LatestTask.TaskID)
-				if err != nil {
-					continue
-				}
-				foundTask = true
-				for _, artifact := range []string{
-					"public/logs/live_backing.log",
-					"public/logs/chain_of_trust.log",
-				} {
-					logURL, err := queue.GetArtifact_SignedURL(worker.LatestTask.TaskID, fmt.Sprintf("%v", worker.LatestTask.RunID), artifact, time.Hour)
-					if err != nil {
-						panic(err)
-					}
-					_, _, err = httpbackoff.Get(logURL.String())
-					if err == nil {
-						tasks[wt] = tcqueue.TaskRun{
-							TaskID: worker.LatestTask.TaskID,
-							RunID:  worker.LatestTask.RunID,
-						}
-						foundLog = true
-						break
-					}
-				}
-				if foundLog {
-					break
-				}
-			}
-			continuationToken = workers.ContinuationToken
-			if continuationToken == "" || foundLog {
-				break
-			}
+		taskID := slugid.Nice()
+		tasks[wt] = tcqueue.TaskRun{
+			TaskID: taskID,
+			RunID:  0,
 		}
-
-		if !foundTask {
-			poolsWithoutTasks = append(poolsWithoutTasks, wt)
-		}
-		if foundTask && !foundLog {
-			poolsWithTasksWithoutLogs = append(poolsWithTasksWithoutLogs, wt)
-		}
-
-		if !foundLog {
-			fmt.Println("No existing task found for " + wt)
-			if os.Getenv("TASKCLUSTER_CLIENT_ID") != "" {
-				taskID := slugid.Nice()
-				tasks[wt] = tcqueue.TaskRun{
-					TaskID: taskID,
-					RunID:  0,
-				}
-				taskDef := &tcqueue.TaskDefinitionRequest{
-					Created:      tcclient.Time(created),
-					Deadline:     tcclient.Time(created.Add(time.Hour * 3)),
-					Dependencies: []string{},
-					Expires:      tcclient.Time(created.Add(time.Hour * 24 * 30)),
-					Extra:        json.RawMessage("{}"),
-					Metadata: struct {
-						Description string `json:"description"`
-						Name        string `json:"name"`
-						Owner       string `json:"owner"`
-						Source      string `json:"source"`
-					}{
-						Name: "Checking worker version on " + provisionerID + "/" + workerType,
-						Description: strings.Join([]string{
-							`This task is a simple probe for checking the worker implementation (and version) that runs`,
-							`on this worker type. This is routinely run in order to keep track of which worker`,
-							`implementations have been deployed to which worker types, and which worker types may be`,
-							`broken.`,
-							``,
-							`Note, the payload is intentionally invalid, so it is expected that the task resolves as`,
-							"`malformed-payload`, but the log file should still contain enough information for the worker",
-							`implementation to be determined.`,
-							``,
-							`The resulting verdict will be published [here](` + reportPrefix + provisionerID + `%E2%81%84` + workerType + `).`,
-						}, "\n"),
-						Owner:  "pmoore@mozilla.com",
-						Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
-					},
-					Payload: json.RawMessage(`{
+		taskDef := &tcqueue.TaskDefinitionRequest{
+			Created:      tcclient.Time(created),
+			Deadline:     tcclient.Time(created.Add(time.Hour * 3)),
+			Dependencies: []string{},
+			Expires:      tcclient.Time(created.Add(time.Hour * 24 * 30)),
+			Extra:        json.RawMessage("{}"),
+			Metadata: struct {
+				Description string `json:"description"`
+				Name        string `json:"name"`
+				Owner       string `json:"owner"`
+				Source      string `json:"source"`
+			}{
+				Name: "Checking worker version on " + provisionerID + "/" + workerType,
+				Description: strings.Join([]string{
+					`This task is a simple probe for checking the worker implementation (and version) that runs`,
+					`on this worker type. This is routinely run in order to keep track of which worker`,
+					`implementations have been deployed to which worker types, and which worker types may be`,
+					`broken.`,
+					``,
+					`Note, the payload is intentionally invalid, so it is expected that the task resolves as`,
+					"`malformed-payload`, but the log file should still contain enough information for the worker",
+					`implementation to be determined.`,
+					``,
+					`The resulting verdict will be published [here](` + reportPrefix + provisionerID + `%E2%81%84` + workerType + `).`,
+				}, "\n"),
+				Owner:  "pmoore@mozilla.com",
+				Source: "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions",
+			},
+			Payload: json.RawMessage(`{
 					"fake": "fake arbitrary payload to cause malformed-payload exception",
 					"see": "https://github.com/taskcluster/mozilla-history/tree/master/audit-worker-versions"
 			}`),
-					Priority:      "lowest",
-					ProvisionerID: provisionerID,
-					Requires:      "all-completed",
-					Retries:       5,
-					Routes:        []string{},
-					SchedulerID:   "-",
-					Scopes:        []string{},
-					Tags:          map[string]string{},
-					TaskGroupID:   taskGroupID,
-					WorkerType:    workerType,
-				}
-				tsr, err := queue.CreateTask(taskID, taskDef)
-				fatalOnError(err)
-
-				respJSON, err := json.MarshalIndent(tsr, "", "  ")
-				fatalOnError(err)
-
-				fmt.Println(string(respJSON))
-				submittedTasks = true
-			}
+			Priority:      "lowest",
+			ProvisionerID: provisionerID,
+			Requires:      "all-completed",
+			Retries:       5,
+			Routes:        []string{},
+			SchedulerID:   "-",
+			Scopes:        []string{},
+			Tags:          map[string]string{},
+			TaskGroupID:   taskGroupID,
+			WorkerType:    workerType,
 		}
-	}
+		tsr, err := queue.CreateTask(taskID, taskDef)
+		fatalOnError(err)
 
-	if submittedTasks {
-		fmt.Println("Task Group ID: " + taskGroupID)
-		fmt.Printf("Now sleeping for %v mins to wait for tasks to run...\n", waitTimeMinutes)
-		// Leave plenty of time for tasks to run
-		time.Sleep(waitTimeMinutes * time.Minute)
-	}
+		respJSON, err := json.MarshalIndent(tsr, "", "  ")
+		fatalOnError(err)
 
-	for _, task := range tasks {
-		statusResponse, err := queue.Status(task.TaskID)
+		fmt.Println(string(respJSON))
+	}
+}
+
+func inspect(queue *tcqueue.Queue, taskIDs []string) {
+	for _, taskID := range taskIDs {
+		statusResponse, err := queue.Status(taskID)
 		if err != nil {
-			fmt.Println("Could not get status for task " + task.TaskID)
+			fmt.Println("Could not get status for task " + taskID)
 			panic(err)
 		}
 		workerPoolID, versionInfo := show(queue, statusResponse)
@@ -191,9 +149,6 @@ func main() {
 		fmt.Print(name[:75])
 		fmt.Println(versionInfo)
 	}
-
-	fmt.Printf("Worker Types without recent tasks: %v\n", poolsWithoutTasks)
-	fmt.Printf("Worker Types with recent tasks without required logs: %v\n", poolsWithTasksWithoutLogs)
 }
 
 func mustCompileToRawMessage(data interface{}) *json.RawMessage {
@@ -312,7 +267,7 @@ func (q *Queue) ProvisionerWorkerTypes(provisionerID string) []string {
 func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID, versionInfo string) {
 	workerPoolID = t.Status.ProvisionerID + "/" + t.Status.WorkerType
 	if t.Status.State == "pending" {
-		versionInfo = fmt.Sprintf("Version not determined; probing task remains pending after %v minutes.", waitTimeMinutes)
+		versionInfo = "Version not determined; task not (yet) claimed"
 		return
 	}
 	var resp *http.Response
@@ -403,4 +358,23 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID, ve
 		log.Printf("Cannot determine worker implementation from log:\n%v", logContent[:1024])
 	}
 	return
+}
+
+func taskIDsForTaskGroup(queue *tcqueue.Queue, taskGroupID string) []string {
+	taskIDs := []string{}
+	continuationToken := ""
+	for {
+		ltgr, err := queue.ListTaskGroup(taskGroupID, continuationToken, "")
+		if err != nil {
+			panic(err)
+		}
+		for _, tdas := range ltgr.Tasks {
+			taskIDs = append(taskIDs, tdas.Status.TaskID)
+		}
+		continuationToken = ltgr.ContinuationToken
+		if continuationToken == "" {
+			break
+		}
+	}
+	return taskIDs
 }
