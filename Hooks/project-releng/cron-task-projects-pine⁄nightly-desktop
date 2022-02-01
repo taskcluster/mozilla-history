@@ -1,0 +1,71 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-projects-pine/nightly-desktop",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-projects-pine/nightly-desktop",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "notify.email.ciduty+failedcron@mozilla.com.on-failed",
+      "notify.email.ciduty+exceptioncron@mozilla.com.on-exception",
+      "notify.email.sheriffs+failedcron@mozilla.org.on-failed",
+      "notify.email.sheriffs+exceptioncron@mozilla.org.on-exception"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-projects-pine/nightly-desktop"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://hg.mozilla.org/projects/pine",
+        "--project",
+        "pine",
+        "--level",
+        "3",
+        "--repository-type",
+        "hg",
+        "--branch",
+        "default",
+        "--trust-domain",
+        "gecko",
+        "--force-run=nightly-desktop"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://hg.mozilla.org/projects/pine",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-projects-pine/nightly-desktop",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-projects-pine/nightly-desktop"
+    },
+    "priority": "normal",
+    "workerType": "build-decision",
+    "schedulerId": "gecko-level-3",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

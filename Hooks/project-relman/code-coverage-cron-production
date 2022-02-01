@@ -2,36 +2,55 @@
   "hookGroupId": "project-relman",
   "hookId": "code-coverage-cron-production",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAutomatically build code coverage reports",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAutomatically build code coverage reports",
     "emailOnError": true,
     "name": "Code coverage hook (production)",
-    "owner": "mcastelluccio@mozilla.com"
+    "owner": "release-mgmt-analysis@mozilla.com"
   },
   "schedule": [
-    "0 0 0 * * *"
+    "0 0 12 * * *"
   ],
   "task": {
+    "scopes": [
+      "secrets:get:project/relman/code-coverage/runtime-production",
+      "docker-worker:cache:code-coverage-bot-production",
+      "index:insert-task:project.relman.code-coverage.production.cron.*"
+    ],
     "created": {
       "$fromNow": "0 seconds"
-    },
-    "deadline": {
-      "$fromNow": "4 hours"
     },
     "expires": {
       "$fromNow": "1 month"
     },
-    "provisionerId": "project-relman",
-    "workerType": "relman-svc-memory",
-    "metadata": {
-      "description": "",
-      "name": "Code Coverage aggregation task - cron (production)",
-      "owner": "mcastelluccio@mozilla.com",
-      "source": "https://github.com/mozilla/code-coverage"
-    },
     "payload": {
+      "env": {},
+      "cache": {
+        "code-coverage-bot-production": "/cache"
+      },
+      "image": {
+        "path": "public/code-coverage-bot.tar",
+        "type": "indexed-image",
+        "namespace": "code-analysis.v2.code-coverage.branch.production"
+      },
+      "command": [
+        "code-coverage-cron",
+        "--taskcluster-secret",
+        "project/relman/code-coverage/runtime-production",
+        "--cache-root",
+        "/cache",
+        "--working-dir",
+        "/build"
+      ],
+      "features": {
+        "taskclusterProxy": true
+      },
       "artifacts": {
         "public/chunk_mapping.tar.xz": {
           "path": "/chunk_mapping.tar.xz",
+          "type": "file"
+        },
+        "public/commit_coverage.json.zst": {
+          "path": "/commit_coverage.json.zst",
           "type": "file"
         },
         "public/per_chunk_mapping.tar.xz": {
@@ -43,35 +62,23 @@
           "type": "file"
         }
       },
-      "cache": {
-        "code-coverage-bot-production": "/cache"
-      },
-      "capabilities": {},
-      "command": [
-        "code-coverage-cron",
-        "--taskcluster-secret",
-        "project/relman/code-coverage/runtime-production",
-        "--cache-root",
-        "/cache",
-        "--working-dir",
-        "/build"
-      ],
-      "env": {},
-      "features": {
-        "taskclusterProxy": true
-      },
-      "image": "mozilla/code-coverage:bot-37d2334c5631759153d470c23739565c0aad58e1",
-      "maxRunTime": 14400
+      "maxRunTime": 14400,
+      "capabilities": {}
     },
-    "priority": "normal",
     "retries": 5,
-    "schedulerId": "-",
-    "scopes": [
-      "secrets:get:project/relman/code-coverage/runtime-production",
-      "docker-worker:cache:code-coverage-bot-production",
-      "index:insert-task:project.releng.services.project.production.code_coverage_bot.*",
-      "index:insert-task:project.relman.code-coverage.production.cron.*"
-    ]
+    "deadline": {
+      "$fromNow": "4 hours"
+    },
+    "metadata": {
+      "name": "Code Coverage aggregation task - cron (production)",
+      "owner": "release-mgmt-analysis@mozilla.com",
+      "source": "https://github.com/mozilla/code-coverage",
+      "description": ""
+    },
+    "priority": "lowest",
+    "workerType": "bot",
+    "schedulerId": "relman",
+    "provisionerId": "code-coverage"
   },
   "triggerSchema": {
     "type": "object",

@@ -1,0 +1,72 @@
+{
+  "hookGroupId": "project-relman",
+  "hookId": "code-coverage-crontrigger-production",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAutomatically trigger code coverage ingestion hook",
+    "emailOnError": true,
+    "name": "Code coverage hook (production)",
+    "owner": "release-mgmt-analysis@mozilla.com"
+  },
+  "schedule": [
+    "0 */30 * * * *"
+  ],
+  "task": {
+    "scopes": [
+      "secrets:get:project/relman/code-coverage/runtime-production",
+      "index:insert-task:project.relman.code-coverage.production.crontrigger.*",
+      "hooks:trigger-hook:project-relman/code-coverage-repo-production"
+    ],
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "payload": {
+      "env": {},
+      "image": {
+        "path": "public/code-coverage-bot.tar",
+        "type": "indexed-image",
+        "namespace": "code-analysis.v2.code-coverage.branch.production"
+      },
+      "command": [
+        "code-coverage-crontrigger",
+        "--taskcluster-secret",
+        "project/relman/code-coverage/runtime-production",
+        "--cache-root",
+        "/cache",
+        "--working-dir",
+        "/build"
+      ],
+      "features": {
+        "taskclusterProxy": true
+      },
+      "artifacts": {
+        "public/triggered_revisions.zst": {
+          "path": "/triggered_revisions.zst",
+          "type": "file"
+        }
+      },
+      "maxRunTime": 14400,
+      "capabilities": {}
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "4 hours"
+    },
+    "metadata": {
+      "name": "Code Coverage - cron trigger task (production)",
+      "owner": "release-mgmt-analysis@mozilla.com",
+      "source": "https://github.com/mozilla/code-coverage",
+      "description": ""
+    },
+    "priority": "lowest",
+    "workerType": "bot",
+    "schedulerId": "relman",
+    "provisionerId": "code-coverage"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "additionalProperties": true
+  }
+}

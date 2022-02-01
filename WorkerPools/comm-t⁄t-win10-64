@@ -1,38 +1,40 @@
 {
   "config": {
-    "minCapacity": 0,
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600
+    },
     "maxCapacity": 1024,
+    "minCapacity": 0,
     "launchConfigs": [
       {
-        "capacityPerInstance": 1,
         "region": "eu-central-1",
         "launchConfig": {
-          "ImageId": "ami-09e1aa7e1f48539c1",
+          "ImageId": "ami-0650080e062de48f2",
+          "SubnetId": "subnet-935645fb",
           "Placement": {
             "AvailabilityZone": "eu-central-1a"
           },
-          "SubnetId": "subnet-935645fb",
-          "SecurityGroupIds": [
-            "sg-c03e0eab",
-            "sg-e43d0d8f"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-c03e0eab"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -42,63 +44,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "eu-central-1",
         "launchConfig": {
-          "ImageId": "ami-09e1aa7e1f48539c1",
+          "ImageId": "ami-0650080e062de48f2",
+          "SubnetId": "subnet-6988da13",
           "Placement": {
             "AvailabilityZone": "eu-central-1b"
           },
-          "SubnetId": "subnet-6988da13",
-          "SecurityGroupIds": [
-            "sg-c03e0eab",
-            "sg-e43d0d8f"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-c03e0eab"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -108,63 +109,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "eu-central-1",
         "launchConfig": {
-          "ImageId": "ami-09e1aa7e1f48539c1",
+          "ImageId": "ami-0650080e062de48f2",
+          "SubnetId": "subnet-114d525b",
           "Placement": {
             "AvailabilityZone": "eu-central-1c"
           },
-          "SubnetId": "subnet-114d525b",
-          "SecurityGroupIds": [
-            "sg-c03e0eab",
-            "sg-e43d0d8f"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-c03e0eab"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -174,63 +174,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0c7fbac545e94f4c4",
+          "ImageId": "ami-088bec648aeb8241d",
+          "SubnetId": "subnet-566e060c",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
-          "SubnetId": "subnet-566e060c",
-          "SecurityGroupIds": [
-            "sg-0dc9337d",
-            "sg-27d72d57"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-0dc9337d"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -240,63 +239,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0c7fbac545e94f4c4",
+          "ImageId": "ami-088bec648aeb8241d",
+          "SubnetId": "subnet-f2c93496",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
-          "SubnetId": "subnet-f2c93496",
-          "SecurityGroupIds": [
-            "sg-0dc9337d",
-            "sg-27d72d57"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-0dc9337d"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -306,63 +304,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0c7fbac545e94f4c4",
+          "ImageId": "ami-088bec648aeb8241d",
+          "SubnetId": "subnet-c52454e9",
           "Placement": {
             "AvailabilityZone": "us-east-1c"
           },
-          "SubnetId": "subnet-c52454e9",
-          "SecurityGroupIds": [
-            "sg-0dc9337d",
-            "sg-27d72d57"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-0dc9337d"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -372,63 +369,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0c7fbac545e94f4c4",
+          "ImageId": "ami-088bec648aeb8241d",
+          "SubnetId": "subnet-e7e6ccaf",
           "Placement": {
             "AvailabilityZone": "us-east-1d"
           },
-          "SubnetId": "subnet-e7e6ccaf",
-          "SecurityGroupIds": [
-            "sg-0dc9337d",
-            "sg-27d72d57"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-0dc9337d"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -438,63 +434,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0c7fbac545e94f4c4",
+          "ImageId": "ami-088bec648aeb8241d",
+          "SubnetId": "subnet-7f720d73",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
-          "SubnetId": "subnet-7f720d73",
-          "SecurityGroupIds": [
-            "sg-0dc9337d",
-            "sg-27d72d57"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-0dc9337d"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -504,63 +499,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0b14e1e3b5665f447",
+          "ImageId": "ami-0d089aeadc4609fab",
+          "SubnetId": "subnet-7641632e",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
-          "SubnetId": "subnet-7641632e",
-          "SecurityGroupIds": [
-            "sg-5be3283d",
-            "sg-fee02b98"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-5be3283d"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -570,63 +564,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0b14e1e3b5665f447",
+          "ImageId": "ami-0d089aeadc4609fab",
+          "SubnetId": "subnet-48a9b82c",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
-          "SubnetId": "subnet-48a9b82c",
-          "SecurityGroupIds": [
-            "sg-5be3283d",
-            "sg-fee02b98"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-5be3283d"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -636,63 +629,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-05d629b4a0589d79a",
+          "ImageId": "ami-04f1c1c19db8c7fcb",
+          "SubnetId": "subnet-d948b6bf",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
-          "SubnetId": "subnet-d948b6bf",
-          "SecurityGroupIds": [
-            "sg-09d6be73",
-            "sg-3bd7bf41"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-09d6be73"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -702,63 +694,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-05d629b4a0589d79a",
+          "ImageId": "ami-04f1c1c19db8c7fcb",
+          "SubnetId": "subnet-2eaaba67",
           "Placement": {
             "AvailabilityZone": "us-west-2b"
           },
-          "SubnetId": "subnet-2eaaba67",
-          "SecurityGroupIds": [
-            "sg-09d6be73",
-            "sg-3bd7bf41"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-09d6be73"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -768,63 +759,62 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-05d629b4a0589d79a",
+          "ImageId": "ami-04f1c1c19db8c7fcb",
+          "SubnetId": "subnet-540a9f0f",
           "Placement": {
             "AvailabilityZone": "us-west-2c"
           },
-          "SubnetId": "subnet-540a9f0f",
-          "SecurityGroupIds": [
-            "sg-09d6be73",
-            "sg-3bd7bf41"
-          ],
           "InstanceType": "c5.2xlarge",
+          "SecurityGroupIds": [
+            "sg-09d6be73"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvda",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvda"
             },
             {
-              "DeviceName": "xvdf",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "xvdf"
             }
           ],
           "InstanceMarketOptions": {
@@ -834,39 +824,40 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "idleTimeoutSecs": 90,
+              "tasksDir": "Z:\\",
               "cachesDir": "Z:\\caches",
-              "cleanUpTaskDirs": true,
+              "wstAudience": "firefoxcitc",
               "deploymentId": "f37dd7ee1cae",
-              "disableReboots": true,
               "downloadsDir": "Z:\\downloads",
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
               "livelogPUTPort": 60022,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 90,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "runTasksAsCurrentUser": false,
-              "sentryProject": "generic-worker",
-              "shutdownMachineOnIdle": false,
-              "shutdownMachineOnInternalError": true,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
               "taskclusterProxyPort": 80,
-              "tasksDir": "Z:\\",
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/"
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
             }
           }
         },
         "additionalUserData": {
           "workerType": "gecko-t-win10-64"
-        }
+        },
+        "capacityPerInstance": 1
       }
     ]
   },
   "created": "2019-11-07T22:04:02.506Z",
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\n",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\n",
   "emailOnError": false,
-  "lastModified": "2019-11-21T14:50:58.104Z",
+  "lastModified": "2022-01-20T10:16:19.260Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "aws",
   "workerPoolId": "comm-t/t-win10-64"

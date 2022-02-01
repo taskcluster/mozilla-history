@@ -1,255 +1,901 @@
 {
   "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600
+    },
+    "maxCapacity": 720,
     "minCapacity": 0,
-    "maxCapacity": 20,
     "launchConfigs": [
       {
-        "capacityPerInstance": 28,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0fb60ab9eb4c5f9f4",
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-566e060c",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
-          "SubnetId": "subnet-566e060c",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-12cd3762"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0fb60ab9eb4c5f9f4",
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-566e060c",
+          "Placement": {
+            "AvailabilityZone": "us-east-1a"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-f2c93496",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
-          "SubnetId": "subnet-f2c93496",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-12cd3762"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0fb60ab9eb4c5f9f4",
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-f2c93496",
+          "Placement": {
+            "AvailabilityZone": "us-east-1b"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-c52454e9",
           "Placement": {
             "AvailabilityZone": "us-east-1c"
           },
-          "SubnetId": "subnet-c52454e9",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-12cd3762"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0fb60ab9eb4c5f9f4",
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-c52454e9",
+          "Placement": {
+            "AvailabilityZone": "us-east-1c"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-e7e6ccaf",
           "Placement": {
             "AvailabilityZone": "us-east-1d"
           },
-          "SubnetId": "subnet-e7e6ccaf",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-12cd3762"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-0fb60ab9eb4c5f9f4",
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-e7e6ccaf",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-deb5a8e2",
+          "Placement": {
+            "AvailabilityZone": "us-east-1e"
+          },
+          "InstanceType": "r5.metal",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 32,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-7f720d73",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
-          "SubnetId": "subnet-7f720d73",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-12cd3762"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-04f6d199fb4335a2f",
+          "SubnetId": "subnet-7f720d73",
+          "Placement": {
+            "AvailabilityZone": "us-east-1f"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-12cd3762"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0425dbf84c2882e6c",
+          "ImageId": "ami-0128afe4764e1e1b0",
+          "SubnetId": "subnet-7641632e",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
-          "SubnetId": "subnet-7641632e",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-caed26ac"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0425dbf84c2882e6c",
+          "ImageId": "ami-0128afe4764e1e1b0",
+          "SubnetId": "subnet-7641632e",
+          "Placement": {
+            "AvailabilityZone": "us-west-1b"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-caed26ac"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0128afe4764e1e1b0",
+          "SubnetId": "subnet-48a9b82c",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
-          "SubnetId": "subnet-48a9b82c",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-caed26ac"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0128afe4764e1e1b0",
+          "SubnetId": "subnet-48a9b82c",
+          "Placement": {
+            "AvailabilityZone": "us-west-1c"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-caed26ac"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-052c80194ddeefc3c",
+          "ImageId": "ami-0eda623438535d185",
+          "SubnetId": "subnet-d948b6bf",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
-          "SubnetId": "subnet-d948b6bf",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-2728435d"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-052c80194ddeefc3c",
+          "ImageId": "ami-0eda623438535d185",
+          "SubnetId": "subnet-d948b6bf",
+          "Placement": {
+            "AvailabilityZone": "us-west-2a"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-2728435d"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0eda623438535d185",
+          "SubnetId": "subnet-2eaaba67",
           "Placement": {
             "AvailabilityZone": "us-west-2b"
           },
-          "SubnetId": "subnet-2eaaba67",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-2728435d"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
       },
       {
-        "capacityPerInstance": 28,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-052c80194ddeefc3c",
+          "ImageId": "ami-0eda623438535d185",
+          "SubnetId": "subnet-2eaaba67",
+          "Placement": {
+            "AvailabilityZone": "us-west-2b"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-2728435d"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0eda623438535d185",
+          "SubnetId": "subnet-540a9f0f",
           "Placement": {
             "AvailabilityZone": "us-west-2c"
           },
-          "SubnetId": "subnet-540a9f0f",
+          "InstanceType": "r5.metal",
           "SecurityGroupIds": [
             "sg-2728435d"
           ],
-          "InstanceType": "c5d.metal",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 32,
           "shutdown": {
             "enabled": true,
-            "afterIdleSeconds": 900
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
           }
-        }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "576G"
+        },
+        "capacityPerInstance": 32
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0eda623438535d185",
+          "SubnetId": "subnet-540a9f0f",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "InstanceType": "m5.metal",
+          "SecurityGroupIds": [
+            "sg-2728435d"
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 15,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 15
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 16000000000
+          }
+        },
+        "additionalUserData": {
+          "tmpfsSize": "294G"
+        },
+        "capacityPerInstance": 15
       }
     ]
   },
   "created": "2019-11-20T00:07:43.029Z",
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nMonopacker metal workers for Firefox automation",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nMonopacker metal workers for Firefox automation",
   "emailOnError": false,
-  "lastModified": "2019-12-16T22:20:20.815Z",
-  "owner": "mcrabill@mozilla.com",
+  "lastModified": "2022-01-20T10:18:04.039Z",
+  "owner": "release+tc-workers@mozilla.com",
   "providerId": "aws",
   "workerPoolId": "gecko-t/t-linux-metal"
 }

@@ -8,68 +8,74 @@
   "hookGroupId": "hg-push",
   "hookId": "pine",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nOn-push task for repository https://hg.mozilla.org/projects/pine.\n\nThis hook listens to pulse messages from `hg.mozilla.org` and creates a task which\nquickly creates a decision task when such a message arrives.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nOn-push task for repository https://hg.mozilla.org/projects/pine.\n\nThis hook listens to pulse messages from `hg.mozilla.org` and creates\na task which quickly creates a decision task when such a message arrives.\n",
     "name": "hg-push/pine",
     "owner": "release+tc-hooks@mozilla.com"
   },
   "schedule": [],
   "task": {
-    "provisionerId": "infra",
-    "workerType": "hg-push",
-    "schedulerId": "gecko-level-2",
-    "deadline": {
-      "$fromNow": "30 minutes"
-    },
-    "expires": {
-      "$fromNow": "3 days"
-    },
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "index.hg-push.v1.pine.revision.${payload.payload.data.heads[0]}",
+      "index.hg-push.v1.pine.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
+    ],
     "scopes": [
       "assume:repo:hg.mozilla.org/projects/pine:branch:*"
     ],
-    "routes": [
-      "index.hg-push.v1.pine.revison.${payload.payload.data.heads[0]}",
-      "index.hg-push.v1.pine.pushlog-id.${payload.payload.data.pushlog_pushes[0].pushid}"
-    ],
+    "expires": {
+      "$fromNow": "3 days"
+    },
     "payload": {
-      "image": {
-        "type": "indexed-image",
-        "path": "public/image.tar.zst",
-        "namespace": "ci.cache.level-3.docker-images.v2.hg-push.hash.f9a043020276e6d664f2428428e7ccf468345cf120def3b5e58f618166780fb9"
-      },
       "env": {
         "PULSE_MESSAGE": {
           "$json": {
             "$eval": "payload"
           }
-        },
-        "REPO_URL": "https://hg.mozilla.org/projects/pine",
-        "PROJECT": "pine",
-        "LEVEL": "2"
+        }
       },
+      "image": "mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67",
+      "command": [
+        "hg-push",
+        "--repo-url",
+        "https://hg.mozilla.org/projects/pine",
+        "--project",
+        "pine",
+        "--level",
+        "3",
+        "--trust-domain",
+        "gecko",
+        "--repository-type",
+        "hg"
+      ],
       "features": {
         "taskclusterProxy": true
       },
       "maxRunTime": 600
     },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "30 minutes"
+    },
     "metadata": {
+      "in": {
+        "name": "On-Push task for https://hg.mozilla.org/projects/pine",
+        "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+        "source": "https://firefox-ci-tc.services.mozilla.com/hooks/hg-push/pine",
+        "description": "${description}"
+      },
       "$let": {
         "description": {
           "$if": "firedBy == \"triggerHook\"",
-          "then": "Fired by triggerHook call from ${clientId}",
-          "else": "Fired by ${firedBy}"
+          "else": "Fired by ${firedBy}",
+          "then": "Fired by triggerHook call from ${clientId}"
         }
-      },
-      "in": {
-        "owner": "mozilla-taskcluster-maintenance@mozilla.com",
-        "source": "https://tools.taskcluster.net/hooks/hg-push/pine",
-        "description": "${description}",
-        "name": "On-Push task for https://hg.mozilla.org/projects/pine"
       }
     },
     "priority": "highest",
-    "retries": 5,
-    "tags": {},
-    "extra": {}
+    "workerType": "build-decision",
+    "schedulerId": "gecko-level-3",
+    "provisionerId": "infra"
   },
   "triggerSchema": {
     "type": "object",
@@ -77,20 +83,14 @@
       "payload"
     ],
     "properties": {
+      "_meta": {},
       "payload": {
         "type": "object",
-        "description": "Hg push payload - see https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications.",
         "required": [
           "type",
           "data"
         ],
         "properties": {
-          "type": {
-            "enum": [
-              "changegroup.1"
-            ],
-            "default": "changegroup.1"
-          },
           "data": {
             "type": "object",
             "required": [
@@ -99,12 +99,6 @@
               "pushlog_pushes"
             ],
             "properties": {
-              "repo_url": {
-                "enum": [
-                  "https://hg.mozilla.org/projects/pine"
-                ],
-                "default": "https://hg.mozilla.org/projects/pine"
-              },
               "heads": {
                 "type": "array",
                 "items": [
@@ -113,6 +107,13 @@
                     "pattern": "^[0-9a-z]{40}$"
                   }
                 ]
+              },
+              "source": {},
+              "repo_url": {
+                "enum": [
+                  "https://hg.mozilla.org/projects/pine"
+                ],
+                "default": "https://hg.mozilla.org/projects/pine"
               },
               "pushlog_pushes": {
                 "type": "array",
@@ -129,14 +130,14 @@
                         "type": "integer",
                         "default": 0
                       },
-                      "pushid": {
-                        "type": "integer",
-                        "default": 0
-                      },
                       "user": {
                         "type": "string",
                         "format": "email",
                         "default": "nobody@mozilla.com"
+                      },
+                      "pushid": {
+                        "type": "integer",
+                        "default": 0
                       },
                       "push_json_url": {
                         "type": "string"
@@ -148,15 +149,20 @@
                     "additionalProperties": false
                   }
                 ]
-              },
-              "source": {}
+              }
             },
             "additionalProperties": false
+          },
+          "type": {
+            "enum": [
+              "changegroup.1"
+            ],
+            "default": "changegroup.1"
           }
         },
+        "description": "Hg push payload - see https://mozilla-version-control-tools.readthedocs.io/en/latest/hgmo/notifications.html#pulse-notifications.",
         "additionalProperties": false
-      },
-      "_meta": {}
+      }
     },
     "additionalProperties": false
   }

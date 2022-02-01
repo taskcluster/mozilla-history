@@ -8,43 +8,30 @@
   "hookGroupId": "project-relman",
   "hookId": "code-review-production",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nAutomatically create code review publication tasks",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAutomatically create code review publication tasks",
     "emailOnError": true,
     "name": "Code review hook (production)",
-    "owner": "babadie@mozilla.com"
+    "owner": "release-mgmt-analysis@mozilla.com"
   },
   "schedule": [],
   "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "index.project.relman.production.code-review.latest"
+    ],
+    "scopes": [
+      "secrets:get:project/relman/code-review/runtime-production",
+      "index:insert-task:project.relman.production.code-review.*",
+      "notify:email:*"
+    ],
     "created": {
       "$fromNow": "0 seconds"
-    },
-    "deadline": {
-      "$fromNow": "2 hours"
     },
     "expires": {
       "$fromNow": "1 month"
     },
-    "extra": {},
-    "metadata": {
-      "description": "Publish issues detected in remote tasks",
-      "name": "Code review publication (production)",
-      "owner": "babadie@mozilla.com",
-      "source": "https://github.com/mozilla/code-review"
-    },
     "payload": {
-      "artifacts": {
-        "public/results": {
-          "path": "/tmp/results",
-          "type": "directory"
-        }
-      },
-      "cache": {},
-      "capabilities": {},
-      "command": [
-        "code-review-bot",
-        "--taskcluster-secret",
-        "project/relman/code-review/runtime-production"
-      ],
       "env": {
         "$merge": [
           {
@@ -61,36 +48,53 @@
               "TRY_RUN_ID": {
                 "$eval": "payload.runId"
               },
-              "TRY_TASK_GROUP_ID": {
-                "$eval": "payload.status.taskGroupId"
-              },
               "TRY_TASK_ID": {
                 "$eval": "payload.status.taskId"
+              },
+              "TRY_TASK_GROUP_ID": {
+                "$eval": "payload.status.taskGroupId"
               }
             }
           }
         ]
       },
+      "cache": {},
+      "image": {
+        "path": "public/code-review-bot.tar",
+        "type": "indexed-image",
+        "namespace": "code-analysis.v2.code-review.branch.production"
+      },
+      "command": [
+        "code-review-bot",
+        "--taskcluster-secret",
+        "project/relman/code-review/runtime-production"
+      ],
       "features": {
         "taskclusterProxy": true
       },
-      "image": "mozilla/code-review:df0f758e5580f0653ff18022e8dbead3b03b6118",
-      "maxRunTime": 7200
+      "artifacts": {
+        "public/results": {
+          "path": "/tmp/results",
+          "type": "directory"
+        }
+      },
+      "maxRunTime": 7200,
+      "capabilities": {}
     },
-    "priority": "normal",
-    "provisionerId": "project-relman",
     "retries": 3,
-    "routes": [
-      "index.project.relman.production.code-review.latest"
-    ],
-    "schedulerId": "-",
-    "scopes": [
-      "secrets:get:project/relman/code-review/runtime-production",
-      "index:insert-task:project.relman.production.code-review.*",
-      "notify:email:*"
-    ],
-    "tags": {},
-    "workerType": "relman-svc"
+    "deadline": {
+      "$fromNow": "2 hours"
+    },
+    "metadata": {
+      "name": "Code review publication (production)",
+      "owner": "release-mgmt-analysis@mozilla.com",
+      "source": "https://github.com/mozilla/code-review",
+      "description": "Publish issues detected in remote tasks"
+    },
+    "priority": "lowest",
+    "workerType": "bot",
+    "schedulerId": "relman",
+    "provisionerId": "code-review"
   },
   "triggerSchema": {
     "type": "object",

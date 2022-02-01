@@ -2,7 +2,7 @@
   "hookGroupId": "project-releng",
   "hookId": "cron-task-mozilla-central",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nCron task for repository https://hg.mozilla.org/mozilla-central.\n\nThis hook is fired every 15 minutes, creating a task that consults .cron.yml in\nthe corresponding repository.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nCron task for repository https://hg.mozilla.org/mozilla-central.\n\nThis hook is fired every 15 minutes, creating a task that consults .cron.yml in\nthe corresponding repository.\n",
     "emailOnError": true,
     "name": "project-releng/cron-task-mozilla-central",
     "owner": "release+tc-hooks@mozilla.com"
@@ -11,15 +11,8 @@
     "0 0,15,30,45 * * * *"
   ],
   "task": {
-    "provisionerId": "gecko-3",
-    "workerType": "decision",
-    "schedulerId": "gecko-level-3",
-    "deadline": {
-      "$fromNow": "1 hour"
-    },
-    "expires": {
-      "$fromNow": "7 days"
-    },
+    "tags": {},
+    "extra": {},
     "routes": [
       "notify.email.ciduty+failedcron@mozilla.com.on-failed",
       "notify.email.ciduty+exceptioncron@mozilla.com.on-exception",
@@ -29,56 +22,47 @@
     "scopes": [
       "assume:hook-id:project-releng/cron-task-mozilla-central"
     ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
     "payload": {
-      "image": "taskcluster/decision:2.1.0@sha256:6db3b697d7a3c7aba440d72f04199331b872111cefff57206b8b8b1d53230360",
-      "env": {
-        "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
-        "GECKO_HEAD_REPOSITORY": "https://hg.mozilla.org/mozilla-central",
-        "GECKO_HEAD_REF": "default",
-        "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
-        "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
-        "TASKCLUSTER_ROOT_URL": "https://firefox-ci-tc.services.mozilla.com"
-      },
-      "cache": {
-        "level-3-checkouts-sparse-v2": "/builds/worker/checkouts"
-      },
-      "features": {
-        "taskclusterProxy": true,
-        "chainOfTrust": true
-      },
-      "maxRunTime": 1800,
+      "env": {},
+      "image": "mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67",
       "command": [
-        "/builds/worker/bin/run-task",
-        "--vcs-checkout=/builds/worker/checkouts/gecko",
-        "--sparse-profile=build/sparse-profiles/taskgraph",
-        "--",
-        "bash",
-        "-cx",
-        "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph cron --head-repository=https://hg.mozilla.org/mozilla-central --project=mozilla-central --level=3"
+        "cron",
+        "--repo-url",
+        "https://hg.mozilla.org/mozilla-central",
+        "--project",
+        "mozilla-central",
+        "--level",
+        "3",
+        "--repository-type",
+        "hg",
+        "--branch",
+        "default",
+        "--trust-domain",
+        "gecko"
       ],
-      "retry-exit-status": [
-        72
-      ],
-      "purge-caches-exit-status": [
-        72
-      ],
-      "artifacts": {
-        "public": {
-          "type": "directory",
-          "path": "/builds/worker/artifacts"
-        }
-      }
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
     },
     "metadata": {
+      "name": "Cron task for https://hg.mozilla.org/mozilla-central",
       "owner": "mozilla-taskcluster-maintenance@mozilla.com",
-      "source": "https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-central",
-      "description": "See https://tools.taskcluster.net/hooks/#project-releng/cron-task-mozilla-central",
-      "name": "Cron task for https://hg.mozilla.org/mozilla-central"
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-central",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-central"
     },
     "priority": "normal",
-    "retries": 5,
-    "tags": {},
-    "extra": {}
+    "workerType": "build-decision",
+    "schedulerId": "gecko-level-3",
+    "provisionerId": "infra"
   },
   "triggerSchema": {
     "type": "object",

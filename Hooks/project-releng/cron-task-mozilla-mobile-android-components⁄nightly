@@ -1,0 +1,71 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-mobile-android-components/nightly",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-mozilla-mobile-android-components/nightly",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "notify.email.release+failedcron@mozilla.com.on-failed",
+      "notify.email.release+exceptioncron@mozilla.com.on-exception"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-mobile-android-components/nightly"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:c8c65816c6f80d7f6466a8561549a5d9bc21db7f@sha256:97b21a2cf55f323127c1ec3f7d1a73a672efa5bfc0fd2aa11f6b348b6aac7d67",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://github.com/mozilla-mobile/android-components",
+        "--project",
+        "android-components",
+        "--level",
+        "3",
+        "--repository-type",
+        "git",
+        "--branch",
+        "main",
+        "--trust-domain",
+        "mobile",
+        "--github-token-secret",
+        "project/releng/mobile/github-cron-token",
+        "--force-run=nightly"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://github.com/mozilla-mobile/android-components",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-mobile-android-components/nightly",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-mobile-android-components/nightly"
+    },
+    "priority": "normal",
+    "workerType": "build-decision",
+    "schedulerId": "mobile-level-3",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

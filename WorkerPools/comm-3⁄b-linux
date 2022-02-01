@@ -1,29 +1,32 @@
 {
   "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600
+    },
+    "maxCapacity": 200,
     "minCapacity": 0,
-    "maxCapacity": 1000,
     "launchConfigs": [
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-566e060c",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
-          "SubnetId": "subnet-566e060c",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -31,63 +34,130 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-566e060c",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
-          "SubnetId": "subnet-566e060c",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-566e060c",
           "Placement": {
             "AvailabilityZone": "us-east-1a"
           },
+          "InstanceType": "m5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
           "SubnetId": "subnet-566e060c",
+          "Placement": {
+            "AvailabilityZone": "us-east-1a"
+          },
+          "InstanceType": "c5n.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -95,36 +165,187 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-566e060c",
+          "Placement": {
+            "AvailabilityZone": "us-east-1a"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-566e060c",
+          "Placement": {
+            "AvailabilityZone": "us-east-1a"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-566e060c",
+          "Placement": {
+            "AvailabilityZone": "us-east-1a"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-f2c93496",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
-          "SubnetId": "subnet-f2c93496",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -132,63 +353,130 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-f2c93496",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
-          "SubnetId": "subnet-f2c93496",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-f2c93496",
           "Placement": {
             "AvailabilityZone": "us-east-1b"
           },
+          "InstanceType": "m5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
           "SubnetId": "subnet-f2c93496",
+          "Placement": {
+            "AvailabilityZone": "us-east-1b"
+          },
+          "InstanceType": "c5n.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -196,36 +484,187 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-f2c93496",
+          "Placement": {
+            "AvailabilityZone": "us-east-1b"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-f2c93496",
+          "Placement": {
+            "AvailabilityZone": "us-east-1b"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-f2c93496",
+          "Placement": {
+            "AvailabilityZone": "us-east-1b"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-c52454e9",
           "Placement": {
             "AvailabilityZone": "us-east-1c"
           },
-          "SubnetId": "subnet-c52454e9",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -233,63 +672,130 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-c52454e9",
           "Placement": {
             "AvailabilityZone": "us-east-1c"
           },
-          "SubnetId": "subnet-c52454e9",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-c52454e9",
           "Placement": {
             "AvailabilityZone": "us-east-1c"
           },
+          "InstanceType": "m5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
           "SubnetId": "subnet-c52454e9",
+          "Placement": {
+            "AvailabilityZone": "us-east-1c"
+          },
+          "InstanceType": "c5n.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -297,36 +803,140 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-c52454e9",
+          "Placement": {
+            "AvailabilityZone": "us-east-1c"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-c52454e9",
+          "Placement": {
+            "AvailabilityZone": "us-east-1c"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-e7e6ccaf",
           "Placement": {
             "AvailabilityZone": "us-east-1d"
           },
-          "SubnetId": "subnet-e7e6ccaf",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -334,63 +944,130 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-e7e6ccaf",
           "Placement": {
             "AvailabilityZone": "us-east-1d"
           },
-          "SubnetId": "subnet-e7e6ccaf",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-e7e6ccaf",
           "Placement": {
             "AvailabilityZone": "us-east-1d"
           },
+          "InstanceType": "m5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
           "SubnetId": "subnet-e7e6ccaf",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "InstanceType": "c5n.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -398,36 +1075,187 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-e7e6ccaf",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-e7e6ccaf",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-e7e6ccaf",
+          "Placement": {
+            "AvailabilityZone": "us-east-1d"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-7f720d73",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
-          "SubnetId": "subnet-7f720d73",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -435,63 +1263,83 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-7f720d73",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
-          "SubnetId": "subnet-7f720d73",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-east-1",
         "launchConfig": {
-          "ImageId": "ami-094b2e87a15dd92fd",
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-7f720d73",
           "Placement": {
             "AvailabilityZone": "us-east-1f"
           },
-          "SubnetId": "subnet-7f720d73",
+          "InstanceType": "m5.4xlarge",
           "SecurityGroupIds": [
             "sg-7aca300a"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -499,36 +1347,234 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-7f720d73",
+          "Placement": {
+            "AvailabilityZone": "us-east-1f"
+          },
+          "InstanceType": "c5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-7f720d73",
+          "Placement": {
+            "AvailabilityZone": "us-east-1f"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-7f720d73",
+          "Placement": {
+            "AvailabilityZone": "us-east-1f"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-east-1",
+        "launchConfig": {
+          "ImageId": "ami-0483d5338c35a6bf7",
+          "SubnetId": "subnet-7f720d73",
+          "Placement": {
+            "AvailabilityZone": "us-east-1f"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-7aca300a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0f2f0e39f3cf1bcf7",
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-7641632e",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
-          "SubnetId": "subnet-7641632e",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-5ce02b3a"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -536,63 +1582,130 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0f2f0e39f3cf1bcf7",
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-7641632e",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
-          "SubnetId": "subnet-7641632e",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-5ce02b3a"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0f2f0e39f3cf1bcf7",
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-7641632e",
           "Placement": {
             "AvailabilityZone": "us-west-1b"
           },
+          "InstanceType": "m5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
           "SubnetId": "subnet-7641632e",
+          "Placement": {
+            "AvailabilityZone": "us-west-1b"
+          },
+          "InstanceType": "c5n.4xlarge",
           "SecurityGroupIds": [
             "sg-5ce02b3a"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -600,36 +1713,187 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0f2f0e39f3cf1bcf7",
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-7641632e",
+          "Placement": {
+            "AvailabilityZone": "us-west-1b"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-7641632e",
+          "Placement": {
+            "AvailabilityZone": "us-west-1b"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-7641632e",
+          "Placement": {
+            "AvailabilityZone": "us-west-1b"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-48a9b82c",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
-          "SubnetId": "subnet-48a9b82c",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-5ce02b3a"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -637,63 +1901,83 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0f2f0e39f3cf1bcf7",
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-48a9b82c",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
-          "SubnetId": "subnet-48a9b82c",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-5ce02b3a"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-1",
         "launchConfig": {
-          "ImageId": "ami-0f2f0e39f3cf1bcf7",
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-48a9b82c",
           "Placement": {
             "AvailabilityZone": "us-west-1c"
           },
-          "SubnetId": "subnet-48a9b82c",
+          "InstanceType": "m5.4xlarge",
           "SecurityGroupIds": [
             "sg-5ce02b3a"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -701,36 +1985,234 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-48a9b82c",
+          "Placement": {
+            "AvailabilityZone": "us-west-1c"
+          },
+          "InstanceType": "c5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-48a9b82c",
+          "Placement": {
+            "AvailabilityZone": "us-west-1c"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-48a9b82c",
+          "Placement": {
+            "AvailabilityZone": "us-west-1c"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-1",
+        "launchConfig": {
+          "ImageId": "ami-0f9193bae5a2b7026",
+          "SubnetId": "subnet-48a9b82c",
+          "Placement": {
+            "AvailabilityZone": "us-west-1c"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-5ce02b3a"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-d948b6bf",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
-          "SubnetId": "subnet-d948b6bf",
+          "InstanceType": "c5.4xlarge",
           "SecurityGroupIds": [
             "sg-a0d6beda"
           ],
-          "InstanceType": "c5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -738,63 +2220,130 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-d948b6bf",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
-          "SubnetId": "subnet-d948b6bf",
+          "InstanceType": "c5d.4xlarge",
           "SecurityGroupIds": [
             "sg-a0d6beda"
           ],
-          "InstanceType": "c5d.4xlarge",
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-d948b6bf",
           "Placement": {
             "AvailabilityZone": "us-west-2a"
           },
+          "InstanceType": "m5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
           "SubnetId": "subnet-d948b6bf",
+          "Placement": {
+            "AvailabilityZone": "us-west-2a"
+          },
+          "InstanceType": "c5n.4xlarge",
           "SecurityGroupIds": [
             "sg-a0d6beda"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -802,36 +2351,187 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-d948b6bf",
           "Placement": {
-            "AvailabilityZone": "us-west-2b"
+            "AvailabilityZone": "us-west-2a"
           },
-          "SubnetId": "subnet-2eaaba67",
+          "InstanceType": "m5d.4xlarge",
           "SecurityGroupIds": [
             "sg-a0d6beda"
           ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-d948b6bf",
+          "Placement": {
+            "AvailabilityZone": "us-west-2a"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-d948b6bf",
+          "Placement": {
+            "AvailabilityZone": "us-west-2a"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-2eaaba67",
+          "Placement": {
+            "AvailabilityZone": "us-west-2b"
+          },
           "InstanceType": "c5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -839,63 +2539,83 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-2eaaba67",
           "Placement": {
             "AvailabilityZone": "us-west-2b"
           },
-          "SubnetId": "subnet-2eaaba67",
-          "SecurityGroupIds": [
-            "sg-a0d6beda"
-          ],
           "InstanceType": "c5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-2eaaba67",
           "Placement": {
             "AvailabilityZone": "us-west-2b"
           },
-          "SubnetId": "subnet-2eaaba67",
+          "InstanceType": "m5.4xlarge",
           "SecurityGroupIds": [
             "sg-a0d6beda"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -903,36 +2623,234 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-2eaaba67",
+          "Placement": {
+            "AvailabilityZone": "us-west-2b"
+          },
+          "InstanceType": "c5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-2eaaba67",
+          "Placement": {
+            "AvailabilityZone": "us-west-2b"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-2eaaba67",
+          "Placement": {
+            "AvailabilityZone": "us-west-2b"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-2eaaba67",
+          "Placement": {
+            "AvailabilityZone": "us-west-2b"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-540a9f0f",
           "Placement": {
             "AvailabilityZone": "us-west-2c"
           },
-          "SubnetId": "subnet-540a9f0f",
-          "SecurityGroupIds": [
-            "sg-a0d6beda"
-          ],
           "InstanceType": "c5.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -940,63 +2858,83 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-540a9f0f",
           "Placement": {
             "AvailabilityZone": "us-west-2c"
           },
-          "SubnetId": "subnet-540a9f0f",
-          "SecurityGroupIds": [
-            "sg-a0d6beda"
-          ],
           "InstanceType": "c5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
           "InstanceMarketOptions": {
             "MarketType": "spot"
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       },
       {
-        "capacityPerInstance": 1,
         "region": "us-west-2",
         "launchConfig": {
-          "ImageId": "ami-0bb2a182014e8742b",
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-540a9f0f",
           "Placement": {
             "AvailabilityZone": "us-west-2c"
           },
-          "SubnetId": "subnet-540a9f0f",
+          "InstanceType": "m5.4xlarge",
           "SecurityGroupIds": [
             "sg-a0d6beda"
           ],
-          "InstanceType": "m5.4xlarge",
           "BlockDeviceMappings": [
             {
-              "DeviceName": "/dev/xvdb",
               "Ebs": {
-                "DeleteOnTermination": true,
                 "VolumeSize": 120,
-                "VolumeType": "gp2"
-              }
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
             }
           ],
           "InstanceMarketOptions": {
@@ -1004,21 +2942,220 @@
           }
         },
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
           },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
           "capacityManagement": {
             "diskspaceThreshold": 70000000000
           }
-        }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-540a9f0f",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "InstanceType": "c5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-540a9f0f",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "InstanceType": "m5d.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-540a9f0f",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "InstanceType": "m5n.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
+      },
+      {
+        "region": "us-west-2",
+        "launchConfig": {
+          "ImageId": "ami-0ded8859755ebede7",
+          "SubnetId": "subnet-540a9f0f",
+          "Placement": {
+            "AvailabilityZone": "us-west-2c"
+          },
+          "InstanceType": "m5dn.4xlarge",
+          "SecurityGroupIds": [
+            "sg-a0d6beda"
+          ],
+          "BlockDeviceMappings": [
+            {
+              "Ebs": {
+                "VolumeSize": 120,
+                "VolumeType": "gp2",
+                "DeleteOnTermination": true
+              },
+              "DeviceName": "/dev/xvdb"
+            }
+          ],
+          "InstanceMarketOptions": {
+            "MarketType": "spot"
+          }
+        },
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          },
+          "capacityManagement": {
+            "diskspaceThreshold": 70000000000
+          }
+        },
+        "additionalUserData": {},
+        "capacityPerInstance": 1
       }
     ]
   },
   "created": "2019-11-06T21:00:00.549Z",
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nWorker for Firefox automation",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nWorker for gecko-based automation",
   "emailOnError": false,
-  "lastModified": "2019-12-09T22:16:59.561Z",
+  "lastModified": "2022-01-20T10:16:00.475Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "aws",
   "workerPoolId": "comm-3/b-linux"

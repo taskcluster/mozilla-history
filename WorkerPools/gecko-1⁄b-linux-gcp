@@ -1,76 +1,56 @@
 {
   "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600
+    },
+    "maxCapacity": 1000,
     "minCapacity": 0,
-    "maxCapacity": 50,
     "launchConfigs": [
       {
-        "capacityPerInstance": 1,
-        "minCpuPlatform": "Intel Skylake",
-        "disks": [
-          {
-            "autoDelete": true,
-            "boot": true,
-            "initializeParams": {
-              "diskSizeGb": 10,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z"
-            },
-            "type": "PERSISTENT"
-          },
-          {
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
-            },
-            "type": "SCRATCH",
-            "interface": "NVME"
-          }
-        ],
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "automaticRestart": false,
-          "preemptible": true
-        },
-        "region": "us-central1",
         "zone": "us-central1-a",
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          }
-        },
-        "machineType": "zones/us-central1-a/machineTypes/custom-32-36864"
-      },
-      {
-        "capacityPerInstance": 1,
-        "minCpuPlatform": "Intel Skylake",
         "disks": [
           {
-            "autoDelete": true,
             "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 10,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z"
-            },
-            "type": "PERSISTENT"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/fxci-level1-gcp-0y9sk1q1wfj5d06y0nea"
+            }
           },
           {
+            "type": "SCRATCH",
+            "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
               "diskType": "zones/us-central1-a/diskTypes/local-ssd"
-            },
-            "type": "SCRATCH",
-            "interface": "NVME"
+            }
           }
         ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-a/machineTypes/custom-32-73728",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Skylake",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -80,43 +60,52 @@
             ]
           }
         ],
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "automaticRestart": false,
-          "preemptible": true
-        },
-        "region": "us-central1",
+        "capacityPerInstance": 1
+      },
+      {
         "zone": "us-central1-b",
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          }
-        },
-        "machineType": "zones/us-central1-b/machineTypes/custom-32-36864"
-      },
-      {
-        "capacityPerInstance": 1,
-        "minCpuPlatform": "Intel Skylake",
         "disks": [
           {
-            "autoDelete": true,
             "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 10,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z"
-            },
-            "type": "PERSISTENT"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/fxci-level1-gcp-0y9sk1q1wfj5d06y0nea"
+            }
           },
           {
+            "type": "SCRATCH",
+            "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
               "diskType": "zones/us-central1-a/diskTypes/local-ssd"
-            },
-            "type": "SCRATCH",
-            "interface": "NVME"
+            }
           }
         ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-b/machineTypes/custom-32-73728",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Skylake",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -126,43 +115,52 @@
             ]
           }
         ],
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "automaticRestart": false,
-          "preemptible": true
-        },
-        "region": "us-central1",
+        "capacityPerInstance": 1
+      },
+      {
         "zone": "us-central1-c",
-        "workerConfig": {
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 900
-          }
-        },
-        "machineType": "zones/us-central1-c/machineTypes/custom-32-36864"
-      },
-      {
-        "capacityPerInstance": 1,
-        "minCpuPlatform": "Intel Skylake",
         "disks": [
           {
-            "autoDelete": true,
             "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 10,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-googlecompute-2019-11-18t20-32-23z"
-            },
-            "type": "PERSISTENT"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/fxci-level1-gcp-0y9sk1q1wfj5d06y0nea"
+            }
           },
           {
+            "type": "SCRATCH",
+            "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
               "diskType": "zones/us-central1-a/diskTypes/local-ssd"
-            },
-            "type": "SCRATCH",
-            "interface": "NVME"
+            }
           }
         ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-c/machineTypes/custom-32-73728",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Skylake",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -172,27 +170,69 @@
             ]
           }
         ],
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "automaticRestart": false,
-          "preemptible": true
-        },
-        "region": "us-central1",
+        "capacityPerInstance": 1
+      },
+      {
         "zone": "us-central1-f",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/fxci-level1-gcp-0y9sk1q1wfj5d06y0nea"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-f/machineTypes/custom-32-73728",
         "workerConfig": {
+          "capacity": 1,
           "shutdown": {
             "enabled": true,
             "afterIdleSeconds": 900
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
           }
         },
-        "machineType": "zones/us-central1-f/machineTypes/custom-32-36864"
+        "minCpuPlatform": "Intel Skylake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1
       }
     ]
   },
-  "created": "2019-11-16T01:10:39.131Z",
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-admin).\n\nWorker for Firefox automation.",
+  "created": "2020-02-13T00:32:19.931Z",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nWorker for Firefox automation.",
   "emailOnError": true,
-  "lastModified": "2019-12-06T18:14:18.274Z",
+  "lastModified": "2022-01-20T10:14:48.273Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "workerPoolId": "gecko-1/b-linux-gcp"
