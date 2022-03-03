@@ -38,7 +38,7 @@ pushed to github.
 ## Installing
 
 ```
-go get github.com/taskcluster/mozilla-history
+go get github.com/taskcluster/mozilla-history@v1.0.0
 ```
 
 ## Running

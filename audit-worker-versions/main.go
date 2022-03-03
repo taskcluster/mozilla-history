@@ -52,7 +52,7 @@ func main() {
 		}
 		inspect(queue, taskIDs)
 	default:
-		log.Fatalf("Expected zero or one program arguments, but have %v: %#s", len(os.Args)-1, os.Args[1:])
+		log.Fatalf("Expected zero or one program arguments, but have %v: %q", len(os.Args)-1, os.Args[1:])
 	}
 }
 
