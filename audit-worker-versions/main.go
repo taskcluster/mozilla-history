@@ -224,7 +224,7 @@ func writeReadme(workers []WorkerInfo) {
 	contents += generateReadmeSection("Version not determined [^2]", workers, func(w WorkerInfo) bool { return w.isUnknown })
 
 	contents += `
-[^1]: Those are the workers whose tasks resolved correctly but did not produce any public artifacts.
+[^1]: Those are the pools whose tasks were claimed and resolved by a worker as expected, but the worker did not publish either artifact `public/logs/live_backing.log` nor `public/logs/chain_of_trust.log`, which is the source used to identify the worker implementation.
 
 [^2]: Probing task remains pending after two hours. Those are the pools that were not able to start any worker to claim the task within two hours.
 `
