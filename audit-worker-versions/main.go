@@ -33,7 +33,7 @@ type WorkerInfo struct {
 	isUnknown      bool
 }
 
-func (w *WorkerInfo) info() string {
+func (w *WorkerInfo) String() string {
 	revision := ""
 	engine := ""
 
@@ -188,7 +188,7 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 	}
 	fmt.Printf("\nWriting README.md\n")
 	writeReadme(workers)
-	fmt.Printf("Writing workers.json\n")
+	fmt.Println("Writing workers.json")
 	writeSnapshot(workers)
 }
 
