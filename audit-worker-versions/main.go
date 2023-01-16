@@ -24,6 +24,41 @@ type (
 	Queue tcqueue.Queue
 )
 
+type WorkerInfo struct {
+	WorkerPoolID   string
+	Implementation string
+	Version        string
+	Details        map[string]string
+	hasNoArtifacts bool
+	isUnknown      bool
+}
+
+func (w *WorkerInfo) info() string {
+	revision := ""
+	engine := ""
+
+	if w.Details["engine"] != "" {
+		engine = fmt.Sprintf(" %v engine", w.Details["engine"])
+	}
+
+	if w.Details["revision"] != "" {
+		revision = fmt.Sprintf(" (revision %v)", w.Details["revision"])
+	}
+
+	info := fmt.Sprintf("%-15s %-9s %-20s %-54s %-10s %-10s %-9s %s",
+		w.Implementation,
+		w.Version,
+		engine,
+		revision,
+		w.Details["go-os"],
+		w.Details["go-arch"],
+		w.Details["go"],
+		w.Details["error"],
+	)
+
+	return strings.Trim(info, " ")
+}
+
 var (
 	// set during build with `-ldflags "-X main.revision=$(git rev-parse HEAD)"`
 	revision string = ""
@@ -133,21 +168,69 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 }
 
 func inspect(queue *tcqueue.Queue, taskIDs []string) {
-	for _, taskID := range taskIDs {
+	workers := make([]WorkerInfo, len(taskIDs))
+
+	for i, taskID := range taskIDs {
 		statusResponse, err := queue.Status(taskID)
 		if err != nil {
 			fmt.Println("Could not get status for task " + taskID)
 			panic(err)
 		}
-		workerPoolID, versionInfo := show(queue, statusResponse)
+		workerPoolID, workerInfo := show(queue, statusResponse)
+		versionInfo := workerInfo.info()
+		workers[i] = workerInfo
 		filename := FilenameEscape(workerPoolID)
 		err = ioutil.WriteFile(filename, append([]byte(versionInfo), '\n'), 0644)
 		if err != nil {
 			log.Fatalf("Error:\n%v", err)
 		}
-		name := workerPoolID + ":                                                                          "
-		fmt.Print(name[:75])
-		fmt.Println(versionInfo)
+		fmt.Printf("%-70s %s\n", workerPoolID+":", versionInfo)
+	}
+	fmt.Printf("\nWriting README.md\n")
+	writeReadme(workers)
+	fmt.Printf("Writing workers.json\n")
+	writeSnapshot(workers)
+}
+
+func generateReadmeSection(title string, workers []WorkerInfo, filter func(WorkerInfo) bool) string {
+	data := ""
+	total := 0
+	for _, w := range workers {
+		if filter(w) {
+			data += fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", w.info())
+			total++
+		}
+	}
+
+	content := fmt.Sprintf("## %v (%d)\n\n```\n%v\n```\n\n", title, total, data)
+	return content
+}
+
+func writeReadme(workers []WorkerInfo) {
+	filename := "README.md"
+
+	contents := generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" })
+	contents += generateReadmeSection("Docker Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "docker-worker" })
+	contents += generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "scriptworker") })
+	contents += generateReadmeSection("No artifacts found", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts })
+	contents += generateReadmeSection("Version not determined; probing task remains pending after 90 minutes", workers, func(w WorkerInfo) bool { return w.isUnknown })
+
+	err := ioutil.WriteFile(filename, []byte(contents), 0644)
+	if err != nil {
+		log.Fatalf("Error:\n%v", err)
+	}
+}
+
+func writeSnapshot(workers []WorkerInfo) {
+	filename := "workers.json"
+	contents, err := json.MarshalIndent(workers, " ", " ")
+	if err != nil {
+		log.Fatalf("Error:\n%v", err)
+	}
+
+	err = ioutil.WriteFile(filename, []byte(contents), 0644)
+	if err != nil {
+		log.Fatalf("Error:\n%v", err)
 	}
 }
 
@@ -264,10 +347,15 @@ func (q *Queue) ProvisionerWorkerTypes(provisionerID string) []string {
 	return workerTypes
 }
 
-func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID, versionInfo string) {
+func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID string, workerInfo WorkerInfo) {
 	workerPoolID = t.Status.ProvisionerID + "/" + t.Status.WorkerType
+	workerInfo.WorkerPoolID = workerPoolID
+	if workerInfo.Details == nil {
+		workerInfo.Details = map[string]string{}
+	}
 	if t.Status.State == "pending" {
-		versionInfo = "Version not determined; task not (yet) claimed"
+		workerInfo.Details["error"] = "Version not determined; task not (yet) claimed"
+		workerInfo.isUnknown = true
 		return
 	}
 	var resp *http.Response
@@ -307,21 +395,23 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID, ve
 		if len(dw) > 1 {
 			val = dw[1]
 		}
-		versionInfo = "docker-worker - version " + val
+		workerInfo.Implementation = "docker-worker"
+		workerInfo.Version = val
 	case strings.Contains(logContent, "Worker Node Type:"):
-		versionInfo = "docker-worker - unknown version"
+		workerInfo.Implementation = "docker-worker"
+		workerInfo.Version = "unknown version"
 	case strings.Contains(logContent, `"generic-worker":`):
-		versionInfo = "generic-worker"
+		workerInfo.Implementation = "generic-worker"
 		for _, t := range []struct {
 			regex string
-			text  string
+			key   string
 		}{
-			{`"engine": "(.*)"`, `%v engine`},
-			{`"https://github.com/taskcluster/.*/releases/tag/v([^"]*)"`, `%v`},
-			{`"revision": "([0-9a-f]{40})"`, `(revision %v)`},
-			{`"go-os": "(.*)"`, `%v`},
-			{`"go-arch": "(.*)"`, `%v`},
-			{`"go-version": "go(.*)"`, `Go %v`},
+			{`"engine": "(.*)"`, "engine"},
+			{`"https://github.com/taskcluster/.*/releases/tag/v([^"]*)"`, "version"},
+			{`"revision": "([0-9a-f]{40})"`, "revision"},
+			{`"go-os": "(.*)"`, "go-os"},
+			{`"go-arch": "(.*)"`, "go-arch"},
+			{`"go-version": "go(.*)"`, "go"},
 		} {
 			re := regexp.MustCompile(t.regex)
 			gw := re.FindStringSubmatch(logContent)
@@ -329,33 +419,39 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID, ve
 			if len(gw) > 1 {
 				val = gw[1]
 			}
-			versionInfo += " " + fmt.Sprintf(t.text, val)
+			if t.key == "version" {
+				workerInfo.Version = val
+			} else {
+				workerInfo.Details[t.key] = val
+			}
 		}
 	case strings.Contains(logContent, "Task not successful due to following exception"):
-		versionInfo = "generic-worker - unknown version"
+		workerInfo.Implementation = "generic-worker"
+		workerInfo.Version = "unknown version"
 	case strings.Contains(logContent, `not allowed at task.payload.features`):
-		versionInfo = "Taskcluster Worker"
+		workerInfo.Implementation = "Taskcluster Worker"
 	case strings.Contains(logContent, `raise TaskVerificationError`):
-		versionInfo = "Scriptworker"
+		workerInfo.Implementation = "Scriptworker"
 	case strings.Contains(logContent, `KeyError: 'artifacts_deps'`):
-		versionInfo = "Other Scriptworker"
+		workerInfo.Implementation = "Other Scriptworker"
 	case artifactFound == "":
-		versionInfo = "No artifacts found"
+		workerInfo.hasNoArtifacts = true
+		workerInfo.Details["error"] = "No artifacts found"
 	case artifactFound == "public/logs/chain_of_trust.log":
-		versionInfo = "Scriptworker Chain of Trust"
+		workerInfo.Implementation = "Scriptworker Chain of Trust"
 	case strings.Contains(logContent, `os.environ.get('GITHUB_HEAD_REPO_URL', decision_json['payload']['env']['GITHUB_HEAD_REPO_URL'])`):
-		versionInfo = "Scriptworker Deepspeech"
+		workerInfo.Implementation = "Scriptworker Deepspeech" // not deepspeach?
 	case strings.Contains(logContent, `balrog`):
-		versionInfo = "Scriptworker Balrog"
+		workerInfo.Implementation = "Scriptworker Balrog"
 	case strings.Contains(logContent, `bouncerscript`):
-		versionInfo = "Scriptworker Bouncer Script"
+		workerInfo.Implementation = "Scriptworker Bouncer Script"
 	case strings.Contains(logContent, `beetmover`):
-		versionInfo = "Scriptworker Beetmover"
+		workerInfo.Implementation = "Scriptworker Beetmover"
 	case strings.Contains(logContent, `scriptworker`):
-		versionInfo = "Scriptworker"
+		workerInfo.Implementation = "Scriptworker"
 	default:
-		versionInfo = "Unknown"
-		log.Printf("Cannot determine worker implementation from log:\n%v", logContent[:1024])
+		workerInfo.Details["error"] = fmt.Sprintf("Cannot determine worker implementation from log:\n%v", logContent[:1024])
+		workerInfo.isUnknown = true
 	}
 	return
 }
