@@ -15,9 +15,9 @@ import (
 
 	"github.com/taskcluster/httpbackoff/v3"
 	"github.com/taskcluster/slugid-go/slugid"
-	tcclient "github.com/taskcluster/taskcluster/v30/clients/client-go"
-	"github.com/taskcluster/taskcluster/v30/clients/client-go/tcqueue"
-	"github.com/taskcluster/taskcluster/v30/clients/client-go/tcworkermanager"
+	tcclient "github.com/taskcluster/taskcluster/v47/clients/client-go"
+	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcqueue"
+	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcworkermanager"
 )
 
 type (
@@ -70,6 +70,10 @@ func FilenameEscape(raw string) (escaped string) {
 
 // Call with no arguments -> New task group generated
 // Call with one argument (taskGroupID) -> Report generated for previously created task group
+//
+// Expected workflow for this tool is to:
+// 1. Run without arguments to generate probing tasks and get taskGroupId
+// 2. wait 2h and run report collection for the given taskGroupId
 func main() {
 
 	queue := tcqueue.NewFromEnv()
@@ -115,7 +119,12 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 			RunID:  0,
 		}
 		taskDef := &tcqueue.TaskDefinitionRequest{
-			Created:      tcclient.Time(created),
+			Created: tcclient.Time(created),
+			// Deadline is set to +3h to give workers enough time to spin up and execute this payload
+			// After this deadline task would be resolved with Deadline Exceeded exception
+			// To be able to tell worker pools that don't have functioning workers and tasks that produce no artifacts
+			// this tool needs to collect data from workers before deadline expires
+			// if you run the create task part at t0, be sure to collect task group info before t0+3h to have relevant data
 			Deadline:     tcclient.Time(created.Add(time.Hour * 3)),
 			Dependencies: []string{},
 			Expires:      tcclient.Time(created.Add(time.Hour * 24 * 30)),
@@ -177,14 +186,13 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 			panic(err)
 		}
 		workerPoolID, workerInfo := show(queue, statusResponse)
-		versionInfo := workerInfo.info()
 		workers[i] = workerInfo
 		filename := FilenameEscape(workerPoolID)
-		err = ioutil.WriteFile(filename, append([]byte(versionInfo), '\n'), 0644)
+		err = ioutil.WriteFile(filename, append([]byte(workerInfo.String()), '\n'), 0644)
 		if err != nil {
 			log.Fatalf("Error:\n%v", err)
 		}
-		fmt.Printf("%-70s %s\n", workerPoolID+":", versionInfo)
+		fmt.Printf("%-70s %s\n", workerPoolID+":", &workerInfo)
 	}
 	fmt.Printf("\nWriting README.md\n")
 	writeReadme(workers)
@@ -197,7 +205,7 @@ func generateReadmeSection(title string, workers []WorkerInfo, filter func(Worke
 	total := 0
 	for _, w := range workers {
 		if filter(w) {
-			data += fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", w.info())
+			data += fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", &w)
 			total++
 		}
 	}
@@ -212,8 +220,14 @@ func writeReadme(workers []WorkerInfo) {
 	contents := generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" })
 	contents += generateReadmeSection("Docker Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "docker-worker" })
 	contents += generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "scriptworker") })
-	contents += generateReadmeSection("No artifacts found", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts })
-	contents += generateReadmeSection("Version not determined; probing task remains pending after 90 minutes", workers, func(w WorkerInfo) bool { return w.isUnknown })
+	contents += generateReadmeSection("No artifacts found [^1]", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts })
+	contents += generateReadmeSection("Version not determined [^2]", workers, func(w WorkerInfo) bool { return w.isUnknown })
+
+	contents += `
+[^1]: Those are the workers whose tasks resolved correctly but did not produce any public artifacts.
+
+[^2]: Probing task remains pending after two hours. Those are the pools that were not able to start any worker to claim the task within two hours.
+`
 
 	err := ioutil.WriteFile(filename, []byte(contents), 0644)
 	if err != nil {
@@ -354,6 +368,9 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID str
 		workerInfo.Details = map[string]string{}
 	}
 	if t.Status.State == "pending" {
+		// We schedule task with deadline for 3h and running report generation anywhere before that time
+		// In case some pools were not able to claim task within 3h we would consider this pool to have unknown workers
+		// which could probably tell that something is wrong with configuration of this pool
 		workerInfo.Details["error"] = "Version not determined; task not (yet) claimed"
 		workerInfo.isUnknown = true
 		return
