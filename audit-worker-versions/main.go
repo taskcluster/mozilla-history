@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/taskcluster/httpbackoff/v3"
+	"github.com/taskcluster/mozilla-history/workerpool"
 	"github.com/taskcluster/slugid-go/slugid"
 	tcclient "github.com/taskcluster/taskcluster/v47/clients/client-go"
 	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcqueue"
@@ -182,23 +183,35 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 }
 
 func inspect(queue *tcqueue.Queue, taskIDs []string) {
-	workers := make([]WorkerInfo, len(taskIDs))
+	wp := workerpool.New(50)
+	workers := make([]WorkerInfo, 0)
 
-	for i, taskID := range taskIDs {
-		statusResponse, err := queue.Status(taskID)
-		if err != nil {
-			fmt.Println("Could not get status for task " + taskID)
-			panic(err)
+	wp.AddWork(func(wsc *workerpool.SubmitterContext) {
+		for _, taskID := range taskIDs {
+			wsc.RequestChannel <- func(taskID string) workerpool.Work {
+				return func(workerId int) workerpool.Result {
+					statusResponse, err := queue.Status(taskID)
+					if err != nil {
+						fmt.Println("Could not get status for task " + taskID)
+						panic(err)
+					}
+					workerPoolID, workerInfo := show(queue, statusResponse)
+					filename := FilenameEscape(workerPoolID)
+					err = ioutil.WriteFile(filename, append([]byte(workerInfo.String()), '\n'), 0644)
+					if err != nil {
+						log.Fatalf("Error:\n%v", err)
+					}
+					fmt.Printf("%-70s %s\n", workerPoolID+":", &workerInfo)
+					return workerInfo
+				}
+			}(taskID)
 		}
-		workerPoolID, workerInfo := show(queue, statusResponse)
-		workers[i] = workerInfo
-		filename := FilenameEscape(workerPoolID)
-		err = ioutil.WriteFile(filename, append([]byte(workerInfo.String()), '\n'), 0644)
-		if err != nil {
-			log.Fatalf("Error:\n%v", err)
-		}
-		fmt.Printf("%-70s %s\n", workerPoolID+":", &workerInfo)
-	}
+	})
+	wp.Done()
+	wp.OnComplete(func(result workerpool.Result) {
+		workers = append(workers, result.(WorkerInfo))
+	})
+
 	fmt.Printf("\nWriting README.md\n")
 	writeReadme(workers)
 	fmt.Println("Writing workers.json")
@@ -206,16 +219,18 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 }
 
 func generateReadmeSection(title string, workers []WorkerInfo, filter func(WorkerInfo) bool) string {
-	data := ""
+	data := make([]string, 0)
 	total := 0
 	for _, w := range workers {
 		if filter(w) {
-			data += fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", &w)
+			data = append(data, fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", &w))
 			total++
 		}
 	}
 
-	content := fmt.Sprintf("## %v (%d)\n\n```\n%v\n```\n\n", title, total, data)
+	sort.Strings(data)
+
+	content := fmt.Sprintf("## %v (%d)\n\n```\n%v\n```\n\n", title, total, strings.Join(data, ""))
 	return content
 }
 
@@ -224,7 +239,7 @@ func writeReadme(workers []WorkerInfo) {
 
 	contents := generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" })
 	contents += generateReadmeSection("Docker Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "docker-worker" })
-	contents += generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "scriptworker") })
+	contents += generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "Scriptworker") })
 	contents += generateReadmeSection("No artifacts found [^1]", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts })
 	contents += generateReadmeSection("Version not determined [^2]", workers, func(w WorkerInfo) bool { return w.isUnknown })
 
