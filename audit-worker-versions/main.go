@@ -219,16 +219,18 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 }
 
 func generateReadmeSection(title string, workers []WorkerInfo, filter func(WorkerInfo) bool) string {
-	data := ""
+	data := make([]string, 0)
 	total := 0
 	for _, w := range workers {
 		if filter(w) {
-			data += fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", &w)
+			data = append(data, fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", &w))
 			total++
 		}
 	}
 
-	content := fmt.Sprintf("## %v (%d)\n\n```\n%v\n```\n\n", title, total, data)
+	sort.Strings(data)
+
+	content := fmt.Sprintf("## %v (%d)\n\n```\n%v\n```\n\n", title, total, strings.Join(data, ""))
 	return content
 }
 
@@ -419,7 +421,7 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID str
 	defer resp.Body.Close()
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("*** ")
+		fmt.Print("*** ")
 	}
 	logContent := string(data)
 	switch true {
