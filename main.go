@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"github.com/taskcluster/mozilla-history/workerpool"
-	tcclient "github.com/taskcluster/taskcluster/v30/clients/client-go"
-	"github.com/taskcluster/taskcluster/v30/clients/client-go/tcauth"
-	"github.com/taskcluster/taskcluster/v30/clients/client-go/tchooks"
-	"github.com/taskcluster/taskcluster/v30/clients/client-go/tcsecrets"
-	"github.com/taskcluster/taskcluster/v30/clients/client-go/tcworkermanager"
+	tcclient "github.com/taskcluster/taskcluster/v47/clients/client-go"
+	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcauth"
+	"github.com/taskcluster/taskcluster/v47/clients/client-go/tchooks"
+	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcsecrets"
+	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcworkermanager"
 )
 
 var (
