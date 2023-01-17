@@ -1,0 +1,357 @@
+{
+  "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600
+    },
+    "maxCapacity": 25,
+    "minCapacity": 0,
+    "scalingRatio": 1,
+    "launchConfigs": [
+      {
+        "tags": {
+          "deploymentId": "32e2f36",
+          "sourceBranch": "cloud_windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "centralus",
+        "priority": "spot",
+        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-central-us-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-central-us-vpn-3/subnets/sn-central-us-vpn-3",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "Z:\\",
+              "cachesDir": "Z:\\caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "Z:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 1800,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            },
+            {
+              "lun": 1,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            }
+          ],
+          "imageReference": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/trusted-win2012r2-64-vs-l3-centralus-2012-R2-Datacenter-32e2f36"
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "Standard_F32s_v2"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
+        },
+        "capacityPerInstance": 1
+      },
+      {
+        "tags": {
+          "deploymentId": "32e2f36",
+          "sourceBranch": "cloud_windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "northcentralus",
+        "priority": "spot",
+        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-north-central-us-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-north-central-us-vpn-3/subnets/sn-north-central-us-vpn-3",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "Z:\\",
+              "cachesDir": "Z:\\caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "Z:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 1800,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            },
+            {
+              "lun": 1,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            }
+          ],
+          "imageReference": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/trusted-win2012r2-64-vs-l3-northcentralus-2012-R2-Datacenter-32e2f36"
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "Standard_F32s_v2"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
+        },
+        "capacityPerInstance": 1
+      },
+      {
+        "tags": {
+          "deploymentId": "32e2f36",
+          "sourceBranch": "cloud_windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "eastus2",
+        "priority": "spot",
+        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-east-us-2-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-east-us-2-vpn-3/subnets/sn-east-us-2-vpn-3",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "Z:\\",
+              "cachesDir": "Z:\\caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "Z:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 1800,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            },
+            {
+              "lun": 1,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            }
+          ],
+          "imageReference": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/trusted-win2012r2-64-vs-l3-eastus2-2012-R2-Datacenter-32e2f36"
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "Standard_F32s_v2"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
+        },
+        "capacityPerInstance": 1
+      },
+      {
+        "tags": {
+          "deploymentId": "32e2f36",
+          "sourceBranch": "cloud_windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "westus2",
+        "priority": "spot",
+        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-west-us-2-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-west-us-2-vpn-3/subnets/sn-west-us-2-vpn-3",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "Z:\\",
+              "cachesDir": "Z:\\caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "Z:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 1800,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            },
+            {
+              "lun": 1,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            }
+          ],
+          "imageReference": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/trusted-win2012r2-64-vs-l3-westus2-2012-R2-Datacenter-32e2f36"
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "Standard_F32s_v2"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
+        },
+        "capacityPerInstance": 1
+      }
+    ]
+  },
+  "created": "2022-12-15T17:28:19.107Z",
+  "currentCapacity": 0,
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\n",
+  "emailOnError": true,
+  "lastModified": "2023-01-12T16:02:09.555Z",
+  "owner": "relops-azure-provisioning@mozilla.com",
+  "providerId": "azure_trusted",
+  "requestedCapacity": 0,
+  "requestedCount": 0,
+  "runningCapacity": 0,
+  "runningCount": 0,
+  "stoppedCapacity": 0,
+  "stoppedCount": 0,
+  "stoppingCapacity": 0,
+  "stoppingCount": 0,
+  "workerPoolId": "mozillavpn-3/b-win2012-azure"
+}

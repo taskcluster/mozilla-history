@@ -1,0 +1,501 @@
+{
+  "hookGroupId": "project-ci",
+  "hookId": "in-tree-action-1-generic/963065063f",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 963065063f.\n\nFor project(s) ci-configuration-try\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "emailOnError": true,
+    "name": "project-ci/in-tree-action-1-generic/963065063f",
+    "owner": "taskcluster-notifications@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "in": {
+      "$if": "tasks_for in [\"hg-push\", \"action\", \"cron\"]",
+      "then": {
+        "in": {
+          "tags": {
+            "$if": "tasks_for == \"hg-push\"",
+            "else": {
+              "$if": "tasks_for == \"action\"",
+              "else": {
+                "$if": "tasks_for == \"cron\"",
+                "then": {
+                  "kind": "cron-task"
+                }
+              },
+              "then": {
+                "kind": "action-callback",
+                "createdForUser": "${ownerEmail}"
+              }
+            },
+            "then": {
+              "kind": "decision-task",
+              "createdForUser": "${ownerEmail}"
+            }
+          },
+          "extra": {
+            "$merge": [
+              {
+                "treeherder": {
+                  "$merge": [
+                    {
+                      "machine": {
+                        "platform": "gecko-decision"
+                      }
+                    },
+                    {
+                      "$if": "tasks_for == \"hg-push\"",
+                      "else": {
+                        "$if": "tasks_for == \"action\"",
+                        "else": {
+                          "symbol": "${cron.job_symbol}",
+                          "groupSymbol": "cron"
+                        },
+                        "then": {
+                          "symbol": "${action.symbol}",
+                          "groupName": "action-callback",
+                          "groupSymbol": "AC"
+                        }
+                      },
+                      "then": {
+                        "symbol": "D"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "$if": "tasks_for == \"action\"",
+                "then": {
+                  "action": {
+                    "name": "${action.name}",
+                    "context": {
+                      "input": {
+                        "$eval": "input"
+                      },
+                      "taskId": {
+                        "$eval": "taskId"
+                      },
+                      "taskGroupId": "${action.taskGroupId}"
+                    }
+                  },
+                  "parent": "${action.taskGroupId}"
+                }
+              },
+              {
+                "$if": "tasks_for == \"cron\"",
+                "then": {
+                  "cron": {
+                    "$json": {
+                      "$eval": "cron"
+                    }
+                  }
+                }
+              },
+              {
+                "tasks_for": "${tasks_for}"
+              }
+            ]
+          },
+          "routes": {
+            "$flatten": [
+              "tc-treeherder.v2.${repository.project}.${push.revision}",
+              {
+                "$if": "tasks_for == \"hg-push\"",
+                "else": {
+                  "$if": "tasks_for == \"action\"",
+                  "else": [
+                    "index.${trustDomain}.v2.${repository.project}.latest.taskgraph.decision-${cron.job_name}"
+                  ],
+                  "then": [
+                    "index.${trustDomain}.v2.${repository.project}.pushlog-id.${push.pushlog_id}.actions.${ownTaskId}"
+                  ]
+                },
+                "then": [
+                  "index.${trustDomain}.v2.${repository.project}.latest.taskgraph.decision",
+                  "index.${trustDomain}.v2.${repository.project}.revision.${push.revision}.taskgraph.decision",
+                  "index.${trustDomain}.v2.${repository.project}.pushlog-id.${push.pushlog_id}.decision"
+                ]
+              }
+            ]
+          },
+          "scopes": {
+            "$if": "tasks_for == \"hg-push\"",
+            "else": {
+              "$if": "tasks_for == \"action\"",
+              "else": [
+                "assume:repo:${repoUrl[8:]}:cron:${cron.job_name}"
+              ],
+              "then": [
+                "assume:repo:${repoUrl[8:]}:action:${action.action_perm}"
+              ]
+            },
+            "then": [
+              "assume:repo:${repoUrl[8:]}:branch:default"
+            ]
+          },
+          "taskId": {
+            "$if": "tasks_for != \"action\"",
+            "then": "${ownTaskId}"
+          },
+          "created": {
+            "$fromNow": ""
+          },
+          "expires": {
+            "$fromNow": "1 year 1 second"
+          },
+          "payload": {
+            "env": {
+              "$merge": [
+                {
+                  "REPOSITORIES": {
+                    "$json": {
+                      "config": "ci-config"
+                    }
+                  },
+                  "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
+                  "CONFIG_HEAD_REF": "${push.revision}",
+                  "CONFIG_HEAD_REV": "${push.revision}",
+                  "CONFIG_BASE_REPOSITORY": "${repoUrl}",
+                  "CONFIG_HEAD_REPOSITORY": "${repoUrl}",
+                  "CONFIG_REPOSITORY_TYPE": "hg",
+                  "CONFIG_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                },
+                {
+                  "$if": "tasks_for == \"action\"",
+                  "then": {
+                    "ACTION_INPUT": {
+                      "$json": {
+                        "$eval": "input"
+                      }
+                    },
+                    "ACTION_TASK_ID": {
+                      "$json": {
+                        "$eval": "taskId"
+                      }
+                    },
+                    "ACTION_CALLBACK": "${action.cb_name}",
+                    "ACTION_TASK_GROUP_ID": "${action.taskGroupId}"
+                  }
+                }
+              ]
+            },
+            "cache": {
+              "${trustDomain}-level-${repository.level}-checkouts-sparse-v2": "/builds/worker/checkouts"
+            },
+            "image": "mozillareleases/taskgraph:decision-10378fde0bf12adbd64e74313bf72ea3c6caf311ad6af23e2bff1d8f1232a221@sha256:7518c410bdf91142b0e26455d26ddaf861202cfbb3c35d0b1ef85d1ed577a5bd",
+            "command": {
+              "$flatten": [
+                "/usr/local/bin/run-task",
+                "--config-checkout=/builds/worker/checkouts/src",
+                "--task-cwd=/builds/worker/checkouts/src",
+                "--",
+                "bash",
+                "-cx",
+                {
+                  "in": {
+                    "$if": "tasks_for == \"action\"",
+                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='${push.pushlog_id}' --pushdate='${push.pushdate}' --project='${repository.project}' --message=\"\" --owner='${ownerEmail}' --level='${repository.level}' --base-repository=\"${repoUrl}\" --head-repository=\"${repoUrl}\" --head-ref=\"${push.revision}\" --head-rev=\"${push.revision}\" --repository-type=hg --tasks-for='${tasks_for}' $${TRY_TASK_CONFIG_FILE+--try-task-config-file=\"$${TRY_TASK_CONFIG_FILE}\"} ${extraArgs}\n",
+                    "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                  },
+                  "$let": {
+                    "extraArgs": {
+                      "$if": "tasks_for == \"cron\"",
+                      "else": "",
+                      "then": "${cron.quoted_args}"
+                    }
+                  }
+                }
+              ]
+            },
+            "features": {
+              "chainOfTrust": true,
+              "taskclusterProxy": true
+            },
+            "artifacts": {
+              "public": {
+                "path": "/builds/worker/artifacts",
+                "type": "directory",
+                "expires": {
+                  "$fromNow": "1 year"
+                }
+              },
+              "public/docker-contexts": {
+                "path": "/builds/worker/checkouts/src/docker-contexts",
+                "type": "directory",
+                "expires": {
+                  "$fromNow": "7 day"
+                }
+              }
+            },
+            "maxRunTime": 1800
+          },
+          "retries": 5,
+          "deadline": {
+            "$fromNow": "1 day"
+          },
+          "metadata": {
+            "$merge": [
+              {
+                "owner": "${ownerEmail}",
+                "source": "${repoUrl}/raw-file/${push.revision}/.taskcluster.yml"
+              },
+              {
+                "$if": "tasks_for == \"hg-push\"",
+                "else": {
+                  "$if": "tasks_for == \"action\"",
+                  "else": {
+                    "name": "Decision Task for cron job ${cron.job_name}",
+                    "description": "Created by a [cron task](https://firefox-ci-tc.services.mozilla.com/tasks/${cron.task_id})"
+                  },
+                  "then": {
+                    "name": "Action: ${action.title}",
+                    "description": "${action.description}"
+                  }
+                },
+                "then": {
+                  "name": "Decision Task",
+                  "description": "The task that creates all of the other tasks in the task graph"
+                }
+              }
+            ]
+          },
+          "priority": {
+            "$if": "tasks_for == 'cron'",
+            "else": {
+              "$if": "tasks_for == 'hg-push'",
+              "else": "lowest",
+              "then": "very-low"
+            },
+            "then": "low"
+          },
+          "requires": "all-completed",
+          "workerType": "decision-gcp",
+          "schedulerId": "${trustDomain}-level-${repository.level}",
+          "taskGroupId": {
+            "$if": "tasks_for == \"action\"",
+            "else": "${ownTaskId}",
+            "then": "${action.taskGroupId}"
+          },
+          "dependencies": [],
+          "provisionerId": "${trustDomain}-${repository.level}"
+        },
+        "$let": {
+          "repoUrl": {
+            "$if": "repository.url[-1] == \"/\"",
+            "else": {
+              "$eval": "repository.url"
+            },
+            "then": {
+              "$eval": "repository.url[:-1]"
+            }
+          },
+          "ownerEmail": {
+            "$if": "\"@\" in push.owner",
+            "else": "${push.owner}@noreply.mozilla.org",
+            "then": "${push.owner}"
+          },
+          "trustDomain": "ci"
+        }
+      }
+    },
+    "$let": {
+      "push": {
+        "$eval": "payload.decision.push"
+      },
+      "input": {
+        "$eval": "payload.user.input"
+      },
+      "action": {
+        "name": "${payload.decision.action.name}",
+        "title": "${payload.decision.action.title}",
+        "symbol": "${payload.decision.action.symbol}",
+        "cb_name": "${payload.decision.action.cb_name}",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "action_perm": "generic",
+        "description": "${payload.decision.action.description}",
+        "taskGroupId": "${payload.decision.action.taskGroupId}"
+      },
+      "taskId": {
+        "$eval": "payload.user.taskId"
+      },
+      "ownTaskId": {
+        "$eval": "taskId"
+      },
+      "tasks_for": "action",
+      "parameters": {
+        "$eval": "payload.decision['parameters']"
+      },
+      "repository": {
+        "$eval": "payload.decision.repository"
+      },
+      "taskGroupId": {
+        "$eval": "payload.user.taskGroupId"
+      }
+    }
+  },
+  "triggerSchema": {
+    "type": "object",
+    "required": [
+      "decision",
+      "user"
+    ],
+    "properties": {
+      "user": {
+        "type": "object",
+        "required": [
+          "input",
+          "taskGroupId",
+          "taskId"
+        ],
+        "properties": {
+          "input": {
+            "anyOf": [
+              {
+                "type": "object",
+                "description": "user input for the task"
+              },
+              {
+                "const": null,
+                "description": "null when the action takes no input"
+              }
+            ]
+          },
+          "taskId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "taskId of the task on which this action was activated"
+              },
+              {
+                "const": null,
+                "description": "null when the action is activated for a taskGroup"
+              }
+            ]
+          },
+          "taskGroupId": {
+            "type": "string",
+            "description": "taskGroupId on which this task was activated"
+          }
+        },
+        "description": "Information provided by the user or user interface",
+        "additionalProperties": false
+      },
+      "decision": {
+        "type": "object",
+        "required": [
+          "action",
+          "push",
+          "repository"
+        ],
+        "properties": {
+          "push": {
+            "type": "object",
+            "required": [
+              "owner",
+              "pushlog_id",
+              "revision"
+            ],
+            "properties": {
+              "owner": {
+                "type": "string",
+                "description": "user who made the original push"
+              },
+              "branch": {
+                "type": "string",
+                "description": "branch revision of original push is from"
+              },
+              "revision": {
+                "type": "string",
+                "description": "revision of the original push"
+              },
+              "pushlog_id": {
+                "type": "string",
+                "description": "Mercurial pushlog ID of the original push"
+              },
+              "base_revision": {
+                "type": "string",
+                "description": "revision before the push occurred"
+              }
+            },
+            "description": "Information about the push that created the decision task",
+            "additionalProperties": false
+          },
+          "action": {
+            "type": "object",
+            "required": [
+              "cb_name",
+              "description",
+              "name",
+              "symbol",
+              "taskGroupId",
+              "title"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "action name"
+              },
+              "title": {
+                "type": "string",
+                "description": "action title"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "treeherder symbol"
+              },
+              "cb_name": {
+                "type": "string",
+                "description": "name of the in-tree callback function"
+              },
+              "description": {
+                "type": "string",
+                "description": "action description"
+              },
+              "taskGroupId": {
+                "type": "string",
+                "description": "taskGroupId of the decision task"
+              }
+            },
+            "description": "Information about the action to perform",
+            "additionalProperties": false
+          },
+          "parameters": {
+            "type": "object",
+            "description": "decision task parameters",
+            "additionalProperties": true
+          },
+          "repository": {
+            "type": "object",
+            "required": [
+              "level",
+              "project",
+              "url"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "pattern": "[^/]$",
+                "description": "repository URL (without trailing slash)"
+              },
+              "level": {
+                "type": "string",
+                "description": "repository SCM level"
+              },
+              "project": {
+                "type": "string",
+                "description": "repository project name (also known as \"alias\")"
+              }
+            },
+            "description": "Information about the repository where the push occurred",
+            "additionalProperties": false
+          }
+        },
+        "description": "Information provided by the decision task; this is usually baked into\n            `actions.json`, although any value could be supplied in a direct call to\n            `hooks.triggerHook`.",
+        "additionalProperties": false
+      }
+    },
+    "description": "Information required to trigger this hook.  This is provided by the\n            `hookPayload` template in the `actions.json` file generated in-tree.",
+    "additionalProperties": false
+  }
+}

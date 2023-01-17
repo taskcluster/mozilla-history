@@ -1,0 +1,111 @@
+{
+  "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600
+    },
+    "maxCapacity": 25,
+    "minCapacity": 0,
+    "scalingRatio": 1,
+    "launchConfigs": [
+      {
+        "tags": {
+          "deploymentId": "alpha",
+          "sourceBranch": "cloud_windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "centralus",
+        "priority": "spot",
+        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-vpn-1/providers/Microsoft.Network/virtualNetworks/vn-central-us-vpn-1/subnets/sn-central-us-vpn-1",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "Z:\\",
+              "cachesDir": "Z:\\caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "Z:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 1800,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "runTasksAsCurrentUser": false,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            },
+            {
+              "lun": 1,
+              "diskSizeGB": 120,
+              "managedDisk": {
+                "storageAccountType": "Premium_LRS"
+              },
+              "createOption": "Empty"
+            }
+          ],
+          "imageReference": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/masterwayz-win2012test-image-20221122010013-alpha"
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "Standard_F32s_v2"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
+        },
+        "capacityPerInstance": 1
+      }
+    ]
+  },
+  "created": "2022-11-22T21:10:07.426Z",
+  "currentCapacity": 0,
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\n",
+  "emailOnError": true,
+  "lastModified": "2022-12-21T19:37:46.035Z",
+  "owner": "relops-azure-provisioning@mozilla.com",
+  "providerId": "azure2",
+  "requestedCapacity": 0,
+  "requestedCount": 0,
+  "runningCapacity": 0,
+  "runningCount": 0,
+  "stoppedCapacity": 0,
+  "stoppedCount": 0,
+  "stoppingCapacity": 0,
+  "stoppingCount": 0,
+  "workerPoolId": "mozillavpn-1/masterwayz-win2012-azure"
+}
