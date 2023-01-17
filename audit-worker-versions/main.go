@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/taskcluster/httpbackoff/v3"
+	"github.com/taskcluster/mozilla-history/workerpool"
 	"github.com/taskcluster/slugid-go/slugid"
 	tcclient "github.com/taskcluster/taskcluster/v47/clients/client-go"
 	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcqueue"
@@ -182,23 +183,35 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 }
 
 func inspect(queue *tcqueue.Queue, taskIDs []string) {
-	workers := make([]WorkerInfo, len(taskIDs))
+	wp := workerpool.New(50)
+	workers := make([]WorkerInfo, 0)
 
-	for i, taskID := range taskIDs {
-		statusResponse, err := queue.Status(taskID)
-		if err != nil {
-			fmt.Println("Could not get status for task " + taskID)
-			panic(err)
+	wp.AddWork(func(wsc *workerpool.SubmitterContext) {
+		for _, taskID := range taskIDs {
+			wsc.RequestChannel <- func(taskID string) workerpool.Work {
+				return func(workerId int) workerpool.Result {
+					statusResponse, err := queue.Status(taskID)
+					if err != nil {
+						fmt.Println("Could not get status for task " + taskID)
+						panic(err)
+					}
+					workerPoolID, workerInfo := show(queue, statusResponse)
+					filename := FilenameEscape(workerPoolID)
+					err = ioutil.WriteFile(filename, append([]byte(workerInfo.String()), '\n'), 0644)
+					if err != nil {
+						log.Fatalf("Error:\n%v", err)
+					}
+					fmt.Printf("%-70s %s\n", workerPoolID+":", &workerInfo)
+					return workerInfo
+				}
+			}(taskID)
 		}
-		workerPoolID, workerInfo := show(queue, statusResponse)
-		workers[i] = workerInfo
-		filename := FilenameEscape(workerPoolID)
-		err = ioutil.WriteFile(filename, append([]byte(workerInfo.String()), '\n'), 0644)
-		if err != nil {
-			log.Fatalf("Error:\n%v", err)
-		}
-		fmt.Printf("%-70s %s\n", workerPoolID+":", &workerInfo)
-	}
+	})
+	wp.Done()
+	wp.OnComplete(func(result workerpool.Result) {
+		workers = append(workers, result.(WorkerInfo))
+	})
+
 	fmt.Printf("\nWriting README.md\n")
 	writeReadme(workers)
 	fmt.Println("Writing workers.json")
@@ -406,7 +419,7 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID str
 	defer resp.Body.Close()
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Print("*** ")
+		fmt.Println("*** ")
 	}
 	logContent := string(data)
 	switch true {
