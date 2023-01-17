@@ -100,10 +100,15 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 		log.Printf("%v built from revision %v", os.Args[0], revision)
 	}
 	reportPrefix := os.Getenv("REPORT_PREFIX")
+	schedulerId := os.Getenv("REPORT_SCHEDULER_ID")
 	if reportPrefix == "" {
 		log.Print("Please export env var REPORT_PREFIX to e.g.")
 		log.Print("  https://github.com/taskcluster/mozilla-history/blob/master/WorkerVersions/")
 		log.Fatal("  https://github.com/taskcluster/community-history/blob/master/WorkerVersions/")
+	}
+	if schedulerId == "" {
+		log.Println("REPORT_SCHEDULER_ID not set, using '-' as default")
+		schedulerId = "-"
 	}
 	tasks := map[string]tcqueue.TaskRun{}
 	created := time.Now()
@@ -160,7 +165,7 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 			Requires:      "all-completed",
 			Retries:       5,
 			Routes:        []string{},
-			SchedulerID:   "-",
+			SchedulerID:   schedulerId,
 			Scopes:        []string{},
 			Tags:          map[string]string{},
 			TaskGroupID:   taskGroupID,
