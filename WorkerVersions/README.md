@@ -353,9 +353,54 @@ xpi-3/images:                                                docker-worker   unk
 
 ```
 
-## Script Worker (0)
+## Script Worker (45)
 
 ```
+scriptworker-k8s/adhoc-1-shipit-dev:                         Scriptworker Chain of Trust
+scriptworker-k8s/comm-3-balrog:                              Scriptworker Chain of Trust
+scriptworker-k8s/comm-3-beetmover:                           Scriptworker Chain of Trust
+scriptworker-k8s/comm-3-bouncer:                             Scriptworker Chain of Trust
+scriptworker-k8s/comm-3-signing:                             Scriptworker Chain of Trust
+scriptworker-k8s/comm-3-tree:                                Scriptworker Chain of Trust
+scriptworker-k8s/comm-t-signing:                             Scriptworker Chain of Trust
+scriptworker-k8s/gecko-3-addon:                              Scriptworker Chain of Trust
+scriptworker-k8s/gecko-3-balrog:                             Scriptworker Chain of Trust
+scriptworker-k8s/gecko-3-beetmover:                          Scriptworker Chain of Trust
+scriptworker-k8s/gecko-3-bouncer:                            Scriptworker Chain of Trust
+scriptworker-k8s/gecko-3-signing:                            Scriptworker Chain of Trust
+scriptworker-k8s/gecko-3-tree:                               Scriptworker Chain of Trust
+scriptworker-k8s/gecko-t-signing:                            Scriptworker Chain of Trust
+scriptworker-k8s/mobile-1-beetmover:                         Scriptworker Chain of Trust
+scriptworker-k8s/mobile-1-pushapk:                           Scriptworker Chain of Trust
+scriptworker-k8s/mobile-1-tree-dev:                          Scriptworker Chain of Trust
+scriptworker-k8s/mobile-1-tree:                              Scriptworker Chain of Trust
+scriptworker-k8s/mobile-3-beetmover:                         Scriptworker Chain of Trust
+scriptworker-k8s/mobile-3-pushapk:                           Scriptworker Chain of Trust
+scriptworker-k8s/mobile-3-signing:                           Scriptworker Chain of Trust
+scriptworker-k8s/mobile-3-tree:                              Scriptworker Chain of Trust
+scriptworker-k8s/mobile-t-signing-dev:                       Scriptworker Chain of Trust
+scriptworker-k8s/mobile-t-signing:                           Scriptworker Chain of Trust
+scriptworker-k8s/mozillavpn-1-beetmover-dev:                 Scriptworker Chain of Trust
+scriptworker-k8s/mozillavpn-1-beetmover:                     Scriptworker Chain of Trust
+scriptworker-k8s/mozillavpn-3-beetmover:                     Scriptworker Chain of Trust
+scriptworker-k8s/mozillavpn-3-signing:                       Scriptworker Chain of Trust
+scriptworker-k8s/xpi-1-balrog-dev:                           Scriptworker Chain of Trust
+scriptworker-k8s/xpi-1-balrog:                               Scriptworker Chain of Trust
+scriptworker-k8s/xpi-1-beetmover-dev:                        Scriptworker Chain of Trust
+scriptworker-k8s/xpi-1-beetmover:                            Scriptworker Chain of Trust
+scriptworker-k8s/xpi-1-github-dev:                           Scriptworker Chain of Trust
+scriptworker-k8s/xpi-1-github:                               Scriptworker Chain of Trust
+scriptworker-k8s/xpi-3-balrog:                               Scriptworker Chain of Trust
+scriptworker-k8s/xpi-3-beetmover:                            Scriptworker Chain of Trust
+scriptworker-k8s/xpi-3-github:                               Scriptworker Chain of Trust
+scriptworker-k8s/xpi-t-signing:                              Scriptworker Chain of Trust
+scriptworker-prov-v1/adhoc-t-signing-mac:                    Scriptworker Chain of Trust
+scriptworker-prov-v1/depsigning-mac-v1:                      Scriptworker Chain of Trust
+scriptworker-prov-v1/mozillavpn-3-signing-mac:               Scriptworker Chain of Trust
+scriptworker-prov-v1/signing-mac-v1:                         Scriptworker Chain of Trust
+scriptworker-prov-v1/tb-depsigning-mac-v1:                   Scriptworker Chain of Trust
+scriptworker-prov-v1/tb-signing-mac-v1:                      Scriptworker Chain of Trust
+scriptworker-prov-v1/vpn-depsigning-mac-v1:                  Scriptworker Chain of Trust
 
 ```
 

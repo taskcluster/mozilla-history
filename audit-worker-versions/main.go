@@ -239,7 +239,7 @@ func writeReadme(workers []WorkerInfo) {
 
 	contents := generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" })
 	contents += generateReadmeSection("Docker Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "docker-worker" })
-	contents += generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "scriptworker") })
+	contents += generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "Scriptworker") })
 	contents += generateReadmeSection("No artifacts found [^1]", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts })
 	contents += generateReadmeSection("Version not determined [^2]", workers, func(w WorkerInfo) bool { return w.isUnknown })
 
