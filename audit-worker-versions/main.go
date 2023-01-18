@@ -111,7 +111,6 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 		log.Println("REPORT_SCHEDULER_ID not set, using '-' as default")
 		schedulerId = "-"
 	}
-	tasks := map[string]tcqueue.TaskRun{}
 	created := time.Now()
 	for _, wt := range AllWorkerTypes() {
 		fmt.Println(wt)
@@ -120,10 +119,6 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 		workerType := x[1]
 
 		taskID := slugid.Nice()
-		tasks[wt] = tcqueue.TaskRun{
-			TaskID: taskID,
-			RunID:  0,
-		}
 		taskDef := &tcqueue.TaskDefinitionRequest{
 			Created: tcclient.Time(created),
 			// Deadline is set to +3h to give workers enough time to spin up and execute this payload
@@ -257,7 +252,12 @@ func writeReadme(workers []WorkerInfo) {
 
 func writeSnapshot(workers []WorkerInfo) {
 	filename := "workers.json"
-	contents, err := json.MarshalIndent(workers, " ", " ")
+
+	sort.Slice(workers, func(i, j int) bool {
+		return strings.Compare(workers[i].WorkerPoolID, workers[j].WorkerPoolID) <= 0
+	})
+
+	contents, err := json.MarshalIndent(workers, "", " ")
 	if err != nil {
 		log.Fatalf("Error:\n%v", err)
 	}
