@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Workers Versions History</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css"
+    integrity="sha512-zb2pp+R+czM7GAemdSUQt6jFmr3qCo6ikvBgVU6F5GvwEDR0C2sefFiPEJ9QUpmAKdD5EqDUdNRtbOYnbF/eyQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/gh/tofsjonas/sortable/sortable-base.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      margin: 20px 40px;
+    }
+    .content {
+      margin-right: 250px;
+    }
+    @media screen and (max-width: 1400px) {
+      .content {
+        margin-right: auto;
+      }
+    }
+    .toc {
+      position: fixed;
+      right: 15px;
+      top: 5px;
+      background: #fff;
+      padding: 15px 25px;
+      border: 1px solid #eee;
+    }
+    .toc ul {
+      margin-left: 20px;
+      padding-left: 0;
+    }
+    .toc ul ul {
+      margin-left: auto;
+      padding-left: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="markdown-body">
+    <main>
+      <div id="toc" class="toc">
+        <legend>TOC</legend>
+        <ul>
+          <li><a href="#generic-worker">Generic Worker</a></li>
+          <li><a href="#docker-worker">Docker Worker</a></li>
+          <li><a href="#script-worker">Script Worker</a></li>
+          <li><a href="#no-artifacts-found-1">No artifacts</a></li>
+          <li><a href="#version-not-determined-2">Version not determined</a></li>
+        </ul>
+      </div>
+      <div class="content" id="content"></div>
+    </main>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"
+    integrity="sha512-LhccdVNGe2QMEfI3x4DVV3ckMRe36TfydKss6mJpdHjNFiV07dFpS2xzeZedptKZrwxfICJpez09iNioiSZ3hA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/gh/tofsjonas/sortable/sortable.min.js"></script>
+  <script type="module">
+    const readmeUrl = 'https://raw.githubusercontent.com/taskcluster/mozilla-history/master/WorkerVersions/README.md'
+
+    function initTables() {
+      document.querySelectorAll('table').forEach(table => table.classList.add('sortable'));
+    }
+
+    async function load() {
+      const res = await (await fetch(readmeUrl)).text()
+      showdown.setFlavor('github');
+      document.getElementById('content').innerHTML = (new showdown.Converter({
+        ghCompatibleHeaderId: true,
+        tables: true,
+      })).makeHtml(res)
+
+      initTables()
+    }
+    load()
+  </script>
+</body>
+
+</html>
