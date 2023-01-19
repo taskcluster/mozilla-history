@@ -272,7 +272,7 @@ func generateReadmeSection(title string, workers []WorkerInfo, filter func(Worke
 	}
 
 	sort.Slice(filtered, func(i, j int) bool {
-		return strings.Compare(filtered[i].WorkerPoolID, filtered[j].WorkerPoolID) >= 0
+		return strings.Compare(filtered[i].WorkerPoolID, filtered[j].WorkerPoolID) < 0
 	})
 
 	type kv struct {
