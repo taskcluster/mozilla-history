@@ -284,7 +284,7 @@ func generateReadmeSection(title string, workers []WorkerInfo, filter func(Worke
 		sortedVersions = append(sortedVersions, kv{k, v})
 	}
 	sort.Slice(sortedVersions, func(i, j int) bool {
-		return sortedVersions[i].Value > sortedVersions[j].Value
+		return strings.Compare(sortedVersions[i].Key, sortedVersions[j].Key) < 0
 	})
 
 	return map[string]interface{}{
