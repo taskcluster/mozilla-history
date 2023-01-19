@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -11,6 +12,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"text/template"
 	"time"
 
 	"github.com/taskcluster/httpbackoff/v3"
@@ -51,13 +53,58 @@ func (w *WorkerInfo) String() string {
 		w.Version,
 		engine,
 		revision,
-		w.Details["go-os"],
-		w.Details["go-arch"],
+		w.Details["os"],
+		w.Details["arch"],
 		w.Details["go"],
 		w.Details["error"],
 	)
 
 	return strings.Trim(info, " ")
+}
+
+var (
+	// Templates for README file
+	readmeTpl string = `
+{{- define "row" -}}
+## {{ .Title }}
+
+Total: ` + "`" + `{{ .Count }}` + "`" + `
+{{ if gt (len .Versions) 1 }}
+Count by version:
+
+| Version | Count |
+| :--- | ---: |
+{{ range .Versions -}}
+| {{ .Key }} | {{ .Value }} |
+{{ end }}
+{{- end }}
+{{if .Count }}
+| Worker Pool | Version {{ if .FullColumns }}| Engine | Revision | OS | Arch | GO {{ end }}|
+| --- | --- {{ if .FullColumns }}| --- | --- | --- | --- | --- {{ end }}|
+{{ range .Filtered -}}
+| **{{ .WorkerPoolID }}** | {{ or .Version .Details.error }} {{ if $.FullColumns }}| {{ or .Details.engine "-" }} | {{ or (slice .Details.revision 0 10) "-" }} | {{ or .Details.os "-" }} | {{ or .Details.arch "-" }} | {{ or .Details.go "-" }} {{ end }}|
+{{end}}
+{{- end -}}
+{{end}}
+
+# Worker Versions
+
+{{ range . }}
+{{ template "row" . }}
+{{ end }}
+
+
+[^1]: Those are the pools whose tasks were claimed and resolved by a worker as expected, but the worker did not publish either artifact ` + "`public/logs/live_backing.log` nor `public/logs/chain_of_trust.log`" + `, which is the source used to identify the worker implementation.
+
+[^2]: Probing task remains pending after two hours. Those are the pools that were not able to start any worker to claim the task within two hours.
+`
+)
+
+func renderTemplate(data interface{}) string {
+	t := template.Must(template.New("").Parse(readmeTpl))
+	var content bytes.Buffer
+	t.Execute(&content, data)
+	return content.String()
 }
 
 var (
@@ -213,36 +260,54 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 	writeSnapshot(workers)
 }
 
-func generateReadmeSection(title string, workers []WorkerInfo, filter func(WorkerInfo) bool) string {
-	data := make([]string, 0)
-	total := 0
+func generateReadmeSection(title string, workers []WorkerInfo, filter func(WorkerInfo) bool) map[string]interface{} {
+	filtered := make([]WorkerInfo, 0)
+	versions := make(map[string]int)
+
 	for _, w := range workers {
 		if filter(w) {
-			data = append(data, fmt.Sprintf("%-60s %v\n", w.WorkerPoolID+":", &w))
-			total++
+			filtered = append(filtered, w)
+			versions[w.Version]++
 		}
 	}
 
-	sort.Strings(data)
+	sort.Slice(filtered, func(i, j int) bool {
+		return strings.Compare(filtered[i].WorkerPoolID, filtered[j].WorkerPoolID) >= 0
+	})
 
-	content := fmt.Sprintf("## %v (%d)\n\n```\n%v\n```\n\n", title, total, strings.Join(data, ""))
-	return content
+	type kv struct {
+		Key   string
+		Value int
+	}
+	var sortedVersions []kv
+	for k, v := range versions {
+		sortedVersions = append(sortedVersions, kv{k, v})
+	}
+	sort.Slice(sortedVersions, func(i, j int) bool {
+		return sortedVersions[i].Value > sortedVersions[j].Value
+	})
+
+	return map[string]interface{}{
+		"FullColumns": title == "Generic Worker",
+		"Filtered":    filtered,
+		"Count":       len(filtered),
+		"Versions":    sortedVersions,
+		"Title":       title,
+	}
 }
 
 func writeReadme(workers []WorkerInfo) {
 	filename := "README.md"
 
-	contents := generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" })
-	contents += generateReadmeSection("Docker Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "docker-worker" })
-	contents += generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "Scriptworker") })
-	contents += generateReadmeSection("No artifacts found [^1]", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts })
-	contents += generateReadmeSection("Version not determined [^2]", workers, func(w WorkerInfo) bool { return w.isUnknown })
+	sections := [5]map[string]interface{}{
+		generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" }),
+		generateReadmeSection("Docker Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "docker-worker" }),
+		generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "Scriptworker") }),
+		generateReadmeSection("No artifacts found [^1]", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts }),
+		generateReadmeSection("Version not determined [^2]", workers, func(w WorkerInfo) bool { return w.isUnknown }),
+	}
 
-	contents += `
-[^1]: Those are the pools whose tasks were claimed and resolved by a worker as expected, but the worker did not publish either artifact ` + "`public/logs/live_backing.log` nor `public/logs/chain_of_trust.log`" + `, which is the source used to identify the worker implementation.
-
-[^2]: Probing task remains pending after two hours. Those are the pools that were not able to start any worker to claim the task within two hours.
-`
+	contents := renderTemplate(sections)
 
 	err := ioutil.WriteFile(filename, []byte(contents), 0644)
 	if err != nil {
@@ -446,8 +511,8 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID str
 			{`"engine": "(.*)"`, "engine"},
 			{`"https://github.com/taskcluster/.*/releases/tag/v([^"]*)"`, "version"},
 			{`"revision": "([0-9a-f]{40})"`, "revision"},
-			{`"go-os": "(.*)"`, "go-os"},
-			{`"go-arch": "(.*)"`, "go-arch"},
+			{`"go-os": "(.*)"`, "os"},
+			{`"go-arch": "(.*)"`, "arch"},
 			{`"go-version": "go(.*)"`, "go"},
 		} {
 			re := regexp.MustCompile(t.regex)
