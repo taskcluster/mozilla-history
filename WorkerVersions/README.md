@@ -16,23 +16,23 @@ Count by version:
 | 44.17.1 | 10 |
 | 16.5.1 | 4 |
 | 36.0.0 | 3 |
-| 40.0.3 | 3 |
 | 38.0.4 | 3 |
-| 30.0.2 | 2 |
-| 44.13.7 | 2 |
-| 16.2.0 | 2 |
+| 40.0.3 | 3 |
 | 16.5.5 | 2 |
-| 13.0.3 | 1 |
+| 16.2.0 | 2 |
+| 44.13.7 | 2 |
+| 30.0.2 | 2 |
+| 15.1.4 | 1 |
 | 44.23.2 | 1 |
-| 44.0.0 | 1 |
 | 45.0.0 | 1 |
+| 44.0.0 | 1 |
+| 13.0.3 | 1 |
 | 14.1.2 | 1 |
 | 47.0.2 | 1 |
-| 15.1.4 | 1 |
 
 
 | Worker Pool | Implementation | Version | Engine | Revision | OS | Arch | GO |
-| --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 | **relops-3/win2019** | generic-worker | 16.5.1 | multiuser | 02bc4c9cd7 | windows | amd64 | 1.10.8 |
 | **releng-hardware/mozillavpn-b-3-osx** | generic-worker | 44.13.7 | multiuser | 4c666f8bf4 | darwin | amd64 | 1.18.1 |
 | **releng-hardware/mozillavpn-b-1-osx** | generic-worker | 44.13.7 | multiuser | 4c666f8bf4 | darwin | amd64 | 1.18.1 |
@@ -123,7 +123,7 @@ Count by version:
 
 
 | Worker Pool | Implementation | Version |
-| --- | --- |
+| --- | --- | --- |
 | **xpi-3/images-gcp** | docker-worker | 38.0.5 |
 | **xpi-3/images** | docker-worker | unknown version |
 | **xpi-3/decision-gcp** | docker-worker | 38.0.5 |
@@ -403,7 +403,7 @@ Total: `50`
 
 
 | Worker Pool | Implementation | Version |
-| --- | --- |
+| --- | --- | --- |
 | **scriptworker-prov-v1/vpn-depsigning-mac-v1** | Scriptworker Chain of Trust | <no value> |
 | **scriptworker-prov-v1/tb-signing-mac-v1** | Scriptworker Chain of Trust | <no value> |
 | **scriptworker-prov-v1/tb-depsigning-mac-v1** | Scriptworker Chain of Trust | <no value> |
@@ -462,7 +462,7 @@ Total: `4`
 
 
 | Worker Pool | Implementation | Version |
-| --- | --- |
+| --- | --- | --- |
 | **scriptworker-prov-v1/tb-mac-notarization-poller** |  | No artifacts found |
 | **scriptworker-prov-v1/mac-notarization-poller** |  | No artifacts found |
 | **built-in/succeed** |  | No artifacts found |
@@ -475,7 +475,7 @@ Total: `10`
 
 
 | Worker Pool | Implementation | Version |
-| --- | --- |
+| --- | --- | --- |
 | **releng-hardware/gecko-t-osx-dtk-dev** |  | Version not determined; task not (yet) claimed |
 | **releng-hardware/gecko-t-osx-1100-m1-bug1730609** |  | Version not determined; task not (yet) claimed |
 | **proj-autophone/gecko-t-bitbar-gw-perf-a51** |  | Version not determined; task not (yet) claimed |

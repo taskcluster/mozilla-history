@@ -80,7 +80,7 @@ Count by version:
 {{- end }}
 {{if .Count }}
 | Worker Pool | Implementation | Version {{ if .FullColumns }}| Engine | Revision | OS | Arch | GO {{ end }}|
-| --- | --- {{ if .FullColumns }}| --- | --- | --- | --- | --- {{ end }}|
+| --- | --- | --- {{ if .FullColumns }}| --- | --- | --- | --- | --- {{ end }}|
 {{ range .Filtered -}}
 | **{{ .WorkerPoolID }}** | {{ .Implementation }} | {{ or .Version .Details.error }} {{ if $.FullColumns }}| {{ or .Details.engine "-" }} | {{ or (slice .Details.revision 0 10) "-" }} | {{ or .Details.os "-" }} | {{ or .Details.arch "-" }} | {{ or .Details.go "-" }} {{ end }}|
 {{end}}
