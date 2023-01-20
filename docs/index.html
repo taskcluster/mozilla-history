@@ -95,9 +95,10 @@
   <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
   <script type="module">
     // This should work for both https://taskcluster.github.io/community-history/ and https://taskcluster.github.io/mozilla-history/
-    let repo = String(window.location.pathname).trim('/')
-    if (!repo.includes('-history')) repo = 'mozilla-history'
-    const readmeUrl = `https://raw.githubusercontent.com/taskcluster/${repo}/master/WorkerVersions/README.md`
+    let basePath = String(window.location.pathname)
+    if (!basePath.includes('-history')) basePath = '/mozilla-history/'
+    const readmeUrl = `https://raw.githubusercontent.com/taskcluster${basePath}master/WorkerVersions/README.md`
+    const historyUrl = `${window.location.pathname}history.json`
 
     async function loadReadme() {
       const res = await (await fetch(readmeUrl)).text()
@@ -122,11 +123,11 @@
       let html = '<h2 id="history">History</h2>'
       dates.forEach(date => {
         html += `<h3>${date}</h3>
-        <div class="row">
-        ${tableByDate('Implementations', data[date].implementations)}
-        ${tableByDate('Versions', data[date].versions)}
-        </div>
-      `
+          <div class="row">
+          ${tableByDate('Implementations', data[date].implementations)}
+          ${tableByDate('Versions', data[date].versions)}
+          </div>
+        `
       })
       document.getElementById('history').innerHTML = html
     }
@@ -165,7 +166,7 @@
       })
     }
     async function loadHistory() {
-      const res = await (await fetch('/history.json')).json()
+      const res = await (await fetch(historyUrl)).json()
       renderHistoryTables(res)
       renderGraphs(res)
     }
