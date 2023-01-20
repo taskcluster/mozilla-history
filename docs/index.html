@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firefox CI Workers Versions History</title>
+  <title>Firefox-CI Workers Versions History</title>
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css"
     integrity="sha512-zb2pp+R+czM7GAemdSUQt6jFmr3qCo6ikvBgVU6F5GvwEDR0C2sefFiPEJ9QUpmAKdD5EqDUdNRtbOYnbF/eyQ=="
@@ -16,17 +16,21 @@
       margin: 0;
       padding: 0;
     }
+
     main {
       margin: 20px 40px;
     }
+
     .content {
       margin-right: 250px;
     }
+
     @media screen and (max-width: 1400px) {
       .content {
         margin-right: auto;
       }
     }
+
     .toc {
       position: fixed;
       right: 15px;
@@ -34,14 +38,26 @@
       background: #fff;
       padding: 15px 25px;
       border: 1px solid #eee;
+      z-index: 1;
     }
+
     .toc ul {
       margin-left: 20px;
       padding-left: 0;
     }
+
     .toc ul ul {
       margin-left: auto;
       padding-left: 15px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .history {
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -58,9 +74,16 @@
           <li><a href="#script-worker">Script Worker</a></li>
           <li><a href="#no-artifacts-found-1">No artifacts</a></li>
           <li><a href="#version-not-determined-2">Version not determined</a></li>
+          <li><a href="#history">History</a></li>
+          <li><a href="#graphs">Graphs</a></li>
         </ul>
       </div>
       <div class="content" id="content"></div>
+      <div class="history" id="history"></div>
+      <div class="graphs" id="graphs">
+        <div id="graph-implementations"></div>
+        <div id="graph-versions"></div>
+      </div>
     </main>
   </div>
 
@@ -69,24 +92,93 @@
     integrity="sha512-LhccdVNGe2QMEfI3x4DVV3ckMRe36TfydKss6mJpdHjNFiV07dFpS2xzeZedptKZrwxfICJpez09iNioiSZ3hA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/gh/tofsjonas/sortable/sortable.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
   <script type="module">
-    const readmeUrl = 'https://raw.githubusercontent.com/taskcluster/mozilla-history/master/WorkerVersions/README.md'
+    // This should work for both https://taskcluster.github.io/community-history/ and https://taskcluster.github.io/mozilla-history/
+    let repo = String(window.location.pathname).trim('/')
+    if (!repo.includes('-history')) repo = 'mozilla-history'
+    const readmeUrl = `https://raw.githubusercontent.com/taskcluster/${repo}/master/WorkerVersions/README.md`
 
-    function initTables() {
-      document.querySelectorAll('table').forEach(table => table.classList.add('sortable'));
-    }
-
-    async function load() {
+    async function loadReadme() {
       const res = await (await fetch(readmeUrl)).text()
       showdown.setFlavor('github');
       document.getElementById('content').innerHTML = (new showdown.Converter({
         ghCompatibleHeaderId: true,
         tables: true,
       })).makeHtml(res)
-
-      initTables()
     }
-    load()
+    function renderHistoryTables(data) {
+      const dates = Object.keys(data).sort((a, b) => b.localeCompare(a)) // dates in reverse order
+
+      const tableByDate = (field, dict) => {
+        let table = `<table><thead><tr><th>${field}</th><th>Count</th></tr></thead><tbody>`
+        Object.keys(dict).forEach(k => {
+          table += `<tr><td>${k || 'unknown'}</td><td>${dict[k]}</td></tr>`
+        })
+        table += '</tbody></table>'
+        return table
+      }
+
+      let html = '<h2 id="history">History</h2>'
+      dates.forEach(date => {
+        html += `<h3>${date}</h3>
+        <div class="row">
+        ${tableByDate('Implementations', data[date].implementations)}
+        ${tableByDate('Versions', data[date].versions)}
+        </div>
+      `
+      })
+      document.getElementById('history').innerHTML = html
+    }
+    function renderGraphs(data) {
+      const dates = Object.keys(data).sort()
+      const implementationTraces = [
+        ['Generic worker', 'generic-worker'],
+        ['Docker worker', 'docker-worker'],
+        ['Unknown', '']
+      ].map(([name, implementation]) => ({
+        x: dates,
+        y: dates.map(date => data[date].implementations[implementation] || 0),
+        name,
+        type: 'bar',
+      }))
+
+      // get unique versions
+      const allVersions = [... new Set(dates.map(date => Object.keys(data[date].versions)).flat())].sort()
+      const versionTraces = allVersions.map((version) => ({
+        x: dates,
+        y: dates.map(date => data[date].versions[version] || 0),
+        name: version,
+        type: 'bar',
+      }))
+
+      const layout = {
+        barmode: 'group',
+      }
+      Plotly.newPlot('graph-implementations', implementationTraces, {
+        ...layout,
+        title: 'Worker Implementations',
+      })
+      Plotly.newPlot('graph-versions', versionTraces, {
+        ...layout,
+        title: 'Worker Versions',
+      })
+    }
+    async function loadHistory() {
+      const res = await (await fetch('/history.json')).json()
+      renderHistoryTables(res)
+      renderGraphs(res)
+    }
+
+    async function init() {
+      await loadReadme()
+      await loadHistory()
+
+      // make tables sortable
+      document.querySelectorAll('table').forEach(table => table.classList.add('sortable'));
+    }
+
+    init()
   </script>
 </body>
 
