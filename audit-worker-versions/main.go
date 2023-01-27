@@ -34,6 +34,9 @@ type WorkerInfo struct {
 	Details        map[string]string
 	hasNoArtifacts bool
 	isUnknown      bool
+	Imageset       string
+	TotalWorkers   int
+	TotalCapacity  int
 }
 
 func (w *WorkerInfo) String() string {
@@ -62,6 +65,56 @@ func (w *WorkerInfo) String() string {
 	return strings.Trim(info, " ")
 }
 
+func GetImageset(wp *tcworkermanager.WorkerPoolFullDefinition) string {
+	var p = wp.ProviderID
+	if p == "test-provisioner" || p == "no-provisioning-nope" || p == "dummy-test-provisioner" || p == "test-dummy-provisioner" {
+		return "unknown"
+	}
+
+	type LaunchConfig struct {
+		// AWS
+		LaunchConfig struct {
+			ImageId string
+		} `json:"launchConfig"`
+
+		// GCP
+		Disks []struct {
+			InitializeParams struct {
+				SourceImage string `json:"sourceImage"`
+			} `json:"initializeParams"`
+		} `json:"disks"`
+
+		// Azure
+		StorageProfile struct {
+			ImageReference struct {
+				Id string `json:"id"`
+			} `json:"imageReference"`
+		} `json:"storageProfile"`
+	}
+	type Config struct {
+		LaunchConfigs []LaunchConfig `json:"launchConfigs"`
+	}
+	var cfg Config
+	if err := json.Unmarshal(wp.Config, &cfg); err != nil {
+		return "unknown"
+	}
+
+	if len(cfg.LaunchConfigs) > 0 {
+		launchCfg := cfg.LaunchConfigs[0]
+		if launchCfg.LaunchConfig.ImageId != "" {
+			return launchCfg.LaunchConfig.ImageId
+		}
+		if len(launchCfg.Disks) > 0 && launchCfg.Disks[0].InitializeParams.SourceImage != "" {
+			return launchCfg.Disks[0].InitializeParams.SourceImage
+		}
+		if launchCfg.StorageProfile.ImageReference.Id != "" {
+			return launchCfg.StorageProfile.ImageReference.Id
+		}
+	}
+
+	return "unknown"
+}
+
 var (
 	// Templates for README file
 	readmeTpl string = `
@@ -78,21 +131,29 @@ Count by version:
 | {{ .Key }} | {{ .Value }} |
 {{ end }}
 {{- end }}
+{{ if gt (len .Images) 1 }}
+Count by image:
+
+| Version | Count |
+| :--- | ---: |
+{{ range .Images -}}
+| {{ .Key }} | {{ .Value }} |
+{{ end }}
+{{- end }}
 {{if .Count }}
-| Worker Pool | Implementation | Version {{ if .FullColumns }}| Engine | Revision | OS | Arch | GO {{ end }}|
-| --- | --- | --- {{ if .FullColumns }}| --- | --- | --- | --- | --- {{ end }}|
+| Worker Pool | Implementation | Version {{ if .FullColumns }}| Engine | Revision | OS | Arch | GO {{ end }}| Total Workers | Total Capacity |
+| --- | --- | --- {{ if .FullColumns }}| --- | --- | --- | --- | --- {{ end }}| ---: | ---: |
 {{ range .Filtered -}}
-| **{{ .WorkerPoolID }}** | {{ .Implementation }} | {{ or .Version .Details.error }} {{ if $.FullColumns }}| {{ or .Details.engine "-" }} | {{ or (slice .Details.revision 0 10) "-" }} | {{ or .Details.os "-" }} | {{ or .Details.arch "-" }} | {{ or .Details.go "-" }} {{ end }}|
+| **{{ .WorkerPoolID }}** | {{ .Implementation }} | {{ or .Version .Details.error }} {{ if $.FullColumns }}| {{ or .Details.engine "-" }} | {{ or (slice .Details.revision 0 10) "-" }} | {{ or .Details.os "-" }} | {{ or .Details.arch "-" }} | {{ or .Details.go "-" }} {{ end }}| {{ .TotalWorkers }} | {{ .TotalCapacity }} |
 {{end}}
 {{- end -}}
 {{end}}
 
-# Worker Versions
+# Worker Pool Versions
 
 {{ range . }}
 {{ template "row" . }}
 {{ end }}
-
 
 [^1]: Those are the pools whose tasks were claimed and resolved by a worker as expected, but the worker did not publish either artifact ` + "`public/logs/live_backing.log` nor `public/logs/chain_of_trust.log`" + `, which is the source used to identify the worker implementation.
 
@@ -225,6 +286,7 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 }
 
 func inspect(queue *tcqueue.Queue, taskIDs []string) {
+	workermanager := tcworkermanager.NewFromEnv()
 	wp := workerpool.New(50)
 	workers := make([]WorkerInfo, 0)
 
@@ -238,6 +300,16 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 						panic(err)
 					}
 					workerPoolID, workerInfo := show(queue, statusResponse)
+					workerPool, err := workermanager.WorkerPool(workerPoolID)
+					if err != nil {
+						fmt.Println("Could not fetch workerPool " + workerPoolID)
+					} else {
+						workerInfo.Imageset = GetImageset(workerPool)
+						workerInfo.TotalWorkers = int(workerPool.RunningCount) + int(workerPool.StoppedCount) +
+							int(workerPool.StoppingCount) + int(workerPool.RequestedCount)
+						workerInfo.TotalCapacity = int(workerPool.RunningCapacity) + int(workerPool.StoppedCapacity) +
+							int(workerPool.StoppingCapacity) + int(workerPool.RequestedCapacity)
+					}
 					filename := FilenameEscape(workerPoolID)
 					err = ioutil.WriteFile(filename, append([]byte(workerInfo.String()), '\n'), 0644)
 					if err != nil {
@@ -263,11 +335,13 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 func generateReadmeSection(title string, workers []WorkerInfo, filter func(WorkerInfo) bool) map[string]interface{} {
 	filtered := make([]WorkerInfo, 0)
 	versions := make(map[string]int)
+	imagesets := make(map[string]int)
 
 	for _, w := range workers {
 		if filter(w) {
 			filtered = append(filtered, w)
 			versions[w.Version]++
+			imagesets[w.Imageset]++
 		}
 	}
 
@@ -287,11 +361,17 @@ func generateReadmeSection(title string, workers []WorkerInfo, filter func(Worke
 		return strings.Compare(sortedVersions[i].Key, sortedVersions[j].Key) < 0
 	})
 
+	var images []kv
+	for k, v := range imagesets {
+		images = append(images, kv{k, v})
+	}
+
 	return map[string]interface{}{
 		"FullColumns": title == "Generic Worker",
 		"Filtered":    filtered,
 		"Count":       len(filtered),
 		"Versions":    sortedVersions,
+		"Images":      images,
 		"Title":       title,
 	}
 }
