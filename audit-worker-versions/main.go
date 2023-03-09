@@ -288,7 +288,7 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("Task group sealed: %v", tg)
+	log.Printf("Task group sealed at: %v", tg.Sealed)
 }
 
 func inspect(queue *tcqueue.Queue, taskIDs []string) {
