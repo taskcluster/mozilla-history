@@ -14,12 +14,14 @@
 	const runStats = (data) => {
 		const implementations = {}
 		const versions = {}
+		const imagesets = {}
 		const inc = (dict, key) => dict[key] = (dict[key] || 0) + 1
 		data.forEach(worker => {
 			inc(implementations, worker.Implementation)
 			inc(versions, worker.Version)
+			inc(imagesets, worker.Imageset)
 		})
-		return { implementations, versions }
+		return { implementations, versions, imagesets }
 	}
 
 	const out = {}
