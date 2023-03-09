@@ -1,0 +1,68 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-releng-staging-firefox-android/screenshots",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-mozilla-releng-staging-firefox-android/screenshots",
+    "owner": "releng+staging-firefox-android@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-releng-staging-firefox-android/screenshots"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:98192abe93dac37c8de02c0069eac1a541563942@sha256:538bc867db2f6466b5a359adefe700ab1af35de00718fad881642d342d704442",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://github.com/mozilla-releng/staging-firefox-android",
+        "--project",
+        "staging-firefox-android",
+        "--level",
+        "1",
+        "--repository-type",
+        "git",
+        "--branch",
+        "main",
+        "--trust-domain",
+        "mobile",
+        "--github-token-secret",
+        "project/releng/mobile/github-cron-token",
+        "--force-run=screenshots"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://github.com/mozilla-releng/staging-firefox-android",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-releng-staging-firefox-android/screenshots",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-releng-staging-firefox-android/screenshots"
+    },
+    "priority": "normal",
+    "workerType": "build-decision",
+    "schedulerId": "mobile-level-1",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
