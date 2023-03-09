@@ -18,9 +18,9 @@ import (
 	"github.com/taskcluster/httpbackoff/v3"
 	"github.com/taskcluster/mozilla-history/workerpool"
 	"github.com/taskcluster/slugid-go/slugid"
-	tcclient "github.com/taskcluster/taskcluster/v47/clients/client-go"
-	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcqueue"
-	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcworkermanager"
+	tcclient "github.com/taskcluster/taskcluster/v48/clients/client-go"
+	"github.com/taskcluster/taskcluster/v48/clients/client-go/tcqueue"
+	"github.com/taskcluster/taskcluster/v48/clients/client-go/tcworkermanager"
 )
 
 type (
@@ -283,6 +283,12 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 
 		fmt.Println(string(respJSON))
 	}
+	fmt.Println("Tasks created, sealing task group...")
+	tg, err := queue.SealTaskGroup(taskGroupID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Task group sealed at: %v", tg.Sealed)
 }
 
 func inspect(queue *tcqueue.Queue, taskIDs []string) {
