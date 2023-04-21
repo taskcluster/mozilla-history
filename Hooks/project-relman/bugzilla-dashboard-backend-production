@@ -1,0 +1,67 @@
+{
+  "hookGroupId": "project-relman",
+  "hookId": "bugzilla-dashboard-backend-production",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nRegularly create bugzilla dashboard datasets",
+    "emailOnError": true,
+    "name": "Bugzilla dashboard data generation (production)",
+    "owner": "release-mgmt-analysis@mozilla.com"
+  },
+  "schedule": [
+    "0 0 */6 * * *"
+  ],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "index.project.relman.production.bugzilla-dashboard.latest"
+    ],
+    "scopes": [
+      "index:insert-task:project.relman.production.bugzilla-dashboard.*",
+      "secrets:get:project/relman/bugzilla-dashboard/runtime-production"
+    ],
+    "created": {
+      "$fromNow": "0 seconds"
+    },
+    "expires": {
+      "$fromNow": "1 month"
+    },
+    "payload": {
+      "env": {
+        "BZD_OUTPUT_PATH": "/output",
+        "TASKCLUSTER_SECRET": "project/relman/bugzilla-dashboard/runtime-production"
+      },
+      "cache": {},
+      "image": "mozilla/bugzilla-dashboard:backend-ac698238332c8974eac194e790fea4106bbcbfc9",
+      "features": {
+        "taskclusterProxy": true
+      },
+      "artifacts": {
+        "project/relman/bugzilla-dashboard": {
+          "path": "/output",
+          "type": "directory"
+        }
+      },
+      "maxRunTime": 7200,
+      "capabilities": {}
+    },
+    "retries": 3,
+    "deadline": {
+      "$fromNow": "2 hours"
+    },
+    "metadata": {
+      "name": "Bugzilla dashboard data generation (production)",
+      "owner": "release-mgmt-analysis@mozilla.com",
+      "source": "https://github.com/mozilla/bugzilla-dashboard-backend",
+      "description": "Build datasets for bugzilla dashboard"
+    },
+    "priority": "lowest",
+    "workerType": "relman-svc",
+    "schedulerId": "relman",
+    "provisionerId": "project-relman"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "additionalProperties": true
+  }
+}
