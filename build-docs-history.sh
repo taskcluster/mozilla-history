@@ -40,7 +40,6 @@ WORKERS_FILE="WorkerVersions/workers.json"
 HISTORICAL_DATA="./${PUBLIC_DIR}/history.json"
 
 mkdir -p "${PUBLIC_DIR}/data/"
-find "${PUBLIC_DIR}/data/" -type f -name '*.json' | xargs rm
 
 # grab all versions by date
 for rev in $(git rev-list master "${WORKERS_FILE}");
