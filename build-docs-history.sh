@@ -45,8 +45,8 @@ mkdir -p "${PUBLIC_DIR}/data/"
 for rev in $(git rev-list master "${WORKERS_FILE}");
 do
 	revdate=$(git show --no-patch --no-notes --date=short --pretty='%cd' "$rev")
-	echo "Fetching ${revdate} version"
-	git show "${s}:${WORKERS_FILE}" > "${PUBLIC_DIR}/data/${revdate}.json"
+	echo "Fetching ${revdate} version ${rev}"
+	git show "${rev}:${WORKERS_FILE}" > "${PUBLIC_DIR}/data/${revdate}.json"
 done
 
 node -e "${nodescript}" "${PWD}" ${PUBLIC_DIR}/data/*.json > $HISTORICAL_DATA
