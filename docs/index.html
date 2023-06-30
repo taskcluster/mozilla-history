@@ -129,24 +129,30 @@
     function renderHistoryTables(data) {
       const dates = Object.keys(data).sort((a, b) => b.localeCompare(a)) // dates in reverse order
 
-      const tableByDate = (field, dict) => {
-        let table = `<table><thead><tr><th>${field}</th><th>Count</th></tr></thead><tbody>`
-        Object.keys(dict).forEach(k => {
-          table += `<tr><td>${k || 'unknown'}</td><td>${dict[k]}</td></tr>`
+      const tableByDate = (field, prop) => {
+        let columns = []
+        dates.forEach(date => {
+          const dict = data[date][prop]
+          Object.keys(dict).forEach(k => {
+            if (!columns.includes(k)) columns.push(k)
+          })
+        })
+        columns = columns.sort((a, b) => a.localeCompare(b))
+
+        let table = `<table><thead><tr><th>Date</th>${columns.map(k => `<th>${k || 'unknown'}</th>`).join('')}</thead><tbody>`
+        dates.forEach(date => {
+          table += `<tr><td>${date}</td>
+            ${columns.map(c => data[date][prop][c] || '-').map(v => `<td>${v}</td>`).join('')}
+          </tr>`
         })
         table += '</tbody></table>'
         return table
       }
 
       let html = '<h2 id="history">History</h2>'
-      dates.forEach(date => {
-        html += `<h3>${date}</h3>
-          <div class="row">
-          ${tableByDate('Implementations', data[date].implementations)}
-          ${tableByDate('Versions', data[date].versions)}
-          </div>
-        `
-      })
+      html += tableByDate('Implementations', 'implementations')
+      html += tableByDate('Versions', 'versions')
+
       document.getElementById('history').innerHTML = html
     }
     function renderGraphs(data) {
@@ -159,7 +165,7 @@
         x: dates,
         y: dates.map(date => data[date].implementations[implementation] || 0),
         name,
-        type: 'bar',
+        type: 'line',
       }))
 
       // get unique versions
@@ -168,7 +174,7 @@
         x: dates,
         y: dates.map(date => data[date].versions[version] || 0),
         name: version,
-        type: 'bar',
+        type: 'line',
       }))
 
       const layout = {
