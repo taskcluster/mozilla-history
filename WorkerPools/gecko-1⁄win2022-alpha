@@ -2,7 +2,8 @@
   "config": {
     "lifecycle": {
       "registrationTimeout": 1800,
-      "reregistrationTimeout": 345600
+      "reregistrationTimeout": 345600,
+      "queueInactivityTimeout": 7200
     },
     "maxCapacity": 25,
     "minCapacity": 0,
@@ -11,10 +12,10 @@
       {
         "tags": {
           "deploymentId": "alpha",
-          "sourceBranch": "win_2012",
+          "sourceBranch": "bug1838725",
           "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "markcor"
+          "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "centralus",
         "priority": "spot",
@@ -28,17 +29,16 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "Z:\\",
-              "cachesDir": "Z:\\caches",
-              "workerType": "win2012-azure",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
+              "workerType": "win2022-azure",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "Z:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "gecko-b",
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 5400,
+              "idleTimeoutSecs": 960,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -60,22 +60,12 @@
             "osType": "Windows",
             "createOption": "FromImage"
           },
-          "dataDisks": [
-            {
-              "lun": 0,
-              "diskSizeGB": 120,
-              "managedDisk": {
-                "storageAccountType": "Premium_LRS"
-              },
-              "createOption": "Empty"
-            }
-          ],
           "imageReference": {
             "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/win2022-64-2009-centralus-2022-datacenter-azure-edition-alpha"
           }
         },
         "hardwareProfile": {
-          "vmSize": "Standard_F16s_v2"
+          "vmSize": "Standard_F32s_v2"
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
@@ -87,10 +77,10 @@
       {
         "tags": {
           "deploymentId": "alpha",
-          "sourceBranch": "win_2012",
+          "sourceBranch": "bug1838725",
           "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "markcor"
+          "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "northcentralus",
         "priority": "spot",
@@ -104,17 +94,16 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "Z:\\",
-              "cachesDir": "Z:\\caches",
-              "workerType": "win2012-azure",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
+              "workerType": "win2022-azure",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "Z:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "gecko-b",
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 5400,
+              "idleTimeoutSecs": 960,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -136,22 +125,12 @@
             "osType": "Windows",
             "createOption": "FromImage"
           },
-          "dataDisks": [
-            {
-              "lun": 0,
-              "diskSizeGB": 120,
-              "managedDisk": {
-                "storageAccountType": "Premium_LRS"
-              },
-              "createOption": "Empty"
-            }
-          ],
           "imageReference": {
             "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/win2022-64-2009-northcentralus-2022-datacenter-azure-edition-alpha"
           }
         },
         "hardwareProfile": {
-          "vmSize": "Standard_F16s_v2"
+          "vmSize": "Standard_F32s_v2"
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
@@ -166,15 +145,15 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\n",
   "emailOnError": true,
-  "lastModified": "2023-03-15T16:20:55.592Z",
+  "lastModified": "2023-07-06T19:32:25.313Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,
   "requestedCount": 0,
   "runningCapacity": 0,
   "runningCount": 0,
-  "stoppedCapacity": 2,
-  "stoppedCount": 2,
+  "stoppedCapacity": 47,
+  "stoppedCount": 47,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
   "workerPoolId": "gecko-1/win2022-alpha"
