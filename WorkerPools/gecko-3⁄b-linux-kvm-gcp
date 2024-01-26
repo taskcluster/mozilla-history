@@ -1,0 +1,498 @@
+{
+  "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600,
+      "queueInactivityTimeout": 7200
+    },
+    "maxCapacity": 10,
+    "minCapacity": 0,
+    "scalingRatio": 1,
+    "launchConfigs": [
+      {
+        "zone": "us-central1-a",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-a/machineTypes/n2-standard-16",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "dockerConfig": {
+            "allowPrivileged": false
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-central1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-b/machineTypes/n2-standard-16",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "dockerConfig": {
+            "allowPrivileged": false
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-central1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-c/machineTypes/n2-standard-16",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "dockerConfig": {
+            "allowPrivileged": false
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-central1-f",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-f/machineTypes/n2-standard-16",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "dockerConfig": {
+            "allowPrivileged": false
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-west1-a",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-west1-a/machineTypes/n2-standard-16",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "dockerConfig": {
+            "allowPrivileged": false
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-west1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2023-12-06t15-04-40z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-west1-b/machineTypes/n2-standard-16",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 900
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "dockerConfig": {
+            "allowPrivileged": false
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      }
+    ]
+  },
+  "created": "2024-01-24T21:13:26.026Z",
+  "currentCapacity": 0,
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nKVM-enabled builders for PGO using docker-worker.",
+  "emailOnError": true,
+  "lastModified": "2024-01-24T21:13:26.026Z",
+  "owner": "release+tc-workers@mozilla.com",
+  "providerId": "fxci-level3-gcp",
+  "requestedCapacity": 0,
+  "requestedCount": 0,
+  "runningCapacity": 0,
+  "runningCount": 0,
+  "stoppedCapacity": 1,
+  "stoppedCount": 1,
+  "stoppingCapacity": 0,
+  "stoppingCount": 0,
+  "workerPoolId": "gecko-3/b-linux-kvm-gcp"
+}

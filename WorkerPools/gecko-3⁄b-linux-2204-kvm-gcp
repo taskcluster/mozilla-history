@@ -1,0 +1,354 @@
+{
+  "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600,
+      "queueInactivityTimeout": 7200
+    },
+    "maxCapacity": 10,
+    "minCapacity": 0,
+    "scalingRatio": 1,
+    "launchConfigs": [
+      {
+        "zone": "us-central1-a",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-01-22t18-50-07z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-a/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-central1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-01-22t18-50-07z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-b/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-central1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-01-22t18-50-07z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-c/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-central1-f",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-01-22t18-50-07z"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-central1-f/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-west1-a",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-01-22t18-50-07z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-west1-a/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-west1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-01-22t18-50-07z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "preemptible": true,
+          "automaticRestart": false,
+          "onHostMaintenance": "terminate"
+        },
+        "machineType": "zones/us-west1-b/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1,
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      }
+    ]
+  },
+  "created": "2024-01-22T17:22:42.800Z",
+  "currentCapacity": 0,
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nKVM-enabled Ubuntu 22.04 GCP builders.",
+  "emailOnError": true,
+  "lastModified": "2024-01-22T22:29:47.836Z",
+  "owner": "release+tc-workers@mozilla.com",
+  "providerId": "fxci-level3-gcp",
+  "requestedCapacity": 0,
+  "requestedCount": 0,
+  "runningCapacity": 0,
+  "runningCount": 0,
+  "stoppedCapacity": 169,
+  "stoppedCount": 169,
+  "stoppingCapacity": 0,
+  "stoppingCount": 0,
+  "workerPoolId": "gecko-3/b-linux-2204-kvm-gcp"
+}
