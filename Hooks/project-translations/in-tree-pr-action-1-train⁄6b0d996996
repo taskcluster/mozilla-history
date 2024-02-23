@@ -2,17 +2,17 @@
   "hookGroupId": "project-translations",
   "hookId": "in-tree-pr-action-1-train/6b0d996996",
   "metadata": {
-    "description": "",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nPR action task train at level 1, with `.taskcluster.yml` hash 6b0d996996.\n\nFor project(s) firefox-translations-training\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
     "name": "project-translations/in-tree-pr-action-1-train/6b0d996996",
-    "owner": "ben@mozilla.com"
+    "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
       "in": {
         "in": {
-          "$if": "tasks_for in [\"action\", \"cron\", \"github-push\", \"pr-action\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+          "$if": "tasks_for in [\"action\", \"pr-action\", \"cron\", \"github-push\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
           "then": {
             "in": {
               "tags": {
@@ -101,7 +101,7 @@
                 "$flatten": [
                   "checks",
                   {
-                    "$if": "!isPullRequest \u0026\u0026 tasks_for != \"pr-action\"",
+                    "$if": "!isPullRequest",
                     "then": [
                       "tc-treeherder.v2.${project}.${head_sha}"
                     ]
@@ -181,7 +181,6 @@
                             "${normProject}": "${normProject}"
                           }
                         },
-                        "PIP_DISABLE_REQUIRE_HASHES": 1,
                         "${normProjectUpper}_BASE_REF": "${short_base_ref}",
                         "${normProjectUpper}_BASE_REV": "${base_sha}",
                         "${normProjectUpper}_HEAD_REF": "${head_ref}",
@@ -293,7 +292,7 @@
                       },
                       "tasks_for == \"pr-action\"": {
                         "name": "PR action: ${action.title}",
-                        "description": "${action.description}\n\nPR action triggered by clientID `${clientId}`\n"
+                        "description": "${action.description}\nPR action triggered by clientID `${clientId}`\n"
                       },
                       "tasks_for == \"github-push\" || isPullRequest": {
                         "name": "Decision Task (${tasks_for[7:]})",
@@ -393,7 +392,7 @@
             "\"github\" in tasks_for": {
               "$eval": "as_slugid(\"decision_task\")"
             },
-            "tasks_for in [\"cron\", \"action\", \"pr-action\"]": "${ownTaskId}"
+            "tasks_for in [\"cron\", \"action\"]": "${ownTaskId}"
           }
         },
         "ownerEmail": {
@@ -405,9 +404,9 @@
         },
         "baseRepoUrl": {
           "$switch": {
-            "tasks_for == \"cron\"": "${repository.url}",
+            "tasks_for == \"pr-action\"": "${repository.base_url}",
             "tasks_for == \"github-push\"": "${event.repository.html_url}",
-            "tasks_for in [\"action\", \"pr-action\"]": "${repository.base_url}",
+            "tasks_for in [\"cron\", \"action\"]": "${repository.url}",
             "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.base.repo.html_url}"
           }
         },
