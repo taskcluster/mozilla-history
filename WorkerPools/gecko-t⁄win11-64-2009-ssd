@@ -39,7 +39,7 @@
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 600,
+              "idleTimeoutSecs": 300,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -119,7 +119,7 @@
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 600,
+              "idleTimeoutSecs": 300,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -177,166 +177,6 @@
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "eastus",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-east-us-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-east-us-gecko-t/subnets/sn-east-us-gecko-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "Z:\\",
-              "cachesDir": "Z:\\caches",
-              "workerType": "win11-64-2009-ssd",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "Z:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "gecko-t",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 600,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "runTasksAsCurrentUser": false,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "diskSizeGB": 500,
-            "managedDisk": {
-              "storageAccountType": "Premium_LRS"
-            },
-            "createOption": "FromImage"
-          },
-          "dataDisks": [
-            {
-              "lun": 0,
-              "diskSizeGB": 120,
-              "managedDisk": {
-                "storageAccountType": "Premium_LRS"
-              },
-              "createOption": "Empty"
-            }
-          ],
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/win11-64-2009-eastus-win11-22h2-avd-b1a6491"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_F8s_v2"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        },
-        "capacityPerInstance": 1
-      },
-      {
-        "tags": {
-          "deploymentId": "b1a6491",
-          "sourceBranch": "cloud_windows",
-          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
-        "location": "eastus2",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-east-us-2-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-east-us-2-gecko-t/subnets/sn-east-us-2-gecko-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "Z:\\",
-              "cachesDir": "Z:\\caches",
-              "workerType": "win11-64-2009-ssd",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "Z:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "gecko-t",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 600,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "runTasksAsCurrentUser": false,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "diskSizeGB": 500,
-            "managedDisk": {
-              "storageAccountType": "Premium_LRS"
-            },
-            "createOption": "FromImage"
-          },
-          "dataDisks": [
-            {
-              "lun": 0,
-              "diskSizeGB": 120,
-              "managedDisk": {
-                "storageAccountType": "Premium_LRS"
-              },
-              "createOption": "Empty"
-            }
-          ],
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/win11-64-2009-eastus2-win11-22h2-avd-b1a6491"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_F8s_v2"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        },
-        "capacityPerInstance": 1
-      },
-      {
-        "tags": {
-          "deploymentId": "b1a6491",
-          "sourceBranch": "cloud_windows",
-          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
         "location": "westus",
         "priority": "spot",
         "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-west-us-gecko-t/subnets/sn-west-us-gecko-t",
@@ -359,7 +199,7 @@
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 600,
+              "idleTimeoutSecs": 300,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -439,7 +279,7 @@
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 600,
+              "idleTimeoutSecs": 300,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -492,19 +332,19 @@
     ]
   },
   "created": "2022-10-24T15:40:24.107Z",
-  "currentCapacity": 101,
+  "currentCapacity": 94,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\n",
   "emailOnError": true,
-  "lastModified": "2024-03-13T13:12:31.834Z",
+  "lastModified": "2024-03-21T14:25:56.113Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
-  "requestedCapacity": 1,
-  "requestedCount": 1,
-  "runningCapacity": 7,
-  "runningCount": 7,
-  "stoppedCapacity": 1940,
-  "stoppedCount": 1940,
-  "stoppingCapacity": 93,
-  "stoppingCount": 93,
+  "requestedCapacity": 94,
+  "requestedCount": 94,
+  "runningCapacity": 0,
+  "runningCount": 0,
+  "stoppedCapacity": 2120,
+  "stoppedCount": 2120,
+  "stoppingCapacity": 0,
+  "stoppingCount": 0,
   "workerPoolId": "gecko-t/win11-64-2009-ssd"
 }
