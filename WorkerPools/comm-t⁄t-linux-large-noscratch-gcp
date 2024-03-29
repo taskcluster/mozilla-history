@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 10,
+    "maxCapacity": 100,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -18,17 +18,17 @@
             "autoDelete": true,
             "initializeParams": {
               "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25"
             }
           }
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/n2-standard-8",
+        "machineType": "zones/us-central1-a/machineTypes/n2-standard-2",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -60,12 +60,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -82,10 +79,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-central1-b",
@@ -96,17 +90,17 @@
             "autoDelete": true,
             "initializeParams": {
               "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25"
             }
           }
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/n2-standard-8",
+        "machineType": "zones/us-central1-b/machineTypes/n2-standard-2",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -138,12 +132,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -160,10 +151,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-central1-c",
@@ -174,17 +162,17 @@
             "autoDelete": true,
             "initializeParams": {
               "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25"
             }
           }
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-c/machineTypes/n2-standard-8",
+        "machineType": "zones/us-central1-c/machineTypes/n2-standard-2",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -216,12 +204,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -238,10 +223,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-central1-f",
@@ -252,17 +234,17 @@
             "autoDelete": true,
             "initializeParams": {
               "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25"
             }
           }
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/n2-standard-8",
+        "machineType": "zones/us-central1-f/machineTypes/n2-standard-2",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -294,12 +276,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -316,10 +295,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-west1-a",
@@ -330,17 +306,17 @@
             "autoDelete": true,
             "initializeParams": {
               "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25"
             }
           }
         ],
         "region": "us-west1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/n2-standard-8",
+        "machineType": "zones/us-west1-a/machineTypes/n2-standard-2",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -372,12 +348,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -394,10 +367,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-west1-b",
@@ -408,17 +378,17 @@
             "autoDelete": true,
             "initializeParams": {
               "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-03-25"
             }
           }
         ],
         "region": "us-west1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/n2-standard-8",
+        "machineType": "zones/us-west1-b/machineTypes/n2-standard-2",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -450,12 +420,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -472,27 +439,24 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       }
     ]
   },
-  "created": "2024-03-22T03:37:11.409Z",
-  "currentCapacity": 2,
+  "created": "2024-03-28T15:21:36.934Z",
+  "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nWorker for gecko-based automation.",
   "emailOnError": true,
-  "lastModified": "2024-03-22T03:37:11.409Z",
+  "lastModified": "2024-03-28T15:21:36.934Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
-  "requestedCapacity": 2,
-  "requestedCount": 2,
+  "requestedCapacity": 0,
+  "requestedCount": 0,
   "runningCapacity": 0,
   "runningCount": 0,
-  "stoppedCapacity": 9,
-  "stoppedCount": 9,
+  "stoppedCapacity": 0,
+  "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "gecko-t/t-linux-kvm-gcp-staging83"
+  "workerPoolId": "comm-t/t-linux-large-noscratch-gcp"
 }

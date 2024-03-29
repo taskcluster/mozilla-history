@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 10,
+    "maxCapacity": 100,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -17,16 +17,8 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
             }
           },
           {
@@ -40,11 +32,11 @@
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/n2-standard-4",
+        "machineType": "zones/us-central1-a/machineTypes/n2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -76,12 +68,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -98,10 +87,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-central1-b",
@@ -111,16 +97,8 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
             }
           },
           {
@@ -134,11 +112,11 @@
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/n2-standard-4",
+        "machineType": "zones/us-central1-b/machineTypes/n2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -170,12 +148,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -192,10 +167,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-central1-c",
@@ -205,16 +177,8 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
             }
           },
           {
@@ -228,11 +192,11 @@
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-c/machineTypes/n2-standard-4",
+        "machineType": "zones/us-central1-c/machineTypes/n2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -264,12 +228,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -286,10 +247,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-central1-f",
@@ -299,16 +257,8 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
             }
           },
           {
@@ -322,11 +272,11 @@
         ],
         "region": "us-central1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/n2-standard-4",
+        "machineType": "zones/us-central1-f/machineTypes/n2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -358,12 +308,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -380,10 +327,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-west1-a",
@@ -393,16 +337,8 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-west1-a/diskTypes/local-ssd"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
             }
           },
           {
@@ -416,11 +352,11 @@
         ],
         "region": "us-west1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/n2-standard-4",
+        "machineType": "zones/us-west1-a/machineTypes/n2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -452,12 +388,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -474,10 +407,7 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       },
       {
         "zone": "us-west1-b",
@@ -487,16 +417,8 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2023-06-13"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
             }
           },
           {
@@ -510,11 +432,11 @@
         ],
         "region": "us-west1",
         "scheduling": {
-          "preemptible": true,
-          "automaticRestart": false,
-          "onHostMaintenance": "terminate"
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/n2-standard-4",
+        "machineType": "zones/us-west1-b/machineTypes/n2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -546,12 +468,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -568,27 +487,24 @@
             ]
           }
         ],
-        "capacityPerInstance": 1,
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        "capacityPerInstance": 1
       }
     ]
   },
-  "created": "2024-03-20T19:36:34.021Z",
+  "created": "2024-03-25T23:15:10.121Z",
   "currentCapacity": 0,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nWorker for gecko-based automation.",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nWorker for Firefox automation.",
   "emailOnError": true,
-  "lastModified": "2024-03-22T03:37:11.354Z",
+  "lastModified": "2024-03-28T14:29:20.300Z",
   "owner": "release+tc-workers@mozilla.com",
-  "providerId": "null-provider",
+  "providerId": "fxci-level3-gcp",
   "requestedCapacity": 0,
   "requestedCount": 0,
   "runningCapacity": 0,
   "runningCount": 0,
-  "stoppedCapacity": 24,
-  "stoppedCount": 24,
+  "stoppedCapacity": 1788,
+  "stoppedCount": 1788,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "gecko-t/t-linux-kvm-gcp-staging4"
+  "workerPoolId": "gecko-3/b-linux-medium-gcp"
 }
