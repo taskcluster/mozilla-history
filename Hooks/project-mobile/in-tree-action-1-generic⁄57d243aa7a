@@ -1,19 +1,19 @@
 {
   "hookGroupId": "project-mobile",
-  "hookId": "in-tree-action-1-generic/1930e47dba",
+  "hookId": "in-tree-action-1-generic/57d243aa7a",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 1930e47dba.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 57d243aa7a.\n\nFor project(s) staging-firefox-ios\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-mobile/in-tree-action-1-generic/1930e47dba",
+    "name": "project-mobile/in-tree-action-1-generic/57d243aa7a",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
       "in": {
-        "$if": "tasks_for in [\"action\", \"cron\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for == \"github-push\" \u0026\u0026 (head_branch == \"refs/heads/main\" || head_branch[:19] == \"refs/heads/releases\")) || (tasks_for == \"github-release\" \u0026\u0026 releaseAction == \"published\")\n",
-        "then": {
-          "in": {
+        "in": {
+          "$if": "tasks_for in [\"action\", \"cron\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for == \"github-push\" \u0026\u0026 (short_head_branch == \"main\" || short_head_branch[:8] == \"releases\")) || (tasks_for == \"github-release\" \u0026\u0026 releaseAction == \"published\")\n",
+          "then": {
             "tags": {
               "$if": "tasks_for == \"github-push\" || isPullRequest",
               "else": {
@@ -178,7 +178,8 @@
                     "MOBILE_BASE_REPOSITORY": "${baseRepoUrl}",
                     "MOBILE_HEAD_REPOSITORY": "${repoUrl}",
                     "MOBILE_REPOSITORY_TYPE": "git",
-                    "MOBILE_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                    "MOBILE_PIP_REQUIREMENTS": "taskcluster/requirements.txt",
+                    "PIP_DISABLE_REQUIRE_HASHES": 1
                   },
                   {
                     "$if": "isPullRequest",
@@ -299,18 +300,19 @@
               "then": "${action.taskGroupId}"
             },
             "provisionerId": "${trustDomain}-${level}"
+          }
+        },
+        "$let": {
+          "level": {
+            "$if": "tasks_for in [\"github-push\", \"github-release\", \"action\", \"cron\"] \u0026\u0026 repoUrl == canonicalRepo",
+            "else": "1",
+            "then": "3"
           },
-          "$let": {
-            "level": {
-              "$if": "tasks_for in [\"github-push\", \"github-release\", \"action\", \"cron\"] \u0026\u0026 repoUrl == canonicalRepo",
-              "else": "1",
-              "then": "3"
-            },
-            "short_head_branch": {
-              "$if": "head_branch[:11] == \"refs/heads/\"",
-              "then": {
-                "$eval": "head_branch[11:]"
-              }
+          "short_head_branch": {
+            "$if": "head_branch[:11] == \"refs/heads/\"",
+            "else": "${head_branch}",
+            "then": {
+              "$eval": "head_branch[11:]"
             }
           }
         }
