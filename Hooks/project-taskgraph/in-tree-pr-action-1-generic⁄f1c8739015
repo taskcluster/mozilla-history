@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-taskgraph",
-  "hookId": "in-tree-action-1-generic/172e677ab5",
+  "hookId": "in-tree-pr-action-1-generic/f1c8739015",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 172e677ab5.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nPR action task generic at level 1, with `.taskcluster.yml` hash f1c8739015.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-taskgraph/in-tree-action-1-generic/172e677ab5",
+    "name": "project-taskgraph/in-tree-pr-action-1-generic/f1c8739015",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -29,81 +29,9 @@
                 }
               }
             },
-            "extra": {
-              "$merge": [
-                {
-                  "treeherder": {
-                    "$merge": [
-                      {
-                        "machine": {
-                          "platform": "gecko-decision"
-                        }
-                      },
-                      {
-                        "$switch": {
-                          "$default": {
-                            "symbol": "${cron.job_symbol}",
-                            "groupSymbol": "cron"
-                          },
-                          "tasks_for == \"action\"": {
-                            "symbol": "${action.symbol}",
-                            "groupName": "action-callback",
-                            "groupSymbol": "AC"
-                          },
-                          "tasks_for == \"github-push\" || isPullRequest": {
-                            "symbol": "D"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  "$if": "tasks_for == \"action\"",
-                  "then": {
-                    "action": {
-                      "name": "${action.name}",
-                      "context": {
-                        "input": {
-                          "$eval": "input"
-                        },
-                        "taskId": {
-                          "$eval": "taskId"
-                        },
-                        "clientId": {
-                          "$eval": "clientId"
-                        },
-                        "taskGroupId": "${action.taskGroupId}"
-                      }
-                    },
-                    "parent": "${action.taskGroupId}"
-                  }
-                },
-                {
-                  "$if": "tasks_for == \"cron\"",
-                  "then": {
-                    "cron": {
-                      "$json": {
-                        "$eval": "cron"
-                      }
-                    }
-                  }
-                },
-                {
-                  "tasks_for": "${tasks_for}"
-                }
-              ]
-            },
             "routes": {
               "$flatten": [
                 "checks",
-                {
-                  "$if": "!isPullRequest",
-                  "else": [],
-                  "then": [
-                    "tc-treeherder.v2.${project}.${head_sha}"
-                  ]
-                },
                 {
                   "$switch": {
                     "$default": [],
@@ -167,93 +95,140 @@
               "$fromNow": "1 year 1 second"
             },
             "payload": {
-              "env": {
-                "$merge": [
-                  {
-                    "REPOSITORIES": {
-                      "$json": {
-                        "taskgraph": "Taskgraph"
+              "in": {
+                "env": {
+                  "$merge": [
+                    {
+                      "REPOSITORIES": {
+                        "$json": {
+                          "${normProject}": "${normProject}"
+                        }
+                      },
+                      "${normProjectUpper}_BASE_REF": "${base_ref}",
+                      "${normProjectUpper}_BASE_REV": "${base_sha}",
+                      "${normProjectUpper}_HEAD_REF": "${head_ref}",
+                      "${normProjectUpper}_HEAD_REV": "${head_sha}",
+                      "${normProjectUpper}_BASE_REPOSITORY": "${baseRepoUrl}",
+                      "${normProjectUpper}_HEAD_REPOSITORY": "${repoUrl}",
+                      "${normProjectUpper}_REPOSITORY_TYPE": "git"
+                    },
+                    {
+                      "$if": "isPullRequest",
+                      "then": {
+                        "${normProjectUpper}_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
                       }
                     },
-                    "TASKGRAPH_BASE_REF": "${base_ref}",
-                    "TASKGRAPH_BASE_REV": "${base_sha}",
-                    "TASKGRAPH_HEAD_REF": "${head_ref}",
-                    "TASKGRAPH_HEAD_REV": "${head_sha}",
-                    "TASKGRAPH_BASE_REPOSITORY": "${baseRepoUrl}",
-                    "TASKGRAPH_HEAD_REPOSITORY": "${repoUrl}",
-                    "TASKGRAPH_REPOSITORY_TYPE": "git"
-                  },
-                  {
-                    "$if": "isPullRequest",
-                    "then": {
-                      "TASKGRAPH_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
+                    {
+                      "$if": "tasks_for == \"action\"",
+                      "then": {
+                        "ACTION_INPUT": {
+                          "$json": {
+                            "$eval": "input"
+                          }
+                        },
+                        "ACTION_TASK_ID": {
+                          "$json": {
+                            "$eval": "taskId"
+                          }
+                        },
+                        "ACTION_CALLBACK": "${action.cb_name}",
+                        "ACTION_TASK_GROUP_ID": "${action.taskGroupId}"
+                      }
                     }
-                  },
-                  {
-                    "$if": "tasks_for == \"action\"",
-                    "then": {
-                      "ACTION_INPUT": {
-                        "$json": {
-                          "$eval": "input"
-                        }
-                      },
-                      "ACTION_TASK_ID": {
-                        "$json": {
-                          "$eval": "taskId"
-                        }
-                      },
-                      "ACTION_CALLBACK": "${action.cb_name}",
-                      "ACTION_TASK_GROUP_ID": "${action.taskGroupId}"
-                    }
-                  }
-                ]
-              },
-              "cache": {
-                "${trustDomain}-level-${level}-checkouts-sparse-v2": "/builds/worker/checkouts"
-              },
-              "image": "mozillareleases/taskgraph:decision-10378fde0bf12adbd64e74313bf72ea3c6caf311ad6af23e2bff1d8f1232a221@sha256:7518c410bdf91142b0e26455d26ddaf861202cfbb3c35d0b1ef85d1ed577a5bd",
-              "command": [
-                "run-task",
-                "--taskgraph-checkout=/builds/worker/checkouts/src",
-                "--",
-                "bash",
-                "-cx",
-                {
-                  "in": {
-                    "$if": "tasks_for == \"action\"",
-                    "else": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 pip3 install --user . \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --owner='${ownerEmail}' --level='${level}' --repository-type=git --tasks-for='${tasks_for}' --base-repository='${baseRepoUrl}' --base-ref='${base_ref}' --base-rev='${base_sha}' --head-repository='${repoUrl}' --head-ref='${head_ref}' --head-rev='${head_sha}' ${extraArgs}\n",
-                    "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 pip3 install -r requirements/base.txt \u0026\u0026 pip3 install --user --no-deps . \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
-                  },
-                  "$let": {
-                    "extraArgs": {
+                  ]
+                },
+                "cache": {
+                  "${trustDomain}-project-${project}-level-${level}-checkouts-sparse-v2": "/builds/worker/checkouts"
+                },
+                "extra": {
+                  "$merge": [
+                    {
+                      "$if": "tasks_for == \"action\"",
+                      "then": {
+                        "action": {
+                          "name": "${action.name}",
+                          "context": {
+                            "input": {
+                              "$eval": "input"
+                            },
+                            "taskId": {
+                              "$eval": "taskId"
+                            },
+                            "clientId": {
+                              "$eval": "clientId"
+                            },
+                            "taskGroupId": "${action.taskGroupId}"
+                          }
+                        },
+                        "parent": "${action.taskGroupId}"
+                      }
+                    },
+                    {
                       "$if": "tasks_for == \"cron\"",
-                      "else": "",
-                      "then": "${cron.quoted_args}"
+                      "then": {
+                        "cron": {
+                          "$json": {
+                            "$eval": "cron"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "tasks_for": "${tasks_for}"
+                    }
+                  ]
+                },
+                "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+                "command": [
+                  "run-task",
+                  "--${normProject}-checkout=/builds/worker/checkouts/src",
+                  "--",
+                  "bash",
+                  "-cx",
+                  {
+                    "in": {
+                      "$if": "tasks_for == \"action\"",
+                      "else": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 pip3 install --user --break-system-packages -r requirements/base.txt \u0026\u0026 pip3 install --user --break-system-packages --no-deps . \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --owner='${ownerEmail}' --level='${level}' --repository-type=git --tasks-for='${tasks_for}' --base-repository='${baseRepoUrl}' --base-ref='${base_ref}' --base-rev='${base_sha}' --head-repository='${repoUrl}' --head-ref='${head_ref}' --head-rev='${head_sha}' ${extraArgs}\n",
+                      "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 pip3 install --user --break-system-packages -r requirements/base.txt \u0026\u0026 pip3 install --user --break-system-packages --no-deps . \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                    },
+                    "$let": {
+                      "extraArgs": {
+                        "$if": "tasks_for == \"cron\"",
+                        "else": "",
+                        "then": "${cron.quoted_args}"
+                      }
                     }
                   }
-                }
-              ],
-              "features": {
-                "chainOfTrust": true,
-                "taskclusterProxy": true
-              },
-              "artifacts": {
-                "public": {
-                  "path": "/builds/worker/artifacts",
-                  "type": "directory",
-                  "expires": {
-                    "$fromNow": "1 year"
+                ],
+                "features": {
+                  "taskclusterProxy": true
+                },
+                "artifacts": {
+                  "public": {
+                    "path": "/builds/worker/artifacts",
+                    "type": "directory",
+                    "expires": {
+                      "$fromNow": "1 year"
+                    }
+                  },
+                  "public/docker-contexts": {
+                    "path": "/builds/worker/checkouts/src/docker-contexts",
+                    "type": "directory",
+                    "expires": {
+                      "$fromNow": "7 day"
+                    }
                   }
                 },
-                "public/docker-contexts": {
-                  "path": "/builds/worker/checkouts/src/docker-contexts",
-                  "type": "directory",
-                  "expires": {
-                    "$fromNow": "7 day"
-                  }
-                }
+                "maxRunTime": 1800
               },
-              "maxRunTime": 1800
+              "$let": {
+                "normProject": {
+                  "$eval": "join(split(project, \"-\"), \"_\")"
+                },
+                "normProjectUpper": {
+                  "$eval": "uppercase(join(split(project, \"-\"), \"_\"))"
+                }
+              }
             },
             "retries": 5,
             "deadline": {
@@ -284,13 +259,11 @@
               ]
             },
             "priority": {
-              "$if": "tasks_for == 'cron'",
-              "else": {
-                "$if": "tasks_for == \"github-push\" || isPullRequest",
-                "else": "lowest",
-                "then": "very-low"
-              },
-              "then": "low"
+              "$switch": {
+                "$default": "lowest",
+                "tasks_for == \"cron\"": "low",
+                "tasks_for == \"github-push\"|| isPullRequest": "very-low"
+              }
             },
             "requires": "all-completed",
             "workerType": "decision-gcp",
@@ -305,7 +278,7 @@
           },
           "$let": {
             "level": {
-              "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/taskcluster/taskgraph\"",
+              "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-releng/mozilla-taskgraph\"",
               "else": 1,
               "then": 3
             }
@@ -410,7 +383,7 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:generic",
         "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
@@ -421,7 +394,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "action",
+      "tasks_for": "pr-action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },
@@ -512,6 +485,10 @@
                 "type": "string",
                 "description": "Mercurial pushlog ID of the original push"
               },
+              "base_branch": {
+                "type": "string",
+                "description": "branch this pull request is based on, if applicable"
+              },
               "base_revision": {
                 "type": "string",
                 "description": "revision before the push occurred"
@@ -584,6 +561,10 @@
               "project": {
                 "type": "string",
                 "description": "repository project name (also known as \"alias\")"
+              },
+              "base_url": {
+                "type": "string",
+                "description": "repository URL to use when checking scopes for this action"
               }
             },
             "description": "Information about the repository where the push occurred",

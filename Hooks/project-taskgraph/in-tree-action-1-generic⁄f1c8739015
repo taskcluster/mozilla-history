@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-taskgraph",
-  "hookId": "in-tree-action-3-generic/44960a45e2",
+  "hookId": "in-tree-action-1-generic/f1c8739015",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 44960a45e2.\n\nFor project(s) mozilla-taskgraph\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash f1c8739015.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-taskgraph/in-tree-action-3-generic/44960a45e2",
+    "name": "project-taskgraph/in-tree-action-1-generic/f1c8739015",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -302,10 +302,10 @@
         },
         "base_ref": {
           "$switch": {
-            "tasks_for == \"github-push\"": "${event.ref}",
             "tasks_for in [\"cron\", \"action\"]": "${push.branch}",
             "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.base.ref}",
-            "tasks_for == \"github-push\" \u0026\u0026 event.base_ref": "${event.base_ref}"
+            "tasks_for == \"github-push\" \u0026\u0026 event.base_ref": "${event.base_ref}",
+            "tasks_for == \"github-push\" \u0026\u0026 !(event.base_ref)": "${event.ref}"
           }
         },
         "base_sha": {
