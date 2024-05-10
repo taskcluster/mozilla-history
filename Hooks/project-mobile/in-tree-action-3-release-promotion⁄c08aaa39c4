@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-mobile",
-  "hookId": "in-tree-action-3-release-promotion/5a39f08338",
+  "hookId": "in-tree-action-3-release-promotion/c08aaa39c4",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash 5a39f08338.\n\nFor project(s) reference-browser\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash c08aaa39c4.\n\nFor project(s) reference-browser\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-mobile/in-tree-action-3-release-promotion/5a39f08338",
+    "name": "project-mobile/in-tree-action-3-release-promotion/c08aaa39c4",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -210,7 +210,7 @@
                         }
                       ]
                     },
-                    "image": "mozillareleases/taskgraph:decision-10068f116a3800a829ddba367136a95bef5634e06f77e051859586202c93b18a@sha256:a74ed430fd80ebb647bb4a5b019523cf5f69246ed2c2603386dbc8f7200c8140",
+                    "image": "mozillareleases/taskgraph:decision-v8.0.1@sha256:74c5a20e7d8c8bdbec6770c61274d3970991273ffe5c955d0868bb3cd7eb3160",
                     "command": [
                       "/usr/local/bin/run-task",
                       "--mobile-checkout=/builds/worker/checkouts/vcs",
@@ -221,8 +221,8 @@
                       {
                         "in": {
                           "$if": "tasks_for == \"action\"",
-                          "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$MOBILE_BASE_REPOSITORY\" --head-repository=\"$MOBILE_HEAD_REPOSITORY\" --head-ref=\"$MOBILE_HEAD_REF\" --head-rev=\"$MOBILE_HEAD_REV\" --head-tag=\"$MOBILE_HEAD_TAG\" --repository-type=\"$MOBILE_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
-                          "then": "cd /builds/worker/checkouts/vcs \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                          "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$MOBILE_BASE_REPOSITORY\" --head-repository=\"$MOBILE_HEAD_REPOSITORY\" --head-ref=\"$MOBILE_HEAD_REF\" --head-rev=\"$MOBILE_HEAD_REV\" --head-tag=\"$MOBILE_HEAD_TAG\" --repository-type=\"$MOBILE_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
+                          "then": "cd /builds/worker/checkouts/vcs \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                         },
                         "$let": {
                           "extraArgs": {

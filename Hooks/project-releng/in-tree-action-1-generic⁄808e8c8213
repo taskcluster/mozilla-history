@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "in-tree-action-3-generic/9a9f293c66",
+  "hookId": "in-tree-action-1-generic/808e8c8213",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 9a9f293c66.\n\nFor project(s) k8s-autoscale\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 808e8c8213.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-releng/in-tree-action-3-generic/9a9f293c66",
+    "name": "project-releng/in-tree-action-1-generic/808e8c8213",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -12,7 +12,7 @@
     "in": {
       "in": {
         "in": {
-          "$if": "tasks_for in [\"action\", \"pr-action\", \"cron\"] || (tasks_for == \"github-push\" \u0026\u0026 short_head_ref == \"main\") || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+          "$if": "tasks_for in [\"action\", \"pr-action\", \"cron\"] || (tasks_for == \"github-push\" \u0026\u0026 (short_head_ref in [\"master\", \"dev\", \"production\"])) || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
           "then": {
             "tags": {
               "$switch": {
@@ -268,11 +268,16 @@
           }
         },
         "$let": {
+          "level": {
+            "$if": "tasks_for in [\"github-release\", \"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-releng/k8s-autoscale\"",
+            "else": 1,
+            "then": 3
+          },
           "short_base_ref": {
             "$switch": {
               "$default": "${base_ref}",
               "base_ref[:10] == \"refs/tags/\"": "${base_ref[10:]}",
-              "base_ref[:11] == \"refs/heads/\"": "${$base_ref[11:]}"
+              "base_ref[:11] == \"refs/heads/\"": "${base_ref[11:]}"
             }
           },
           "short_head_ref": {
@@ -285,7 +290,7 @@
         }
       },
       "$let": {
-        "level": "1",
+        "level": "3",
         "project": {
           "$switch": {
             "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.head.repo.name}",
@@ -303,11 +308,11 @@
         "base_ref": {
           "$switch": {
             "tasks_for == \"pr-action\"": "${push.base_branch}",
-            "tasks_for == \"github-push\"": "${event.ref}",
             "tasks_for == \"github-release\"": "",
             "tasks_for in [\"cron\", \"action\"]": "${push.branch}",
             "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.base.ref}",
-            "tasks_for == \"github-push\" \u0026\u0026 event.base_ref": "${event.base_ref}"
+            "tasks_for == \"github-push\" \u0026\u0026 event.base_ref": "${event.base_ref}",
+            "tasks_for == \"github-push\" \u0026\u0026 !(event.base_ref)": "${event.ref}"
           }
         },
         "base_sha": {

@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-app-services",
-  "hookId": "in-tree-action-3-release-promotion/733b05722e",
+  "hookId": "in-tree-action-1-generic/d34f673940",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash 733b05722e.\n\nFor project(s) application-services\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash d34f673940.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-app-services/in-tree-action-3-release-promotion/733b05722e",
+    "name": "project-app-services/in-tree-action-1-generic/d34f673940",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -204,7 +204,7 @@
                   "cache": {
                     "${trustDomain}-level-${level}-checkouts-v1": "/builds/worker/checkouts"
                   },
-                  "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+                  "image": "mozillareleases/taskgraph:decision-v8.0.1@sha256:74c5a20e7d8c8bdbec6770c61274d3970991273ffe5c955d0868bb3cd7eb3160",
                   "command": [
                     "/usr/local/bin/run-task",
                     "--appservices-checkout=/builds/worker/checkouts/vcs",
@@ -215,8 +215,8 @@
                     {
                       "in": {
                         "$if": "tasks_for == \"action\"",
-                        "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$APPSERVICES_BASE_REPOSITORY\" --head-repository=\"$APPSERVICES_HEAD_REPOSITORY\" --head-ref=\"$APPSERVICES_HEAD_REF\" --head-rev=\"$APPSERVICES_HEAD_REV\" --repository-type=\"$APPSERVICES_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
-                        "then": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                        "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$APPSERVICES_BASE_REPOSITORY\" --head-repository=\"$APPSERVICES_HEAD_REPOSITORY\" --head-ref=\"$APPSERVICES_HEAD_REF\" --head-rev=\"$APPSERVICES_HEAD_REV\" --repository-type=\"$APPSERVICES_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
+                        "then": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                       },
                       "$let": {
                         "extraArgs": {
@@ -410,8 +410,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "action_perm": "release-promotion",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
