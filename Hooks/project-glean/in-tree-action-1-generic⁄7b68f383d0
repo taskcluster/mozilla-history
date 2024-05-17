@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-glean",
-  "hookId": "in-tree-action-1-generic/699b229be9",
+  "hookId": "in-tree-action-1-generic/7b68f383d0",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 699b229be9.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 7b68f383d0.\n\nFor project(s) \n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-glean/in-tree-action-1-generic/699b229be9",
+    "name": "project-glean/in-tree-action-1-generic/7b68f383d0",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -184,8 +184,7 @@
                         "ANDROID_SDK_ROOT": "/builds/worker/android-sdk",
                         "GLEAN_BASE_REPOSITORY": "${baseRepoUrl}",
                         "GLEAN_HEAD_REPOSITORY": "${repoUrl}",
-                        "GLEAN_REPOSITORY_TYPE": "git",
-                        "GLEAN_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                        "GLEAN_REPOSITORY_TYPE": "git"
                       },
                       {
                         "$if": "tasks_for in [\"github-pull-request\"]",
@@ -216,7 +215,7 @@
                   "cache": {
                     "${trustDomain}-project-${project}-level-${level}-checkouts-sparse-v1": "/builds/worker/checkouts"
                   },
-                  "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+                  "image": "mozillareleases/taskgraph:decision-v8.1.0@sha256:ffed8883c6f3e505dd88bafd7a153103b768c77609bf0cbafd15dd602ba95352",
                   "command": [
                     "/usr/local/bin/run-task",
                     "--glean-checkout=/builds/worker/checkouts/vcs",
@@ -227,8 +226,8 @@
                     {
                       "in": {
                         "$if": "tasks_for == \"action\"",
-                        "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$GLEAN_BASE_REPOSITORY\" --head-repository=\"$GLEAN_HEAD_REPOSITORY\" --head-ref=\"$GLEAN_HEAD_REF\" --head-rev=\"$GLEAN_HEAD_REV\" --head-tag=\"$GLEAN_HEAD_TAG\" --repository-type=\"$GLEAN_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' #{extraArgs}\n",
-                        "then": "cd /builds/worker/checkouts/vcs \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                        "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$GLEAN_BASE_REPOSITORY\" --head-repository=\"$GLEAN_HEAD_REPOSITORY\" --head-ref=\"$GLEAN_HEAD_REF\" --head-rev=\"$GLEAN_HEAD_REV\" --head-tag=\"$GLEAN_HEAD_TAG\" --repository-type=\"$GLEAN_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' #{extraArgs}\n",
+                        "then": "cd /builds/worker/checkouts/vcs \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                       },
                       "$let": {
                         "extraArgs": {
