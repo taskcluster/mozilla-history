@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-translations",
-  "hookId": "in-tree-action-1-generic/53df723dfa",
+  "hookId": "in-tree-pr-action-1-train/c49d0f0c50",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 53df723dfa.\n\nFor project(s) firefox-translations-training\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nPR action task train at level 1, with `.taskcluster.yml` hash c49d0f0c50.\n\nFor project(s) firefox-translations-training\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-translations/in-tree-action-1-generic/53df723dfa",
+    "name": "project-translations/in-tree-pr-action-1-train/c49d0f0c50",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -258,7 +258,12 @@
                       }
                     }
                   },
-                  "maxRunTime": 1800
+                  "maxRunTime": 1800,
+                  "onExitStatus": {
+                    "retry": [
+                      128
+                    ]
+                  }
                 },
                 "$let": {
                   "normProject": {
@@ -441,8 +446,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:train",
+        "action_perm": "train",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
@@ -452,7 +457,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "action",
+      "tasks_for": "pr-action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },
