@@ -1,17 +1,17 @@
 {
   "hookGroupId": "project-adhoc",
-  "hookId": "in-tree-action-1-generic/e0b7537e3f",
+  "hookId": "in-tree-action-1-release-promotion/32d3df0f66",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash e0b7537e3f.\n\nFor (project, branch) combinations:\nstaging-adhoc-signing, branch: 'master'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 32d3df0f66.\n\nFor (project, branch) combinations:\nstaging-adhoc-signing, branch: 'master'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-adhoc/in-tree-action-1-generic/e0b7537e3f",
+    "name": "project-adhoc/in-tree-action-1-release-promotion/32d3df0f66",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
       "in": {
-        "$if": "tasks_for in [\"github-pull-request\", \"github-push\", \"action\", \"cron\"]",
+        "$if": "(tasks_for in [\"github-pull-request\", \"action\", \"cron\"] || (tasks_for == \"github-push\" \u0026\u0026 event.ref in [\"refs/heads/master\"]))\n",
         "then": {
           "in": {
             "in": {
@@ -141,13 +141,13 @@
                       "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
                       "ADHOC_HEAD_REF": "${head_branch}",
                       "ADHOC_HEAD_REV": "${head_sha}",
-                      "TASKGRAPH_HEAD_REV": "main",
+                      "TASKGRAPH_HEAD_REV": "${taskgraph.revision}",
                       "ADHOC_BASE_REPOSITORY": "${baseRepoUrl}",
                       "ADHOC_HEAD_REPOSITORY": "${repoUrl}",
                       "ADHOC_REPOSITORY_TYPE": "git",
-                      "TASKGRAPH_BASE_REPOSITORY": "https://github.com/bhearsum/taskgraph",
-                      "TASKGRAPH_HEAD_REPOSITORY": "https://github.com/bhearsum/taskgraph",
-                      "TASKGRAPH_REPOSITORY_TYPE": "git"
+                      "TASKGRAPH_BASE_REPOSITORY": "https://hg.mozilla.org/ci/taskgraph",
+                      "TASKGRAPH_HEAD_REPOSITORY": "https://hg.mozilla.org/ci/${taskgraph.branch}",
+                      "TASKGRAPH_REPOSITORY_TYPE": "hg"
                     },
                     {
                       "$if": "tasks_for in [\"github-pull-request\"]",
@@ -383,8 +383,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "action_perm": "release-promotion",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },

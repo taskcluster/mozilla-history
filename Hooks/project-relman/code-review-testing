@@ -23,7 +23,8 @@
     "scopes": [
       "secrets:get:project/relman/code-review/runtime-testing",
       "index:insert-task:project.relman.testing.code-review.*",
-      "notify:email:*"
+      "notify:email:*",
+      "generic-worker:cache:code-review-testing-checkout"
     ],
     "created": {
       "$fromNow": "0 seconds"
@@ -58,7 +59,9 @@
           }
         ]
       },
-      "cache": {},
+      "cache": {
+        "code-review-testing-checkout": "/checkouts"
+      },
       "image": {
         "path": "public/code-review-bot.tar.zst",
         "type": "indexed-image",
@@ -67,7 +70,9 @@
       "command": [
         "code-review-bot",
         "--taskcluster-secret",
-        "project/relman/code-review/runtime-testing"
+        "project/relman/code-review/runtime-testing",
+        "--mercurial-repository",
+        "/checkouts"
       ],
       "features": {
         "taskclusterProxy": true

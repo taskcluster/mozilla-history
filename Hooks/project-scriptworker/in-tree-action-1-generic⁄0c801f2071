@@ -1,16 +1,16 @@
 {
   "hookGroupId": "project-scriptworker",
-  "hookId": "in-tree-action-3-generic/e0a0c7198d",
+  "hookId": "in-tree-action-1-generic/0c801f2071",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 3, with `.taskcluster.yml` hash e0a0c7198d.\n\nFor (project, branch) combinations:\nscriptworker, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 0c801f2071.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-scriptworker/in-tree-action-3-generic/e0a0c7198d",
+    "name": "project-scriptworker/in-tree-action-1-generic/0c801f2071",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
-      "$if": "(tasks_for == \"github-pull-request\" \u0026\u0026 event.action in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for in [\"github-push\", \"action\", \"cron\"])\n",
+      "$if": "(tasks_for == \"github-pull-request\" \u0026\u0026 event.action in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for in [\"action\", \"cron\"]) || (tasks_for == \"github-push\" \u0026\u0026 event.ref == \"refs/heads/main\")\n",
       "then": {
         "in": {
           "in": {

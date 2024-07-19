@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 96,
+    "maxCapacity": 128,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -442,22 +442,208 @@
           }
         ],
         "capacityPerInstance": 1
+      },
+      {
+        "zone": "europe-west4-a",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 1024,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-04-22t18-22-42z"
+            }
+          }
+        ],
+        "region": "europe-west4",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/europe-west4-a/machineTypes/n1-custom-40-262144",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "/home/ubuntu/tasks",
+              "cachesDir": "/home/ubuntu/caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/ubuntu/downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "maxTaskRunTime": 2592000,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/home/ubuntu/generic_worker/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 8081,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
+              "taskclusterProxyExecutable": "/home/ubuntu/generic_worker/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/europe-west4-a/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 4
+          }
+        ],
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1
+      },
+      {
+        "zone": "europe-west4-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 1024,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-04-22t18-22-42z"
+            }
+          }
+        ],
+        "region": "europe-west4",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/europe-west4-b/machineTypes/n1-custom-40-262144",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "/home/ubuntu/tasks",
+              "cachesDir": "/home/ubuntu/caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/ubuntu/downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "maxTaskRunTime": 2592000,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/home/ubuntu/generic_worker/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 8081,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
+              "taskclusterProxyExecutable": "/home/ubuntu/generic_worker/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/europe-west4-b/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 4
+          }
+        ],
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1
+      },
+      {
+        "zone": "europe-west4-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 1024,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-translations-gcp-googlecompute-2024-04-22t18-22-42z"
+            }
+          }
+        ],
+        "region": "europe-west4",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/europe-west4-c/machineTypes/n1-custom-40-262144",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "/home/ubuntu/tasks",
+              "cachesDir": "/home/ubuntu/caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/ubuntu/downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "maxTaskRunTime": 2592000,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/home/ubuntu/generic_worker/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 8081,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
+              "taskclusterProxyExecutable": "/home/ubuntu/generic_worker/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/europe-west4-c/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 4
+          }
+        ],
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1
       }
     ]
   },
   "created": "2023-07-05T19:34:17.392Z",
-  "currentCapacity": 11,
+  "currentCapacity": 8,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nWorker for machine learning and other high GPU tasks",
   "emailOnError": true,
-  "lastModified": "2024-07-10T20:17:26.435Z",
+  "lastModified": "2024-07-17T13:20:29.148Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
   "requestedCount": 0,
-  "runningCapacity": 11,
-  "runningCount": 11,
-  "stoppedCapacity": 3384,
-  "stoppedCount": 3384,
+  "runningCapacity": 8,
+  "runningCount": 8,
+  "stoppedCapacity": 3535,
+  "stoppedCount": 3535,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
   "workerPoolId": "translations-1/b-linux-v100-gpu-4-1tb"
