@@ -8,7 +8,7 @@
   "hookGroupId": "project-relman",
   "hookId": "code-review-testing",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://hg.mozilla.org/ci/ci-configuration).\n\nAutomatically create code review publication tasks",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAutomatically create code review publication tasks",
     "emailOnError": true,
     "name": "Code review hook (testing)",
     "owner": "release-mgmt-analysis@mozilla.com"
@@ -24,7 +24,7 @@
       "secrets:get:project/relman/code-review/runtime-testing",
       "index:insert-task:project.relman.testing.code-review.*",
       "notify:email:*",
-      "generic-worker:cache:code-review-testing-checkout"
+      "docker-worker:cache:code-review-testing-checkout"
     ],
     "created": {
       "$fromNow": "0 seconds"
