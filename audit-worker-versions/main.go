@@ -99,20 +99,26 @@ func GetImageset(wp *tcworkermanager.WorkerPoolFullDefinition) string {
 		return "unknown"
 	}
 
-	if len(cfg.LaunchConfigs) > 0 {
-		launchCfg := cfg.LaunchConfigs[0]
-		if launchCfg.LaunchConfig.ImageId != "" {
-			return launchCfg.LaunchConfig.ImageId
+	imagesMap := map[string]struct{}{}
+	for _, launchCfg := range cfg.LaunchConfigs {
+		imagesMap[launchCfg.LaunchConfig.ImageId] = struct{}{}
+		for _, disk := range launchCfg.Disks {
+			imagesMap[disk.InitializeParams.SourceImage] = struct{}{}
 		}
-		if len(launchCfg.Disks) > 0 && launchCfg.Disks[0].InitializeParams.SourceImage != "" {
-			return launchCfg.Disks[0].InitializeParams.SourceImage
-		}
-		if launchCfg.StorageProfile.ImageReference.Id != "" {
-			return launchCfg.StorageProfile.ImageReference.Id
-		}
+		imagesMap[launchCfg.StorageProfile.ImageReference.Id] = struct{}{}
 	}
-
-	return "unknown"
+	// remove empty image name ""
+	delete(imagesMap, "")
+	imagesSlice := make([]string, 0, len(imagesMap))
+	for image := range imagesMap {
+		imagesSlice = append(imagesSlice, image)
+	}
+	sort.Strings(imagesSlice)
+	sortedImages := strings.Join(imagesSlice, ",")
+	if sortedImages == "" {
+		return "unknown"
+	}
+	return sortedImages
 }
 
 var (
