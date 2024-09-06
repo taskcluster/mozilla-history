@@ -5,21 +5,21 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 100,
+    "maxCapacity": 500,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
       {
         "tags": {
           "deploymentId": "alpha",
-          "sourceBranch": "bug1831158",
+          "sourceBranch": "cloud_windows",
           "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "centralus",
+        "location": "uksouth",
         "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-central-us-gecko-t/subnets/sn-central-us-gecko-t",
+        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-uk-south-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-uk-south-gecko-t/subnets/sn-uk-south-gecko-t",
         "osProfile": {
           "windowsConfiguration": {
             "timeZone": "UTC",
@@ -29,17 +29,17 @@
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "Z:\\",
-              "cachesDir": "Z:\\caches",
-              "workerType": "win11-64-2009-tc-alpha",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
+              "workerType": "win11-64-24h2-alpha",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "Z:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "gecko-t",
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 5400,
+              "idleTimeoutSecs": 150,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -59,20 +59,14 @@
         "storageProfile": {
           "osDisk": {
             "osType": "Windows",
-            "createOption": "FromImage"
-          },
-          "dataDisks": [
-            {
-              "lun": 0,
-              "diskSizeGB": 30,
-              "managedDisk": {
-                "storageAccountType": "Standard_LRS"
-              },
-              "createOption": "Empty"
+            "caching": "ReadOnly",
+            "createOption": "FromImage",
+            "diffDiskSettings": {
+              "option": "Local"
             }
-          ],
+          },
           "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/win11-64-2009-tc-centralus-win11-22h2-avd-alpha"
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/win11-64-24h2-uksouth-win11-24h2-avd-alpha"
           }
         },
         "hardwareProfile": {
@@ -87,20 +81,20 @@
       }
     ]
   },
-  "created": "2023-05-11T17:00:08.803Z",
+  "created": "2024-09-04T19:13:04.711Z",
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2024-08-14T13:28:01.185Z",
+  "lastModified": "2024-09-04T19:13:04.711Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,
   "requestedCount": 0,
   "runningCapacity": 0,
   "runningCount": 0,
-  "stoppedCapacity": 20,
-  "stoppedCount": 20,
+  "stoppedCapacity": 208,
+  "stoppedCount": 208,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "gecko-t/win11-64-2009-tc-alpha"
+  "workerPoolId": "gecko-t/win11-64-24h2-alpha"
 }
