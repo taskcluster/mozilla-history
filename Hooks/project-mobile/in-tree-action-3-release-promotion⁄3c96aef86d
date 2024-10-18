@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-mobile",
-  "hookId": "in-tree-action-1-generic/c6936083b5",
+  "hookId": "in-tree-action-3-release-promotion/3c96aef86d",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash c6936083b5.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash 3c96aef86d.\n\nFor (project, branch) combinations:\nreference-browser, branch: 'master'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-mobile/in-tree-action-1-generic/c6936083b5",
+    "name": "project-mobile/in-tree-action-3-release-promotion/3c96aef86d",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -116,20 +116,22 @@
                         "then": [
                           "tc-treeherder.v2.${project}.${head_sha}",
                           {
-                            "$if": "tasks_for == \"github-push\"",
-                            "then": [
-                              "index.mobile.v2.${project}.branch.${short_head_branch}.latest.taskgraph.decision",
-                              "index.mobile.v2.${project}.branch.${short_head_branch}.revision.${head_sha}.taskgraph.decision",
-                              "index.mobile.v2.${project}.revision.${head_sha}.taskgraph.decision"
-                            ]
-                          },
-                          {
-                            "$if": "tasks_for == \"cron\"",
-                            "then": [
-                              "index.mobile.v2.${project}.branch.${head_branch}.latest.taskgraph.decision-${cron.job_name}",
-                              "index.mobile.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.decision-${cron.job_name}",
-                              "index.mobile.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.cron.${ownTaskId}"
-                            ]
+                            "$switch": {
+                              "tasks_for == \"cron\"": [
+                                "index.mobile.v2.${project}.branch.${head_branch}.latest.taskgraph.decision-${cron.job_name}",
+                                "index.mobile.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.decision-${cron.job_name}",
+                                "index.mobile.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.cron.${ownTaskId}",
+                                "index.mobile.v2.${project}.revision.${head_sha}.cron.${ownTaskId}"
+                              ],
+                              "tasks_for == \"action\"": [
+                                "index.${trustDomain}.v2.${project}.revision.${head_sha}.taskgraph.actions.${ownTaskId}"
+                              ],
+                              "tasks_for == \"github-push\"": [
+                                "index.mobile.v2.${project}.branch.${short_head_branch}.latest.taskgraph.decision",
+                                "index.mobile.v2.${project}.branch.${short_head_branch}.revision.${head_sha}.taskgraph.decision",
+                                "index.mobile.v2.${project}.revision.${head_sha}.taskgraph.decision"
+                              ]
+                            }
                           }
                         ]
                       }
@@ -449,8 +451,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "action_perm": "release-promotion",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
