@@ -1,0 +1,72 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-fx-desktop-qa-automation",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nCron task for repository https://github.com/mozilla/fx-desktop-qa-automation.\n\nThis hook is fired every 15 minutes, creating a task that consults .cron.yml in\nthe corresponding repository.\n",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-mozilla-fx-desktop-qa-automation",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [
+    "0 0,15,30,45 * * * *"
+  ],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "notify.email.release+failedcron@mozilla.com.on-failed",
+      "notify.email.release+exceptioncron@mozilla.com.on-exception"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-fx-desktop-qa-automation"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:d9b4a81d8e114107d174994bf6be3968b34ca0db@sha256:5b1d21483c08c0698dd7f0b41f99482277375de5e5304ada1ad9d927d3899d7d",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://github.com/mozilla/fx-desktop-qa-automation",
+        "--project",
+        "fx-desktop-qa-automation",
+        "--level",
+        "3",
+        "--repository-type",
+        "git",
+        "--branch",
+        "main",
+        "--trust-domain",
+        "mozilla",
+        "--github-token-secret",
+        "project/releng/mobile/github-cron-token"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://github.com/mozilla/fx-desktop-qa-automation",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-fx-desktop-qa-automation",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-fx-desktop-qa-automation"
+    },
+    "priority": "normal",
+    "workerType": "build-decision",
+    "schedulerId": "mozilla-level-3",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
