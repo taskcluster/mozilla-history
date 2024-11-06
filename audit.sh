@@ -20,4 +20,5 @@ sleep 5400
 echo "Generating reports"
 
 cd WorkerVersions
+find . -type f -not -name "workers.json" -delete # remove everything except workers.json
 audit-worker-versions "$TASK_GROUP_ID"
