@@ -51,3 +51,11 @@ mozilla-history
 
 This will populate subdirectories `Clients`, `Hooks`, `Roles` and `WorkerPools`
 of the current directory.
+
+## Automating
+
+To automate the process, you can set up a cron job to execute `run-report.sh` at
+regular intervals.
+
+You would need to provide proper taskcluster credentials in the environment
+variables `TASKCLUSTER_CLIENT_ID`, `TASKCLUSTER_ACCESS_TOKEN`.
