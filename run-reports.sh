@@ -15,6 +15,7 @@ cd "$(dirname "${0}")"
 git pull
 
 echo "generating audit report"
+go build -buildvcs=false -o mozilla-history
 ./mozilla-history
 
 git add .
