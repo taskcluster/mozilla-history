@@ -12,10 +12,15 @@ set -euo pipefail
 
 cd "$(dirname "${0}")"
 
+# build necessary tools with
+# go build -buildvcs=false -o mozilla-history
+# go build -buildvcs=false -o audit-worker-versions ./audit-worker-versions
+# or
+# go build ./...
+
 git pull
 
 echo "generating audit report"
-go build -buildvcs=false -o mozilla-history
 ./mozilla-history
 
 git add .
