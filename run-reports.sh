@@ -10,6 +10,8 @@ export REPORT_PREFIX=https://github.com/taskcluster/mozilla-history/blob/master/
 
 set -euo pipefail
 
+cd "$(dirname "${0}")"
+
 git pull
 
 echo "generating audit report"
