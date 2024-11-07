@@ -20,4 +20,5 @@ sleep 5400
 echo "Generating reports"
 
 cd WorkerVersions
+find . -type f -delete
 audit-worker-versions "$TASK_GROUP_ID"

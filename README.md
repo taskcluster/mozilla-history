@@ -29,12 +29,6 @@ This conversion avoids illegal filenames.
 Rather than creating nested subdirectories, this conversion avoids directory
 names colliding with entity filenames.
 
-## Entity update cadence
-
-The `mozilla-history` command is run every 5 mins from a raspberry pi in
-@petemoore's home network with the results committed to this repository and
-pushed to github.
-
 ## Installing
 
 ```
@@ -51,3 +45,22 @@ mozilla-history
 
 This will populate subdirectories `Clients`, `Hooks`, `Roles` and `WorkerPools`
 of the current directory.
+
+## Automating the Process
+
+You can automate this reporting process by setting up a cron job to execute `run-report.sh` at regular intervals.
+
+### Prerequisites
+- Valid Taskcluster credentials must be set in the environment variables:
+  - `TASKCLUSTER_CLIENT_ID`
+  - `TASKCLUSTER_ACCESS_TOKEN`
+
+### How it works
+1. `run-report.sh` executes `audit.sh`
+2. `audit.sh` schedules tasks for each worker pool to extract worker implementation details from logs
+3. Results are stored in the `WorkerPools` directory
+4. `mozilla-history` stores Taskcluster configurations in their respective directories:
+   - Hooks definitions in `Hooks/`
+   - Roles definitions in `Roles/`
+   - WorkerPool definitions in `WorkerPool/`
+5. `build-docs-history.sh` generates a static page containing the version history

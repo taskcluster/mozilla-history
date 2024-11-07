@@ -212,6 +212,16 @@ func FetchWorkerPools(context *workerpool.SubmitterContext) {
 			panic(err)
 		}
 		for _, workerPool := range workerPools.WorkerPools {
+  		// Strip out fields that change frequently
+  		workerPool.RequestedCapacity = 0
+  		workerPool.RequestedCount = 0
+  		workerPool.RunningCapacity = 0
+  		workerPool.RunningCount = 0
+  		workerPool.StoppedCapacity = 0
+  		workerPool.StoppedCount = 0
+  		workerPool.StoppingCapacity = 0
+  		workerPool.StoppingCount = 0
+
 			context.RequestChannel <- WriteEntityToFileAsJSON(
 				workerPool,
 				filepath.Join("WorkerPools", FilenameEscape(workerPool.WorkerPoolID)),
