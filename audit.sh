@@ -17,8 +17,6 @@ echo "Generated tasks for TASK_GROUP_ID = $TASK_GROUP_ID"
 
 echo "Sleep 90m"
 sleep 5400
-echo "Generating reports"
 
-cd WorkerVersions
-find . -type f -delete
+echo "Generating reports"
 audit-worker-versions "$TASK_GROUP_ID"

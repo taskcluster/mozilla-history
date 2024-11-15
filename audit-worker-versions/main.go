@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"regexp"
 	"sort"
 	"strings"
@@ -179,8 +180,32 @@ var (
 	revision string = ""
 )
 
+var (
+  outputDir = "WorkerVersions"
+)
+
 func FilenameEscape(raw string) (escaped string) {
 	return strings.Replace(strings.Replace(raw, "*", "★", -1), "/", "⁄", -1)
+}
+
+func EmptyDirectory(dir string) {
+	err := os.RemoveAll(dir)
+	if err != nil {
+		panic(err)
+	}
+}
+
+
+func WriteFile(path string, content []byte) {
+	err := os.MkdirAll(filepath.Dir(path), 0755)
+	if err != nil {
+		panic(err)
+	}
+
+	err = os.WriteFile(path, content, 0644)
+	if err != nil {
+	  log.Fatalf("Error:\n%v", err)
+	}
 }
 
 // Call with no arguments -> New task group generated
@@ -189,6 +214,8 @@ func FilenameEscape(raw string) (escaped string) {
 // Expected workflow for this tool is to:
 // 1. Run without arguments to generate probing tasks and get taskGroupId
 // 2. wait 2h and run report collection for the given taskGroupId
+//
+// Files are written to the WorkerVersions directory
 func main() {
 
 	queue := tcqueue.NewFromEnv()
@@ -200,6 +227,8 @@ func main() {
 		createTasks(queue, taskGroupID)
 	case 2:
 		taskGroupID := os.Args[1]
+		EmptyDirectory(outputDir)
+
 		taskIDs := taskIDsForTaskGroup(queue, taskGroupID)
 		if len(taskIDs) == 0 {
 			log.Fatalf("No tasks with taskGroupId %q", taskGroupID)
@@ -298,6 +327,7 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 }
 
 func inspect(queue *tcqueue.Queue, taskIDs []string) {
+	EmptyDirectory(outputDir)
 	workermanager := tcworkermanager.NewFromEnv()
 	wp := workerpool.New(50)
 	workers := make([]WorkerInfo, 0)
@@ -322,11 +352,8 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 						workerInfo.TotalCapacity = int(workerPool.RunningCapacity) + int(workerPool.StoppedCapacity) +
 							int(workerPool.StoppingCapacity) + int(workerPool.RequestedCapacity)
 					}
-					filename := FilenameEscape(workerPoolID)
-					err = ioutil.WriteFile(filename, append([]byte(workerInfo.String()), '\n'), 0644)
-					if err != nil {
-						log.Fatalf("Error:\n%v", err)
-					}
+					filename := filepath.Join(outputDir, FilenameEscape(workerPoolID))
+					WriteFile(filename, append([]byte(workerInfo.String()), '\n'))
 					fmt.Printf("%-70s %s\n", workerPoolID+":", &workerInfo)
 					return workerInfo
 				}
@@ -389,7 +416,7 @@ func generateReadmeSection(title string, workers []WorkerInfo, filter func(Worke
 }
 
 func writeReadme(workers []WorkerInfo) {
-	filename := "README.md"
+	filename := filepath.Join(outputDir, "README.md")
 
 	sections := [5]map[string]interface{}{
 		generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" }),
@@ -400,15 +427,11 @@ func writeReadme(workers []WorkerInfo) {
 	}
 
 	contents := renderTemplate(sections)
-
-	err := ioutil.WriteFile(filename, []byte(contents), 0644)
-	if err != nil {
-		log.Fatalf("Error:\n%v", err)
-	}
+	WriteFile(filename, []byte(contents))
 }
 
 func writeSnapshot(workers []WorkerInfo) {
-	filename := "workers.json"
+	filename := filepath.Join(outputDir, "workers.json")
 
 	sort.Slice(workers, func(i, j int) bool {
 		return strings.Compare(workers[i].WorkerPoolID, workers[j].WorkerPoolID) <= 0
@@ -419,10 +442,7 @@ func writeSnapshot(workers []WorkerInfo) {
 		log.Fatalf("Error:\n%v", err)
 	}
 
-	err = ioutil.WriteFile(filename, []byte(contents), 0644)
-	if err != nil {
-		log.Fatalf("Error:\n%v", err)
-	}
+	WriteFile(filename, []byte(contents))
 }
 
 func mustCompileToRawMessage(data interface{}) *json.RawMessage {
@@ -576,7 +596,7 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID str
 		log.Fatal(3, err)
 	}
 	defer resp.Body.Close()
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Print("*** ")
 	}
