@@ -23,7 +23,8 @@
     "scopes": [
       "secrets:get:project/relman/code-review/runtime-production",
       "index:insert-task:project.relman.production.code-review.*",
-      "notify:email:*"
+      "notify:email:*",
+      "docker-worker:cache:code-review-production-checkout"
     ],
     "created": {
       "$fromNow": "0 seconds"
@@ -58,7 +59,9 @@
           }
         ]
       },
-      "cache": {},
+      "cache": {
+        "code-review-production-checkout": "/checkouts"
+      },
       "image": {
         "path": "public/code-review-bot.tar.zst",
         "type": "indexed-image",
@@ -67,7 +70,9 @@
       "command": [
         "code-review-bot",
         "--taskcluster-secret",
-        "project/relman/code-review/runtime-production"
+        "project/relman/code-review/runtime-production",
+        "--mercurial-repository",
+        "/checkouts"
       ],
       "features": {
         "taskclusterProxy": true

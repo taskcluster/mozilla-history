@@ -5,21 +5,21 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 500,
+    "maxCapacity": 100,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
       {
         "tags": {
-          "deploymentId": "8346140",
+          "deploymentId": "alpha",
           "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "centralus",
+        "location": "westus",
         "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-central-us-gecko-3/providers/Microsoft.Network/virtualNetworks/vn-central-us-gecko-3/subnets/sn-central-us-gecko-3",
+        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-west-us-gecko-t/subnets/sn-west-us-gecko-t",
         "osProfile": {
           "windowsConfiguration": {
             "timeZone": "UTC",
@@ -31,9 +31,11 @@
             "config": {
               "tasksDir": "D:\\",
               "cachesDir": "D:\\caches",
+              "workerType": "win11-64-24h2-gpu-alpha",
               "wstAudience": "firefoxcitc",
               "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "provisionerId": "gecko-t",
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
@@ -64,11 +66,11 @@
             }
           },
           "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/trusted-win2022-64-2009-centralus-2022-datacenter-azure-edition-8346140"
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2_alpha/images/win11_64_24h2_alpha/versions/1.0.0"
           }
         },
         "hardwareProfile": {
-          "vmSize": "Standard_F32s_v2"
+          "vmSize": "Standard_NV12s_v3"
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
@@ -79,83 +81,15 @@
       },
       {
         "tags": {
-          "deploymentId": "8346140",
+          "deploymentId": "alpha",
           "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
-        "location": "eastus2",
-        "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-east-us-2-gecko-3/providers/Microsoft.Network/virtualNetworks/vn-east-us-2-gecko-3/subnets/sn-east-us-2-gecko-3",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "D:\\",
-              "cachesDir": "D:\\caches",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "D:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "runTasksAsCurrentUser": false,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "caching": "ReadOnly",
-            "createOption": "FromImage",
-            "diffDiskSettings": {
-              "option": "Local"
-            }
-          },
-          "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/trusted-win2022-64-2009-eastus2-2022-datacenter-azure-edition-8346140"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_F32s_v2"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        },
-        "capacityPerInstance": 1
-      },
-      {
-        "tags": {
-          "deploymentId": "8346140",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "westus2",
         "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-west-us-2-gecko-3/providers/Microsoft.Network/virtualNetworks/vn-west-us-2-gecko-3/subnets/sn-west-us-2-gecko-3",
+        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-2-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-west-us-2-gecko-t/subnets/sn-west-us-2-gecko-t",
         "osProfile": {
           "windowsConfiguration": {
             "timeZone": "UTC",
@@ -167,9 +101,11 @@
             "config": {
               "tasksDir": "D:\\",
               "cachesDir": "D:\\caches",
+              "workerType": "win11-64-24h2-gpu-alpha",
               "wstAudience": "firefoxcitc",
               "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "provisionerId": "gecko-t",
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
@@ -200,11 +136,11 @@
             }
           },
           "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-through-cib/providers/Microsoft.Compute/images/trusted-win2022-64-2009-westus2-2022-datacenter-azure-edition-8346140"
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2_alpha/images/win11_64_24h2_alpha/versions/1.0.0"
           }
         },
         "hardwareProfile": {
-          "vmSize": "Standard_F32s_v2"
+          "vmSize": "Standard_NV12s_v3"
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
@@ -215,13 +151,13 @@
       }
     ]
   },
-  "created": "2023-07-13T20:23:43.978Z",
-  "currentCapacity": 10,
+  "created": "2024-12-05T18:05:32.686Z",
+  "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2024-11-05T18:49:00.162Z",
+  "lastModified": "2024-12-05T18:05:32.686Z",
   "owner": "relops-azure-provisioning@mozilla.com",
-  "providerId": "azure_trusted",
+  "providerId": "azure2",
   "requestedCapacity": 0,
   "requestedCount": 0,
   "runningCapacity": 0,
@@ -230,5 +166,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "gecko-3/b-win2022"
+  "workerPoolId": "gecko-t/win11-64-24h2-gpu-alpha"
 }
