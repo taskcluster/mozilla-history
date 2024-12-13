@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-translations",
-  "hookId": "in-tree-action-1-generic/ba8e4efbcc",
+  "hookId": "in-tree-action-1-train/4ba748f794",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash ba8e4efbcc.\n\nFor (project, branch) combinations:\nstaging-firefox-translations-training, branch: 'main'\ntranslations, branch: 'dev-alignments'\ntranslations, branch: 'dev-all-pipeline-bug'\ntranslations, branch: 'dev-da-en-mono-reduction'\ntranslations, branch: 'dev-distill-inference'\ntranslations, branch: 'dev-en-lt-decoder-size'\ntranslations, branch: 'dev_cjk'\ntranslations, branch: 'dev_cjk2'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task train at level 1, with `.taskcluster.yml` hash 4ba748f794.\n\nFor (project, branch) combinations:\ntranslations, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-translations/in-tree-action-1-generic/ba8e4efbcc",
+    "name": "project-translations/in-tree-action-1-train/4ba748f794",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -350,7 +350,7 @@
         "project": {
           "$switch": {
             "tasks_for == \"github-push\"": "${event.repository.name}",
-            "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.head.repo.name}",
+            "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.base.repo.name}",
             "tasks_for in [\"cron\", \"action\", \"pr-action\"]": "${repository.project}"
           }
         },
@@ -446,8 +446,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:train",
+        "action_perm": "train",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },

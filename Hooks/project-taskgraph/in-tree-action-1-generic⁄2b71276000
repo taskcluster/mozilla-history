@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-taskgraph",
-  "hookId": "in-tree-action-3-generic/137821f66e",
+  "hookId": "in-tree-action-1-generic/2b71276000",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 137821f66e.\n\nFor (project, branch) combinations:\ntaskgraph, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 2b71276000.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-taskgraph/in-tree-action-3-generic/137821f66e",
+    "name": "project-taskgraph/in-tree-action-1-generic/2b71276000",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -321,7 +321,7 @@
       "$let": {
         "project": {
           "$switch": {
-            "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.head.repo.name}",
+            "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.base.repo.name}",
             "tasks_for in [\"cron\", \"action\", \"pr-action\"]": "${repository.project}",
             "tasks_for in [\"github-push\", \"github-release\"]": "${event.repository.name}"
           }

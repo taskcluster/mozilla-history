@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "in-tree-action-3-generic/8ee9af226f",
+  "hookId": "in-tree-action-1-generic/b83a94b21a",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 8ee9af226f.\n\nFor (project, branch) combinations:\nbalrog, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash b83a94b21a.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-releng/in-tree-action-3-generic/8ee9af226f",
+    "name": "project-releng/in-tree-action-1-generic/b83a94b21a",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -86,8 +86,7 @@
                   "BALROG_HEAD_REV": "${head_sha}",
                   "BALROG_BASE_REPOSITORY": "${baseRepoUrl}",
                   "BALROG_HEAD_REPOSITORY": "${repoUrl}",
-                  "BALROG_REPOSITORY_TYPE": "git",
-                  "BALROG_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                  "BALROG_REPOSITORY_TYPE": "git"
                 },
                 {
                   "$if": "tasks_for in [\"github-pull-request\"]",
@@ -97,7 +96,7 @@
                 }
               ]
             },
-            "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+            "image": "mozillareleases/taskgraph:decision-v12.1.0@sha256:756d6edd4c60e1c58132a667273e3cb6113bde3d7a4a3f7b326b375caf53eb81",
             "command": [
               "/usr/local/bin/run-task",
               "--balrog-checkout=/builds/worker/checkouts/src",
@@ -106,7 +105,7 @@
               "bash",
               "-cx",
               {
-                "in": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$BALROG_BASE_REPOSITORY\" --head-repository=\"$BALROG_HEAD_REPOSITORY\" --head-ref=\"$BALROG_HEAD_REF\" --head-rev=\"$BALROG_HEAD_REV\" --repository-type=\"$BALROG_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' --target-tasks-method=balrog ${extraArgs}",
+                "in": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$BALROG_BASE_REPOSITORY\" --head-repository=\"$BALROG_HEAD_REPOSITORY\" --head-ref=\"$BALROG_HEAD_REF\" --head-rev=\"$BALROG_HEAD_REV\" --repository-type=\"$BALROG_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' --target-tasks-method=balrog ${extraArgs}",
                 "$let": {
                   "extraArgs": {
                     "$if": "tasks_for == \"github-release\"",
