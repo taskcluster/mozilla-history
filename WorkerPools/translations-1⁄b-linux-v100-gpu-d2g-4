@@ -3,7 +3,7 @@
     "lifecycle": {
       "registrationTimeout": 1800,
       "reregistrationTimeout": 345600,
-      "queueInactivityTimeout": 7200
+      "queueInactivityTimeout": 1800
     },
     "maxCapacity": 128,
     "minCapacity": 0,
@@ -42,7 +42,7 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592000,
+              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -107,7 +107,7 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592000,
+              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -172,7 +172,7 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592000,
+              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -237,7 +237,7 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592000,
+              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -302,7 +302,7 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592000,
+              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -367,7 +367,7 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592000,
+              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -432,7 +432,7 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592000,
+              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -463,201 +463,6 @@
           }
         ],
         "capacityPerInstance": 1
-      },
-      {
-        "zone": "europe-west4-a",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
-            }
-          }
-        ],
-        "region": "europe-west4",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/europe-west4-a/machineTypes/n1-highmem-8",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "d2gConfig": {
-                "allowGPUs": true,
-                "enableD2G": true,
-                "containerEngine": "docker"
-              },
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "maxTaskRunTime": 2592000,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 300,
-              "enableInteractive": true,
-              "livelogExecutable": "/usr/local/bin/livelog",
-              "numberOfTasksToRun": 0,
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
-              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "minCpuPlatform": "Intel Skylake",
-        "guestAccelerators": [
-          {
-            "acceleratorType": "zones/europe-west4-a/acceleratorTypes/nvidia-tesla-v100",
-            "acceleratorCount": 4
-          }
-        ],
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "capacityPerInstance": 1
-      },
-      {
-        "zone": "europe-west4-b",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
-            }
-          }
-        ],
-        "region": "europe-west4",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/europe-west4-b/machineTypes/n1-highmem-8",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "d2gConfig": {
-                "allowGPUs": true,
-                "enableD2G": true,
-                "containerEngine": "docker"
-              },
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "maxTaskRunTime": 2592000,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 300,
-              "enableInteractive": true,
-              "livelogExecutable": "/usr/local/bin/livelog",
-              "numberOfTasksToRun": 0,
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
-              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "minCpuPlatform": "Intel Skylake",
-        "guestAccelerators": [
-          {
-            "acceleratorType": "zones/europe-west4-b/acceleratorTypes/nvidia-tesla-v100",
-            "acceleratorCount": 4
-          }
-        ],
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "capacityPerInstance": 1
-      },
-      {
-        "zone": "europe-west4-c",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
-            }
-          }
-        ],
-        "region": "europe-west4",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/europe-west4-c/machineTypes/n1-highmem-8",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "d2gConfig": {
-                "allowGPUs": true,
-                "enableD2G": true,
-                "containerEngine": "docker"
-              },
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "maxTaskRunTime": 2592000,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 300,
-              "enableInteractive": true,
-              "livelogExecutable": "/usr/local/bin/livelog",
-              "numberOfTasksToRun": 0,
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
-              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "minCpuPlatform": "Intel Skylake",
-        "guestAccelerators": [
-          {
-            "acceleratorType": "zones/europe-west4-c/acceleratorTypes/nvidia-tesla-v100",
-            "acceleratorCount": 4
-          }
-        ],
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "capacityPerInstance": 1
       }
     ]
   },
@@ -665,7 +470,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for machine learning and other high GPU tasks",
   "emailOnError": true,
-  "lastModified": "2024-12-18T19:07:20.046Z",
+  "lastModified": "2025-01-09T13:55:05.227Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
