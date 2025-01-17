@@ -1,0 +1,71 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-releng-staging-reference-browser/bump-android-comp",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-mozilla-releng-staging-reference-browser/bump-android-comp",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "notify.email.release+failedcron@mozilla.com.on-failed",
+      "notify.email.release+exceptioncron@mozilla.com.on-exception"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-releng-staging-reference-browser/bump-android-comp"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:d9b4a81d8e114107d174994bf6be3968b34ca0db@sha256:5b1d21483c08c0698dd7f0b41f99482277375de5e5304ada1ad9d927d3899d7d",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://github.com/mozilla-releng/staging-reference-browser",
+        "--project",
+        "staging-reference-browser",
+        "--level",
+        "1",
+        "--repository-type",
+        "git",
+        "--branch",
+        "master",
+        "--trust-domain",
+        "mobile",
+        "--github-token-secret",
+        "project/releng/mobile/github-cron-token",
+        "--force-run=bump-android-comp"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://github.com/mozilla-releng/staging-reference-browser",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-releng-staging-reference-browser/bump-android-comp",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-releng-staging-reference-browser/bump-android-comp"
+    },
+    "priority": "normal",
+    "workerType": "build-decision",
+    "schedulerId": "mobile-level-1",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
