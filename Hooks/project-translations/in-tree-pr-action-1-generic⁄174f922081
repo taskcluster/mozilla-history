@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-translations",
-  "hookId": "in-tree-action-1-generic/4ba748f794",
+  "hookId": "in-tree-pr-action-1-generic/174f922081",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 4ba748f794.\n\nFor (project, branch) combinations:\nstaging-firefox-translations-training, branch: 'main'\ntranslations, branch: 'dev-all-pipeline'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task generic at level 1, with `.taskcluster.yml` hash 174f922081.\n\nFor (project, branch) combinations:\ntranslations, branch: 'dev-arabic'\ntranslations, branch: 'dev_cjk2'\ntranslations, branch: 'dev_monocleaner'\ntranslations, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-translations/in-tree-action-1-generic/4ba748f794",
+    "name": "project-translations/in-tree-pr-action-1-generic/174f922081",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -364,10 +364,10 @@
         "base_ref": {
           "$switch": {
             "tasks_for == \"pr-action\"": "${push.base_branch}",
-            "tasks_for == \"github-push\"": "${event.ref}",
             "tasks_for in [\"cron\", \"action\"]": "${push.branch}",
             "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.base.ref}",
-            "tasks_for == \"github-push\" \u0026\u0026 event.base_ref": "${event.base_ref}"
+            "tasks_for == \"github-push\" \u0026\u0026 event.base_ref": "${event.base_ref}",
+            "tasks_for == \"github-push\" \u0026\u0026 !(event.base_ref)": "${event.ref}"
           }
         },
         "base_sha": {
@@ -446,7 +446,7 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:generic",
         "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
@@ -457,7 +457,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "action",
+      "tasks_for": "pr-action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },

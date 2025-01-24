@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-mobile",
-  "hookId": "in-tree-action-1-generic/dc47ca4c26",
+  "hookId": "in-tree-action-1-release-promotion/4f88f051a7",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash dc47ca4c26.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 4f88f051a7.\n\nFor (project, branch) combinations:\nstaging-firefox-ios, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-mobile/in-tree-action-1-generic/dc47ca4c26",
+    "name": "project-mobile/in-tree-action-1-release-promotion/4f88f051a7",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -100,7 +100,7 @@
               "$flattenDeep": [
                 "checks",
                 {
-                  "$if": "level == \"3\"",
+                  "$if": "level == \"3\" || repoUrl == \"https://github.com/mozilla-mobile/staging-firefox-ios\"",
                   "then": [
                     "tc-treeherder.v2.${project}.${head_sha}",
                     {
@@ -445,8 +445,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "action_perm": "release-promotion",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
