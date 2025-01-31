@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-ci",
-  "hookId": "in-tree-pr-action-1-generic/5cdac3e103",
+  "hookId": "in-tree-action-3-generic/8c69d9d22a",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task generic at level 1, with `.taskcluster.yml` hash 5cdac3e103.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 8c69d9d22a.\n\nFor (project, branch) combinations:\nfxci-config, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-ci/in-tree-pr-action-1-generic/5cdac3e103",
+    "name": "project-ci/in-tree-action-3-generic/8c69d9d22a",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -162,7 +162,7 @@
                 "cache": {
                   "${trustDomain}-level-${level}-checkouts-sparse-v1": "/builds/worker/checkouts"
                 },
-                "image": "mozillareleases/taskgraph:decision-v12.1.0@sha256:756d6edd4c60e1c58132a667273e3cb6113bde3d7a4a3f7b326b375caf53eb81",
+                "image": "mozillareleases/taskgraph:decision-v13.0.0@sha256:57e4c2d2ad92cea663dcc02cacbfd88b3506edde80e19fbd8a57b3dfe37ae9bd",
                 "command": {
                   "$flatten": [
                     "run-task",
@@ -406,7 +406,7 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
         "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
@@ -417,7 +417,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "pr-action",
+      "tasks_for": "action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },
