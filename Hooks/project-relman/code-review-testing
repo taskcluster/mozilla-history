@@ -46,28 +46,8 @@
             "$if": "firedBy == 'triggerHookWithToken'",
             "else": {},
             "then": {
-              "in": {
-                "PHABRICATOR_OBJECT_PHID": {
-                  "$eval": "payload.object.phid"
-                },
-                "PHABRICATOR_OBJECT_TYPE": {
-                  "$eval": "payload.object.type"
-                },
-                "PHABRICATOR_TRANSACTIONS": {
-                  "$json": {
-                    "$eval": "transactions"
-                  }
-                }
-              },
-              "$let": {
-                "transactions": {
-                  "$map": {
-                    "$eval": "payload.transactions"
-                  },
-                  "each(transaction)": {
-                    "$eval": "transaction.phid"
-                  }
-                }
+              "PHABRICATOR_BUILD_TARGET": {
+                "$eval": "payload.build_target_phid"
               }
             }
           },
@@ -137,23 +117,6 @@
         "type": "integer",
         "description": "Taskcluster Task Run ID triggering the hook (should be a Try Task run)"
       },
-      "object": {
-        "type": "object",
-        "required": [
-          "type",
-          "phid"
-        ],
-        "properties": {
-          "phid": {
-            "type": "string",
-            "description": "Phabricator object's PHID triggering the hook"
-          },
-          "type": {
-            "type": "string",
-            "description": "Phabricator object's type triggering the hook"
-          }
-        }
-      },
       "status": {
         "type": "object",
         "required": [
@@ -171,21 +134,9 @@
           }
         }
       },
-      "transactions": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "required": [
-            "phid"
-          ],
-          "properties": {
-            "phid": {
-              "type": "string",
-              "description": "Phabricator transaction's PHID"
-            }
-          }
-        },
-        "description": "Phabricator transactions leading to this trigger"
+      "build_target_phid": {
+        "type": "string",
+        "description": "Phabricator Build target's PHID triggering the hook"
       }
     },
     "additionalProperties": true
