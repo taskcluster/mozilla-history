@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-mobile",
-  "hookId": "in-tree-action-1-generic/4f88f051a7",
+  "hookId": "in-tree-action-1-generic/b6eb6a714d",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 4f88f051a7.\n\nFor (project, branch) combinations:\nstaging-firefox-ios, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash b6eb6a714d.\n\nFor (project, branch) combinations:\nstaging-firefox-ios, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-mobile/in-tree-action-1-generic/4f88f051a7",
+    "name": "project-mobile/in-tree-action-1-generic/b6eb6a714d",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -214,7 +214,7 @@
               "cache": {
                 "${trustDomain}-level-${level}-checkouts-v1": "/builds/worker/checkouts"
               },
-              "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+              "image": "mozillareleases/taskgraph:decision-v13.1.0@sha256:8ff59a0d89e8fd7bbdc236cf1fb15e03be9ef67d7e74ed8ffe15f27765593ecd",
               "command": [
                 "/usr/local/bin/run-task",
                 "--mobile-checkout=/builds/worker/checkouts/src",
@@ -225,8 +225,8 @@
                 {
                   "in": {
                     "$if": "tasks_for == \"action\"",
-                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$MOBILE_BASE_REPOSITORY\" --head-repository=\"$MOBILE_HEAD_REPOSITORY\" --head-ref=\"$MOBILE_HEAD_REF\" --head-rev=\"$MOBILE_HEAD_REV\" --head-tag=\"$MOBILE_HEAD_TAG\" --repository-type=\"$MOBILE_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
-                    "then": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$MOBILE_BASE_REPOSITORY\" --head-repository=\"$MOBILE_HEAD_REPOSITORY\" --head-ref=\"$MOBILE_HEAD_REF\" --head-rev=\"$MOBILE_HEAD_REV\" --head-tag=\"$MOBILE_HEAD_TAG\" --repository-type=\"$MOBILE_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
+                    "then": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                   },
                   "$let": {
                     "extraArgs": {
