@@ -3,9 +3,9 @@
     "lifecycle": {
       "registrationTimeout": 1800,
       "reregistrationTimeout": 345600,
-      "queueInactivityTimeout": 7200
+      "queueInactivityTimeout": 1800
     },
-    "maxCapacity": 1000,
+    "maxCapacity": 200,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -17,7 +17,7 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
+              "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
             }
           }
@@ -28,11 +28,12 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-central1-a/machineTypes/n1-highmem-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
               "d2gConfig": {
+                "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
@@ -56,7 +57,13 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-central1-a/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 1
+          }
+        ],
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -76,7 +83,7 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
+              "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
             }
           }
@@ -87,11 +94,12 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-central1-b/machineTypes/n1-highmem-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
               "d2gConfig": {
+                "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
@@ -115,7 +123,13 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-central1-b/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 1
+          }
+        ],
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -135,7 +149,7 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
+              "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
             }
           }
@@ -146,11 +160,12 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-c/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-central1-c/machineTypes/n1-highmem-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
               "d2gConfig": {
+                "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
@@ -174,7 +189,13 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-central1-c/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 1
+          }
+        ],
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -194,7 +215,7 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
+              "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
             }
           }
@@ -205,11 +226,12 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-central1-f/machineTypes/n1-highmem-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
               "d2gConfig": {
+                "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
@@ -233,7 +255,13 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-central1-f/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 1
+          }
+        ],
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -253,7 +281,7 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
+              "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
             }
           }
@@ -264,11 +292,12 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-west1-a/machineTypes/n1-highmem-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
               "d2gConfig": {
+                "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
@@ -292,7 +321,13 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-west1-a/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 1
+          }
+        ],
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -312,7 +347,7 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
+              "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
             }
           }
@@ -323,11 +358,12 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-west1-b/machineTypes/n1-highmem-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
               "d2gConfig": {
+                "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
@@ -351,7 +387,79 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-west1-b/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 1
+          }
+        ],
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1
+      },
+      {
+        "zone": "us-east1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
+            }
+          }
+        ],
+        "region": "us-east1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-east1-c/machineTypes/n1-highmem-8",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "d2gConfig": {
+                "allowGPUs": true,
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "maxTaskRunTime": 2592900,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-east1-c/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 1
+          }
+        ],
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -365,11 +473,11 @@
       }
     ]
   },
-  "created": "2024-04-22T14:34:07.707Z",
+  "created": "2025-02-24T14:09:11.508Z",
   "currentCapacity": 0,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorkers using generic-worker on Linux with D2G capability.",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for machine learning and other high GPU tasks",
   "emailOnError": true,
-  "lastModified": "2025-02-22T01:32:23.243Z",
+  "lastModified": "2025-02-24T14:09:11.508Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
@@ -380,5 +488,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "translations-1/b-linux-large-gcp-d2g"
+  "workerPoolId": "translations-1/b-linux-v100-gpu-d2g"
 }

@@ -43,6 +43,15 @@
             }
           },
           {
+            "$if": "firedBy == 'triggerHookWithToken'",
+            "else": {},
+            "then": {
+              "PHABRICATOR_BUILD_TARGET": {
+                "$eval": "payload.build_target_phid"
+              }
+            }
+          },
+          {
             "$if": "firedBy == 'pulseMessage'",
             "else": {},
             "then": {
@@ -103,6 +112,33 @@
   },
   "triggerSchema": {
     "type": "object",
+    "properties": {
+      "runId": {
+        "type": "integer",
+        "description": "Taskcluster Task Run ID triggering the hook (should be a Try Task run)"
+      },
+      "status": {
+        "type": "object",
+        "required": [
+          "taskId",
+          "taskGroupId"
+        ],
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "description": "Taskcluster Task ID triggering the hook (should be a Try Task)"
+          },
+          "taskGroupId": {
+            "type": "string",
+            "description": "Taskcluster Task Group ID triggering the hook (should be a Try Task Group)"
+          }
+        }
+      },
+      "build_target_phid": {
+        "type": "string",
+        "description": "Phabricator Build target's PHID triggering the hook"
+      }
+    },
     "additionalProperties": true
   }
 }
