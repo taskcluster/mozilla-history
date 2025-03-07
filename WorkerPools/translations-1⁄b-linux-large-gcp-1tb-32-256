@@ -10,6 +10,81 @@
     "scalingRatio": 1,
     "launchConfigs": [
       {
+        "zone": "us-west1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 1024,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2024-06-14t19-52-20z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-west1-b/machineTypes/n2-highmem-32",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-beb6cae13bf76726bdca"
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1
+      },
+      {
         "zone": "us-central1-a",
         "disks": [
           {
@@ -68,6 +143,9 @@
               "enabled": false
             }
           }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-68e692d2cc7706aafcff"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -141,6 +219,9 @@
             }
           }
         },
+        "workerManager": {
+          "launchConfigId": "lc-b65af1c71ba66af30dc8"
+        },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
           {
@@ -212,6 +293,9 @@
               "enabled": false
             }
           }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-7c20ba82b2bde4dbb3fe"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -285,6 +369,9 @@
             }
           }
         },
+        "workerManager": {
+          "launchConfigId": "lc-b8d300b1157e0ce3d2c8"
+        },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
           {
@@ -357,77 +444,8 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "capacityPerInstance": 1
-      },
-      {
-        "zone": "us-west1-b",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2024-06-14t19-52-20z"
-            }
-          }
-        ],
-        "region": "us-west1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-west1-b/machineTypes/n2-highmem-32",
-        "workerConfig": {
-          "capacity": 1,
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 120
-          },
-          "artifacts": {
-            "skipCompressionExtensions": [
-              ".7z",
-              ".bz2",
-              ".deb",
-              ".dmg",
-              ".flv",
-              ".gif",
-              ".gz",
-              ".jpeg",
-              ".jpg",
-              ".png",
-              ".swf",
-              ".tbz",
-              ".tgz",
-              ".webp",
-              ".whl",
-              ".woff",
-              ".woff2",
-              ".xz",
-              ".zip",
-              ".zst",
-              "lz4"
-            ]
-          },
-          "deviceManagement": {
-            "kvm": {
-              "enabled": false
-            },
-            "hostSharedMemory": {
-              "enabled": false
-            }
-          }
+        "workerManager": {
+          "launchConfigId": "lc-195aaf783d0472f52a83"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [

@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 1000,
+    "maxCapacity": 10,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -17,8 +17,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
             }
           }
         ],
@@ -28,7 +36,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/n2-highmem-64",
+        "machineType": "zones/us-central1-a/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -42,7 +50,6 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -57,7 +64,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-39c7ed671c607443c61f"
+          "launchConfigId": "lc-623089b9cc472a31f9b4"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -79,8 +86,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
             }
           }
         ],
@@ -90,7 +105,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/n2-highmem-64",
+        "machineType": "zones/us-central1-b/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -104,7 +119,6 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -119,7 +133,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-18aebf1b54d9fbbf8c11"
+          "launchConfigId": "lc-9b761d9157d3e228cca6"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -141,8 +155,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
             }
           }
         ],
@@ -152,7 +174,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-c/machineTypes/n2-highmem-64",
+        "machineType": "zones/us-central1-c/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -166,7 +188,6 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -181,7 +202,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-ae3b043ac413e3109d42"
+          "launchConfigId": "lc-dd32225ee4fc6458f826"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -203,8 +224,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
             }
           }
         ],
@@ -214,7 +243,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/n2-highmem-64",
+        "machineType": "zones/us-central1-f/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -228,7 +257,6 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -243,7 +271,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-5c0f714c687395bd0bd5"
+          "launchConfigId": "lc-12d4439d3fffb39973d4"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -265,8 +293,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-a/diskTypes/local-ssd"
             }
           }
         ],
@@ -276,7 +312,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/n2-highmem-64",
+        "machineType": "zones/us-west1-a/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -290,7 +326,6 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -305,7 +340,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-42a28772cfa455f03282"
+          "launchConfigId": "lc-0504a32a0da8cfc880a1"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -327,8 +362,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-02-21"
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
             }
           }
         ],
@@ -338,7 +381,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/n2-highmem-64",
+        "machineType": "zones/us-west1-b/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -352,7 +395,6 @@
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
@@ -367,7 +409,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-8b13869dceadd0d3b60d"
+          "launchConfigId": "lc-1385875246f78948c053"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -383,11 +425,11 @@
       }
     ]
   },
-  "created": "2024-06-25T21:17:26.997Z",
+  "created": "2025-03-05T17:34:47.990Z",
   "currentCapacity": 0,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPreemptible VM workers with 1 TB of disk space, 64 vCPUs, and 512 GiB of RAM. Intended for Firefox Translations only.",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorkers running Ubuntu 24.04. Used by RelSRE to qualify images.",
   "emailOnError": true,
-  "lastModified": "2025-02-22T01:32:23.028Z",
+  "lastModified": "2025-03-05T17:34:47.990Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
@@ -398,5 +440,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "translations-1/b-linux-large-gcp-1tb-64-512-d2g"
+  "workerPoolId": "gecko-t/t-linux-2404-headless-ssd-alpha"
 }

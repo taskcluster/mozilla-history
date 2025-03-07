@@ -10,7 +10,7 @@
     "scalingRatio": 1,
     "launchConfigs": [
       {
-        "zone": "us-central1-a",
+        "zone": "us-west1-a",
         "disks": [
           {
             "boot": true,
@@ -26,17 +26,17 @@
             "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
-              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
+              "diskType": "zones/us-west1-a/diskTypes/local-ssd"
             }
           }
         ],
-        "region": "us-central1",
+        "region": "us-west1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/c2-standard-8",
+        "machineType": "zones/us-west1-a/machineTypes/c2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -76,6 +76,9 @@
               "enabled": false
             }
           }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-068be31c30f07f9e9886"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -90,7 +93,7 @@
         "capacityPerInstance": 1
       },
       {
-        "zone": "us-central1-b",
+        "zone": "us-west1-b",
         "disks": [
           {
             "boot": true,
@@ -106,17 +109,17 @@
             "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
-              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
+              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
             }
           }
         ],
-        "region": "us-central1",
+        "region": "us-west1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/c2-standard-8",
+        "machineType": "zones/us-west1-b/machineTypes/c2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -157,85 +160,8 @@
             }
           }
         },
-        "minCpuPlatform": "Intel Cascadelake",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "capacityPerInstance": 1
-      },
-      {
-        "zone": "us-central1-c",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
-            }
-          }
-        ],
-        "region": "us-central1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-central1-c/machineTypes/c2-standard-8",
-        "workerConfig": {
-          "capacity": 1,
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 120
-          },
-          "artifacts": {
-            "skipCompressionExtensions": [
-              ".7z",
-              ".bz2",
-              ".deb",
-              ".dmg",
-              ".flv",
-              ".gif",
-              ".gz",
-              ".jpeg",
-              ".jpg",
-              ".png",
-              ".swf",
-              ".tbz",
-              ".tgz",
-              ".webp",
-              ".whl",
-              ".woff",
-              ".woff2",
-              ".xz",
-              ".zip",
-              ".zst",
-              "lz4"
-            ]
-          },
-          "deviceManagement": {
-            "kvm": {
-              "enabled": false
-            },
-            "hostSharedMemory": {
-              "enabled": false
-            }
-          }
+        "workerManager": {
+          "launchConfigId": "lc-55548cfdc9bf2e38c9d9"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -317,6 +243,9 @@
             }
           }
         },
+        "workerManager": {
+          "launchConfigId": "lc-2376817e94daf6beaa92"
+        },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
           {
@@ -330,7 +259,7 @@
         "capacityPerInstance": 1
       },
       {
-        "zone": "us-west1-a",
+        "zone": "us-central1-a",
         "disks": [
           {
             "boot": true,
@@ -346,17 +275,17 @@
             "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
-              "diskType": "zones/us-west1-a/diskTypes/local-ssd"
+              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
             }
           }
         ],
-        "region": "us-west1",
+        "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/c2-standard-8",
+        "machineType": "zones/us-central1-a/machineTypes/c2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -397,6 +326,9 @@
             }
           }
         },
+        "workerManager": {
+          "launchConfigId": "lc-5a3a43bded4ca37450a4"
+        },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
           {
@@ -410,7 +342,7 @@
         "capacityPerInstance": 1
       },
       {
-        "zone": "us-west1-b",
+        "zone": "us-central1-b",
         "disks": [
           {
             "boot": true,
@@ -426,17 +358,17 @@
             "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
-              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
+              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
             }
           }
         ],
-        "region": "us-west1",
+        "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/c2-standard-8",
+        "machineType": "zones/us-central1-b/machineTypes/c2-standard-8",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -476,6 +408,92 @@
               "enabled": false
             }
           }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-726ae6f53fe196506be8"
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "capacityPerInstance": 1
+      },
+      {
+        "zone": "us-central1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-central1-c/machineTypes/c2-standard-8",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-463f6557a8870abcb08e"
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
