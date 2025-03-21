@@ -10,89 +10,6 @@
     "scalingRatio": 1,
     "launchConfigs": [
       {
-        "zone": "us-west1-b",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
-            }
-          }
-        ],
-        "region": "us-west1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-west1-b/machineTypes/n2-standard-2",
-        "workerConfig": {
-          "capacity": 2,
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 120
-          },
-          "artifacts": {
-            "skipCompressionExtensions": [
-              ".7z",
-              ".bz2",
-              ".deb",
-              ".dmg",
-              ".flv",
-              ".gif",
-              ".gz",
-              ".jpeg",
-              ".jpg",
-              ".png",
-              ".swf",
-              ".tbz",
-              ".tgz",
-              ".webp",
-              ".whl",
-              ".woff",
-              ".woff2",
-              ".xz",
-              ".zip",
-              ".zst",
-              "lz4"
-            ]
-          },
-          "deviceManagement": {
-            "kvm": {
-              "enabled": false
-            },
-            "hostSharedMemory": {
-              "enabled": false
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-d9cc4ffaf58a6253de99"
-        },
-        "minCpuPlatform": "Intel Cascadelake",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "capacityPerInstance": 2
-      },
-      {
         "zone": "us-central1-a",
         "disks": [
           {
@@ -161,7 +78,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-8f6093cc6fb9880fffe1"
+          "launchConfigId": "lc-d2377955194ec5ba7cad",
+          "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -172,8 +90,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 2
+        ]
       },
       {
         "zone": "us-central1-b",
@@ -244,7 +161,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-f01ef93ea4a98af42a68"
+          "launchConfigId": "lc-368d0e41c0346743db5f",
+          "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -255,8 +173,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 2
+        ]
       },
       {
         "zone": "us-central1-c",
@@ -327,7 +244,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-8513f3f54e9df0e35aa6"
+          "launchConfigId": "lc-69f1d8df09a2c8bb2080",
+          "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -338,8 +256,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 2
+        ]
       },
       {
         "zone": "us-central1-f",
@@ -410,7 +327,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-79799f20f1a0edb9fa00"
+          "launchConfigId": "lc-647fcb5eacc8f8a37900",
+          "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -421,8 +339,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 2
+        ]
       },
       {
         "zone": "us-west1-a",
@@ -493,7 +410,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-cbe979775e6cae7add69"
+          "launchConfigId": "lc-70c7964a55d182dca652",
+          "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -504,8 +422,90 @@
               }
             ]
           }
+        ]
+      },
+      {
+        "zone": "us-west1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
+            }
+          }
         ],
-        "capacityPerInstance": 2
+        "region": "us-west1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-west1-b/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "capacity": 2,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-9f9510ff939a6f3bd5a2",
+          "capacityPerInstance": 2
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -513,7 +513,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for Firefox automation",
   "emailOnError": false,
-  "lastModified": "2025-03-12T18:37:55.526Z",
+  "lastModified": "2025-03-17T16:07:14.508Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level3-gcp",
   "requestedCapacity": 0,

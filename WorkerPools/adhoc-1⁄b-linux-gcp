@@ -10,7 +10,7 @@
     "scalingRatio": 1,
     "launchConfigs": [
       {
-        "zone": "us-central1-f",
+        "zone": "us-central1-a",
         "disks": [
           {
             "boot": true,
@@ -26,7 +26,7 @@
             "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
-              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
+              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
             }
           }
         ],
@@ -36,7 +36,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/c2-standard-4",
+        "machineType": "zones/us-central1-a/machineTypes/c2-standard-4",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -78,7 +78,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-64db4b8bde66f583d73a"
+          "launchConfigId": "lc-bca7e8ddcfaf05e1d8ac",
+          "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -89,8 +90,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 1
+        ]
       },
       {
         "zone": "us-central1-b",
@@ -161,7 +161,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-93f17cd7a508e050dfb7"
+          "launchConfigId": "lc-c6cc8a3fcf23de9483fb",
+          "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -172,8 +173,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 1
+        ]
       },
       {
         "zone": "us-central1-c",
@@ -244,7 +244,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-9f4008c735a86c3e1339"
+          "launchConfigId": "lc-a242c12014d4160ab24c",
+          "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -255,11 +256,10 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 1
+        ]
       },
       {
-        "zone": "us-west1-b",
+        "zone": "us-central1-f",
         "disks": [
           {
             "boot": true,
@@ -275,17 +275,17 @@
             "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
-              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
+              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
             }
           }
         ],
-        "region": "us-west1",
+        "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/c2-standard-4",
+        "machineType": "zones/us-central1-f/machineTypes/c2-standard-4",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -327,7 +327,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-c375cb101cbb9041f6b4"
+          "launchConfigId": "lc-ba6b4a88857bfec16e6c",
+          "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -338,8 +339,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 1
+        ]
       },
       {
         "zone": "us-west1-a",
@@ -410,7 +410,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-88f996a1481d0051a79e"
+          "launchConfigId": "lc-037705f7aa0c91529054",
+          "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -421,11 +422,10 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 1
+        ]
       },
       {
-        "zone": "us-central1-a",
+        "zone": "us-west1-b",
         "disks": [
           {
             "boot": true,
@@ -441,17 +441,17 @@
             "interface": "NVME",
             "autoDelete": true,
             "initializeParams": {
-              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
+              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
             }
           }
         ],
-        "region": "us-central1",
+        "region": "us-west1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/c2-standard-4",
+        "machineType": "zones/us-west1-b/machineTypes/c2-standard-4",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -493,7 +493,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-9a75e9427afcfc42df53"
+          "launchConfigId": "lc-2b91dc60b12e73c0bffa",
+          "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
         "networkInterfaces": [
@@ -504,8 +505,7 @@
               }
             ]
           }
-        ],
-        "capacityPerInstance": 1
+        ]
       }
     ]
   },
@@ -513,7 +513,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for Firefox automation.",
   "emailOnError": true,
-  "lastModified": "2025-03-12T18:37:34.516Z",
+  "lastModified": "2025-03-17T16:07:07.556Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,

@@ -17,79 +17,6 @@
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "westus2",
-        "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-west-us-2-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-west-us-2-vpn-3/subnets/sn-west-us-2-vpn-3",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "D:\\",
-              "cachesDir": "D:\\caches",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "D:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/trusted-win2022-64-2009-1.0.2.md"
-              },
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-8c6c1133df41e8fba91e"
-        },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "caching": "ReadOnly",
-            "createOption": "FromImage",
-            "diffDiskSettings": {
-              "option": "Local"
-            }
-          },
-          "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2022_64_2009/images/trusted_win2022_64_2009/versions/1.0.2"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_F32s_v2"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        },
-        "capacityPerInstance": 1
-      },
-      {
-        "tags": {
-          "deploymentId": "b1f4165",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
         "location": "centralus",
         "priority": "spot",
         "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-central-us-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-central-us-vpn-3/subnets/sn-central-us-vpn-3",
@@ -126,7 +53,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6b8b259afb72d59e5b7f"
+          "launchConfigId": "lc-30b2f9cc5754efdacf4b",
+          "capacityPerInstance": 1
         },
         "billingProfile": {
           "maxPrice": -1
@@ -152,8 +80,7 @@
           "bootDiagnostics": {
             "enabled": false
           }
-        },
-        "capacityPerInstance": 1
+        }
       },
       {
         "tags": {
@@ -199,7 +126,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-1a8da1df3158234b6607"
+          "launchConfigId": "lc-e104db393dee3996e85a",
+          "capacityPerInstance": 1
         },
         "billingProfile": {
           "maxPrice": -1
@@ -225,8 +153,80 @@
           "bootDiagnostics": {
             "enabled": false
           }
+        }
+      },
+      {
+        "tags": {
+          "deploymentId": "b1f4165",
+          "sourceBranch": "windows",
+          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
         },
-        "capacityPerInstance": 1
+        "location": "westus2",
+        "priority": "spot",
+        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-west-us-2-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-west-us-2-vpn-3/subnets/sn-west-us-2-vpn-3",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "D:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 150,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "workerTypeMetaData": {
+                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/trusted-win2022-64-2009-1.0.2.md"
+              },
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-b270b36162295fb3c999",
+          "capacityPerInstance": 1
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "caching": "ReadOnly",
+            "createOption": "FromImage",
+            "diffDiskSettings": {
+              "option": "Local"
+            }
+          },
+          "imageReference": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2022_64_2009/images/trusted_win2022_64_2009/versions/1.0.2"
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "Standard_F32s_v2"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
+        }
       }
     ]
   },
@@ -234,7 +234,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2025-03-12T18:37:30.452Z",
+  "lastModified": "2025-03-17T16:07:30.807Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure_trusted",
   "requestedCapacity": 0,
