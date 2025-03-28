@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 500,
+    "maxCapacity": 100,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -17,8 +17,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
-              "sourceImage": "projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-03-19"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
             }
           }
         ],
@@ -28,31 +36,38 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/n2-standard-2",
+        "machineType": "zones/us-central1-a/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "/home/ubuntu/tasks",
-              "cachesDir": "/home/ubuntu/caches",
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "/home/ubuntu/downloads",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
-              "livelogExecutable": "/home/ubuntu/.taskcluster/livelog",
-              "numberOfTasksToRun": 1,
-              "taskclusterProxyPort": 8081,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
-              "taskclusterProxyExecutable": "/home/ubuntu/.taskcluster/taskcluster-proxy",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-50911956eea8626e909d",
+          "launchConfigId": "lc-de5ec7f444468c782c16",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -64,10 +79,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-central1-b",
@@ -77,8 +89,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
-              "sourceImage": "projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-03-19"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
             }
           }
         ],
@@ -88,31 +108,38 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/n2-standard-2",
+        "machineType": "zones/us-central1-b/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "/home/ubuntu/tasks",
-              "cachesDir": "/home/ubuntu/caches",
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "/home/ubuntu/downloads",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
-              "livelogExecutable": "/home/ubuntu/.taskcluster/livelog",
-              "numberOfTasksToRun": 1,
-              "taskclusterProxyPort": 8081,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
-              "taskclusterProxyExecutable": "/home/ubuntu/.taskcluster/taskcluster-proxy",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-aedbaf8ce940e09f6972",
+          "launchConfigId": "lc-fea19ace7b887e3ab2bc",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -124,10 +151,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-central1-c",
@@ -137,8 +161,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
-              "sourceImage": "projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-03-19"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
             }
           }
         ],
@@ -148,31 +180,38 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-c/machineTypes/n2-standard-2",
+        "machineType": "zones/us-central1-c/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "/home/ubuntu/tasks",
-              "cachesDir": "/home/ubuntu/caches",
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "/home/ubuntu/downloads",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
-              "livelogExecutable": "/home/ubuntu/.taskcluster/livelog",
-              "numberOfTasksToRun": 1,
-              "taskclusterProxyPort": 8081,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
-              "taskclusterProxyExecutable": "/home/ubuntu/.taskcluster/taskcluster-proxy",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-1cd2874dacf488c3066b",
+          "launchConfigId": "lc-8ced1893ba5405a006f5",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -184,10 +223,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-central1-f",
@@ -197,8 +233,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
-              "sourceImage": "projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-03-19"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
             }
           }
         ],
@@ -208,31 +252,38 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/n2-standard-2",
+        "machineType": "zones/us-central1-f/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "/home/ubuntu/tasks",
-              "cachesDir": "/home/ubuntu/caches",
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "/home/ubuntu/downloads",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
-              "livelogExecutable": "/home/ubuntu/.taskcluster/livelog",
-              "numberOfTasksToRun": 1,
-              "taskclusterProxyPort": 8081,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
-              "taskclusterProxyExecutable": "/home/ubuntu/.taskcluster/taskcluster-proxy",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-0270901b82316214b6c3",
+          "launchConfigId": "lc-029dd659ba178d585db2",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -244,10 +295,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-west1-a",
@@ -257,8 +305,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
-              "sourceImage": "projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-03-19"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-a/diskTypes/local-ssd"
             }
           }
         ],
@@ -268,31 +324,38 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/n2-standard-2",
+        "machineType": "zones/us-west1-a/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "/home/ubuntu/tasks",
-              "cachesDir": "/home/ubuntu/caches",
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "/home/ubuntu/downloads",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
-              "livelogExecutable": "/home/ubuntu/.taskcluster/livelog",
-              "numberOfTasksToRun": 1,
-              "taskclusterProxyPort": 8081,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
-              "taskclusterProxyExecutable": "/home/ubuntu/.taskcluster/taskcluster-proxy",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-cc4e72411244d870cc8d",
+          "launchConfigId": "lc-75ebc65eed7969043aff",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -304,10 +367,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-west1-b",
@@ -317,8 +377,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 60,
-              "sourceImage": "projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-03-19"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
             }
           }
         ],
@@ -328,31 +396,38 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/n2-standard-2",
+        "machineType": "zones/us-west1-b/machineTypes/c2-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "/home/ubuntu/tasks",
-              "cachesDir": "/home/ubuntu/caches",
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "/home/ubuntu/downloads",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
-              "livelogExecutable": "/home/ubuntu/.taskcluster/livelog",
-              "numberOfTasksToRun": 1,
-              "taskclusterProxyPort": 8081,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
-              "taskclusterProxyExecutable": "/home/ubuntu/.taskcluster/taskcluster-proxy",
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6e7505b35afa8039aca7",
+          "launchConfigId": "lc-5befd7001de226f5bb7e",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -364,18 +439,15 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       }
     ]
   },
-  "created": "2023-05-04T19:47:08.572Z",
+  "created": "2025-03-25T13:31:32.430Z",
   "currentCapacity": 0,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for testing Wayland and XWayland on Ubuntu 22.04",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for gecko-based automation.",
   "emailOnError": true,
-  "lastModified": "2025-03-26T20:30:12.938Z",
+  "lastModified": "2025-03-25T16:37:45.117Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
@@ -386,5 +458,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "gecko-t/t-linux-vm-2204-wayland"
+  "workerPoolId": "mozilla-t/t-linux-docker"
 }
