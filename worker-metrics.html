@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Worker Utilization Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    /* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+    color: #363636;
+    background-color: #f5f5f5;
+}
+
+/* Layout */
+.container {
+    max-width: 2100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section {
+    padding: 3rem 1.5rem;
+}
+
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    margin-top: -0.75rem;
+}
+
+.column {
+    display: block;
+    flex: 1 1 0;
+    padding: 0.75rem;
+}
+
+.column.is-6 {
+    flex: none;
+    width: 50%;
+}
+
+.column.is-12 {
+    flex: none;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .column.is-6 {
+        width: 100%;
+    }
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+/* Typography */
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.125;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+}
+
+.title.is-5 {
+    font-size: 1.25rem;
+}
+
+.has-text-centered {
+    text-align: center;
+}
+
+/* Components */
+.box {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form elements */
+select {
+    appearance: none;
+    background-color: white;
+    border-color: #dbdbdb;
+    border-radius: 4px;
+    border-width: 1px;
+    color: #363636;
+    height: 2.5em;
+    line-height: 1.5;
+    padding: 0 1em;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23363636' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7em top 50%;
+    background-size: 0.65em auto;
+    padding-right: 2.5em;
+}
+
+.button {
+    background-color: white;
+    border-color: #dbdbdb;
+    border-width: 1px;
+    border-radius: 4px;
+    color: #363636;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    text-align: center;
+    white-space: nowrap;
+    height: 2.5em;
+    line-height: 1.5;
+    margin-bottom: 0.5em;
+}
+
+.button.is-primary {
+    background-color: #00d1b2;
+    border-color: transparent;
+    color: white;
+}
+
+.button.is-primary:hover {
+    background-color: #00c4a7;
+}
+
+.field {
+    margin-bottom: 0.75rem;
+}
+
+.field.is-grouped {
+    display: flex;
+    align-items: center;
+}
+
+.field.is-grouped > .control:not(:last-child) {
+    margin-right: 0.75rem;
+}
+
+.control {
+    font-size: 1rem;
+    position: relative;
+    text-align: left;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.table.is-fullwidth {
+    width: 100%;
+}
+
+.table.is-striped tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.table th,
+.table td {
+    border: 1px solid #dbdbdb;
+    padding: 0.5em 0.75em;
+    vertical-align: middle;
+}
+
+.table th {
+    color: #363636;
+    font-weight: 700;
+    text-align: left;
+}
+
+.table tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Custom styles for alternating column backgrounds */
+.metric-group-1 {
+    background-color: rgba(0, 209, 178, 0.05); /* Light teal */
+}
+
+.metric-group-2 {
+    background-color: rgba(50, 115, 220, 0.05); /* Light blue */
+}
+
+.metric-group-3 {
+    background-color: rgba(241, 70, 104, 0.05); /* Light red */
+}
+
+/* Add subtle borders between metric groups */
+th.metric-group-1,
+td.metric-group-1 {
+    border-left: 1px solid #dbdbdb;
+}
+
+th.metric-group-2,
+td.metric-group-2 {
+    border-left: 1px solid #dbdbdb;
+}
+
+th.metric-group-3,
+td.metric-group-3 {
+    border-left: 1px solid #dbdbdb;
+}
+
+/* Make the metric group headers stand out */
+th[colspan="3"] {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #dbdbdb;
+}
+
+/* Canvas styles */
+canvas {
+    max-width: 100%;
+}
+
+th.sortable {
+    cursor: pointer;
+    position: relative;
+    padding-right: 20px;
+}
+
+th.sortable:after {
+    content: "⇵";
+    position: absolute;
+    right: 5px;
+    color: #999;
+}
+
+th.sortable.asc:after {
+    content: "↑";
+    color: #333;
+}
+
+th.sortable.desc:after {
+    content: "↓";
+    color: #333;
+}
+</style>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Worker Utilization Dashboard</h1>
+            <h2 class="subtitle">Last 7 days</h2>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <select id="timerange">
+                        <option value="1" >Last 24 hours</option>
+                        <option value="7" selected>Last 7 days</option>
+                        <option value="30" >Last 30 days</option>
+                    </select>
+                </div>
+                <div class="control">
+                    <button class="button is-primary" onclick="window.location.href='/worker-dashboard?days='+document.getElementById('timerange').value">Apply</button>
+                </div>
+            </div>
+
+            <div class="columns mt-4">
+                <div class="column is-6">
+                    <div class="box">
+                        <h3 class="title is-5">Overall Statistics</h3>
+                        <table class="table is-fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td>Total Workers</td>
+                                    <td>125887</td>
+                                </tr>
+                                <tr>
+                                    <td>Unused Workers</td>
+                                    <td>13950 (11.1%)</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Tasks Executed</td>
+                                    <td>418353</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Working Hours</td>
+                                    <td>60095.36</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Unused Worker Hours</td>
+                                    <td>2749.86 hours</td>
+                                </tr>
+                                <tr class="metric-group-1">
+                                    <th colspan="2" class="has-text-centered">Provisioning Time (seconds)</th>
+                                </tr>
+                                <tr class="metric-group-1">
+                                    <td>Average</td>
+                                    <td>344.53</td>
+                                </tr>
+                                <tr class="metric-group-1">
+                                    <td>Median (P50)</td>
+                                    <td>285.34</td>
+                                </tr>
+                                <tr class="metric-group-1">
+                                    <td>P90</td>
+                                    <td>742.34</td>
+                                </tr>
+                                <tr class="metric-group-2">
+                                    <th colspan="2" class="has-text-centered">Initial Idle Time (seconds)</th>
+                                </tr>
+                                <tr class="metric-group-2">
+                                    <td>Average</td>
+                                    <td>77.97</td>
+                                </tr>
+                                <tr class="metric-group-2">
+                                    <td>Median (P50)</td>
+                                    <td>54.94</td>
+                                </tr>
+                                <tr class="metric-group-2">
+                                    <td>P90</td>
+                                    <td>126.76</td>
+                                </tr>
+                                <tr class="metric-group-3">
+                                    <th colspan="2" class="has-text-centered">Time Between Tasks (seconds)</th>
+                                </tr>
+                                <tr class="metric-group-3">
+                                    <td>Average</td>
+                                    <td>91.75</td>
+                                </tr>
+                                <tr class="metric-group-3">
+                                    <td>Median (P50)</td>
+                                    <td>68.07</td>
+                                </tr>
+                                <tr class="metric-group-3">
+                                    <td>P90</td>
+                                    <td>195.64</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="column is-6">
+                    <div class="box">
+                        <h3 class="title is-5">Worker Efficiency</h3>
+                        <div class="has-text-centered">
+                            <canvas id="utilizationChart" width="300" height="300"></canvas>
+                            <div id="chartLegend" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-12">
+                    <div class="box">
+                        <h3 class="title is-5">Worker Pools</h3>
+                        <div class="table-container">
+                            <table id="workerPoolTable" class="table is-fullwidth is-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" data-col="0" rowspan="2">Worker Pool ID</th>
+                                        <th colspan="2" class="has-text-centered metric-group-1">Tasks</th>
+                                        <th colspan="3" class="has-text-centered metric-group-2">Workers</th>
+                                        <th colspan="3" class="has-text-centered metric-group-3">Hours</th>
+                                        <th colspan="3" class="has-text-centered metric-group-1">Provisioning Time (sec)</th>
+                                        <th colspan="3" class="has-text-centered metric-group-2">Initial Idle Time (sec)</th>
+                                        <th colspan="3" class="has-text-centered metric-group-3">Time Between Tasks (sec)</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="metric-group-1 sortable" data-col="1">Total</th>
+                                        <th class="metric-group-1 sortable" data-col="2">Per Worker</th>
+                                        <th class="metric-group-2 sortable" data-col="3">Total</th>
+                                        <th class="metric-group-2 sortable" data-col="4">Unused</th>
+                                        <th class="metric-group-2 sortable" data-col="5">%</th>
+                                        <th class="metric-group-3 sortable" data-col="6">Working</th>
+                                        <th class="metric-group-3 sortable" data-col="7">Unused</th>
+                                        <th class="metric-group-3 sortable" data-col="8">%</th>
+                                        <th class="metric-group-1 sortable" data-col="9">Avg</th>
+                                        <th class="metric-group-1 sortable" data-col="10">P50</th>
+                                        <th class="metric-group-1 sortable" data-col="11">P95</th>
+                                        <th class="metric-group-2 sortable" data-col="12">Avg</th>
+                                        <th class="metric-group-2 sortable" data-col="13">P50</th>
+                                        <th class="metric-group-2 sortable" data-col="14">P95</th>
+                                        <th class="metric-group-3 sortable" data-col="15">Avg</th>
+                                        <th class="metric-group-3 sortable" data-col="16">P50</th>
+                                        <th class="metric-group-3 sortable" data-col="17">P95</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-large-noscratch-gcp</td>
+                                        <td class="metric-group-1">54004</td>
+                                        <td class="metric-group-1">1.8</td>
+                                        <td class="metric-group-2">30427</td>
+                                        <td class="metric-group-2">2537</td>
+                                        <td class="metric-group-2">8.3%</td>
+                                        <td class="metric-group-3">13197.12</td>
+                                        <td class="metric-group-3">307.39</td>
+                                        <td class="metric-group-3">2.3%</td>
+                                        <td class="metric-group-1">43.91</td>
+                                        <td class="metric-group-1">38.21</td>
+                                        <td class="metric-group-1">97.02</td>
+                                        <td class="metric-group-2">28.70</td>
+                                        <td class="metric-group-2">5.37</td>
+                                        <td class="metric-group-2">24.56</td>
+                                        <td class="metric-group-3">62.42</td>
+                                        <td class="metric-group-3">22.46</td>
+                                        <td class="metric-group-3">151.38</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-kvm-noscratch-gcp</td>
+                                        <td class="metric-group-1">31681</td>
+                                        <td class="metric-group-1">1.7</td>
+                                        <td class="metric-group-2">18739</td>
+                                        <td class="metric-group-2">1705</td>
+                                        <td class="metric-group-2">9.1%</td>
+                                        <td class="metric-group-3">10477.42</td>
+                                        <td class="metric-group-3">309.25</td>
+                                        <td class="metric-group-3">2.9%</td>
+                                        <td class="metric-group-1">37.27</td>
+                                        <td class="metric-group-1">34.25</td>
+                                        <td class="metric-group-1">69.52</td>
+                                        <td class="metric-group-2">26.82</td>
+                                        <td class="metric-group-2">5.13</td>
+                                        <td class="metric-group-2">18.05</td>
+                                        <td class="metric-group-3">56.43</td>
+                                        <td class="metric-group-3">15.34</td>
+                                        <td class="metric-group-3">126.01</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-xlarge-noscratch-gcp</td>
+                                        <td class="metric-group-1">26764</td>
+                                        <td class="metric-group-1">1.6</td>
+                                        <td class="metric-group-2">16305</td>
+                                        <td class="metric-group-2">2149</td>
+                                        <td class="metric-group-2">13.2%</td>
+                                        <td class="metric-group-3">8597.52</td>
+                                        <td class="metric-group-3">245.49</td>
+                                        <td class="metric-group-3">2.8%</td>
+                                        <td class="metric-group-1">43.80</td>
+                                        <td class="metric-group-1">35.37</td>
+                                        <td class="metric-group-1">110.65</td>
+                                        <td class="metric-group-2">67.81</td>
+                                        <td class="metric-group-2">5.54</td>
+                                        <td class="metric-group-2">73.81</td>
+                                        <td class="metric-group-3">78.02</td>
+                                        <td class="metric-group-3">30.92</td>
+                                        <td class="metric-group-3">149.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-xlarge-source-gcp</td>
+                                        <td class="metric-group-1">27898</td>
+                                        <td class="metric-group-1">2.7</td>
+                                        <td class="metric-group-2">10260</td>
+                                        <td class="metric-group-2">921</td>
+                                        <td class="metric-group-2">9.0%</td>
+                                        <td class="metric-group-3">1801.96</td>
+                                        <td class="metric-group-3">38.58</td>
+                                        <td class="metric-group-3">2.1%</td>
+                                        <td class="metric-group-1">37.72</td>
+                                        <td class="metric-group-1">37.55</td>
+                                        <td class="metric-group-1">67.10</td>
+                                        <td class="metric-group-2">19.93</td>
+                                        <td class="metric-group-2">4.75</td>
+                                        <td class="metric-group-2">49.56</td>
+                                        <td class="metric-group-3">33.10</td>
+                                        <td class="metric-group-3">12.37</td>
+                                        <td class="metric-group-3">112.21</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/b-linux-gcp</td>
+                                        <td class="metric-group-1">33416</td>
+                                        <td class="metric-group-1">3.6</td>
+                                        <td class="metric-group-2">9162</td>
+                                        <td class="metric-group-2">410</td>
+                                        <td class="metric-group-2">4.5%</td>
+                                        <td class="metric-group-3">5319.52</td>
+                                        <td class="metric-group-3">54.65</td>
+                                        <td class="metric-group-3">1.0%</td>
+                                        <td class="metric-group-1">104.65</td>
+                                        <td class="metric-group-1">92.45</td>
+                                        <td class="metric-group-1">211.06</td>
+                                        <td class="metric-group-2">35.96</td>
+                                        <td class="metric-group-2">4.12</td>
+                                        <td class="metric-group-2">26.62</td>
+                                        <td class="metric-group-3">51.94</td>
+                                        <td class="metric-group-3">7.76</td>
+                                        <td class="metric-group-3">169.34</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-24h2</td>
+                                        <td class="metric-group-1">23749</td>
+                                        <td class="metric-group-1">3.2</td>
+                                        <td class="metric-group-2">7332</td>
+                                        <td class="metric-group-2">961</td>
+                                        <td class="metric-group-2">13.1%</td>
+                                        <td class="metric-group-3">7168.31</td>
+                                        <td class="metric-group-3">342.47</td>
+                                        <td class="metric-group-3">4.6%</td>
+                                        <td class="metric-group-1">1859.87</td>
+                                        <td class="metric-group-1">1333.59</td>
+                                        <td class="metric-group-1">4864.47</td>
+                                        <td class="metric-group-2">259.37</td>
+                                        <td class="metric-group-2">95.50</td>
+                                        <td class="metric-group-2">1232.20</td>
+                                        <td class="metric-group-3">205.17</td>
+                                        <td class="metric-group-3">118.08</td>
+                                        <td class="metric-group-3">323.13</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">16401</td>
+                                        <td class="metric-group-1">3.3</td>
+                                        <td class="metric-group-2">5043</td>
+                                        <td class="metric-group-2">439</td>
+                                        <td class="metric-group-2">8.7%</td>
+                                        <td class="metric-group-3">2614.47</td>
+                                        <td class="metric-group-3">27.50</td>
+                                        <td class="metric-group-3">1.0%</td>
+                                        <td class="metric-group-1">91.64</td>
+                                        <td class="metric-group-1">86.57</td>
+                                        <td class="metric-group-1">155.60</td>
+                                        <td class="metric-group-2">32.96</td>
+                                        <td class="metric-group-2">4.75</td>
+                                        <td class="metric-group-2">53.90</td>
+                                        <td class="metric-group-3">62.59</td>
+                                        <td class="metric-group-3">20.39</td>
+                                        <td class="metric-group-3">162.72</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/b-linux-medium-gcp</td>
+                                        <td class="metric-group-1">9832</td>
+                                        <td class="metric-group-1">2.1</td>
+                                        <td class="metric-group-2">4667</td>
+                                        <td class="metric-group-2">176</td>
+                                        <td class="metric-group-2">3.8%</td>
+                                        <td class="metric-group-3">1778.22</td>
+                                        <td class="metric-group-3">36.66</td>
+                                        <td class="metric-group-3">2.0%</td>
+                                        <td class="metric-group-1">79.04</td>
+                                        <td class="metric-group-1">70.21</td>
+                                        <td class="metric-group-1">125.01</td>
+                                        <td class="metric-group-2">7.41</td>
+                                        <td class="metric-group-2">4.12</td>
+                                        <td class="metric-group-2">8.77</td>
+                                        <td class="metric-group-3">37.82</td>
+                                        <td class="metric-group-3">22.13</td>
+                                        <td class="metric-group-3">126.39</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-24h2-gpu</td>
+                                        <td class="metric-group-1">7302</td>
+                                        <td class="metric-group-1">2.2</td>
+                                        <td class="metric-group-2">3355</td>
+                                        <td class="metric-group-2">553</td>
+                                        <td class="metric-group-2">16.5%</td>
+                                        <td class="metric-group-3">2412.42</td>
+                                        <td class="metric-group-3">180.39</td>
+                                        <td class="metric-group-3">7.0%</td>
+                                        <td class="metric-group-1">1823.08</td>
+                                        <td class="metric-group-1">1447.88</td>
+                                        <td class="metric-group-1">4450.55</td>
+                                        <td class="metric-group-2">206.69</td>
+                                        <td class="metric-group-2">112.01</td>
+                                        <td class="metric-group-2">312.85</td>
+                                        <td class="metric-group-3">242.28</td>
+                                        <td class="metric-group-3">143.57</td>
+                                        <td class="metric-group-3">442.19</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/b-linux-medium-gcp</td>
+                                        <td class="metric-group-1">6715</td>
+                                        <td class="metric-group-1">2.3</td>
+                                        <td class="metric-group-2">2965</td>
+                                        <td class="metric-group-2">82</td>
+                                        <td class="metric-group-2">2.8%</td>
+                                        <td class="metric-group-3">1150.43</td>
+                                        <td class="metric-group-3">9.85</td>
+                                        <td class="metric-group-3">0.8%</td>
+                                        <td class="metric-group-1">82.90</td>
+                                        <td class="metric-group-1">71.22</td>
+                                        <td class="metric-group-1">163.99</td>
+                                        <td class="metric-group-2">12.20</td>
+                                        <td class="metric-group-2">3.99</td>
+                                        <td class="metric-group-2">10.36</td>
+                                        <td class="metric-group-3">52.50</td>
+                                        <td class="metric-group-3">22.56</td>
+                                        <td class="metric-group-3">131.94</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/b-win2022</td>
+                                        <td class="metric-group-1">2636</td>
+                                        <td class="metric-group-1">1.7</td>
+                                        <td class="metric-group-2">1552</td>
+                                        <td class="metric-group-2">429</td>
+                                        <td class="metric-group-2">27.6%</td>
+                                        <td class="metric-group-3">460.18</td>
+                                        <td class="metric-group-3">184.41</td>
+                                        <td class="metric-group-3">28.6%</td>
+                                        <td class="metric-group-1">1950.88</td>
+                                        <td class="metric-group-1">1880.02</td>
+                                        <td class="metric-group-1">3902.28</td>
+                                        <td class="metric-group-2">132.00</td>
+                                        <td class="metric-group-2">63.85</td>
+                                        <td class="metric-group-2">221.21</td>
+                                        <td class="metric-group-3">114.25</td>
+                                        <td class="metric-group-3">61.39</td>
+                                        <td class="metric-group-3">217.64</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-t/win11-64-2009</td>
+                                        <td class="metric-group-1">2442</td>
+                                        <td class="metric-group-1">1.7</td>
+                                        <td class="metric-group-2">1472</td>
+                                        <td class="metric-group-2">419</td>
+                                        <td class="metric-group-2">28.5%</td>
+                                        <td class="metric-group-3">517.99</td>
+                                        <td class="metric-group-3">172.82</td>
+                                        <td class="metric-group-3">25.0%</td>
+                                        <td class="metric-group-1">1494.55</td>
+                                        <td class="metric-group-1">1236.46</td>
+                                        <td class="metric-group-1">3970.70</td>
+                                        <td class="metric-group-2">93.57</td>
+                                        <td class="metric-group-2">80.88</td>
+                                        <td class="metric-group-2">157.87</td>
+                                        <td class="metric-group-3">101.53</td>
+                                        <td class="metric-group-3">85.83</td>
+                                        <td class="metric-group-3">192.24</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-3/b-linux-gcp</td>
+                                        <td class="metric-group-1">3133</td>
+                                        <td class="metric-group-1">2.6</td>
+                                        <td class="metric-group-2">1186</td>
+                                        <td class="metric-group-2">100</td>
+                                        <td class="metric-group-2">8.4%</td>
+                                        <td class="metric-group-3">389.41</td>
+                                        <td class="metric-group-3">7.04</td>
+                                        <td class="metric-group-3">1.8%</td>
+                                        <td class="metric-group-1">94.51</td>
+                                        <td class="metric-group-1">86.42</td>
+                                        <td class="metric-group-1">165.75</td>
+                                        <td class="metric-group-2">7.87</td>
+                                        <td class="metric-group-2">4.31</td>
+                                        <td class="metric-group-2">13.65</td>
+                                        <td class="metric-group-3">31.93</td>
+                                        <td class="metric-group-3">5.81</td>
+                                        <td class="metric-group-3">132.09</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-t/t-linux-large-noscratch-gcp</td>
+                                        <td class="metric-group-1">1247</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">1116</td>
+                                        <td class="metric-group-2">80</td>
+                                        <td class="metric-group-2">7.2%</td>
+                                        <td class="metric-group-3">305.45</td>
+                                        <td class="metric-group-3">7.82</td>
+                                        <td class="metric-group-3">2.5%</td>
+                                        <td class="metric-group-1">38.69</td>
+                                        <td class="metric-group-1">38.50</td>
+                                        <td class="metric-group-1">66.20</td>
+                                        <td class="metric-group-2">9.24</td>
+                                        <td class="metric-group-2">4.98</td>
+                                        <td class="metric-group-2">10.38</td>
+                                        <td class="metric-group-3">50.34</td>
+                                        <td class="metric-group-3">34.41</td>
+                                        <td class="metric-group-3">123.82</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-24h2-large</td>
+                                        <td class="metric-group-1">3183</td>
+                                        <td class="metric-group-1">3.4</td>
+                                        <td class="metric-group-2">940</td>
+                                        <td class="metric-group-2">193</td>
+                                        <td class="metric-group-2">20.5%</td>
+                                        <td class="metric-group-3">615.84</td>
+                                        <td class="metric-group-3">45.57</td>
+                                        <td class="metric-group-3">6.9%</td>
+                                        <td class="metric-group-1">1536.26</td>
+                                        <td class="metric-group-1">1140.34</td>
+                                        <td class="metric-group-1">4205.98</td>
+                                        <td class="metric-group-2">105.11</td>
+                                        <td class="metric-group-2">84.16</td>
+                                        <td class="metric-group-2">152.22</td>
+                                        <td class="metric-group-3">131.75</td>
+                                        <td class="metric-group-3">94.82</td>
+                                        <td class="metric-group-3">243.36</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-2009</td>
+                                        <td class="metric-group-1">1259</td>
+                                        <td class="metric-group-1">1.4</td>
+                                        <td class="metric-group-2">918</td>
+                                        <td class="metric-group-2">363</td>
+                                        <td class="metric-group-2">39.5%</td>
+                                        <td class="metric-group-3">352.02</td>
+                                        <td class="metric-group-3">260.50</td>
+                                        <td class="metric-group-3">42.5%</td>
+                                        <td class="metric-group-1">3322.14</td>
+                                        <td class="metric-group-1">2764.77</td>
+                                        <td class="metric-group-1">7170.98</td>
+                                        <td class="metric-group-2">208.21</td>
+                                        <td class="metric-group-2">99.58</td>
+                                        <td class="metric-group-2">578.75</td>
+                                        <td class="metric-group-3">253.08</td>
+                                        <td class="metric-group-3">98.78</td>
+                                        <td class="metric-group-3">1178.30</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/b-linux-xlarge-gcp</td>
+                                        <td class="metric-group-1">1435</td>
+                                        <td class="metric-group-1">1.6</td>
+                                        <td class="metric-group-2">914</td>
+                                        <td class="metric-group-2">125</td>
+                                        <td class="metric-group-2">13.7%</td>
+                                        <td class="metric-group-3">418.88</td>
+                                        <td class="metric-group-3">13.17</td>
+                                        <td class="metric-group-3">3.0%</td>
+                                        <td class="metric-group-1">70.66</td>
+                                        <td class="metric-group-1">72.86</td>
+                                        <td class="metric-group-1">136.14</td>
+                                        <td class="metric-group-2">42.35</td>
+                                        <td class="metric-group-2">3.92</td>
+                                        <td class="metric-group-2">20.94</td>
+                                        <td class="metric-group-3">34.81</td>
+                                        <td class="metric-group-3">10.27</td>
+                                        <td class="metric-group-3">138.50</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win10-64-2009</td>
+                                        <td class="metric-group-1">1323</td>
+                                        <td class="metric-group-1">2.0</td>
+                                        <td class="metric-group-2">675</td>
+                                        <td class="metric-group-2">198</td>
+                                        <td class="metric-group-2">29.3%</td>
+                                        <td class="metric-group-3">277.96</td>
+                                        <td class="metric-group-3">73.95</td>
+                                        <td class="metric-group-3">21.0%</td>
+                                        <td class="metric-group-1">1733.39</td>
+                                        <td class="metric-group-1">1409.60</td>
+                                        <td class="metric-group-1">3802.78</td>
+                                        <td class="metric-group-2">753.08</td>
+                                        <td class="metric-group-2">557.52</td>
+                                        <td class="metric-group-2">1901.56</td>
+                                        <td class="metric-group-3">184.66</td>
+                                        <td class="metric-group-3">116.21</td>
+                                        <td class="metric-group-3">332.01</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/b-linux-xlarge-gcp</td>
+                                        <td class="metric-group-1">862</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">663</td>
+                                        <td class="metric-group-2">83</td>
+                                        <td class="metric-group-2">12.5%</td>
+                                        <td class="metric-group-3">299.55</td>
+                                        <td class="metric-group-3">6.36</td>
+                                        <td class="metric-group-3">2.1%</td>
+                                        <td class="metric-group-1">86.62</td>
+                                        <td class="metric-group-1">79.39</td>
+                                        <td class="metric-group-1">145.45</td>
+                                        <td class="metric-group-2">25.90</td>
+                                        <td class="metric-group-2">4.89</td>
+                                        <td class="metric-group-2">28.60</td>
+                                        <td class="metric-group-3">60.20</td>
+                                        <td class="metric-group-3">16.66</td>
+                                        <td class="metric-group-3">165.05</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/b-win2022</td>
+                                        <td class="metric-group-1">1176</td>
+                                        <td class="metric-group-1">1.9</td>
+                                        <td class="metric-group-2">608</td>
+                                        <td class="metric-group-2">151</td>
+                                        <td class="metric-group-2">24.8%</td>
+                                        <td class="metric-group-3">197.51</td>
+                                        <td class="metric-group-3">117.19</td>
+                                        <td class="metric-group-3">37.2%</td>
+                                        <td class="metric-group-1">1914.72</td>
+                                        <td class="metric-group-1">648.36</td>
+                                        <td class="metric-group-1">9221.83</td>
+                                        <td class="metric-group-2">217.52</td>
+                                        <td class="metric-group-2">68.91</td>
+                                        <td class="metric-group-2">334.11</td>
+                                        <td class="metric-group-3">137.84</td>
+                                        <td class="metric-group-3">89.39</td>
+                                        <td class="metric-group-3">237.13</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-t/t-linux-xlarge-source-gcp</td>
+                                        <td class="metric-group-1">1227</td>
+                                        <td class="metric-group-1">2.3</td>
+                                        <td class="metric-group-2">532</td>
+                                        <td class="metric-group-2">9</td>
+                                        <td class="metric-group-2">1.7%</td>
+                                        <td class="metric-group-3">32.29</td>
+                                        <td class="metric-group-3">0.24</td>
+                                        <td class="metric-group-3">0.7%</td>
+                                        <td class="metric-group-1">37.51</td>
+                                        <td class="metric-group-1">37.52</td>
+                                        <td class="metric-group-1">65.29</td>
+                                        <td class="metric-group-2">5.29</td>
+                                        <td class="metric-group-2">4.52</td>
+                                        <td class="metric-group-2">8.18</td>
+                                        <td class="metric-group-3">4.73</td>
+                                        <td class="metric-group-3">3.34</td>
+                                        <td class="metric-group-3">7.77</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-large-gcp</td>
+                                        <td class="metric-group-1">500</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">452</td>
+                                        <td class="metric-group-2">35</td>
+                                        <td class="metric-group-2">7.7%</td>
+                                        <td class="metric-group-3">77.49</td>
+                                        <td class="metric-group-3">2.52</td>
+                                        <td class="metric-group-3">3.1%</td>
+                                        <td class="metric-group-1">57.12</td>
+                                        <td class="metric-group-1">49.49</td>
+                                        <td class="metric-group-1">113.25</td>
+                                        <td class="metric-group-2">6.18</td>
+                                        <td class="metric-group-2">5.23</td>
+                                        <td class="metric-group-2">12.56</td>
+                                        <td class="metric-group-3">48.63</td>
+                                        <td class="metric-group-3">40.44</td>
+                                        <td class="metric-group-3">118.68</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>translations-1/decision-gcp</td>
+                                        <td class="metric-group-1">38</td>
+                                        <td class="metric-group-1">0.1</td>
+                                        <td class="metric-group-2">388</td>
+                                        <td class="metric-group-2">372</td>
+                                        <td class="metric-group-2">95.9%</td>
+                                        <td class="metric-group-3">0.22</td>
+                                        <td class="metric-group-3">15.36</td>
+                                        <td class="metric-group-3">98.6%</td>
+                                        <td class="metric-group-1">59.26</td>
+                                        <td class="metric-group-1">56.35</td>
+                                        <td class="metric-group-1">100.52</td>
+                                        <td class="metric-group-2">27.39</td>
+                                        <td class="metric-group-2">6.18</td>
+                                        <td class="metric-group-2">123.98</td>
+                                        <td class="metric-group-3">41.45</td>
+                                        <td class="metric-group-3">27.05</td>
+                                        <td class="metric-group-3">87.75</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/decision-gcp</td>
+                                        <td class="metric-group-1">3749</td>
+                                        <td class="metric-group-1">9.7</td>
+                                        <td class="metric-group-2">387</td>
+                                        <td class="metric-group-2">47</td>
+                                        <td class="metric-group-2">12.1%</td>
+                                        <td class="metric-group-3">72.92</td>
+                                        <td class="metric-group-3">7.70</td>
+                                        <td class="metric-group-3">9.6%</td>
+                                        <td class="metric-group-1">74.50</td>
+                                        <td class="metric-group-1">68.39</td>
+                                        <td class="metric-group-1">141.75</td>
+                                        <td class="metric-group-2">89.80</td>
+                                        <td class="metric-group-2">5.66</td>
+                                        <td class="metric-group-2">463.33</td>
+                                        <td class="metric-group-3">125.03</td>
+                                        <td class="metric-group-3">22.42</td>
+                                        <td class="metric-group-3">533.28</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-2009-gpu</td>
+                                        <td class="metric-group-1">712</td>
+                                        <td class="metric-group-1">2.1</td>
+                                        <td class="metric-group-2">332</td>
+                                        <td class="metric-group-2">93</td>
+                                        <td class="metric-group-2">28.0%</td>
+                                        <td class="metric-group-3">203.56</td>
+                                        <td class="metric-group-3">27.84</td>
+                                        <td class="metric-group-3">12.0%</td>
+                                        <td class="metric-group-1">2502.14</td>
+                                        <td class="metric-group-1">2484.69</td>
+                                        <td class="metric-group-1">6618.66</td>
+                                        <td class="metric-group-2">282.43</td>
+                                        <td class="metric-group-2">119.66</td>
+                                        <td class="metric-group-2">850.37</td>
+                                        <td class="metric-group-3">322.08</td>
+                                        <td class="metric-group-3">121.22</td>
+                                        <td class="metric-group-3">650.08</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">459</td>
+                                        <td class="metric-group-1">1.4</td>
+                                        <td class="metric-group-2">330</td>
+                                        <td class="metric-group-2">33</td>
+                                        <td class="metric-group-2">10.0%</td>
+                                        <td class="metric-group-3">87.30</td>
+                                        <td class="metric-group-3">1.40</td>
+                                        <td class="metric-group-3">1.6%</td>
+                                        <td class="metric-group-1">83.82</td>
+                                        <td class="metric-group-1">86.62</td>
+                                        <td class="metric-group-1">128.26</td>
+                                        <td class="metric-group-2">15.54</td>
+                                        <td class="metric-group-2">4.97</td>
+                                        <td class="metric-group-2">8.91</td>
+                                        <td class="metric-group-3">40.88</td>
+                                        <td class="metric-group-3">8.39</td>
+                                        <td class="metric-group-3">134.73</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/decision-gcp</td>
+                                        <td class="metric-group-1">3070</td>
+                                        <td class="metric-group-1">9.4</td>
+                                        <td class="metric-group-2">326</td>
+                                        <td class="metric-group-2">31</td>
+                                        <td class="metric-group-2">9.5%</td>
+                                        <td class="metric-group-3">155.64</td>
+                                        <td class="metric-group-3">5.24</td>
+                                        <td class="metric-group-3">3.3%</td>
+                                        <td class="metric-group-1">73.31</td>
+                                        <td class="metric-group-1">69.99</td>
+                                        <td class="metric-group-1">120.85</td>
+                                        <td class="metric-group-2">52.82</td>
+                                        <td class="metric-group-2">5.59</td>
+                                        <td class="metric-group-2">287.83</td>
+                                        <td class="metric-group-3">181.06</td>
+                                        <td class="metric-group-3">81.60</td>
+                                        <td class="metric-group-3">621.71</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-24h2-source</td>
+                                        <td class="metric-group-1">663</td>
+                                        <td class="metric-group-1">2.1</td>
+                                        <td class="metric-group-2">315</td>
+                                        <td class="metric-group-2">85</td>
+                                        <td class="metric-group-2">27.0%</td>
+                                        <td class="metric-group-3">122.30</td>
+                                        <td class="metric-group-3">36.45</td>
+                                        <td class="metric-group-3">23.0%</td>
+                                        <td class="metric-group-1">1480.20</td>
+                                        <td class="metric-group-1">1043.46</td>
+                                        <td class="metric-group-1">4047.77</td>
+                                        <td class="metric-group-2">122.96</td>
+                                        <td class="metric-group-2">88.52</td>
+                                        <td class="metric-group-2">327.77</td>
+                                        <td class="metric-group-3">176.93</td>
+                                        <td class="metric-group-3">105.25</td>
+                                        <td class="metric-group-3">414.38</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>app-services-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">387</td>
+                                        <td class="metric-group-1">1.6</td>
+                                        <td class="metric-group-2">239</td>
+                                        <td class="metric-group-2">11</td>
+                                        <td class="metric-group-2">4.6%</td>
+                                        <td class="metric-group-3">20.64</td>
+                                        <td class="metric-group-3">1.40</td>
+                                        <td class="metric-group-3">6.4%</td>
+                                        <td class="metric-group-1">100.69</td>
+                                        <td class="metric-group-1">88.52</td>
+                                        <td class="metric-group-1">185.84</td>
+                                        <td class="metric-group-2">12.04</td>
+                                        <td class="metric-group-2">4.71</td>
+                                        <td class="metric-group-2">19.62</td>
+                                        <td class="metric-group-3">37.54</td>
+                                        <td class="metric-group-3">12.33</td>
+                                        <td class="metric-group-3">134.88</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-2/b-linux-gcp</td>
+                                        <td class="metric-group-1">305</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">237</td>
+                                        <td class="metric-group-2">64</td>
+                                        <td class="metric-group-2">27.0%</td>
+                                        <td class="metric-group-3">51.59</td>
+                                        <td class="metric-group-3">8.89</td>
+                                        <td class="metric-group-3">14.7%</td>
+                                        <td class="metric-group-1">81.04</td>
+                                        <td class="metric-group-1">82.31</td>
+                                        <td class="metric-group-1">127.74</td>
+                                        <td class="metric-group-2">7.56</td>
+                                        <td class="metric-group-2">4.10</td>
+                                        <td class="metric-group-2">10.04</td>
+                                        <td class="metric-group-3">71.37</td>
+                                        <td class="metric-group-3">32.40</td>
+                                        <td class="metric-group-3">148.39</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/misc-gcp</td>
+                                        <td class="metric-group-1">3281</td>
+                                        <td class="metric-group-1">15.0</td>
+                                        <td class="metric-group-2">219</td>
+                                        <td class="metric-group-2">11</td>
+                                        <td class="metric-group-2">5.0%</td>
+                                        <td class="metric-group-3">4.65</td>
+                                        <td class="metric-group-3">0.43</td>
+                                        <td class="metric-group-3">8.5%</td>
+                                        <td class="metric-group-1">75.77</td>
+                                        <td class="metric-group-1">72.36</td>
+                                        <td class="metric-group-1">136.00</td>
+                                        <td class="metric-group-2">8.82</td>
+                                        <td class="metric-group-2">5.27</td>
+                                        <td class="metric-group-2">13.78</td>
+                                        <td class="metric-group-3">16.58</td>
+                                        <td class="metric-group-3">5.72</td>
+                                        <td class="metric-group-3">72.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>app-services-3/b-linux-gcp</td>
+                                        <td class="metric-group-1">317</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">218</td>
+                                        <td class="metric-group-2">15</td>
+                                        <td class="metric-group-2">6.9%</td>
+                                        <td class="metric-group-3">26.26</td>
+                                        <td class="metric-group-3">3.45</td>
+                                        <td class="metric-group-3">11.6%</td>
+                                        <td class="metric-group-1">180.06</td>
+                                        <td class="metric-group-1">91.31</td>
+                                        <td class="metric-group-1">960.48</td>
+                                        <td class="metric-group-2">5.81</td>
+                                        <td class="metric-group-2">4.11</td>
+                                        <td class="metric-group-2">14.01</td>
+                                        <td class="metric-group-3">23.51</td>
+                                        <td class="metric-group-3">4.55</td>
+                                        <td class="metric-group-3">109.71</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-3/b-win2022</td>
+                                        <td class="metric-group-1">579</td>
+                                        <td class="metric-group-1">2.9</td>
+                                        <td class="metric-group-2">202</td>
+                                        <td class="metric-group-2">17</td>
+                                        <td class="metric-group-2">8.4%</td>
+                                        <td class="metric-group-3">92.22</td>
+                                        <td class="metric-group-3">7.88</td>
+                                        <td class="metric-group-3">7.9%</td>
+                                        <td class="metric-group-1">1551.61</td>
+                                        <td class="metric-group-1">1307.69</td>
+                                        <td class="metric-group-1">3944.76</td>
+                                        <td class="metric-group-2">57.82</td>
+                                        <td class="metric-group-2">59.40</td>
+                                        <td class="metric-group-2">101.06</td>
+                                        <td class="metric-group-3">88.01</td>
+                                        <td class="metric-group-3">96.67</td>
+                                        <td class="metric-group-3">156.06</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>nss-t/t-linux-xlarge-gcp</td>
+                                        <td class="metric-group-1">767</td>
+                                        <td class="metric-group-1">4.1</td>
+                                        <td class="metric-group-2">189</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">2.1%</td>
+                                        <td class="metric-group-3">64.98</td>
+                                        <td class="metric-group-3">0.46</td>
+                                        <td class="metric-group-3">0.7%</td>
+                                        <td class="metric-group-1">57.81</td>
+                                        <td class="metric-group-1">38.68</td>
+                                        <td class="metric-group-1">66.48</td>
+                                        <td class="metric-group-2">20.25</td>
+                                        <td class="metric-group-2">4.31</td>
+                                        <td class="metric-group-2">21.07</td>
+                                        <td class="metric-group-3">17.67</td>
+                                        <td class="metric-group-3">4.47</td>
+                                        <td class="metric-group-3">65.11</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-1/decision-gcp</td>
+                                        <td class="metric-group-1">9</td>
+                                        <td class="metric-group-1">0.0</td>
+                                        <td class="metric-group-2">187</td>
+                                        <td class="metric-group-2">179</td>
+                                        <td class="metric-group-2">95.7%</td>
+                                        <td class="metric-group-3">0.11</td>
+                                        <td class="metric-group-3">29.22</td>
+                                        <td class="metric-group-3">99.6%</td>
+                                        <td class="metric-group-1">56.68</td>
+                                        <td class="metric-group-1">57.55</td>
+                                        <td class="metric-group-1">84.68</td>
+                                        <td class="metric-group-2">202.53</td>
+                                        <td class="metric-group-2">22.24</td>
+                                        <td class="metric-group-2">676.00</td>
+                                        <td class="metric-group-3">77.52</td>
+                                        <td class="metric-group-3">77.52</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/b-linux-kvm-gcp</td>
+                                        <td class="metric-group-1">383</td>
+                                        <td class="metric-group-1">2.1</td>
+                                        <td class="metric-group-2">183</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">3.3%</td>
+                                        <td class="metric-group-3">61.84</td>
+                                        <td class="metric-group-3">1.00</td>
+                                        <td class="metric-group-3">1.6%</td>
+                                        <td class="metric-group-1">65.33</td>
+                                        <td class="metric-group-1">31.94</td>
+                                        <td class="metric-group-1">147.16</td>
+                                        <td class="metric-group-2">3.32</td>
+                                        <td class="metric-group-2">2.16</td>
+                                        <td class="metric-group-2">9.45</td>
+                                        <td class="metric-group-3">5.05</td>
+                                        <td class="metric-group-3">1.55</td>
+                                        <td class="metric-group-3">15.73</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>glean-1/decision-gcp</td>
+                                        <td class="metric-group-1">10</td>
+                                        <td class="metric-group-1">0.1</td>
+                                        <td class="metric-group-2">180</td>
+                                        <td class="metric-group-2">173</td>
+                                        <td class="metric-group-2">96.1%</td>
+                                        <td class="metric-group-3">0.10</td>
+                                        <td class="metric-group-3">28.54</td>
+                                        <td class="metric-group-3">99.7%</td>
+                                        <td class="metric-group-1">62.31</td>
+                                        <td class="metric-group-1">59.08</td>
+                                        <td class="metric-group-1">108.37</td>
+                                        <td class="metric-group-2">144.13</td>
+                                        <td class="metric-group-2">25.28</td>
+                                        <td class="metric-group-2">388.60</td>
+                                        <td class="metric-group-3">269.84</td>
+                                        <td class="metric-group-3">292.89</td>
+                                        <td class="metric-group-3">292.89</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>app-services-1/decision-gcp</td>
+                                        <td class="metric-group-1">57</td>
+                                        <td class="metric-group-1">0.3</td>
+                                        <td class="metric-group-2">179</td>
+                                        <td class="metric-group-2">145</td>
+                                        <td class="metric-group-2">81.0%</td>
+                                        <td class="metric-group-3">0.71</td>
+                                        <td class="metric-group-3">21.25</td>
+                                        <td class="metric-group-3">96.8%</td>
+                                        <td class="metric-group-1">54.86</td>
+                                        <td class="metric-group-1">55.19</td>
+                                        <td class="metric-group-1">97.29</td>
+                                        <td class="metric-group-2">193.46</td>
+                                        <td class="metric-group-2">81.94</td>
+                                        <td class="metric-group-2">586.33</td>
+                                        <td class="metric-group-3">237.50</td>
+                                        <td class="metric-group-3">256.71</td>
+                                        <td class="metric-group-3">427.84</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozilla-1/decision-gcp</td>
+                                        <td class="metric-group-1">22</td>
+                                        <td class="metric-group-1">0.1</td>
+                                        <td class="metric-group-2">178</td>
+                                        <td class="metric-group-2">161</td>
+                                        <td class="metric-group-2">90.4%</td>
+                                        <td class="metric-group-3">0.17</td>
+                                        <td class="metric-group-3">25.78</td>
+                                        <td class="metric-group-3">99.3%</td>
+                                        <td class="metric-group-1">59.45</td>
+                                        <td class="metric-group-1">56.45</td>
+                                        <td class="metric-group-1">98.40</td>
+                                        <td class="metric-group-2">324.96</td>
+                                        <td class="metric-group-2">239.76</td>
+                                        <td class="metric-group-2">787.53</td>
+                                        <td class="metric-group-3">329.23</td>
+                                        <td class="metric-group-3">326.53</td>
+                                        <td class="metric-group-3">379.95</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>nss-1/linux-gcp</td>
+                                        <td class="metric-group-1">286</td>
+                                        <td class="metric-group-1">1.6</td>
+                                        <td class="metric-group-2">174</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">0.6%</td>
+                                        <td class="metric-group-3">40.86</td>
+                                        <td class="metric-group-3">0.05</td>
+                                        <td class="metric-group-3">0.1%</td>
+                                        <td class="metric-group-1">66.66</td>
+                                        <td class="metric-group-1">64.78</td>
+                                        <td class="metric-group-1">94.06</td>
+                                        <td class="metric-group-2">4.62</td>
+                                        <td class="metric-group-2">3.96</td>
+                                        <td class="metric-group-2">6.91</td>
+                                        <td class="metric-group-3">54.83</td>
+                                        <td class="metric-group-3">38.00</td>
+                                        <td class="metric-group-3">139.79</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mobile-1/decision-gcp</td>
+                                        <td class="metric-group-1">118</td>
+                                        <td class="metric-group-1">0.7</td>
+                                        <td class="metric-group-2">160</td>
+                                        <td class="metric-group-2">108</td>
+                                        <td class="metric-group-2">67.5%</td>
+                                        <td class="metric-group-3">1.30</td>
+                                        <td class="metric-group-3">18.09</td>
+                                        <td class="metric-group-3">93.3%</td>
+                                        <td class="metric-group-1">59.30</td>
+                                        <td class="metric-group-1">56.79</td>
+                                        <td class="metric-group-1">88.58</td>
+                                        <td class="metric-group-2">149.82</td>
+                                        <td class="metric-group-2">112.43</td>
+                                        <td class="metric-group-2">486.08</td>
+                                        <td class="metric-group-3">150.49</td>
+                                        <td class="metric-group-3">92.96</td>
+                                        <td class="metric-group-3">522.83</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>code-coverage/bot-gcp</td>
+                                        <td class="metric-group-1">225</td>
+                                        <td class="metric-group-1">1.4</td>
+                                        <td class="metric-group-2">157</td>
+                                        <td class="metric-group-2">47</td>
+                                        <td class="metric-group-2">29.9%</td>
+                                        <td class="metric-group-3">1.72</td>
+                                        <td class="metric-group-3">9.33</td>
+                                        <td class="metric-group-3">84.4%</td>
+                                        <td class="metric-group-1">94.36</td>
+                                        <td class="metric-group-1">88.01</td>
+                                        <td class="metric-group-1">166.23</td>
+                                        <td class="metric-group-2">347.44</td>
+                                        <td class="metric-group-2">368.59</td>
+                                        <td class="metric-group-2">711.49</td>
+                                        <td class="metric-group-3">30.88</td>
+                                        <td class="metric-group-3">2.50</td>
+                                        <td class="metric-group-3">13.79</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-t/t-linux-xlarge-noscratch-gcp</td>
+                                        <td class="metric-group-1">412</td>
+                                        <td class="metric-group-1">2.7</td>
+                                        <td class="metric-group-2">154</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">2.6%</td>
+                                        <td class="metric-group-3">113.59</td>
+                                        <td class="metric-group-3">0.08</td>
+                                        <td class="metric-group-3">0.1%</td>
+                                        <td class="metric-group-1">34.34</td>
+                                        <td class="metric-group-1">32.19</td>
+                                        <td class="metric-group-1">60.64</td>
+                                        <td class="metric-group-2">5.23</td>
+                                        <td class="metric-group-2">4.62</td>
+                                        <td class="metric-group-2">10.65</td>
+                                        <td class="metric-group-3">5.10</td>
+                                        <td class="metric-group-3">3.40</td>
+                                        <td class="metric-group-3">8.73</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-t/win11-64-2009-ssd</td>
+                                        <td class="metric-group-1">152</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">119</td>
+                                        <td class="metric-group-2">34</td>
+                                        <td class="metric-group-2">28.6%</td>
+                                        <td class="metric-group-3">34.80</td>
+                                        <td class="metric-group-3">10.28</td>
+                                        <td class="metric-group-3">22.8%</td>
+                                        <td class="metric-group-1">1476.53</td>
+                                        <td class="metric-group-1">1505.33</td>
+                                        <td class="metric-group-1">3702.07</td>
+                                        <td class="metric-group-2">77.42</td>
+                                        <td class="metric-group-2">80.49</td>
+                                        <td class="metric-group-2">107.16</td>
+                                        <td class="metric-group-3">110.59</td>
+                                        <td class="metric-group-3">85.61</td>
+                                        <td class="metric-group-3">139.70</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-2009-source</td>
+                                        <td class="metric-group-1">167</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">110</td>
+                                        <td class="metric-group-2">34</td>
+                                        <td class="metric-group-2">30.9%</td>
+                                        <td class="metric-group-3">35.43</td>
+                                        <td class="metric-group-3">19.23</td>
+                                        <td class="metric-group-3">35.2%</td>
+                                        <td class="metric-group-1">1516.44</td>
+                                        <td class="metric-group-1">1149.84</td>
+                                        <td class="metric-group-1">3576.78</td>
+                                        <td class="metric-group-2">166.10</td>
+                                        <td class="metric-group-2">85.74</td>
+                                        <td class="metric-group-2">237.81</td>
+                                        <td class="metric-group-3">115.35</td>
+                                        <td class="metric-group-3">86.81</td>
+                                        <td class="metric-group-3">150.56</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/b-linux-kvm-gcp</td>
+                                        <td class="metric-group-1">134</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">106</td>
+                                        <td class="metric-group-2">7</td>
+                                        <td class="metric-group-2">6.6%</td>
+                                        <td class="metric-group-3">49.49</td>
+                                        <td class="metric-group-3">0.58</td>
+                                        <td class="metric-group-3">1.2%</td>
+                                        <td class="metric-group-1">95.25</td>
+                                        <td class="metric-group-1">91.32</td>
+                                        <td class="metric-group-1">151.69</td>
+                                        <td class="metric-group-2">5.57</td>
+                                        <td class="metric-group-2">5.16</td>
+                                        <td class="metric-group-2">9.54</td>
+                                        <td class="metric-group-3">7.63</td>
+                                        <td class="metric-group-3">4.75</td>
+                                        <td class="metric-group-3">8.60</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win10-64-2009-gpu</td>
+                                        <td class="metric-group-1">145</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">96</td>
+                                        <td class="metric-group-2">35</td>
+                                        <td class="metric-group-2">36.5%</td>
+                                        <td class="metric-group-3">7.74</td>
+                                        <td class="metric-group-3">15.33</td>
+                                        <td class="metric-group-3">66.4%</td>
+                                        <td class="metric-group-1">2203.17</td>
+                                        <td class="metric-group-1">1997.62</td>
+                                        <td class="metric-group-1">4002.34</td>
+                                        <td class="metric-group-2">586.34</td>
+                                        <td class="metric-group-2">489.91</td>
+                                        <td class="metric-group-2">1134.49</td>
+                                        <td class="metric-group-3">170.67</td>
+                                        <td class="metric-group-3">138.78</td>
+                                        <td class="metric-group-3">286.68</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>code-review/bot-gcp</td>
+                                        <td class="metric-group-1">3725</td>
+                                        <td class="metric-group-1">39.2</td>
+                                        <td class="metric-group-2">95</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">3.2%</td>
+                                        <td class="metric-group-3">79.08</td>
+                                        <td class="metric-group-3">1.02</td>
+                                        <td class="metric-group-3">1.3%</td>
+                                        <td class="metric-group-1">73.59</td>
+                                        <td class="metric-group-1">71.75</td>
+                                        <td class="metric-group-1">118.58</td>
+                                        <td class="metric-group-2">56.97</td>
+                                        <td class="metric-group-2">5.91</td>
+                                        <td class="metric-group-2">222.58</td>
+                                        <td class="metric-group-3">199.65</td>
+                                        <td class="metric-group-3">94.83</td>
+                                        <td class="metric-group-3">716.19</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">124</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">83</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">4.8%</td>
+                                        <td class="metric-group-3">34.44</td>
+                                        <td class="metric-group-3">0.12</td>
+                                        <td class="metric-group-3">0.3%</td>
+                                        <td class="metric-group-1">80.39</td>
+                                        <td class="metric-group-1">67.35</td>
+                                        <td class="metric-group-1">189.10</td>
+                                        <td class="metric-group-2">7.64</td>
+                                        <td class="metric-group-2">5.41</td>
+                                        <td class="metric-group-2">19.01</td>
+                                        <td class="metric-group-3">29.87</td>
+                                        <td class="metric-group-3">4.31</td>
+                                        <td class="metric-group-3">120.68</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-1/decision-gcp</td>
+                                        <td class="metric-group-1">118</td>
+                                        <td class="metric-group-1">1.6</td>
+                                        <td class="metric-group-2">72</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">4.2%</td>
+                                        <td class="metric-group-3">5.42</td>
+                                        <td class="metric-group-3">0.13</td>
+                                        <td class="metric-group-3">2.3%</td>
+                                        <td class="metric-group-1">68.83</td>
+                                        <td class="metric-group-1">69.99</td>
+                                        <td class="metric-group-1">96.44</td>
+                                        <td class="metric-group-2">5.41</td>
+                                        <td class="metric-group-2">5.12</td>
+                                        <td class="metric-group-2">8.45</td>
+                                        <td class="metric-group-3">32.69</td>
+                                        <td class="metric-group-3">16.93</td>
+                                        <td class="metric-group-3">131.23</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mobile-3/b-linux-gcp</td>
+                                        <td class="metric-group-1">71</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">68</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">8.8%</td>
+                                        <td class="metric-group-3">5.23</td>
+                                        <td class="metric-group-3">1.04</td>
+                                        <td class="metric-group-3">16.6%</td>
+                                        <td class="metric-group-1">88.96</td>
+                                        <td class="metric-group-1">70.66</td>
+                                        <td class="metric-group-1">216.65</td>
+                                        <td class="metric-group-2">5.80</td>
+                                        <td class="metric-group-2">5.03</td>
+                                        <td class="metric-group-2">13.26</td>
+                                        <td class="metric-group-3">64.81</td>
+                                        <td class="metric-group-3">72.90</td>
+                                        <td class="metric-group-3">110.64</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/images-gcp</td>
+                                        <td class="metric-group-1">57</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">58</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">6.9%</td>
+                                        <td class="metric-group-3">9.89</td>
+                                        <td class="metric-group-3">0.12</td>
+                                        <td class="metric-group-3">1.2%</td>
+                                        <td class="metric-group-1">68.02</td>
+                                        <td class="metric-group-1">66.64</td>
+                                        <td class="metric-group-1">128.83</td>
+                                        <td class="metric-group-2">5.05</td>
+                                        <td class="metric-group-2">5.13</td>
+                                        <td class="metric-group-2">9.02</td>
+                                        <td class="metric-group-3">3.66</td>
+                                        <td class="metric-group-3">5.00</td>
+                                        <td class="metric-group-3">2.32</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozilla-3/decision-gcp</td>
+                                        <td class="metric-group-1">55</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">54</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">7.4%</td>
+                                        <td class="metric-group-3">0.22</td>
+                                        <td class="metric-group-3">0.04</td>
+                                        <td class="metric-group-3">15.4%</td>
+                                        <td class="metric-group-1">74.56</td>
+                                        <td class="metric-group-1">58.95</td>
+                                        <td class="metric-group-1">100.66</td>
+                                        <td class="metric-group-2">5.16</td>
+                                        <td class="metric-group-2">5.34</td>
+                                        <td class="metric-group-2">9.60</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/b-linux-large-gcp</td>
+                                        <td class="metric-group-1">48</td>
+                                        <td class="metric-group-1">0.9</td>
+                                        <td class="metric-group-2">52</td>
+                                        <td class="metric-group-2">7</td>
+                                        <td class="metric-group-2">13.5%</td>
+                                        <td class="metric-group-3">11.19</td>
+                                        <td class="metric-group-3">1.51</td>
+                                        <td class="metric-group-3">11.9%</td>
+                                        <td class="metric-group-1">65.64</td>
+                                        <td class="metric-group-1">64.17</td>
+                                        <td class="metric-group-1">108.61</td>
+                                        <td class="metric-group-2">6.07</td>
+                                        <td class="metric-group-2">4.56</td>
+                                        <td class="metric-group-2">13.49</td>
+                                        <td class="metric-group-3">56.39</td>
+                                        <td class="metric-group-3">105.82</td>
+                                        <td class="metric-group-3">6.96</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mobile-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">56</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">51</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">5.9%</td>
+                                        <td class="metric-group-3">3.42</td>
+                                        <td class="metric-group-3">0.09</td>
+                                        <td class="metric-group-3">2.6%</td>
+                                        <td class="metric-group-1">58.78</td>
+                                        <td class="metric-group-1">64.55</td>
+                                        <td class="metric-group-1">93.91</td>
+                                        <td class="metric-group-2">4.65</td>
+                                        <td class="metric-group-2">4.92</td>
+                                        <td class="metric-group-2">7.55</td>
+                                        <td class="metric-group-3">39.37</td>
+                                        <td class="metric-group-3">21.52</td>
+                                        <td class="metric-group-3">70.02</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>nss-1/b-win2022</td>
+                                        <td class="metric-group-1">457</td>
+                                        <td class="metric-group-1">9.0</td>
+                                        <td class="metric-group-2">51</td>
+                                        <td class="metric-group-2">5</td>
+                                        <td class="metric-group-2">9.8%</td>
+                                        <td class="metric-group-3">104.45</td>
+                                        <td class="metric-group-3">0.97</td>
+                                        <td class="metric-group-3">0.9%</td>
+                                        <td class="metric-group-1">1132.27</td>
+                                        <td class="metric-group-1">786.25</td>
+                                        <td class="metric-group-1">2231.69</td>
+                                        <td class="metric-group-2">261.34</td>
+                                        <td class="metric-group-2">72.56</td>
+                                        <td class="metric-group-2">825.55</td>
+                                        <td class="metric-group-3">54.30</td>
+                                        <td class="metric-group-3">48.48</td>
+                                        <td class="metric-group-3">85.27</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/b-linux-large-gcp</td>
+                                        <td class="metric-group-1">62</td>
+                                        <td class="metric-group-1">1.2</td>
+                                        <td class="metric-group-2">50</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">8.0%</td>
+                                        <td class="metric-group-3">16.40</td>
+                                        <td class="metric-group-3">0.19</td>
+                                        <td class="metric-group-3">1.1%</td>
+                                        <td class="metric-group-1">105.07</td>
+                                        <td class="metric-group-1">72.37</td>
+                                        <td class="metric-group-1">233.38</td>
+                                        <td class="metric-group-2">7.61</td>
+                                        <td class="metric-group-2">5.95</td>
+                                        <td class="metric-group-2">18.62</td>
+                                        <td class="metric-group-3">86.78</td>
+                                        <td class="metric-group-3">64.32</td>
+                                        <td class="metric-group-3">156.39</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-1/b-linux-large-gcp</td>
+                                        <td class="metric-group-1">44</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">43</td>
+                                        <td class="metric-group-2">2</td>
+                                        <td class="metric-group-2">4.7%</td>
+                                        <td class="metric-group-3">7.50</td>
+                                        <td class="metric-group-3">0.08</td>
+                                        <td class="metric-group-3">1.1%</td>
+                                        <td class="metric-group-1">72.54</td>
+                                        <td class="metric-group-1">66.53</td>
+                                        <td class="metric-group-1">141.13</td>
+                                        <td class="metric-group-2">5.57</td>
+                                        <td class="metric-group-2">4.87</td>
+                                        <td class="metric-group-2">8.85</td>
+                                        <td class="metric-group-3">50.61</td>
+                                        <td class="metric-group-3">50.61</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>taskgraph-t/linux-gcp</td>
+                                        <td class="metric-group-1">43</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">40</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.57</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">72.10</td>
+                                        <td class="metric-group-1">69.61</td>
+                                        <td class="metric-group-1">91.28</td>
+                                        <td class="metric-group-2">5.48</td>
+                                        <td class="metric-group-2">5.36</td>
+                                        <td class="metric-group-2">6.85</td>
+                                        <td class="metric-group-3">20.33</td>
+                                        <td class="metric-group-3">18.92</td>
+                                        <td class="metric-group-3">18.92</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mobile-3/decision-gcp</td>
+                                        <td class="metric-group-1">46</td>
+                                        <td class="metric-group-1">1.2</td>
+                                        <td class="metric-group-2">38</td>
+                                        <td class="metric-group-2">2</td>
+                                        <td class="metric-group-2">5.3%</td>
+                                        <td class="metric-group-3">0.68</td>
+                                        <td class="metric-group-3">0.04</td>
+                                        <td class="metric-group-3">5.6%</td>
+                                        <td class="metric-group-1">54.96</td>
+                                        <td class="metric-group-1">59.27</td>
+                                        <td class="metric-group-1">88.38</td>
+                                        <td class="metric-group-2">5.29</td>
+                                        <td class="metric-group-2">4.57</td>
+                                        <td class="metric-group-2">9.63</td>
+                                        <td class="metric-group-3">38.40</td>
+                                        <td class="metric-group-3">22.47</td>
+                                        <td class="metric-group-3">22.47</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-xlarge-gcp</td>
+                                        <td class="metric-group-1">40</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">36</td>
+                                        <td class="metric-group-2">5</td>
+                                        <td class="metric-group-2">13.9%</td>
+                                        <td class="metric-group-3">7.80</td>
+                                        <td class="metric-group-3">1.08</td>
+                                        <td class="metric-group-3">12.2%</td>
+                                        <td class="metric-group-1">55.76</td>
+                                        <td class="metric-group-1">45.74</td>
+                                        <td class="metric-group-1">94.64</td>
+                                        <td class="metric-group-2">8.27</td>
+                                        <td class="metric-group-2">5.98</td>
+                                        <td class="metric-group-2">20.71</td>
+                                        <td class="metric-group-3">7.34</td>
+                                        <td class="metric-group-3">7.76</td>
+                                        <td class="metric-group-3">6.92</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-3/decision-gcp</td>
+                                        <td class="metric-group-1">50</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">34</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">2.13</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">72.66</td>
+                                        <td class="metric-group-1">73.22</td>
+                                        <td class="metric-group-1">106.13</td>
+                                        <td class="metric-group-2">5.25</td>
+                                        <td class="metric-group-2">4.84</td>
+                                        <td class="metric-group-2">9.17</td>
+                                        <td class="metric-group-3">53.16</td>
+                                        <td class="metric-group-3">73.55</td>
+                                        <td class="metric-group-3">73.55</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-docker-noscratch</td>
+                                        <td class="metric-group-1">13727</td>
+                                        <td class="metric-group-1">442.8</td>
+                                        <td class="metric-group-2">31</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">57.64</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">65.37</td>
+                                        <td class="metric-group-1">62.30</td>
+                                        <td class="metric-group-1">96.36</td>
+                                        <td class="metric-group-2">2.11</td>
+                                        <td class="metric-group-2">2.12</td>
+                                        <td class="metric-group-2">3.28</td>
+                                        <td class="metric-group-3">53.04</td>
+                                        <td class="metric-group-3">0.38</td>
+                                        <td class="metric-group-3">267.68</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-2/b-linux-xlarge-gcp</td>
+                                        <td class="metric-group-1">28</td>
+                                        <td class="metric-group-1">1.4</td>
+                                        <td class="metric-group-2">20</td>
+                                        <td class="metric-group-2">2</td>
+                                        <td class="metric-group-2">10.0%</td>
+                                        <td class="metric-group-3">4.42</td>
+                                        <td class="metric-group-3">0.16</td>
+                                        <td class="metric-group-3">3.5%</td>
+                                        <td class="metric-group-1">78.96</td>
+                                        <td class="metric-group-1">68.93</td>
+                                        <td class="metric-group-1">147.07</td>
+                                        <td class="metric-group-2">4.77</td>
+                                        <td class="metric-group-2">3.81</td>
+                                        <td class="metric-group-2">7.79</td>
+                                        <td class="metric-group-3">26.94</td>
+                                        <td class="metric-group-3">18.01</td>
+                                        <td class="metric-group-3">18.01</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-3/b-linux-gcp</td>
+                                        <td class="metric-group-1">28</td>
+                                        <td class="metric-group-1">1.4</td>
+                                        <td class="metric-group-2">20</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">1.35</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">16.65</td>
+                                        <td class="metric-group-1">17.19</td>
+                                        <td class="metric-group-1">22.15</td>
+                                        <td class="metric-group-2">1.32</td>
+                                        <td class="metric-group-2">1.26</td>
+                                        <td class="metric-group-2">2.18</td>
+                                        <td class="metric-group-3">8.26</td>
+                                        <td class="metric-group-3">14.34</td>
+                                        <td class="metric-group-3">15.61</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-24h2-alpha</td>
+                                        <td class="metric-group-1">0</td>
+                                        <td class="metric-group-1">0.0</td>
+                                        <td class="metric-group-2">19</td>
+                                        <td class="metric-group-2">19</td>
+                                        <td class="metric-group-2">100.0%</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0%</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>ci-t/linux-gcp</td>
+                                        <td class="metric-group-1">18</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">17</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.24</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">66.65</td>
+                                        <td class="metric-group-1">69.38</td>
+                                        <td class="metric-group-1">97.69</td>
+                                        <td class="metric-group-2">4.18</td>
+                                        <td class="metric-group-2">4.68</td>
+                                        <td class="metric-group-2">6.65</td>
+                                        <td class="metric-group-3">120.24</td>
+                                        <td class="metric-group-3">120.24</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>scriptworker-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">17</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">17</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">5.9%</td>
+                                        <td class="metric-group-3">0.23</td>
+                                        <td class="metric-group-3">0.04</td>
+                                        <td class="metric-group-3">14.8%</td>
+                                        <td class="metric-group-1">82.21</td>
+                                        <td class="metric-group-1">80.77</td>
+                                        <td class="metric-group-1">103.43</td>
+                                        <td class="metric-group-2">6.56</td>
+                                        <td class="metric-group-2">5.71</td>
+                                        <td class="metric-group-2">11.60</td>
+                                        <td class="metric-group-3">1.29</td>
+                                        <td class="metric-group-3">1.29</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/win11-a64-24h2-builder</td>
+                                        <td class="metric-group-1">12</td>
+                                        <td class="metric-group-1">0.8</td>
+                                        <td class="metric-group-2">15</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">40.0%</td>
+                                        <td class="metric-group-3">5.07</td>
+                                        <td class="metric-group-3">1.59</td>
+                                        <td class="metric-group-3">23.9%</td>
+                                        <td class="metric-group-1">1671.55</td>
+                                        <td class="metric-group-1">983.34</td>
+                                        <td class="metric-group-1">2244.34</td>
+                                        <td class="metric-group-2">425.24</td>
+                                        <td class="metric-group-2">131.80</td>
+                                        <td class="metric-group-2">632.86</td>
+                                        <td class="metric-group-3">201.06</td>
+                                        <td class="metric-group-3">119.45</td>
+                                        <td class="metric-group-3">119.45</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-3/b-linux-large-gcp</td>
+                                        <td class="metric-group-1">16</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">15</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">6.7%</td>
+                                        <td class="metric-group-3">0.46</td>
+                                        <td class="metric-group-3">0.01</td>
+                                        <td class="metric-group-3">2.1%</td>
+                                        <td class="metric-group-1">14.32</td>
+                                        <td class="metric-group-1">13.51</td>
+                                        <td class="metric-group-1">18.62</td>
+                                        <td class="metric-group-2">1.00</td>
+                                        <td class="metric-group-2">1.07</td>
+                                        <td class="metric-group-2">1.65</td>
+                                        <td class="metric-group-3">0.53</td>
+                                        <td class="metric-group-3">0.53</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>xpi-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">16</td>
+                                        <td class="metric-group-1">1.1</td>
+                                        <td class="metric-group-2">14</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">7.1%</td>
+                                        <td class="metric-group-3">0.17</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">55.10</td>
+                                        <td class="metric-group-1">54.70</td>
+                                        <td class="metric-group-1">71.40</td>
+                                        <td class="metric-group-2">4.55</td>
+                                        <td class="metric-group-2">4.55</td>
+                                        <td class="metric-group-2">6.38</td>
+                                        <td class="metric-group-3">1.62</td>
+                                        <td class="metric-group-3">1.08</td>
+                                        <td class="metric-group-3">1.08</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>glean-1/b-linux-gcp</td>
+                                        <td class="metric-group-1">20</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">13</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.89</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">48.59</td>
+                                        <td class="metric-group-1">23.83</td>
+                                        <td class="metric-group-1">91.92</td>
+                                        <td class="metric-group-2">3.55</td>
+                                        <td class="metric-group-2">1.51</td>
+                                        <td class="metric-group-2">8.05</td>
+                                        <td class="metric-group-3">98.40</td>
+                                        <td class="metric-group-3">127.21</td>
+                                        <td class="metric-group-3">140.55</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>glean-3/b-linux-gcp</td>
+                                        <td class="metric-group-1">13</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">13</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.76</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">32.59</td>
+                                        <td class="metric-group-1">21.70</td>
+                                        <td class="metric-group-1">64.39</td>
+                                        <td class="metric-group-2">2.20</td>
+                                        <td class="metric-group-2">1.06</td>
+                                        <td class="metric-group-2">4.88</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>ci-1/decision-gcp</td>
+                                        <td class="metric-group-1">14</td>
+                                        <td class="metric-group-1">1.2</td>
+                                        <td class="metric-group-2">12</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.06</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">52.72</td>
+                                        <td class="metric-group-1">61.36</td>
+                                        <td class="metric-group-1">82.31</td>
+                                        <td class="metric-group-2">5.59</td>
+                                        <td class="metric-group-2">6.17</td>
+                                        <td class="metric-group-2">8.48</td>
+                                        <td class="metric-group-3">20.25</td>
+                                        <td class="metric-group-3">20.25</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-2/b-linux-large-gcp</td>
+                                        <td class="metric-group-1">9</td>
+                                        <td class="metric-group-1">0.8</td>
+                                        <td class="metric-group-2">11</td>
+                                        <td class="metric-group-2">2</td>
+                                        <td class="metric-group-2">18.2%</td>
+                                        <td class="metric-group-3">0.33</td>
+                                        <td class="metric-group-3">0.05</td>
+                                        <td class="metric-group-3">13.2%</td>
+                                        <td class="metric-group-1">52.32</td>
+                                        <td class="metric-group-1">60.44</td>
+                                        <td class="metric-group-1">44.21</td>
+                                        <td class="metric-group-2">3.84</td>
+                                        <td class="metric-group-2">2.29</td>
+                                        <td class="metric-group-2">2.29</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozilla-t/t-linux-large-gcp</td>
+                                        <td class="metric-group-1">14</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">11</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">1.98</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">51.20</td>
+                                        <td class="metric-group-1">53.85</td>
+                                        <td class="metric-group-1">64.09</td>
+                                        <td class="metric-group-2">5.90</td>
+                                        <td class="metric-group-2">6.08</td>
+                                        <td class="metric-group-2">6.69</td>
+                                        <td class="metric-group-3">40.04</td>
+                                        <td class="metric-group-3">40.04</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-1/b-win2022</td>
+                                        <td class="metric-group-1">11</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">11</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">27.3%</td>
+                                        <td class="metric-group-3">4.02</td>
+                                        <td class="metric-group-3">0.98</td>
+                                        <td class="metric-group-3">19.6%</td>
+                                        <td class="metric-group-1">1749.41</td>
+                                        <td class="metric-group-1">1711.23</td>
+                                        <td class="metric-group-1">3360.07</td>
+                                        <td class="metric-group-2">66.79</td>
+                                        <td class="metric-group-2">68.06</td>
+                                        <td class="metric-group-2">73.87</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>app-services-3/decision-gcp</td>
+                                        <td class="metric-group-1">10</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">10</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.26</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">58.42</td>
+                                        <td class="metric-group-1">62.53</td>
+                                        <td class="metric-group-1">73.24</td>
+                                        <td class="metric-group-2">5.62</td>
+                                        <td class="metric-group-2">5.71</td>
+                                        <td class="metric-group-2">6.42</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-24h2-source-alpha</td>
+                                        <td class="metric-group-1">0</td>
+                                        <td class="metric-group-1">0.0</td>
+                                        <td class="metric-group-2">10</td>
+                                        <td class="metric-group-2">10</td>
+                                        <td class="metric-group-2">100.0%</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0%</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-1/images-gcp</td>
+                                        <td class="metric-group-1">13</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">10</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.26</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">70.72</td>
+                                        <td class="metric-group-1">73.58</td>
+                                        <td class="metric-group-1">80.94</td>
+                                        <td class="metric-group-2">6.45</td>
+                                        <td class="metric-group-2">5.32</td>
+                                        <td class="metric-group-2">9.38</td>
+                                        <td class="metric-group-3">1.74</td>
+                                        <td class="metric-group-3">1.60</td>
+                                        <td class="metric-group-3">1.60</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>scriptworker-3/b-linux-gcp</td>
+                                        <td class="metric-group-1">10</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">10</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.13</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">62.23</td>
+                                        <td class="metric-group-1">65.35</td>
+                                        <td class="metric-group-1">70.79</td>
+                                        <td class="metric-group-2">4.36</td>
+                                        <td class="metric-group-2">4.14</td>
+                                        <td class="metric-group-2">5.72</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>nss-1/decision-gcp</td>
+                                        <td class="metric-group-1">9</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">9</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.06</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">58.22</td>
+                                        <td class="metric-group-1">55.14</td>
+                                        <td class="metric-group-1">63.75</td>
+                                        <td class="metric-group-2">4.94</td>
+                                        <td class="metric-group-2">4.83</td>
+                                        <td class="metric-group-2">6.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>releng-t/linux-gcp</td>
+                                        <td class="metric-group-1">9</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">9</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.02</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">56.78</td>
+                                        <td class="metric-group-1">61.54</td>
+                                        <td class="metric-group-1">74.88</td>
+                                        <td class="metric-group-2">3.96</td>
+                                        <td class="metric-group-2">4.22</td>
+                                        <td class="metric-group-2">5.34</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>translations-1/images-gcp</td>
+                                        <td class="metric-group-1">13</td>
+                                        <td class="metric-group-1">1.4</td>
+                                        <td class="metric-group-2">9</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">11.1%</td>
+                                        <td class="metric-group-3">0.31</td>
+                                        <td class="metric-group-3">0.04</td>
+                                        <td class="metric-group-3">11.4%</td>
+                                        <td class="metric-group-1">68.96</td>
+                                        <td class="metric-group-1">63.77</td>
+                                        <td class="metric-group-1">73.04</td>
+                                        <td class="metric-group-2">5.26</td>
+                                        <td class="metric-group-2">5.12</td>
+                                        <td class="metric-group-2">6.40</td>
+                                        <td class="metric-group-3">3.91</td>
+                                        <td class="metric-group-3">3.89</td>
+                                        <td class="metric-group-3">3.89</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/t-linux-vm-2204-wayland</td>
+                                        <td class="metric-group-1">3827</td>
+                                        <td class="metric-group-1">478.4</td>
+                                        <td class="metric-group-2">8</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">9.61</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">130.88</td>
+                                        <td class="metric-group-1">130.88</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-2">2565.95</td>
+                                        <td class="metric-group-2">2565.95</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-3">4685.34</td>
+                                        <td class="metric-group-3">3777.78</td>
+                                        <td class="metric-group-3">10583.91</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-2/decision-gcp</td>
+                                        <td class="metric-group-1">8</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.43</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">77.76</td>
+                                        <td class="metric-group-1">66.45</td>
+                                        <td class="metric-group-1">66.45</td>
+                                        <td class="metric-group-2">6.20</td>
+                                        <td class="metric-group-2">6.30</td>
+                                        <td class="metric-group-2">6.30</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-64-24h2-gpu-alpha</td>
+                                        <td class="metric-group-1">0</td>
+                                        <td class="metric-group-1">0.0</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">100.0%</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0%</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-1">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-2">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-t/win11-a64-24h2</td>
+                                        <td class="metric-group-1">5</td>
+                                        <td class="metric-group-1">0.8</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">2</td>
+                                        <td class="metric-group-2">33.3%</td>
+                                        <td class="metric-group-3">1.57</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">995.47</td>
+                                        <td class="metric-group-1">1240.32</td>
+                                        <td class="metric-group-1">1240.32</td>
+                                        <td class="metric-group-2">157.25</td>
+                                        <td class="metric-group-2">146.59</td>
+                                        <td class="metric-group-2">146.59</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozilla-1/images-gcp</td>
+                                        <td class="metric-group-1">6</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">6</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.02</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">70.50</td>
+                                        <td class="metric-group-1">71.16</td>
+                                        <td class="metric-group-1">77.99</td>
+                                        <td class="metric-group-2">5.64</td>
+                                        <td class="metric-group-2">5.54</td>
+                                        <td class="metric-group-2">5.55</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>ci-3/decision-gcp</td>
+                                        <td class="metric-group-1">6</td>
+                                        <td class="metric-group-1">1.2</td>
+                                        <td class="metric-group-2">5</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.02</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">60.04</td>
+                                        <td class="metric-group-1">56.25</td>
+                                        <td class="metric-group-1">56.93</td>
+                                        <td class="metric-group-2">5.63</td>
+                                        <td class="metric-group-2">5.97</td>
+                                        <td class="metric-group-2">6.51</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>comm-t/t-linux-large-gcp</td>
+                                        <td class="metric-group-1">5</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">5</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.20</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">50.35</td>
+                                        <td class="metric-group-1">52.65</td>
+                                        <td class="metric-group-1">55.34</td>
+                                        <td class="metric-group-2">5.56</td>
+                                        <td class="metric-group-2">5.32</td>
+                                        <td class="metric-group-2">5.44</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/win11-a64-24h2-builder</td>
+                                        <td class="metric-group-1">5</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">5</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">1.33</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">963.77</td>
+                                        <td class="metric-group-1">702.87</td>
+                                        <td class="metric-group-1">1337.39</td>
+                                        <td class="metric-group-2">185.10</td>
+                                        <td class="metric-group-2">135.14</td>
+                                        <td class="metric-group-2">141.20</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-2/b-linux-kvm-gcp</td>
+                                        <td class="metric-group-1">4</td>
+                                        <td class="metric-group-1">0.8</td>
+                                        <td class="metric-group-2">5</td>
+                                        <td class="metric-group-2">2</td>
+                                        <td class="metric-group-2">40.0%</td>
+                                        <td class="metric-group-3">0.57</td>
+                                        <td class="metric-group-3">0.64</td>
+                                        <td class="metric-group-3">52.9%</td>
+                                        <td class="metric-group-1">86.67</td>
+                                        <td class="metric-group-1">92.65</td>
+                                        <td class="metric-group-1">80.68</td>
+                                        <td class="metric-group-2">4.28</td>
+                                        <td class="metric-group-2">4.01</td>
+                                        <td class="metric-group-2">4.01</td>
+                                        <td class="metric-group-3">2.66</td>
+                                        <td class="metric-group-3">2.66</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>mozillavpn-3/b-win2022</td>
+                                        <td class="metric-group-1">6</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">2</td>
+                                        <td class="metric-group-2">50.0%</td>
+                                        <td class="metric-group-3">0.16</td>
+                                        <td class="metric-group-3">0.11</td>
+                                        <td class="metric-group-3">40.7%</td>
+                                        <td class="metric-group-1">84.34</td>
+                                        <td class="metric-group-1">80.41</td>
+                                        <td class="metric-group-1">80.41</td>
+                                        <td class="metric-group-2">14.81</td>
+                                        <td class="metric-group-2">18.72</td>
+                                        <td class="metric-group-2">10.90</td>
+                                        <td class="metric-group-3">22.61</td>
+                                        <td class="metric-group-3">30.60</td>
+                                        <td class="metric-group-3">30.60</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>scriptworker-1/decision-gcp</td>
+                                        <td class="metric-group-1">4</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.05</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">62.30</td>
+                                        <td class="metric-group-1">65.85</td>
+                                        <td class="metric-group-1">65.85</td>
+                                        <td class="metric-group-2">6.68</td>
+                                        <td class="metric-group-2">6.92</td>
+                                        <td class="metric-group-2">6.92</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>xpi-1/decision-gcp</td>
+                                        <td class="metric-group-1">6</td>
+                                        <td class="metric-group-1">1.5</td>
+                                        <td class="metric-group-2">4</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">25.0%</td>
+                                        <td class="metric-group-3">0.03</td>
+                                        <td class="metric-group-3">0.02</td>
+                                        <td class="metric-group-3">40.0%</td>
+                                        <td class="metric-group-1">50.19</td>
+                                        <td class="metric-group-1">65.16</td>
+                                        <td class="metric-group-1">65.16</td>
+                                        <td class="metric-group-2">4.42</td>
+                                        <td class="metric-group-2">4.87</td>
+                                        <td class="metric-group-2">4.87</td>
+                                        <td class="metric-group-3">1.43</td>
+                                        <td class="metric-group-3">1.43</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-1/b-win2022-alpha</td>
+                                        <td class="metric-group-1">4</td>
+                                        <td class="metric-group-1">1.3</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">33.3%</td>
+                                        <td class="metric-group-3">0.51</td>
+                                        <td class="metric-group-3">0.63</td>
+                                        <td class="metric-group-3">55.3%</td>
+                                        <td class="metric-group-1">1933.24</td>
+                                        <td class="metric-group-1">1224.88</td>
+                                        <td class="metric-group-1">1224.88</td>
+                                        <td class="metric-group-2">38.76</td>
+                                        <td class="metric-group-2">49.55</td>
+                                        <td class="metric-group-2">27.98</td>
+                                        <td class="metric-group-3">60.73</td>
+                                        <td class="metric-group-3">96.98</td>
+                                        <td class="metric-group-3">24.49</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-2/b-win2022</td>
+                                        <td class="metric-group-1">3</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">1</td>
+                                        <td class="metric-group-2">33.3%</td>
+                                        <td class="metric-group-3">0.18</td>
+                                        <td class="metric-group-3">0.08</td>
+                                        <td class="metric-group-3">30.8%</td>
+                                        <td class="metric-group-1">304.53</td>
+                                        <td class="metric-group-1">389.55</td>
+                                        <td class="metric-group-1">219.51</td>
+                                        <td class="metric-group-2">18.84</td>
+                                        <td class="metric-group-2">24.82</td>
+                                        <td class="metric-group-2">12.86</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>gecko-3/images-gcp</td>
+                                        <td class="metric-group-1">5</td>
+                                        <td class="metric-group-1">1.7</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.50</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">74.73</td>
+                                        <td class="metric-group-1">71.53</td>
+                                        <td class="metric-group-1">71.53</td>
+                                        <td class="metric-group-2">4.35</td>
+                                        <td class="metric-group-2">4.04</td>
+                                        <td class="metric-group-2">4.04</td>
+                                        <td class="metric-group-3">81.08</td>
+                                        <td class="metric-group-3">105.59</td>
+                                        <td class="metric-group-3">56.56</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>glean-3/decision-gcp</td>
+                                        <td class="metric-group-1">3</td>
+                                        <td class="metric-group-1">1.0</td>
+                                        <td class="metric-group-2">3</td>
+                                        <td class="metric-group-2">0</td>
+                                        <td class="metric-group-2">0.0%</td>
+                                        <td class="metric-group-3">0.03</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.0%</td>
+                                        <td class="metric-group-1">32.36</td>
+                                        <td class="metric-group-1">24.47</td>
+                                        <td class="metric-group-1">24.47</td>
+                                        <td class="metric-group-2">2.89</td>
+                                        <td class="metric-group-2">1.25</td>
+                                        <td class="metric-group-2">1.25</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                        <td class="metric-group-3">0.00</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the pie chart data
+        const usedWorkers = 111937;
+        const unusedWorkers = 13950;
+        const totalWorkers = 125887;
+
+        // Set up colors
+        const colors = ['#00d1b2', '#ff3860']; // Used workers (green), Unused workers (red)
+
+        // Get the canvas element
+        const canvas = document.getElementById('utilizationChart');
+        const ctx = canvas.getContext('2d');
+
+        // Calculate center and radius
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = Math.min(centerX, centerY) * 0.9;
+
+        // Function to draw the pie slice
+        function drawPieSlice(startAngle, endAngle, color) {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Draw the pie chart
+        if (totalWorkers > 0) {
+            // Calculate angles
+            const usedAngle = (usedWorkers / totalWorkers) * 2 * Math.PI;
+
+            // Draw slices
+            drawPieSlice(0, usedAngle, colors[0]); // Used workers
+            drawPieSlice(usedAngle, 2 * Math.PI, colors[1]); // Unused workers
+
+            // Draw a white circle in the middle to create a donut chart (optional)
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.6, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Add percentages in the middle
+            ctx.fillStyle = '#363636';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const usedPercent = Math.round((usedWorkers / totalWorkers) * 100);
+            const unusedPercent = 100 - usedPercent;
+            ctx.fillText(`${usedPercent}% Used`, centerX, centerY - 10);
+            ctx.fillText(`${unusedPercent}% Unused`, centerX, centerY + 10);
+        } else {
+            // No data
+            ctx.fillStyle = '#dbdbdb';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = '#363636';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('No Data', centerX, centerY);
+        }
+
+        // Create legend
+        const legend = document.getElementById('chartLegend');
+        legend.innerHTML = `
+            <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+                <div style="margin: 0 10px;">
+                    <span style="display: inline-block; width: 16px; height: 16px; background-color: ${colors[0]}; margin-right: 5px; vertical-align: middle;"></span>
+                    <span>Used Workers: ${usedWorkers} (${Math.round((usedWorkers / totalWorkers) * 100) || 0}%)</span>
+                </div>
+                <div style="margin: 0 10px;">
+                    <span style="display: inline-block; width: 16px; height: 16px; background-color: ${colors[1]}; margin-right: 5px; vertical-align: middle;"></span>
+                    <span>Unused Workers: ${unusedWorkers} (${Math.round((unusedWorkers / totalWorkers) * 100) || 0}%)</span>
+                </div>
+            </div>
+        `;
+
+        initTableSort();
+    });
+    function initTableSort() {
+            const table = document.getElementById('workerPoolTable');
+            const headers = table.querySelectorAll('th.sortable');
+
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    const column = parseInt(this.dataset.col);
+                    const isAscending = !this.classList.contains('asc');
+
+                    // Clear sort indicators from all headers
+                    headers.forEach(h => {
+                        h.classList.remove('asc', 'desc');
+                    });
+
+                    // Set sort indicator on clicked header
+                    this.classList.add(isAscending ? 'asc' : 'desc');
+
+                    // Sort the table
+                    sortTable(table, column, isAscending);
+                });
+            });
+        }
+
+        function sortTable(table, column, isAscending) {
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            // Sort rows based on cell value
+            rows.sort((a, b) => {
+                let valueA = getCellValue(a, column);
+                let valueB = getCellValue(b, column);
+
+                // For first column (worker pool ID) use string comparison
+                if (typeof valueA === 'string' && typeof valueB === 'string') {
+                    return isAscending ?
+                        valueA.localeCompare(valueB) :
+                        valueB.localeCompare(valueA);
+                } else {
+                    // For numeric columns, use numeric comparison
+                    return isAscending ?
+                        valueA - valueB :
+                        valueB - valueA;
+                }
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        function getCellValue(row, column) {
+            const cell = row.cells[column];
+            const content = cell.textContent.trim();
+            if (content.match(/^[0-9,.%]+$/)) {
+              const numValue = parseFloat(content.replace(/[^0-9.-]+/g, ''));
+              return isNaN(numValue) ? content : numValue;
+            }
+            return content;
+        }
+    </script>
+</body>
+</html>
