@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 1000,
+    "maxCapacity": 100,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -17,37 +17,40 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-08"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-04-07"
             }
           }
         ],
         "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "STANDARD"
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-central1-a/machineTypes/t2a-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
+              "cachesDir": "/home/generic-worker/caches",
               "d2gConfig": {
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
               "livelogExecutable": "/usr/local/bin/livelog",
               "numberOfTasksToRun": 0,
               "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
@@ -56,10 +59,10 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-ae6c3611c0b95147307e",
+          "launchConfigId": "lc-349669f2f4f5fc5f4f2a",
           "capacityPerInstance": 1
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Ampere Altra",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -78,37 +81,40 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-08"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-04-07"
             }
           }
         ],
         "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "STANDARD"
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-central1-b/machineTypes/t2a-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
+              "cachesDir": "/home/generic-worker/caches",
               "d2gConfig": {
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
               "livelogExecutable": "/usr/local/bin/livelog",
               "numberOfTasksToRun": 0,
               "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
@@ -117,71 +123,10 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-80e242ba83b5d611d148",
+          "launchConfigId": "lc-14c78ba4e565543f98be",
           "capacityPerInstance": 1
         },
-        "minCpuPlatform": "Intel Cascadelake",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "zone": "us-central1-c",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-08"
-            }
-          }
-        ],
-        "region": "us-central1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "STANDARD"
-        },
-        "machineType": "zones/us-central1-c/machineTypes/n2-highmem-32",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "d2gConfig": {
-                "enableD2G": true,
-                "allowPrivileged": false,
-                "allowHostSharedMemory": false
-              },
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "maxTaskRunTime": 2592900,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 300,
-              "enableInteractive": true,
-              "livelogExecutable": "/usr/local/bin/livelog",
-              "numberOfTasksToRun": 0,
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
-              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-4a5f785ba977c138e85b",
-          "capacityPerInstance": 1
-        },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Ampere Altra",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -200,37 +145,40 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-08"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-04-07"
             }
           }
         ],
         "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "STANDARD"
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-central1-f/machineTypes/t2a-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
+              "cachesDir": "/home/generic-worker/caches",
               "d2gConfig": {
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
               "livelogExecutable": "/usr/local/bin/livelog",
               "numberOfTasksToRun": 0,
               "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
@@ -239,10 +187,10 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-de2eb0e4aa1b67975a98",
+          "launchConfigId": "lc-e041767bb0685558d19a",
           "capacityPerInstance": 1
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Ampere Altra",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -261,37 +209,40 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-08"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-04-07"
             }
           }
         ],
         "region": "us-west1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "STANDARD"
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-west1-a/machineTypes/t2a-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
+              "cachesDir": "/home/generic-worker/caches",
               "d2gConfig": {
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
               "livelogExecutable": "/usr/local/bin/livelog",
               "numberOfTasksToRun": 0,
               "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
@@ -300,10 +251,10 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-44f13cd7768f1d86d101",
+          "launchConfigId": "lc-412d357f03d7bbf78e77",
           "capacityPerInstance": 1
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Ampere Altra",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -322,37 +273,40 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-04-08"
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2025-04-07"
             }
           }
         ],
         "region": "us-west1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "STANDARD"
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/n2-highmem-32",
+        "machineType": "zones/us-west1-b/machineTypes/t2a-standard-4",
         "workerConfig": {
           "genericWorker": {
             "config": {
+              "cachesDir": "/home/generic-worker/caches",
               "d2gConfig": {
                 "enableD2G": true,
                 "allowPrivileged": false,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/generic-worker/downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "headlessTasks": true,
               "sentryProject": "generic-worker",
               "disableReboots": false,
-              "maxTaskRunTime": 2592900,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 300,
               "enableInteractive": true,
               "livelogExecutable": "/usr/local/bin/livelog",
               "numberOfTasksToRun": 0,
               "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
@@ -361,10 +315,10 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6970c3e77ae1ad1c9308",
+          "launchConfigId": "lc-f96c90d355ac8ea7d60f",
           "capacityPerInstance": 1
         },
-        "minCpuPlatform": "Intel Cascadelake",
+        "minCpuPlatform": "Ampere Altra",
         "networkInterfaces": [
           {
             "accessConfigs": [
@@ -377,11 +331,11 @@
       }
     ]
   },
-  "created": "2024-04-22T14:34:07.259Z",
+  "created": "2025-04-08T13:50:15.924Z",
   "currentCapacity": 0,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nBig workers with big disks - intended for Firefox Translations only",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for gecko-based automation.",
   "emailOnError": true,
-  "lastModified": "2025-04-10T20:47:20.250Z",
+  "lastModified": "2025-04-08T13:50:15.924Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
@@ -392,5 +346,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "translations-1/b-linux-large-gcp-d2g-1tb-standard"
+  "workerPoolId": "mozilla-t/t-linux-arm64-docker"
 }

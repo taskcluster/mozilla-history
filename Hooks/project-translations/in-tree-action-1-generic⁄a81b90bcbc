@@ -1,11 +1,11 @@
 {
   "hookGroupId": "project-translations",
-  "hookId": "in-tree-pr-action-1-train/e00ea05393",
+  "hookId": "in-tree-action-1-generic/a81b90bcbc",
   "metadata": {
-    "description": "",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash a81b90bcbc.\n\nFor (project, branch) combinations:\ntranslations, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-translations/in-tree-pr-action-1-train/e00ea05393",
-    "owner": "ben@mozilla.com"
+    "name": "project-translations/in-tree-action-1-generic/a81b90bcbc",
+    "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
@@ -217,7 +217,7 @@
                   "cache": {
                     "${trustDomain}-level-${level}-checkouts-sparse-v2": "/builds/worker/checkouts"
                   },
-                  "image": "mozillareleases/taskgraph:decision-v13.0.0@sha256:57e4c2d2ad92cea663dcc02cacbfd88b3506edde80e19fbd8a57b3dfe37ae9bd",
+                  "image": "mozillareleases/taskgraph:decision-v14.1.1@sha256:a3f03dbaf6b52733e16e52cdf6fc547193839ed825e1c3740d2b0515f65c7d73",
                   "command": [
                     "run-task",
                     "--${normProject}-checkout=/builds/worker/checkouts/src",
@@ -227,8 +227,8 @@
                     {
                       "in": {
                         "$if": "tasks_for in [\"action\", \"pr-action\"]",
-                        "else": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 pip install --break-system-packages git+https://github.com/bhearsum/taskgraph.git@volume-artifact2 \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --owner='${ownerEmail}' --level='${level}' --repository-type=git --tasks-for='${tasks_for}' --base-repository='${baseRepoUrl}' --base-ref='${short_base_ref}' --base-rev='${base_sha}' --head-repository='${repoUrl}' --head-ref='${head_ref}' --head-rev='${head_sha}' ${extraArgs}\n",
-                        "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 pip install --break-system-packages git+https://github.com/bhearsum/taskgraph.git@volume-artifact2 \u0026\u0026 taskgraph action-callback\n"
+                        "else": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --owner='${ownerEmail}' --level='${level}' --repository-type=git --tasks-for='${tasks_for}' --base-repository='${baseRepoUrl}' --base-ref='${short_base_ref}' --base-rev='${base_sha}' --head-repository='${repoUrl}' --head-ref='${head_ref}' --head-rev='${head_sha}' ${extraArgs}\n",
+                        "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                       },
                       "$let": {
                         "extraArgs": {
@@ -447,8 +447,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:train",
-        "action_perm": "train",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
@@ -458,7 +458,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "pr-action",
+      "tasks_for": "action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },
