@@ -1,21 +1,21 @@
 {
-  "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-generic/541b555777",
+  "hookGroupId": "project-mobile",
+  "hookId": "in-tree-action-3-release-promotion/f42a1bfb42",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 541b555777.\n\nFor (project, branch) combinations:\nstaging-xpi-manifest, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 3, with `.taskcluster.yml` hash f42a1bfb42.\n\nFor (project, branch) combinations:\nfirefox-ios, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-generic/541b555777",
+    "name": "project-mobile/in-tree-action-3-release-promotion/f42a1bfb42",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
-      "$if": "tasks_for in [\"action\", \"cron\", \"github-push\"] || (tasks_for == \"github-pull-request\" \u0026\u0026 event.action in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for == \"github-push\" \u0026\u0026 event.ref in [\"refs/heads/main\"])\n",
-      "then": {
+      "in": {
         "in": {
-          "in": {
+          "$if": "tasks_for in [\"action\", \"cron\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for == \"github-push\" \u0026\u0026 short_head_branch == \"main\") || (tasks_for == \"github-push\" \u0026\u0026 short_head_branch[:8] == \"release/\")\n",
+          "then": {
             "tags": {
-              "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
+              "$if": "tasks_for == \"github-push\" || isPullRequest",
               "else": {
                 "$if": "tasks_for == \"action\"",
                 "else": {
@@ -34,6 +34,35 @@
             },
             "extra": {
               "$merge": [
+                {
+                  "treeherder": {
+                    "$merge": [
+                      {
+                        "machine": {
+                          "platform": "gecko-decision"
+                        }
+                      },
+                      {
+                        "$if": "tasks_for  == \"github-push\" || isPullRequest",
+                        "else": {
+                          "$if": "tasks_for == \"action\"",
+                          "else": {
+                            "symbol": "${cron.job_symbol}",
+                            "groupSymbol": "cron"
+                          },
+                          "then": {
+                            "symbol": "${action.symbol}",
+                            "groupName": "action-callback",
+                            "groupSymbol": "AC"
+                          }
+                        },
+                        "then": {
+                          "symbol": "D"
+                        }
+                      }
+                    ]
+                  }
+                },
                 {
                   "$if": "tasks_for == \"action\"",
                   "then": {
@@ -68,13 +97,28 @@
               ]
             },
             "routes": {
-              "$flatten": [
+              "$flattenDeep": [
                 "checks",
                 {
-                  "$if": "tasks_for == \"github-push\"",
-                  "else": [],
+                  "$if": "!isPullRequest",
                   "then": [
-                    "index.${trustDomain}.v2.${project}.revision.${head_sha}.taskgraph.decision"
+                    "tc-treeherder.v2.${project}.${head_sha}",
+                    {
+                      "$if": "tasks_for == \"github-push\"",
+                      "then": [
+                        "index.${trustDomain}.v2.${project}.branch.${short_head_branch}.latest.taskgraph.decision",
+                        "index.${trustDomain}.v2.${project}.branch.${short_head_branch}.revision.${head_sha}.taskgraph.decision",
+                        "index.${trustDomain}.v2.${project}.revision.${head_sha}.taskgraph.decision"
+                      ]
+                    },
+                    {
+                      "$if": "tasks_for == \"cron\"",
+                      "then": [
+                        "index.${trustDomain}.v2.${project}.branch.${head_branch}.latest.taskgraph.decision-${cron.job_name}",
+                        "index.${trustDomain}.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.decision-${cron.job_name}",
+                        "index.${trustDomain}.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.cron.${ownTaskId}"
+                      ]
+                    }
                   ]
                 }
               ]
@@ -82,40 +126,29 @@
             "scopes": {
               "$if": "tasks_for == \"github-push\"",
               "else": {
-                "$if": "tasks_for == \"github-pull-request\"",
+                "$if": "isPullRequest",
                 "else": {
-                  "$if": "tasks_for == \"action\"",
-                  "else": [
-                    "assume:repo:${repoUrl[8:]}:cron:${cron.job_name}"
-                  ],
+                  "$if": "tasks_for == \"github-release\"",
+                  "else": {
+                    "$if": "tasks_for == \"action\"",
+                    "else": [
+                      "assume:repo:${repoUrl[8:]}:cron:${cron.job_name}"
+                    ],
+                    "then": [
+                      "${action.repo_scope}"
+                    ]
+                  },
                   "then": [
-                    "${action.repo_scope}"
+                    "assume:repo:${repoUrl[8:]}:release:${releaseAction}"
                   ]
                 },
                 "then": [
-                  "assume:repo:github.com/${event.pull_request.base.repo.full_name}:pull-request"
+                  "assume:repo:github.com/${event.pull_request.base.repo.full_name}:${tasks_for[7:]}"
                 ]
               },
-              "then": {
-                "in": [
-                  "assume:repo:${repoUrl[8:]}:branch:${short_head_branch}"
-                ],
-                "$let": {
-                  "short_head_branch": {
-                    "$if": "head_branch[:10] == \"refs/tags/\"",
-                    "else": {
-                      "$if": "head_branch[:11] == \"refs/heads/\"",
-                      "else": "${head_branch}",
-                      "then": {
-                        "$eval": "head_branch[11:]"
-                      }
-                    },
-                    "then": {
-                      "$eval": "head_branch[10:]"
-                    }
-                  }
-                }
-              }
+              "then": [
+                "assume:repo:${repoUrl[8:]}:branch:${short_head_branch}"
+              ]
             },
             "taskId": {
               "$if": "tasks_for != \"action\"",
@@ -133,21 +166,24 @@
                   {
                     "REPOSITORIES": {
                       "$json": {
-                        "xpi": "XPI Manifest"
+                        "mobile": "Firefox for iOS"
                       }
                     },
-                    "XPI_HEAD_REF": "${head_branch}",
-                    "XPI_HEAD_REV": "${head_sha}",
                     "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
-                    "XPI_BASE_REPOSITORY": "${baseRepoUrl}",
-                    "XPI_HEAD_REPOSITORY": "${repoUrl}",
-                    "XPI_REPOSITORY_TYPE": "git",
-                    "XPI_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                    "MOBILE_HEAD_REF": "${head_branch}",
+                    "MOBILE_HEAD_REV": "${head_sha}",
+                    "MOBILE_HEAD_TAG": "${head_tag}",
+                    "ANDROID_SDK_ROOT": "/builds/worker/android-sdk",
+                    "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
+                    "MOBILE_BASE_REPOSITORY": "${baseRepoUrl}",
+                    "MOBILE_HEAD_REPOSITORY": "${repoUrl}",
+                    "MOBILE_REPOSITORY_TYPE": "git",
+                    "MOBILE_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
                   },
                   {
-                    "$if": "tasks_for in [\"github-pull-request\"]",
+                    "$if": "isPullRequest",
                     "then": {
-                      "XPI_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
+                      "MOBILE_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
                     }
                   },
                   {
@@ -166,13 +202,22 @@
                       "ACTION_CALLBACK": "${action.cb_name}",
                       "ACTION_TASK_GROUP_ID": "${action.taskGroupId}"
                     }
+                  },
+                  {
+                    "$if": "tasks_for == \"github-release\"",
+                    "then": {
+                      "MOBILE_HEAD_TAG": "${event.release.tag_name}"
+                    }
                   }
                 ]
               },
-              "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+              "cache": {
+                "${trustDomain}-level-${level}-checkouts-v1": "/builds/worker/checkouts"
+              },
+              "image": "mozillareleases/taskgraph:decision-v13.1.0@sha256:8ff59a0d89e8fd7bbdc236cf1fb15e03be9ef67d7e74ed8ffe15f27765593ecd",
               "command": [
                 "/usr/local/bin/run-task",
-                "--xpi-checkout=/builds/worker/checkouts/src",
+                "--mobile-checkout=/builds/worker/checkouts/src",
                 "--task-cwd=/builds/worker/checkouts/src",
                 "--",
                 "bash",
@@ -180,8 +225,8 @@
                 {
                   "in": {
                     "$if": "tasks_for == \"action\"",
-                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$XPI_BASE_REPOSITORY\" --head-repository=\"$XPI_HEAD_REPOSITORY\" --head-ref=\"$XPI_HEAD_REF\" --head-rev=\"$XPI_HEAD_REV\" --repository-type=\"$XPI_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
-                    "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$MOBILE_BASE_REPOSITORY\" --head-repository=\"$MOBILE_HEAD_REPOSITORY\" --head-ref=\"$MOBILE_HEAD_REF\" --head-rev=\"$MOBILE_HEAD_REV\" --head-tag=\"$MOBILE_HEAD_TAG\" --repository-type=\"$MOBILE_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
+                    "then": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                   },
                   "$let": {
                     "extraArgs": {
@@ -225,12 +270,12 @@
                   "source": "${repoUrl}/raw/${head_sha}/.taskcluster.yml"
                 },
                 {
-                  "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
+                  "$if": "isPullRequest || tasks_for in [\"github-push\", \"github-release\"]",
                   "else": {
                     "$if": "tasks_for == \"action\"",
                     "else": {
                       "name": "Decision Task for cron job ${cron.job_name}",
-                      "description": "Created by a [cron task](https://tools.taskcluster.net/tasks/${cron.task_id})"
+                      "description": "Created by a [cron task](https://firefox-ci-tc.services.mozilla.com/tasks/${cron.task_id})"
                     },
                     "then": {
                       "name": "Action: ${action.title}",
@@ -238,7 +283,7 @@
                     }
                   },
                   "then": {
-                    "name": "Decision Task",
+                    "name": "Decision Task (${tasks_for[7:]})",
                     "description": "The task that creates all of the other tasks in the task graph"
                   }
                 }
@@ -253,104 +298,138 @@
               "else": "${ownTaskId}",
               "then": "${action.taskGroupId}"
             },
-            "provisionerId": "xpi-${level}"
-          },
-          "$let": {
-            "level": {
-              "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-extensions/xpi-manifest\"",
-              "else": "1",
-              "then": "3"
-            }
+            "provisionerId": "${trustDomain}-${level}"
           }
         },
         "$let": {
-          "project": {
-            "$if": "tasks_for == \"github-push\"",
-            "else": {
-              "$if": "tasks_for == \"github-pull-request\"",
-              "else": {
-                "$if": "tasks_for in [\"cron\", \"action\"]",
-                "then": "${repository.project}"
-              },
-              "then": "${event.pull_request.head.repo.name}"
-            },
-            "then": "${event.repository.name}"
+          "level": {
+            "$if": "tasks_for in [\"github-push\", \"github-release\", \"action\", \"cron\"] \u0026\u0026 repoUrl == canonicalRepo",
+            "else": "1",
+            "then": "3"
           },
-          "repoUrl": {
-            "$if": "tasks_for == \"github-push\"",
-            "else": {
-              "$if": "tasks_for == \"github-pull-request\"",
-              "else": {
-                "$if": "tasks_for in [\"cron\", \"action\"]",
-                "then": "${repository.url}"
-              },
-              "then": "${event.pull_request.head.repo.html_url}"
-            },
-            "then": "${event.repository.html_url}"
-          },
-          "head_sha": {
-            "$if": "tasks_for == \"github-push\"",
-            "else": {
-              "$if": "tasks_for == \"github-pull-request\"",
-              "else": {
-                "$if": "tasks_for in [\"cron\", \"action\"]",
-                "then": "${push.revision}"
-              },
-              "then": "${event.pull_request.head.sha}"
-            },
-            "then": "${event.after}"
-          },
-          "ownTaskId": {
-            "$if": "\"github\" in tasks_for",
+          "short_head_branch": {
+            "$if": "head_branch[:11] == \"refs/heads/\"",
+            "else": "${head_branch}",
+            "then": {
+              "$eval": "head_branch[11:]"
+            }
+          }
+        }
+      },
+      "$let": {
+        "project": {
+          "$if": "tasks_for in [\"github-push\", \"github-release\"]",
+          "else": {
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
             "else": {
               "$if": "tasks_for in [\"cron\", \"action\"]",
-              "then": "${ownTaskId}"
+              "then": "${repository.project}"
             },
-            "then": {
-              "$eval": "as_slugid(\"decision_task\")"
-            }
+            "then": "${event.pull_request.head.repo.name}"
           },
-          "ownerEmail": {
+          "then": "${event.repository.name}"
+        },
+        "repoUrl": {
+          "$if": "tasks_for in [\"github-push\", \"github-release\"]",
+          "else": {
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
+            "else": {
+              "$if": "tasks_for in [\"cron\", \"action\"]",
+              "then": "${repository.url}"
+            },
+            "then": "${event.pull_request.head.repo.html_url}"
+          },
+          "then": "${event.repository.html_url}"
+        },
+        "head_sha": {
+          "$if": "tasks_for == \"github-push\"",
+          "else": {
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
+            "else": {
+              "$if": "tasks_for == \"github-release\"",
+              "else": {
+                "$if": "tasks_for in [\"action\", \"cron\"]",
+                "then": "${push.revision}"
+              },
+              "then": "${event.release.tag_name}"
+            },
+            "then": "${event.pull_request.head.sha}"
+          },
+          "then": "${event.after}"
+        },
+        "head_tag": {
+          "$if": "tasks_for == \"github-release\"",
+          "else": "",
+          "then": "${event.release.tag_name}"
+        },
+        "ownTaskId": {
+          "$if": "\"github\" in tasks_for",
+          "else": {
+            "$if": "tasks_for in [\"cron\", \"action\"]",
+            "then": "${ownTaskId}"
+          },
+          "then": {
+            "$eval": "as_slugid(\"decision_task\")"
+          }
+        },
+        "ownerEmail": {
+          "$if": "tasks_for in [\"cron\", \"action\"]",
+          "else": {
             "$if": "tasks_for == \"github-push\"",
             "else": {
-              "$if": "tasks_for == \"github-pull-request\"",
+              "$if": "tasks_for[:19] == \"github-pull-request\"",
               "else": {
-                "$if": "tasks_for in [\"cron\", \"action\"]",
-                "then": "${tasks_for}@noreply.mozilla.org"
+                "$if": "tasks_for == \"github-release\"",
+                "then": "${event.sender.login}@users.noreply.github.com"
               },
               "then": "${event.pull_request.user.login}@users.noreply.github.com"
             },
             "then": "${event.pusher.email}"
           },
-          "baseRepoUrl": {
+          "then": "${tasks_for}@noreply.mozilla.org"
+        },
+        "baseRepoUrl": {
+          "$if": "tasks_for in [\"github-push\", \"github-release\"]",
+          "else": {
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
+            "else": {
+              "$if": "tasks_for in [\"cron\", \"action\"]",
+              "then": "${repository.url}"
+            },
+            "then": "${event.pull_request.base.repo.html_url}"
+          },
+          "then": "${event.repository.html_url}"
+        },
+        "head_branch": {
+          "$if": "tasks_for[:19] == \"github-pull-request\"",
+          "else": {
             "$if": "tasks_for == \"github-push\"",
             "else": {
-              "$if": "tasks_for == \"github-pull-request\"",
+              "$if": "tasks_for == \"github-release\"",
               "else": {
-                "$if": "tasks_for in [\"cron\", \"action\"]",
-                "then": "${repository.url}"
-              },
-              "then": "${event.pull_request.base.repo.html_url}"
-            },
-            "then": "${event.repository.html_url}"
-          },
-          "head_branch": {
-            "$if": "tasks_for == \"github-pull-request\"",
-            "else": {
-              "$if": "tasks_for == \"github-push\"",
-              "else": {
-                "$if": "tasks_for == \"cron\"",
-                "else": {
-                  "$if": "tasks_for == \"action\"",
-                  "then": "refs/heads/main"
-                },
+                "$if": "tasks_for in [\"action\", \"cron\"]",
                 "then": "${push.branch}"
               },
-              "then": "${event.ref}"
+              "then": "${event.release.target_commitish}"
             },
-            "then": "${event.pull_request.head.ref}"
+            "then": "${event.ref}"
           },
-          "trustDomain": "xpi"
+          "then": "${event.pull_request.head.ref}"
+        },
+        "trustDomain": "mobile",
+        "canonicalRepo": "https://github.com/mozilla-mobile/firefox-ios",
+        "isPullRequest": {
+          "$eval": "tasks_for[:19] == \"github-pull-request\""
+        },
+        "releaseAction": {
+          "$if": "tasks_for == \"github-release\"",
+          "else": "UNDEFINED",
+          "then": "${event.action}"
+        },
+        "pullRequestAction": {
+          "$if": "tasks_for[:19] == \"github-pull-request\"",
+          "else": "UNDEFINED",
+          "then": "${event.action}"
         }
       }
     },
@@ -366,8 +445,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "action_perm": "release-promotion",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
