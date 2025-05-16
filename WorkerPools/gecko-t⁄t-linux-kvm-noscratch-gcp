@@ -91,6 +91,87 @@
         }
       },
       {
+        "zone": "us-central1-a",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-central1-a/machineTypes/n2-standard-8",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "dockerConfig": {
+            "allowPrivileged": true
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": true
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-8d0e737f2a0a2ce16924",
+          "capacityPerInstance": 1
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
         "zone": "us-central1-c",
         "disks": [
           {
@@ -236,87 +317,6 @@
         },
         "workerManager": {
           "launchConfigId": "lc-c674579f825e72c1e368",
-          "capacityPerInstance": 1
-        },
-        "minCpuPlatform": "Intel Cascadelake",
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
-      },
-      {
-        "zone": "us-central1-a",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
-            }
-          }
-        ],
-        "region": "us-central1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-central1-a/machineTypes/n2-standard-8",
-        "workerConfig": {
-          "capacity": 1,
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 120
-          },
-          "artifacts": {
-            "skipCompressionExtensions": [
-              ".7z",
-              ".bz2",
-              ".deb",
-              ".dmg",
-              ".flv",
-              ".gif",
-              ".gz",
-              ".jpeg",
-              ".jpg",
-              ".png",
-              ".swf",
-              ".tbz",
-              ".tgz",
-              ".webp",
-              ".whl",
-              ".woff",
-              ".woff2",
-              ".xz",
-              ".zip",
-              ".zst",
-              "lz4"
-            ]
-          },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
-          "deviceManagement": {
-            "kvm": {
-              "enabled": true
-            },
-            "hostSharedMemory": {
-              "enabled": false
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-8d0e737f2a0a2ce16924",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -501,7 +501,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for gecko-based automation.",
   "emailOnError": true,
-  "lastModified": "2025-05-07T09:25:29.166Z",
+  "lastModified": "2025-05-15T23:03:14.189Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
