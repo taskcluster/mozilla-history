@@ -1,0 +1,71 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-mobile-staging-firefox-ios/beta-releases",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-mozilla-mobile-staging-firefox-ios/beta-releases",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "notify.email.release+failedcron@mozilla.com.on-failed",
+      "notify.email.release+exceptioncron@mozilla.com.on-exception"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-mobile-staging-firefox-ios/beta-releases"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:2b139bd1909ef0688663a479d30e58de809a490f@sha256:de6435a75ba4f8d579d28c9c1c907b95a09105394a4ac4072ce3a8bb0090abff",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://github.com/mozilla-mobile/staging-firefox-ios",
+        "--project",
+        "staging-firefox-ios",
+        "--level",
+        "1",
+        "--repository-type",
+        "git",
+        "--branch",
+        "main",
+        "--trust-domain",
+        "mobile",
+        "--github-token-secret",
+        "project/releng/mobile/github-cron-token",
+        "--force-run=beta-releases"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://github.com/mozilla-mobile/staging-firefox-ios",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-mobile-staging-firefox-ios/beta-releases",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-mobile-staging-firefox-ios/beta-releases"
+    },
+    "priority": "normal",
+    "workerType": "build-decision",
+    "schedulerId": "mobile-level-1",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
