@@ -1,23 +1,32 @@
 {
-  "hookGroupId": "project-nss",
-  "hookId": "in-tree-action-1-generic/0940ea578c",
+  "hookGroupId": "project-comm",
+  "hookId": "in-tree-action-1-backfill/c2e82354e1",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 0940ea578c.\n\nFor (project, branch) combinations:\nnss-try, branch: 'default'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task backfill at level 1, with `.taskcluster.yml` hash c2e82354e1.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-nss/in-tree-action-1-generic/0940ea578c",
+    "name": "project-comm/in-tree-action-1-backfill/c2e82354e1",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
-      "$if": "tasks_for in [\"hg-push\", \"action\"]",
+      "$if": "tasks_for in [\"hg-push\", \"action\", \"cron\"]",
       "then": {
         "in": {
           "tags": {
             "$if": "tasks_for == \"hg-push\"",
             "else": {
-              "kind": "action-callback",
-              "createdForUser": "${ownerEmail}"
+              "$if": "tasks_for == \"action\"",
+              "else": {
+                "$if": "tasks_for == \"cron\"",
+                "then": {
+                  "kind": "cron-task"
+                }
+              },
+              "then": {
+                "kind": "action-callback",
+                "createdForUser": "${ownerEmail}"
+              }
             },
             "then": {
               "kind": "decision-task",
@@ -31,15 +40,22 @@
                   "$merge": [
                     {
                       "machine": {
-                        "platform": "nss-decision"
+                        "platform": "gecko-decision"
                       }
                     },
                     {
                       "$if": "tasks_for == \"hg-push\"",
                       "else": {
-                        "symbol": "${action.symbol}",
-                        "groupName": "action-callback",
-                        "groupSymbol": "AC"
+                        "$if": "tasks_for == \"action\"",
+                        "else": {
+                          "symbol": "${cron.job_symbol}",
+                          "groupSymbol": "cron"
+                        },
+                        "then": {
+                          "symbol": "${action.symbol}",
+                          "groupName": "action-callback",
+                          "groupSymbol": "AC"
+                        }
                       },
                       "then": {
                         "symbol": "D"
@@ -70,6 +86,16 @@
                 }
               },
               {
+                "$if": "tasks_for == \"cron\"",
+                "then": {
+                  "cron": {
+                    "$json": {
+                      "$eval": "cron"
+                    }
+                  }
+                }
+              },
+              {
                 "tasks_for": "${tasks_for}"
               },
               {
@@ -82,6 +108,13 @@
                           "link": {
                             "href": "https://treeherder.mozilla.org/#/jobs?repo=${repository.project}\u0026revision=${push.revision}",
                             "text": "Treeherder Jobs"
+                          }
+                        },
+                        {
+                          "$if": "repository.project == \"try-comm-central\"",
+                          "then": {
+                            "content": "Your try-comm-central push has been submitted. It's the best! Use the link to view the status of your jobs.",
+                            "subject": "try-comm-central submission - ${push.revision}"
                           }
                         }
                       ]
@@ -96,25 +129,54 @@
               "tc-treeherder.v2.${repository.project}.${push.revision}",
               {
                 "$if": "tasks_for == \"hg-push\"",
-                "else": [
-                  "index.${trustDomain}.v2.${repository.project}.revision.${push.revision}.taskgraph.actions.${ownTaskId}",
-                  "index.${trustDomain}.v2.${repository.project}.pushlog-id.${push.pushlog_id}.actions.${ownTaskId}"
-                ],
+                "else": {
+                  "$if": "tasks_for == \"action\"",
+                  "else": [
+                    "index.${trustDomain}.v2.${repository.project}.latest.taskgraph.decision-${cron.job_name}",
+                    "index.${trustDomain}.v2.${repository.project}.revision.${push.revision}.taskgraph.decision-${cron.job_name}",
+                    "index.${trustDomain}.v2.${repository.project}.pushlog-id.${push.pushlog_id}.decision-${cron.job_name}",
+                    "index.${trustDomain}.v2.${repository.project}.revision.${push.revision}.cron.${ownTaskId}",
+                    {
+                      "$if": "repository.project != \"try-comm-central\"",
+                      "then": [
+                        "notify.email.tb-builds@thunderbird.net.on-failed",
+                        "notify.email.tb-builds@thunderbird.net.on-exception"
+                      ]
+                    }
+                  ],
+                  "then": [
+                    "index.${trustDomain}.v2.${repository.project}.revision.${push.revision}.taskgraph.actions.${ownTaskId}",
+                    "index.${trustDomain}.v2.${repository.project}.pushlog-id.${push.pushlog_id}.actions.${ownTaskId}"
+                  ]
+                },
                 "then": [
                   "index.${trustDomain}.v2.${repository.project}.latest.taskgraph.decision",
                   "index.${trustDomain}.v2.${repository.project}.revision.${push.revision}.taskgraph.decision",
-                  "index.${trustDomain}.v2.${repository.project}.pushlog-id.${push.pushlog_id}.decision"
+                  "index.${trustDomain}.v2.${repository.project}.pushlog-id.${push.pushlog_id}.decision",
+                  "notify.email.${ownerEmail}.on-failed",
+                  "notify.email.${ownerEmail}.on-exception",
+                  {
+                    "$if": "repository.project == \"try-comm-central\"",
+                    "then": "notify.email.${ownerEmail}.on-completed"
+                  }
                 ]
               }
             ]
           },
           "scopes": {
             "$if": "tasks_for == \"hg-push\"",
-            "else": [
-              "${action.repo_scope}"
-            ],
+            "else": {
+              "$if": "tasks_for == \"action\"",
+              "else": [
+                "assume:repo:${repoUrl[8:]}:cron:${cron.job_name}"
+              ],
+              "then": [
+                "${action.repo_scope}"
+              ]
+            },
             "then": [
               "assume:repo:${repoUrl[8:]}:branch:default",
+              "queue:route:notify.email.${ownerEmail}.*",
               "in-tree:hook-action:project-${trustDomain}/in-tree-action-${repository.level}-*",
               "index:insert-task:${trustDomain}.v2.${repository.project}.*"
             ]
@@ -133,18 +195,16 @@
             "env": {
               "$merge": [
                 {
-                  "NSS_BASE_REV": "${push.base_revision}",
-                  "NSS_HEAD_REV": "${push.revision}",
-                  "REPOSITORIES": {
-                    "$json": {
-                      "nss": "NSS"
-                    }
-                  },
+                  "COMM_BASE_REV": "${push.base_revision}",
+                  "COMM_HEAD_REF": "${push.revision}",
+                  "COMM_HEAD_REV": "${push.revision}",
                   "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
+                  "MOZ_AUTOMATION": "1",
                   "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
-                  "NSS_BASE_REPOSITORY": "https://hg.mozilla.org/projects/nss",
-                  "NSS_HEAD_REPOSITORY": "${repository.url}",
-                  "NSS_REPOSITORY_TYPE": "hg"
+                  "TASKCLUSTER_VOLUMES": "/builds/worker/artifacts",
+                  "COMM_BASE_REPOSITORY": "https://hg.mozilla.org/comm-unified",
+                  "COMM_HEAD_REPOSITORY": "${repoUrl}",
+                  "PYTHONDONTWRITEBYTECODE": "1"
                 },
                 {
                   "$if": "tasks_for == \"action\"",
@@ -166,22 +226,35 @@
               ]
             },
             "cache": {
-              "${trustDomain}-level-${repository.level}-checkouts-sparse-v3": "/builds/worker/checkouts"
+              "${trustDomain}-level-${repository.level}-checkouts-sparse-v4": "/builds/worker/checkouts"
             },
-            "image": "mozillareleases/taskgraph:decision-v13.0.0@sha256:57e4c2d2ad92cea663dcc02cacbfd88b3506edde80e19fbd8a57b3dfe37ae9bd",
+            "image": "mozillareleases/gecko_decision:5.0.0@sha256:9e000c9fd31ee1723927aeea2b82b95ff2ecf32ebdb7a5d893300281a1452670",
             "command": [
-              "/usr/local/bin/run-task",
-              "--nss-checkout=/builds/worker/checkouts/nss",
+              "/builds/worker/bin/comm-task-env",
+              "/builds/worker/bin/run-task",
+              "--gecko-checkout=/builds/worker/checkouts/gecko",
+              "--gecko-sparse-profile=build/sparse-profiles/taskgraph",
+              "--comm-checkout=/builds/worker/checkouts/gecko/comm",
               "--",
               "bash",
               "-cx",
               {
-                "$if": "tasks_for == \"action\"",
-                "else": "cd /builds/worker/checkouts/nss \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='${push.pushlog_id}' --pushdate='${push.pushdate}' --project='${repository.project}' --owner='${ownerEmail}' --level='${repository.level}' --tasks-for='${tasks_for}' --repository-type=hg --base-repository=\"$NSS_BASE_REPOSITORY\" --base-rev=\"$NSS_BASE_REV\" --head-repository=\"$NSS_HEAD_REPOSITORY\" --head-ref=\"$NSS_HEAD_REF\" --head-rev=\"$NSS_HEAD_REV\"\n",
-                "then": "cd /builds/worker/checkouts/nss \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
+                "in": {
+                  "$if": "tasks_for == \"action\"",
+                  "else": "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph decision --root=comm/taskcluster --pushlog-id='${push.pushlog_id}' --pushdate='${push.pushdate}' --project='${repository.project}' --owner='${ownerEmail}' --level='${repository.level}' --tasks-for='${tasks_for}' --repository-type=hg --base-repository=\"$GECKO_BASE_REPOSITORY\" --head-repository=\"$GECKO_HEAD_REPOSITORY\" --head-ref=\"$GECKO_HEAD_REF\" --head-rev=\"$GECKO_HEAD_REV\" --try-task-config-file=comm/try_task_config.json ${extraArgs}\n",
+                  "then": "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph action-callback --root=comm/taskcluster\n"
+                },
+                "$let": {
+                  "extraArgs": {
+                    "$if": "tasks_for == \"cron\"",
+                    "else": "",
+                    "then": "${cron.quoted_args}"
+                  }
+                }
               }
             ],
             "features": {
+              "chainOfTrust": true,
               "taskclusterProxy": true
             },
             "artifacts": {
@@ -193,7 +266,7 @@
                 }
               },
               "public/docker-contexts": {
-                "path": "/builds/worker/checkouts/nss/docker-contexts",
+                "path": "/builds/worker/checkouts/gecko/docker-contexts",
                 "type": "directory",
                 "expires": {
                   "$fromNow": "7 day"
@@ -202,33 +275,52 @@
             },
             "maxRunTime": 1800
           },
-          "retries": 0,
+          "retries": {
+            "$if": "tasks_for == 'hg-push'",
+            "else": 5,
+            "then": 0
+          },
           "deadline": {
             "$fromNow": "1 day"
           },
           "metadata": {
             "$merge": [
               {
-                "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+                "owner": "${ownerEmail}",
                 "source": "${repoUrl}/raw-file/${push.revision}/.taskcluster.yml"
               },
               {
                 "$if": "tasks_for == \"hg-push\"",
                 "else": {
-                  "name": "Action: ${action.title}",
-                  "description": "${action.description}\n\n${treeherder_link}\n\nAction triggered by clientID `${clientId}`\n"
+                  "$if": "tasks_for == \"action\"",
+                  "else": {
+                    "name": "Decision Task for cron job ${cron.job_name}",
+                    "description": "Created by a [cron task](https://firefox-ci-tc.services.mozilla.com/tasks/${cron.task_id}) (${treeherder_link})"
+                  },
+                  "then": {
+                    "name": "Action: ${action.title}",
+                    "description": "${action.description}\n\n${treeherder_link}\n\nAction triggered by clientID `${clientId}`\n"
+                  }
                 },
                 "then": {
-                  "name": "NSS Decision Task",
-                  "description": "The task that creates all of the other tasks in the task graph"
+                  "name": "Thunderbird Decision Task",
+                  "description": "The task that creates all of the other tasks in the task graph (${treeherder_link})"
                 }
               }
             ]
           },
-          "priority": "low",
+          "priority": {
+            "$if": "tasks_for == 'cron'",
+            "else": {
+              "$if": "tasks_for == 'action'",
+              "else": "lowest",
+              "then": "very-low"
+            },
+            "then": "low"
+          },
           "requires": "all-completed",
           "workerType": "decision-gcp",
-          "schedulerId": "nss-level-${repository.level}",
+          "schedulerId": "${trustDomain}-level-${repository.level}",
           "taskGroupId": {
             "$if": "tasks_for == \"action\"",
             "else": "${ownTaskId}",
@@ -239,7 +331,13 @@
         },
         "$let": {
           "expires": {
-            "$fromNow": "14 days"
+            "$if": "repository.project == \"try-comm-central\"",
+            "else": {
+              "$fromNow": "1 year"
+            },
+            "then": {
+              "$fromNow": "28 days"
+            }
           },
           "repoUrl": {
             "$if": "repository.url[-1] == \"/\"",
@@ -255,7 +353,7 @@
             "else": "${push.owner}@noreply.mozilla.org",
             "then": "${push.owner}"
           },
-          "trustDomain": "nss",
+          "trustDomain": "comm",
           "treeherder_link": "[Treeherder job](https://treeherder.mozilla.org/#/jobs?repo=${repository.project}\u0026revision=${push.revision}\u0026selectedTaskRun=${ownTaskId})"
         }
       }
@@ -272,8 +370,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:backfill",
+        "action_perm": "backfill",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },

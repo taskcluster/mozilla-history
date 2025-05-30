@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-translations",
-  "hookId": "in-tree-pr-action-1-generic/da83d2d4dd",
+  "hookId": "in-tree-action-1-train/0fe6dc5248",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task generic at level 1, with `.taskcluster.yml` hash da83d2d4dd.\n\nFor (project, branch) combinations:\ntranslations, branch: 'dev_deen'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task train at level 1, with `.taskcluster.yml` hash 0fe6dc5248.\n\nFor (project, branch) combinations:\ntranslations, branch: 'dev_deen'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-translations/in-tree-pr-action-1-generic/da83d2d4dd",
+    "name": "project-translations/in-tree-action-1-train/0fe6dc5248",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -185,10 +185,10 @@
                         "${normProjectUpper}_BASE_REV": "${base_sha}",
                         "${normProjectUpper}_HEAD_REF": "${head_ref}",
                         "${normProjectUpper}_HEAD_REV": "${head_sha}",
-                        "${normProjectUpper}_REQUIREMENTS": "taskcluster/requirements.txt",
                         "${normProjectUpper}_BASE_REPOSITORY": "${baseRepoUrl}",
                         "${normProjectUpper}_HEAD_REPOSITORY": "${repoUrl}",
-                        "${normProjectUpper}_REPOSITORY_TYPE": "git"
+                        "${normProjectUpper}_REPOSITORY_TYPE": "git",
+                        "${normProjectUpper}_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
                       },
                       {
                         "$if": "isPullRequest",
@@ -448,8 +448,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:train",
+        "action_perm": "train",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
@@ -459,7 +459,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "pr-action",
+      "tasks_for": "action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },

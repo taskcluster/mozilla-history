@@ -1,21 +1,21 @@
 {
-  "hookGroupId": "project-scriptworker",
-  "hookId": "in-tree-action-3-generic/19b7a41d47",
+  "hookGroupId": "project-mozillavpn",
+  "hookId": "in-tree-action-3-generic/ac3d87b7f4",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 19b7a41d47.\n\nFor (project, branch) combinations:\nscriptworker-scripts, branch: 'dev-pushapkscript'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash ac3d87b7f4.\n\nFor (project, branch) combinations:\nmozilla-vpn-client, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-scriptworker/in-tree-action-3-generic/19b7a41d47",
+    "name": "project-mozillavpn/in-tree-action-3-generic/ac3d87b7f4",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
       "in": {
-        "$if": "tasks_for in [\"github-push\", \"action\", \"cron\"] || (tasks_for == \"github-pull-request\" \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+        "$if": "tasks_for in [\"action\", \"cron\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for == \"github-push\" \u0026\u0026 (head_branch == \"refs/heads/main\" || head_branch[:19] == \"refs/heads/releases\"))\n",
         "then": {
           "in": {
             "tags": {
-              "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
+              "$if": "tasks_for == \"github-push\" || isPullRequest",
               "else": {
                 "$if": "tasks_for == \"action\"",
                 "else": {
@@ -35,6 +35,41 @@
             "extra": {
               "$merge": [
                 {
+                  "treeherder": {
+                    "$merge": [
+                      {
+                        "machine": {
+                          "platform": "gecko-decision"
+                        }
+                      },
+                      {
+                        "$if": "tasks_for == \"github-push\" || isPullRequest",
+                        "else": {
+                          "$if": "tasks_for == \"github-release\"",
+                          "else": {
+                            "$if": "tasks_for == \"action\"",
+                            "else": {
+                              "symbol": "${cron.job_symbol}",
+                              "groupSymbol": "cron"
+                            },
+                            "then": {
+                              "symbol": "${action.symbol}",
+                              "groupName": "action-callback",
+                              "groupSymbol": "AC"
+                            }
+                          },
+                          "then": {
+                            "symbol": "ship_mozillavpn"
+                          }
+                        },
+                        "then": {
+                          "symbol": "D"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
                   "$if": "tasks_for == \"action\"",
                   "then": {
                     "action": {
@@ -45,6 +80,9 @@
                         },
                         "taskId": {
                           "$eval": "taskId"
+                        },
+                        "clientId": {
+                          "$eval": "clientId"
                         },
                         "taskGroupId": "${action.taskGroupId}"
                       }
@@ -68,13 +106,34 @@
               ]
             },
             "routes": {
-              "$flatten": [
+              "$flattenDeep": [
                 "checks",
                 {
-                  "$if": "tasks_for == \"github-push\"",
-                  "else": [],
+                  "$if": "!isPullRequest",
                   "then": [
-                    "index.${trustDomain}.v2.${project}.revision.${head_sha}.taskgraph.decision"
+                    "tc-treeherder.v2.${project}.${head_sha}",
+                    {
+                      "$if": "tasks_for == \"github-push\"",
+                      "then": [
+                        "index.mozillavpn.v2.${project}.branch.${short_head_branch}.latest.taskgraph.decision",
+                        "index.mozillavpn.v2.${project}.branch.${short_head_branch}.revision.${head_sha}.taskgraph.decision",
+                        "index.mozillavpn.v2.${project}.revision.${head_sha}.taskgraph.decision"
+                      ]
+                    },
+                    {
+                      "$if": "tasks_for == \"github-release\"",
+                      "then": [
+                        "index.mozillavpn.v2.${project}.release.${head_tag}.taskgraph.decision"
+                      ]
+                    },
+                    {
+                      "$if": "tasks_for == \"cron\"",
+                      "then": [
+                        "index.mozillavpn.v2.${project}.branch.${head_branch}.latest.taskgraph.decision-${cron.job_name}",
+                        "index.mozillavpn.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.decision-${cron.job_name}",
+                        "index.mozillavpn.v2.${project}.branch.${head_branch}.revision.${head_sha}.taskgraph.cron.${ownTaskId}"
+                      ]
+                    }
                   ]
                 }
               ]
@@ -82,40 +141,30 @@
             "scopes": {
               "$if": "tasks_for == \"github-push\"",
               "else": {
-                "$if": "tasks_for == \"github-pull-request\"",
+                "$if": "isPullRequest",
                 "else": {
-                  "$if": "tasks_for == \"action\"",
-                  "else": [
-                    "assume:repo:${repoUrl[8:]}:cron:${cron.job_name}"
-                  ],
+                  "$if": "tasks_for == \"github-release\"",
+                  "else": {
+                    "$if": "tasks_for == \"action\"",
+                    "else": [
+                      "assume:repo:${repoUrl[8:]}:cron:${cron.job_name}"
+                    ],
+                    "then": [
+                      "${action.repo_scope}"
+                    ]
+                  },
                   "then": [
-                    "${action.repo_scope}"
+                    "assume:repo:${repoUrl[8:]}:release:${releaseAction}"
                   ]
                 },
                 "then": [
-                  "assume:repo:github.com/${event.pull_request.base.repo.full_name}:pull-request"
+                  "assume:repo:github.com/${event.pull_request.base.repo.full_name}:${tasks_for[7:]}"
                 ]
               },
-              "then": {
-                "in": [
-                  "assume:repo:${repoUrl[8:]}:branch:${short_head_branch}"
-                ],
-                "$let": {
-                  "short_head_branch": {
-                    "$if": "head_branch[:10] == \"refs/tags/\"",
-                    "else": {
-                      "$if": "head_branch[:11] == \"refs/heads/\"",
-                      "else": "${head_branch}",
-                      "then": {
-                        "$eval": "head_branch[11:]"
-                      }
-                    },
-                    "then": {
-                      "$eval": "head_branch[10:]"
-                    }
-                  }
-                }
-              }
+              "then": [
+                "assume:repo:${repoUrl[8:]}:branch:${short_head_branch}",
+                "secrets:get:project/mozillavpn/tokens"
+              ]
             },
             "taskId": {
               "$if": "tasks_for != \"action\"",
@@ -133,20 +182,22 @@
                   {
                     "REPOSITORIES": {
                       "$json": {
-                        "scriptworker": "Scriptworker-scripts"
+                        "mozillavpn": "MozillaVPN"
                       }
                     },
-                    "SCRIPTWORKER_HEAD_REF": "${head_branch}",
-                    "SCRIPTWORKER_HEAD_REV": "${head_sha}",
-                    "SCRIPTWORKER_BASE_REPOSITORY": "${baseRepoUrl}",
-                    "SCRIPTWORKER_HEAD_REPOSITORY": "${repoUrl}",
-                    "SCRIPTWORKER_REPOSITORY_TYPE": "git",
-                    "SCRIPTWORKER_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                    "ANDROID_SDK_ROOT": "/builds/worker/android-sdk",
+                    "MOZILLAVPN_HEAD_REF": "${head_branch}",
+                    "MOZILLAVPN_HEAD_REV": "${head_sha}",
+                    "MOZILLAVPN_HEAD_TAG": "${head_tag}",
+                    "MOZILLAVPN_BASE_REPOSITORY": "${baseRepoUrl}",
+                    "MOZILLAVPN_HEAD_REPOSITORY": "${repoUrl}",
+                    "MOZILLAVPN_REPOSITORY_TYPE": "git",
+                    "MOZILLAVPN_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
                   },
                   {
-                    "$if": "tasks_for in [\"github-pull-request\"]",
+                    "$if": "isPullRequest",
                     "then": {
-                      "SCRIPTWORKER_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
+                      "MOZILLAVPN_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
                     }
                   },
                   {
@@ -168,10 +219,10 @@
                   }
                 ]
               },
-              "image": "mozillareleases/taskgraph:decision-8af16934fd68303cebf9735705515cb48df542d251c04e921c7ac50564faac32@sha256:2965f42c2e91fc66ae7bd27d5dff88297225a90d04ebc6de23c538e3933d4049",
+              "image": "mozillareleases/taskgraph:decision-v14.2.1@sha256:f4e3a22df9ec0017a2534b3a7b4cd9b60318f86619e0c2156c12c1ec1a0e32cb",
               "command": [
-                "/usr/local/bin/run-task",
-                "--scriptworker-checkout=/builds/worker/checkouts/src",
+                "run-task",
+                "--mozillavpn-checkout=/builds/worker/checkouts/src",
                 "--task-cwd=/builds/worker/checkouts/src",
                 "--",
                 "bash",
@@ -179,8 +230,8 @@
                 {
                   "in": {
                     "$if": "tasks_for == \"action\"",
-                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$SCRIPTWORKER_BASE_REPOSITORY\" --head-repository=\"$SCRIPTWORKER_HEAD_REPOSITORY\" --head-ref=\"$SCRIPTWORKER_HEAD_REF\" --head-rev=\"$SCRIPTWORKER_HEAD_REV\" --repository-type=\"$SCRIPTWORKER_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
-                    "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$MOZILLAVPN_BASE_REPOSITORY\" --head-repository=\"$MOZILLAVPN_HEAD_REPOSITORY\" --head-ref=\"$MOZILLAVPN_HEAD_REF\" --head-rev=\"$MOZILLAVPN_HEAD_REV\" --head-tag=\"$MOZILLAVPN_HEAD_TAG\" --repository-type=\"$MOZILLAVPN_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
+                    "then": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                   },
                   "$let": {
                     "extraArgs": {
@@ -224,21 +275,24 @@
                   "source": "${repoUrl}/raw/${head_sha}/.taskcluster.yml"
                 },
                 {
-                  "$if": "tasks_for in [\"github-push\", \"github-pull-request\"]",
-                  "else": {
-                    "$if": "tasks_for == \"action\"",
-                    "else": {
-                      "name": "Decision Task for cron job ${cron.job_name}",
-                      "description": "Created by a [cron task](https://tools.taskcluster.net/tasks/${cron.task_id})"
-                    },
-                    "then": {
-                      "name": "Action: ${action.title}",
-                      "description": "${action.description}"
-                    }
-                  },
+                  "$if": "tasks_for in [\"github-push\", \"github-release\"] || isPullRequest",
                   "then": {
-                    "name": "Decision Task",
+                    "name": "Decision Task (${tasks_for[7:]})",
                     "description": "The task that creates all of the other tasks in the task graph"
+                  }
+                },
+                {
+                  "$if": "tasks_for == \"action\"",
+                  "then": {
+                    "name": "Action: ${action.title}",
+                    "description": "${action.description}\n\nAction triggered by clientID `${clientId}`\n"
+                  }
+                },
+                {
+                  "$if": "tasks_for == \"cron\"",
+                  "then": {
+                    "name": "Decision Task for cron job ${cron.job_name}",
+                    "description": "Created by a [cron task](https://firefox-ci-tc.services.mozilla.com/tasks/${cron.task_id})"
                   }
                 }
               ]
@@ -252,22 +306,28 @@
               "else": "${ownTaskId}",
               "then": "${action.taskGroupId}"
             },
-            "provisionerId": "${trustDomain}-${level}"
+            "provisionerId": "mozillavpn-${level}"
           },
           "$let": {
             "level": {
-              "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-releng/scriptworker-scripts\"",
-              "else": 1,
-              "then": 3
+              "$if": "tasks_for in [\"github-push\", \"github-release\", \"action\", \"cron\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-mobile/mozilla-vpn-client\"",
+              "else": "1",
+              "then": "3"
+            },
+            "short_head_branch": {
+              "$if": "head_branch[:11] == \"refs/heads/\"",
+              "then": {
+                "$eval": "head_branch[11:]"
+              }
             }
           }
         }
       },
       "$let": {
         "project": {
-          "$if": "tasks_for == \"github-push\"",
+          "$if": "tasks_for in [\"github-push\", \"github-release\"]",
           "else": {
-            "$if": "tasks_for == \"github-pull-request\"",
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
             "else": {
               "$if": "tasks_for in [\"cron\", \"action\"]",
               "then": "${repository.project}"
@@ -277,9 +337,9 @@
           "then": "${event.repository.name}"
         },
         "repoUrl": {
-          "$if": "tasks_for == \"github-push\"",
+          "$if": "tasks_for in [\"github-push\", \"github-release\"]",
           "else": {
-            "$if": "tasks_for == \"github-pull-request\"",
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
             "else": {
               "$if": "tasks_for in [\"cron\", \"action\"]",
               "then": "${repository.url}"
@@ -291,14 +351,23 @@
         "head_sha": {
           "$if": "tasks_for == \"github-push\"",
           "else": {
-            "$if": "tasks_for == \"github-pull-request\"",
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
             "else": {
-              "$if": "tasks_for in [\"cron\", \"action\"]",
-              "then": "${push.revision}"
+              "$if": "tasks_for == \"github-release\"",
+              "else": {
+                "$if": "tasks_for in [\"action\", \"cron\"]",
+                "then": "${push.revision}"
+              },
+              "then": "${event.release.tag_name}"
             },
             "then": "${event.pull_request.head.sha}"
           },
           "then": "${event.after}"
+        },
+        "head_tag": {
+          "$if": "tasks_for == \"github-release\"",
+          "else": "",
+          "then": "${event.release.tag_name}"
         },
         "ownTaskId": {
           "$if": "\"github\" in tasks_for",
@@ -311,21 +380,25 @@
           }
         },
         "ownerEmail": {
-          "$if": "tasks_for == \"github-push\"",
+          "$if": "tasks_for in [\"cron\", \"action\"]",
           "else": {
-            "$if": "tasks_for == \"github-pull-request\"",
+            "$if": "tasks_for == \"github-push\"",
             "else": {
-              "$if": "tasks_for in [\"cron\", \"action\"]",
-              "then": "${tasks_for}@noreply.mozilla.org"
+              "$if": "tasks_for[:19] == \"github-pull-request\"",
+              "else": {
+                "$if": "tasks_for == \"github-release\"",
+                "then": "${event.sender.login}@users.noreply.github.com"
+              },
+              "then": "${event.pull_request.user.login}@users.noreply.github.com"
             },
-            "then": "${event.pull_request.user.login}@users.noreply.github.com"
+            "then": "${event.pusher.email}"
           },
-          "then": "${event.pusher.email}"
+          "then": "${tasks_for}@noreply.mozilla.org"
         },
         "baseRepoUrl": {
-          "$if": "tasks_for == \"github-push\"",
+          "$if": "tasks_for in [\"github-push\", \"github-release\"]",
           "else": {
-            "$if": "tasks_for == \"github-pull-request\"",
+            "$if": "tasks_for[:19] == \"github-pull-request\"",
             "else": {
               "$if": "tasks_for in [\"cron\", \"action\"]",
               "then": "${repository.url}"
@@ -335,20 +408,32 @@
           "then": "${event.repository.html_url}"
         },
         "head_branch": {
-          "$if": "tasks_for == \"github-pull-request\"",
+          "$if": "tasks_for[:19] == \"github-pull-request\"",
           "else": {
             "$if": "tasks_for == \"github-push\"",
             "else": {
-              "$if": "tasks_for in [\"cron\", \"action\"]",
-              "then": "${push.branch}"
+              "$if": "tasks_for == \"github-release\"",
+              "else": {
+                "$if": "tasks_for in [\"action\", \"cron\"]",
+                "then": "${push.branch}"
+              },
+              "then": "${event.release.target_commitish}"
             },
             "then": "${event.ref}"
           },
           "then": "${event.pull_request.head.ref}"
         },
-        "trustDomain": "scriptworker",
+        "trustDomain": "mozillavpn",
+        "isPullRequest": {
+          "$eval": "tasks_for[:19] == \"github-pull-request\""
+        },
+        "releaseAction": {
+          "$if": "tasks_for == \"github-release\"",
+          "else": "UNDEFINED",
+          "then": "${event.action}"
+        },
         "pullRequestAction": {
-          "$if": "tasks_for == \"github-pull-request\"",
+          "$if": "tasks_for[:19] == \"github-pull-request\"",
           "else": "UNDEFINED",
           "then": "${event.action}"
         }
