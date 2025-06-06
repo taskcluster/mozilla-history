@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 128,
+    "maxCapacity": 50,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -25,8 +25,7 @@
         "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
+          "provisioningModel": "STANDARD"
         },
         "machineType": "zones/us-central1-a/machineTypes/n1-custom-40-262144",
         "workerConfig": {
@@ -59,7 +58,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-d1ea2ca7a442351cb57c",
+          "launchConfigId": "lc-6cd2f231c4949e08dbbe",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -95,8 +94,7 @@
         "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
+          "provisioningModel": "STANDARD"
         },
         "machineType": "zones/us-central1-b/machineTypes/n1-custom-40-262144",
         "workerConfig": {
@@ -129,7 +127,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-c04c28b5d9649f433d8b",
+          "launchConfigId": "lc-aa7e640961019b9de7c0",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -165,8 +163,7 @@
         "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
+          "provisioningModel": "STANDARD"
         },
         "machineType": "zones/us-central1-c/machineTypes/n1-custom-40-262144",
         "workerConfig": {
@@ -199,7 +196,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-aa46286466e60d5149a4",
+          "launchConfigId": "lc-e40497102ca900cb2e7c",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -235,8 +232,7 @@
         "region": "us-central1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
+          "provisioningModel": "STANDARD"
         },
         "machineType": "zones/us-central1-f/machineTypes/n1-custom-40-262144",
         "workerConfig": {
@@ -269,7 +265,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-2fd98852e323c40195ae",
+          "launchConfigId": "lc-71f4645b5d5602b3a40e",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -305,8 +301,7 @@
         "region": "us-west1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
+          "provisioningModel": "STANDARD"
         },
         "machineType": "zones/us-west1-a/machineTypes/n1-custom-40-262144",
         "workerConfig": {
@@ -339,7 +334,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-ff897497f3de60850f09",
+          "launchConfigId": "lc-2782d2dbe61d06398eb0",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -375,8 +370,7 @@
         "region": "us-west1",
         "scheduling": {
           "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
+          "provisioningModel": "STANDARD"
         },
         "machineType": "zones/us-west1-b/machineTypes/n1-custom-40-262144",
         "workerConfig": {
@@ -409,7 +403,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-5e4a21e34d9ae09ac12b",
+          "launchConfigId": "lc-2b8850152cbdb0f5660e",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -428,84 +422,14 @@
             ]
           }
         ]
-      },
-      {
-        "zone": "us-east1-c",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 1024,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha-tc"
-            }
-          }
-        ],
-        "region": "us-east1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-east1-c/machineTypes/n1-custom-40-262144",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "d2gConfig": {
-                "allowKVM": false,
-                "allowGPUs": true,
-                "enableD2G": true,
-                "allowPrivileged": false,
-                "allowHostSharedMemory": false
-              },
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "maxTaskRunTime": 2592900,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 300,
-              "enableInteractive": true,
-              "livelogExecutable": "/usr/local/bin/livelog",
-              "numberOfTasksToRun": 0,
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
-              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-90eb2dc53f46b6fec802",
-          "capacityPerInstance": 1
-        },
-        "minCpuPlatform": "Intel Skylake",
-        "guestAccelerators": [
-          {
-            "acceleratorType": "zones/us-east1-c/acceleratorTypes/nvidia-tesla-v100",
-            "acceleratorCount": 4
-          }
-        ],
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ]
       }
     ]
   },
-  "created": "2025-05-29T20:46:54.899Z",
+  "created": "2025-06-05T13:32:00.374Z",
   "currentCapacity": 0,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for machine learning and other high GPU tasks",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for machine learning tasks that require standard VMs",
   "emailOnError": true,
-  "lastModified": "2025-06-05T13:20:12.691Z",
+  "lastModified": "2025-06-05T19:45:53.824Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
@@ -516,5 +440,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "translations-1/b-linux-v100-gpu-d2g-4-1tb-alpha"
+  "workerPoolId": "translations-1/b-linux-v100-gpu-d2g-4-1tb-std-alpha"
 }
