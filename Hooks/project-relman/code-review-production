@@ -3,6 +3,10 @@
     {
       "exchange": "exchange/taskcluster-queue/v1/task-completed",
       "routingKeyPattern": "route.project.relman.codereview.v1.try_ending"
+    },
+    {
+      "exchange": "exchange/taskcluster-queue/v1/task-group-resolved",
+      "routingKeyPattern": "#.gecko-level-3.#"
     }
   ],
   "hookGroupId": "project-relman",
@@ -55,14 +59,22 @@
             "$if": "firedBy == 'pulseMessage'",
             "else": {},
             "then": {
-              "TRY_RUN_ID": {
-                "$eval": "payload.runId"
+              "$if": "\"runId\" in payload \u0026\u0026 \"status\" in payload",
+              "else": {
+                "GENERIC_TASK_GROUP_ID": {
+                  "$eval": "payload.taskGroupId"
+                }
               },
-              "TRY_TASK_ID": {
-                "$eval": "payload.status.taskId"
-              },
-              "TRY_TASK_GROUP_ID": {
-                "$eval": "payload.status.taskGroupId"
+              "then": {
+                "TRY_RUN_ID": {
+                  "$eval": "payload.runId"
+                },
+                "TRY_TASK_ID": {
+                  "$eval": "payload.status.taskId"
+                },
+                "TRY_TASK_GROUP_ID": {
+                  "$eval": "payload.status.taskGroupId"
+                }
               }
             }
           }

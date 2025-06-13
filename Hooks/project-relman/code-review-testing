@@ -59,9 +59,7 @@
             "$if": "firedBy == 'pulseMessage'",
             "else": {},
             "then": {
-              "$if": {
-                "$eval": "\"runId\" in payload \u0026\u0026 \"status\" in payload"
-              },
+              "$if": "\"runId\" in payload \u0026\u0026 \"status\" in payload",
               "else": {
                 "GENERIC_TASK_GROUP_ID": {
                   "$eval": "payload.taskGroupId"
