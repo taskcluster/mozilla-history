@@ -5,7 +5,7 @@
       "reregistrationTimeout": 345600,
       "queueInactivityTimeout": 7200
     },
-    "maxCapacity": 400,
+    "maxCapacity": 100,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
@@ -17,8 +17,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
             }
           },
           {
@@ -36,7 +44,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-a/machineTypes/c2-standard-8",
+        "machineType": "zones/us-central1-a/machineTypes/c2-standard-16",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -68,12 +76,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -81,7 +86,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6a09ab82e853998cf95b",
+          "launchConfigId": "lc-ebb9a50c6c6448c26359",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -93,10 +98,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-central1-b",
@@ -106,8 +108,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
             }
           },
           {
@@ -125,7 +135,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/c2-standard-8",
+        "machineType": "zones/us-central1-b/machineTypes/c2-standard-16",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -157,12 +167,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -170,7 +177,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6abc87e77f7a8a5ccf65",
+          "launchConfigId": "lc-431f783488868fa8653d",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -182,10 +189,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-central1-c",
@@ -195,8 +199,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
             }
           },
           {
@@ -214,7 +226,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-c/machineTypes/c2-standard-8",
+        "machineType": "zones/us-central1-c/machineTypes/c2-standard-16",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -246,12 +258,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -259,7 +268,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-c47fac6ffdbbbac7653a",
+          "launchConfigId": "lc-cf7f1f8d546b5099b6dd",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -271,10 +280,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-central1-f",
@@ -284,8 +290,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
             }
           },
           {
@@ -303,7 +317,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/c2-standard-8",
+        "machineType": "zones/us-central1-f/machineTypes/c2-standard-16",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -335,12 +349,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -348,7 +359,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-f4023876cb3041f77331",
+          "launchConfigId": "lc-95ddb00ecd17f6e2e2f6",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -360,10 +371,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-west1-a",
@@ -373,8 +381,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-a/diskTypes/local-ssd"
             }
           },
           {
@@ -392,7 +408,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/c2-standard-8",
+        "machineType": "zones/us-west1-a/machineTypes/c2-standard-16",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -424,12 +440,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -437,7 +450,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-ba9aec79c36f7ddd06da",
+          "launchConfigId": "lc-ce7559f811d31ff2d78c",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -449,10 +462,7 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       },
       {
         "zone": "us-west1-b",
@@ -462,8 +472,16 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-worker-gcp-u14-04-2024-06-14"
+              "diskSizeGb": 20,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-b/diskTypes/local-ssd"
             }
           },
           {
@@ -481,7 +499,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/c2-standard-8",
+        "machineType": "zones/us-west1-b/machineTypes/c2-standard-16",
         "workerConfig": {
           "capacity": 1,
           "shutdown": {
@@ -513,12 +531,9 @@
               "lz4"
             ]
           },
-          "dockerConfig": {
-            "allowPrivileged": true
-          },
           "deviceManagement": {
             "kvm": {
-              "enabled": true
+              "enabled": false
             },
             "hostSharedMemory": {
               "enabled": false
@@ -526,7 +541,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-92e05f3c70d428502be5",
+          "launchConfigId": "lc-712d73ff1ac65e091d5b",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -538,18 +553,15 @@
               }
             ]
           }
-        ],
-        "advancedMachineFeatures": {
-          "enableNestedVirtualization": true
-        }
+        ]
       }
     ]
   },
-  "created": "2024-07-01T13:41:37.960Z",
+  "created": "2025-06-16T15:42:10.094Z",
   "currentCapacity": 0,
-  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for gecko-based automation.",
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for Firefox automation.",
   "emailOnError": true,
-  "lastModified": "2025-03-17T16:07:20.231Z",
+  "lastModified": "2025-06-16T15:42:10.094Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
@@ -560,5 +572,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "gecko-t/t-linux-kvm-gcp-bug1862675"
+  "workerPoolId": "gecko-1/b-linux-gcp-relops1411"
 }
