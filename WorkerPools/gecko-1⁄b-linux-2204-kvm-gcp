@@ -49,7 +49,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-8e4eda7a40e57f29009e",
+          "launchConfigId": "lc-c54710b38cc47f86bcd5",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -106,7 +106,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-e124791e6211b4259393",
+          "launchConfigId": "lc-940d82deaf636e169880",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -163,7 +163,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-848d63a648f6acd17b20",
+          "launchConfigId": "lc-9e6beed6c357eec8c1fa",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -220,7 +220,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-445dccdbe2023026c09c",
+          "launchConfigId": "lc-0be9864e821ed6d9b41a",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -277,7 +277,64 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-c5a3b2efa3a6db082370",
+          "launchConfigId": "lc-c7a0522d886a9cd57958",
+          "capacityPerInstance": 1
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-west1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-west1-c/machineTypes/c2-standard-4",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-dd4089f56028f9d4621f",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -334,7 +391,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-da6bbe800217cbd2b747",
+          "launchConfigId": "lc-a6af3654556d8878e6de",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -357,7 +414,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nKVM-enabled Ubuntu 22.04 GCP builders.",
   "emailOnError": true,
-  "lastModified": "2025-03-17T16:07:18.206Z",
+  "lastModified": "2025-08-27T14:52:30.949Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,

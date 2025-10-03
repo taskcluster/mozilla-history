@@ -50,7 +50,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-705b49a6f77f86d74496",
+          "launchConfigId": "lc-775d29cbc9316186dbbd",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -105,7 +105,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-dbe1a449ed99241df493",
+          "launchConfigId": "lc-b4bf8b5cb85f616cae2d",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -160,7 +160,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-93edb2858e2ce7759eb4",
+          "launchConfigId": "lc-124b46c0589c1ea819f4",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -215,7 +215,62 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-0da13822eca97a952891",
+          "launchConfigId": "lc-a6c9c610cf6f45c16ae4",
+          "capacityPerInstance": 1
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-west1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-west1-c/machineTypes/c2-standard-4",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/taskcluster/secrets/gw_cot_private_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-65ed0b983cea9ed10654",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -270,7 +325,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-93d005fb5d225748de44",
+          "launchConfigId": "lc-03a6ffa642d9c0139600",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -325,7 +380,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-844f3e78e199780059b2",
+          "launchConfigId": "lc-e9d8fe0aa2c487e0bdfd",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -345,7 +400,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for Wayland on Ubuntu 22.04",
   "emailOnError": true,
-  "lastModified": "2025-03-17T16:07:38.177Z",
+  "lastModified": "2025-08-27T14:52:43.049Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,

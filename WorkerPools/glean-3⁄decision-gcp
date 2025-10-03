@@ -78,7 +78,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-2e3fc95c7c8cb337948c",
+          "launchConfigId": "lc-ac5853cf042bc567fead",
           "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -161,7 +161,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-39e871085201990998a0",
+          "launchConfigId": "lc-192884d75810080e9c21",
           "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -244,7 +244,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-67dc8116d518077b22fc",
+          "launchConfigId": "lc-3152998938dc0f050c62",
           "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -327,7 +327,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-540cca1ba7cba744d865",
+          "launchConfigId": "lc-11a34bab40796c9a5a85",
           "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -410,7 +410,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-b3a0a583eab14c36525e",
+          "launchConfigId": "lc-ecf0d8575ad078465c6d",
           "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -493,7 +493,90 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-e4403ef5f9c3d232779d",
+          "launchConfigId": "lc-c5ef351f1e8df38416e6",
+          "capacityPerInstance": 2
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-west1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/fxci-production-level3-workers/global/images/docker-firefoxci-gcp-l3-googlecompute-2024-02-05t23-18-22z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-west1-c/diskTypes/local-ssd"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-west1-c/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "capacity": 2,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-8fc3bc15294e9144499d",
           "capacityPerInstance": 2
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -513,7 +596,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for Firefox automation",
   "emailOnError": false,
-  "lastModified": "2025-03-17T16:07:33.365Z",
+  "lastModified": "2025-08-27T14:52:46.622Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level3-gcp",
   "requestedCapacity": 0,

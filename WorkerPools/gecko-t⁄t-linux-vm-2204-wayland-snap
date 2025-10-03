@@ -52,7 +52,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-e94bb1240b1e8b5712be",
+          "launchConfigId": "lc-2043b4291ab34a8856dc",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -112,7 +112,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-e9fed2f93d782eef1d5d",
+          "launchConfigId": "lc-4e5150fc655a1e55be04",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -172,7 +172,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-bb37a556262b6fb0eb19",
+          "launchConfigId": "lc-fe3a0f380768bb20dee3",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -232,7 +232,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-532a496ce96bc222d809",
+          "launchConfigId": "lc-66b3dcfcb64421533c94",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -292,7 +292,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6755742c3f295e0fbc12",
+          "launchConfigId": "lc-feaf8dce7277c20cf326",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -352,7 +352,67 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6e59bac73fd0bbe34897",
+          "launchConfigId": "lc-b299d2cae10cd5edcd16",
+          "capacityPerInstance": 1
+        },
+        "minCpuPlatform": "Intel Cascadelake",
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ],
+        "advancedMachineFeatures": {
+          "enableNestedVirtualization": true
+        }
+      },
+      {
+        "zone": "us-west1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z"
+            }
+          }
+        ],
+        "region": "us-west1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-west1-c/machineTypes/n2-standard-2",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "/home/ubuntu/tasks",
+              "cachesDir": "/home/ubuntu/caches",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/ubuntu/downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "/home/ubuntu/.taskcluster/livelog",
+              "numberOfTasksToRun": 1,
+              "taskclusterProxyPort": 8081,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/home/ubuntu/generic_worker/ed25519-private.key",
+              "taskclusterProxyExecutable": "/home/ubuntu/.taskcluster/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-678f5bf37f0e918bf13d",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Cascadelake",
@@ -375,7 +435,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for testing Wayland and XWayland on Ubuntu 22.04",
   "emailOnError": true,
-  "lastModified": "2025-03-26T20:30:14.217Z",
+  "lastModified": "2025-08-27T14:52:43.804Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
