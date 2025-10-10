@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-1-merge-automation/a6f97c027d",
+  "hookId": "in-tree-action-1-release-promotion/9360e0e4ad",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task merge-automation at level 1, with `.taskcluster.yml` hash a6f97c027d.\n\nFor (project, branch) combinations:\nstaging-firefox, branch: 'tc-github'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 9360e0e4ad.\n\nFor (project, branch) combinations:\nstaging-firefox, branch: 'tc-github'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-1-merge-automation/a6f97c027d",
+    "name": "project-gecko/in-tree-action-1-release-promotion/9360e0e4ad",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -220,6 +220,7 @@
                   "GECKO_HEAD_REF": "${push.revision}",
                   "GECKO_HEAD_REV": "${push.revision}",
                   "MOZ_AUTOMATION": "1",
+                  "MOZ_UPLOAD_DIR": "/builds/worker/artifacts",
                   "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
                   "TASKCLUSTER_VOLUMES": "/builds/worker/artifacts",
                   "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
@@ -389,8 +390,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:merge-automation",
-        "action_perm": "merge-automation",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "action_perm": "release-promotion",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },

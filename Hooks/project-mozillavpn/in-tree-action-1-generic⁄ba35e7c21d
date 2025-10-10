@@ -1,17 +1,17 @@
 {
   "hookGroupId": "project-mozillavpn",
-  "hookId": "in-tree-action-1-release-promotion/9d40e0340c",
+  "hookId": "in-tree-action-1-generic/ba35e7c21d",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 9d40e0340c.\n\nFor (project, branch) combinations:\nstaging-mozilla-vpn-client, branch: 'releases/naomi/deb-repackage/2.25.0'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash ba35e7c21d.\n\nFor (project, branch) combinations:\nstaging-mozilla-vpn-client, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-mozillavpn/in-tree-action-1-release-promotion/9d40e0340c",
+    "name": "project-mozillavpn/in-tree-action-1-generic/ba35e7c21d",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
       "in": {
-        "$if": "tasks_for in [\"action\", \"cron\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for == \"github-push\" \u0026\u0026 (head_branch == \"refs/heads/main\" || head_branch[:19] == \"refs/heads/releases\")) || (tasks_for == \"github-release\" \u0026\u0026 releaseAction == \"published\")\n",
+        "$if": "tasks_for in [\"action\", \"cron\"] || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for == \"github-push\" \u0026\u0026 (head_branch == \"refs/heads/main\" || head_branch[:19] == \"refs/heads/releases\"))\n",
         "then": {
           "in": {
             "tags": {
@@ -219,7 +219,11 @@
                   }
                 ]
               },
-              "image": "mozillareleases/taskgraph:decision-v11.2.4@sha256:eb53b1ca6b86b1344d61f55aab77b130048c0ae007eef181ec82eec327e91e07",
+              "image": {
+                "path": "public/image.tar.zst",
+                "type": "indexed-image",
+                "namespace": "taskgraph.v2.taskgraph-pr.772.latest.docker-image.decision"
+              },
               "command": [
                 "run-task",
                 "--mozillavpn-checkout=/builds/worker/checkouts/src",
@@ -451,8 +455,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "action_perm": "release-promotion",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },

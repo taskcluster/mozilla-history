@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-pr-action-1-googleplay/a6f97c027d",
+  "hookId": "in-tree-action-1-googleplay/9360e0e4ad",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task googleplay at level 1, with `.taskcluster.yml` hash a6f97c027d.\n\nFor (project, branch) combinations:\nstaging-firefox, branch: 'tc-github'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task googleplay at level 1, with `.taskcluster.yml` hash 9360e0e4ad.\n\nFor (project, branch) combinations:\nstaging-firefox, branch: 'tc-github'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-pr-action-1-googleplay/a6f97c027d",
+    "name": "project-gecko/in-tree-action-1-googleplay/9360e0e4ad",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -220,6 +220,7 @@
                   "GECKO_HEAD_REF": "${push.revision}",
                   "GECKO_HEAD_REV": "${push.revision}",
                   "MOZ_AUTOMATION": "1",
+                  "MOZ_UPLOAD_DIR": "/builds/worker/artifacts",
                   "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
                   "TASKCLUSTER_VOLUMES": "/builds/worker/artifacts",
                   "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
@@ -389,7 +390,7 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:googleplay",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:googleplay",
         "action_perm": "googleplay",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
@@ -400,7 +401,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "pr-action",
+      "tasks_for": "action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },
