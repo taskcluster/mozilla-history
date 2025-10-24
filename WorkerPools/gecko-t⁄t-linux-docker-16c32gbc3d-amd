@@ -10,7 +10,7 @@
     "scalingRatio": 1,
     "launchConfigs": [
       {
-        "zone": "us-central1-b",
+        "zone": "us-central1-a",
         "disks": [
           {
             "boot": true,
@@ -20,14 +20,6 @@
               "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-10-13"
             }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
-            }
           }
         ],
         "region": "us-central1",
@@ -36,7 +28,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-b/machineTypes/c3d-standard-8-lssd",
+        "machineType": "zones/us-central1-a/machineTypes/c3d-highcpu-16",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -68,7 +60,71 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-6ec1220b681cec1f128c",
+          "launchConfigId": "lc-9814e0604e1ed0b7f449",
+          "capacityPerInstance": 1
+        },
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-central1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-10-13"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-central1-b/machineTypes/c3d-highcpu-16",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "allowKVM": false,
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowHostSharedMemory": false
+              },
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/generic-worker/downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-74ed78acf80917ae04f1",
           "capacityPerInstance": 1
         },
         "networkInterfaces": [
@@ -92,14 +148,6 @@
               "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-10-13"
             }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
-            }
           }
         ],
         "region": "us-central1",
@@ -108,7 +156,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-c/machineTypes/c3d-standard-8-lssd",
+        "machineType": "zones/us-central1-c/machineTypes/c3d-highcpu-16",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -140,7 +188,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-210d7f1b153433de7024",
+          "launchConfigId": "lc-d37dd04c55d2bcfaa7d8",
           "capacityPerInstance": 1
         },
         "networkInterfaces": [
@@ -164,14 +212,6 @@
               "diskSizeGb": 75,
               "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-10-13"
             }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
-            }
           }
         ],
         "region": "us-central1",
@@ -180,7 +220,7 @@
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-central1-f/machineTypes/c3d-standard-8-lssd",
+        "machineType": "zones/us-central1-f/machineTypes/c3d-highcpu-16",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -212,79 +252,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-8d8a300421d08dbc4277",
-          "capacityPerInstance": 1
-        },
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "zone": "us-central1-a",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 75,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-10-13"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-a/diskTypes/local-ssd"
-            }
-          }
-        ],
-        "region": "us-central1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-central1-a/machineTypes/c3d-standard-8-lssd",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "cachesDir": "/home/generic-worker/caches",
-              "d2gConfig": {
-                "allowKVM": false,
-                "enableD2G": true,
-                "allowPrivileged": false,
-                "allowHostSharedMemory": false
-              },
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "/home/generic-worker/downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 300,
-              "enableInteractive": true,
-              "livelogExecutable": "/usr/local/bin/livelog",
-              "numberOfTasksToRun": 0,
-              "taskclusterProxyPort": 80,
-              "disableNativePayloads": true,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
-              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-09cbd1f0f4b808c6984a",
+          "launchConfigId": "lc-87a280e32f433389f1df",
           "capacityPerInstance": 1
         },
         "networkInterfaces": [
@@ -299,11 +267,11 @@
       }
     ]
   },
-  "created": "2025-08-18T18:36:41.319Z",
+  "created": "2025-10-23T20:31:41.151Z",
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for test tasks.",
   "emailOnError": true,
-  "lastModified": "2025-10-22T20:48:59.318Z",
+  "lastModified": "2025-10-23T20:31:41.151Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
@@ -314,5 +282,5 @@
   "stoppedCount": 0,
   "stoppingCapacity": 0,
   "stoppingCount": 0,
-  "workerPoolId": "gecko-t/t-linux-docker-amd"
+  "workerPoolId": "gecko-t/t-linux-docker-16c32gbc3d-amd"
 }

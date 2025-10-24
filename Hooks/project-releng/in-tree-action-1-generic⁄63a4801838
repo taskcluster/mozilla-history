@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "in-tree-action-3-generic/e4fd8f3800",
+  "hookId": "in-tree-action-1-generic/63a4801838",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash e4fd8f3800.\n\nFor (project, branch) combinations:\ntooltool, branch: 'production'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 63a4801838.\n\nFor (project, branch) combinations:\nwinsign, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-releng/in-tree-action-3-generic/e4fd8f3800",
+    "name": "project-releng/in-tree-action-1-generic/63a4801838",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -12,7 +12,7 @@
     "in": {
       "in": {
         "in": {
-          "$if": "tasks_for in [\"action\", \"pr-action\", \"cron\"] || (tasks_for == \"github-push\" \u0026\u0026 short_head_ref in [\"main\", \"master\", \"staging\", \"production\"]) || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+          "$if": "tasks_for in [\"action\", \"pr-action\", \"cron\"] || (tasks_for == \"github-push\" \u0026\u0026 short_head_ref == \"main\") || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
           "then": {
             "tags": {
               "$switch": {
@@ -123,9 +123,6 @@
                     }
                   ]
                 },
-                "cache": {
-                  "${trustDomain}-project-${project}-level-${level}-checkouts-sparse-v2": "/builds/worker/checkouts"
-                },
                 "extra": {
                   "$merge": [
                     {
@@ -164,7 +161,7 @@
                     }
                   ]
                 },
-                "image": "mozillareleases/taskgraph:decision-v9.0.0@sha256:e56c7e5cd467c2ce497c344b358f68cc84a4f73f3422e507a97b397d4e617fbd",
+                "image": "mozillareleases/taskgraph:decision-v17.0.0",
                 "command": [
                   "run-task",
                   "--${normProject}-checkout=/builds/worker/checkouts/src",
@@ -270,7 +267,7 @@
         "$let": {
           "level": {
             "$if": "isPullRequest || tasks_for == \"pr-action\"",
-            "else": "3",
+            "else": "1",
             "then": "1"
           },
           "short_base_ref": {
@@ -292,7 +289,7 @@
       "$let": {
         "project": {
           "$switch": {
-            "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.head.repo.name}",
+            "tasks_for[:19] == \"github-pull-request\"": "${event.pull_request.base.repo.name}",
             "tasks_for in [\"cron\", \"action\", \"pr-action\"]": "${repository.project}",
             "tasks_for in [\"github-push\", \"github-release\"]": "${event.repository.name}"
           }

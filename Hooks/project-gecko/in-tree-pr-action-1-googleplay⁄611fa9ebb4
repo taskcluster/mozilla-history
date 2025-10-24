@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-1-release-promotion/9360e0e4ad",
+  "hookId": "in-tree-pr-action-1-googleplay/611fa9ebb4",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 9360e0e4ad.\n\nFor (project, branch) combinations:\nstaging-firefox, branch: 'tc-github'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task googleplay at level 1, with `.taskcluster.yml` hash 611fa9ebb4.\n\nFor (project, branch) combinations:\nstaging-firefox, branch: 'tc-github'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-1-release-promotion/9360e0e4ad",
+    "name": "project-gecko/in-tree-pr-action-1-googleplay/611fa9ebb4",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -390,8 +390,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "action_perm": "release-promotion",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:googleplay",
+        "action_perm": "googleplay",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
@@ -401,7 +401,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "action",
+      "tasks_for": "pr-action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },

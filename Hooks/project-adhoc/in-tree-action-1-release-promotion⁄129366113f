@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-adhoc",
-  "hookId": "in-tree-action-1-generic/2be0c342c3",
+  "hookId": "in-tree-action-1-release-promotion/129366113f",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 2be0c342c3.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 129366113f.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-adhoc/in-tree-action-1-generic/2be0c342c3",
+    "name": "project-adhoc/in-tree-action-1-release-promotion/129366113f",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -138,13 +138,11 @@
                           "adhoc": "Adhoc Manifest"
                         }
                       },
-                      "HG_STORE_PATH": "/builds/worker/checkouts/hg-store",
                       "ADHOC_HEAD_REF": "${head_branch}",
                       "ADHOC_HEAD_REV": "${head_sha}",
                       "ADHOC_BASE_REPOSITORY": "${baseRepoUrl}",
                       "ADHOC_HEAD_REPOSITORY": "${repoUrl}",
-                      "ADHOC_REPOSITORY_TYPE": "git",
-                      "ADHOC_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                      "ADHOC_REPOSITORY_TYPE": "git"
                     },
                     {
                       "$if": "tasks_for in [\"github-pull-request\"]",
@@ -171,7 +169,7 @@
                     }
                   ]
                 },
-                "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+                "image": "mozillareleases/taskgraph:decision-v17.0.0@sha256:bf05dc1a9baeb07972fa5afbfad92bf02eb42e3b2e3384aa1f9fe33927a3b3aa",
                 "command": [
                   "/usr/local/bin/run-task",
                   "--adhoc-checkout=/builds/worker/checkouts/src",
@@ -182,8 +180,8 @@
                   {
                     "in": {
                       "$if": "tasks_for == \"action\"",
-                      "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$ADHOC_BASE_REPOSITORY\" --head-repository=\"$ADHOC_HEAD_REPOSITORY\" --head-ref=\"$ADHOC_HEAD_REF\" --head-rev=\"$ADHOC_HEAD_REV\" --repository-type=\"$ADHOC_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
-                      "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                      "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$ADHOC_BASE_REPOSITORY\" --head-repository=\"$ADHOC_HEAD_REPOSITORY\" --head-ref=\"$ADHOC_HEAD_REF\" --head-rev=\"$ADHOC_HEAD_REV\" --repository-type=\"$ADHOC_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
+                      "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                     },
                     "$let": {
                       "extraArgs": {
@@ -380,8 +378,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "action_perm": "release-promotion",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
