@@ -37,6 +37,9 @@
                 "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
@@ -53,13 +56,14 @@
               "taskclusterProxyPort": 80,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-4478e8a5f49778d0f5a9",
+          "launchConfigId": "lc-9af2b56626b95ec4e44e",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -107,6 +111,9 @@
                 "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
@@ -123,13 +130,14 @@
               "taskclusterProxyPort": 80,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-a303c2b33228f70b2f80",
+          "launchConfigId": "lc-82cf290c503acd8c0649",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -177,6 +185,9 @@
                 "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
@@ -193,13 +204,14 @@
               "taskclusterProxyPort": 80,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-d1b3e9389c2bdaa41225",
+          "launchConfigId": "lc-c826337288841776bd0a",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -247,6 +259,9 @@
                 "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
@@ -263,19 +278,94 @@
               "taskclusterProxyPort": 80,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-b203075901f157935e8b",
+          "launchConfigId": "lc-9a57256499db1b850529",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
         "guestAccelerators": [
           {
             "acceleratorType": "zones/us-central1-f/acceleratorTypes/nvidia-tesla-v100",
+            "acceleratorCount": 4
+          }
+        ],
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-east1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 300,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha-tc"
+            }
+          }
+        ],
+        "region": "us-east1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-east1-c/machineTypes/n1-custom-40-262144",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "d2gConfig": {
+                "allowKVM": false,
+                "allowGPUs": true,
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
+                "allowHostSharedMemory": false
+              },
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "maxTaskRunTime": 2592900,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-a2614d69223cb639cb6f",
+          "capacityPerInstance": 1
+        },
+        "minCpuPlatform": "Intel Skylake",
+        "guestAccelerators": [
+          {
+            "acceleratorType": "zones/us-east1-c/acceleratorTypes/nvidia-tesla-v100",
             "acceleratorCount": 4
           }
         ],
@@ -317,6 +407,9 @@
                 "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
@@ -333,13 +426,14 @@
               "taskclusterProxyPort": 80,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-1344fb58d58b8dd60686",
+          "launchConfigId": "lc-63f1eba509786fec6e6a",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
@@ -387,6 +481,9 @@
                 "allowGPUs": true,
                 "enableD2G": true,
                 "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
                 "allowHostSharedMemory": false
               },
               "wstAudience": "firefoxcitc",
@@ -403,89 +500,20 @@
               "taskclusterProxyPort": 80,
               "shutdownMachineOnIdle": true,
               "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
               "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
               "shutdownMachineOnInternalError": true
             }
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-8db5e707164c46832390",
+          "launchConfigId": "lc-aac9362fa5b7160d410b",
           "capacityPerInstance": 1
         },
         "minCpuPlatform": "Intel Skylake",
         "guestAccelerators": [
           {
             "acceleratorType": "zones/us-west1-b/acceleratorTypes/nvidia-tesla-v100",
-            "acceleratorCount": 4
-          }
-        ],
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "zone": "us-east1-c",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 300,
-              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha-tc"
-            }
-          }
-        ],
-        "region": "us-east1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-east1-c/machineTypes/n1-custom-40-262144",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "d2gConfig": {
-                "allowKVM": false,
-                "allowGPUs": true,
-                "enableD2G": true,
-                "allowPrivileged": false,
-                "allowHostSharedMemory": false
-              },
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "maxTaskRunTime": 2592900,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 300,
-              "enableInteractive": true,
-              "livelogExecutable": "/usr/local/bin/livelog",
-              "numberOfTasksToRun": 0,
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
-              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-d4ad7d7342aeb3585ff6",
-          "capacityPerInstance": 1
-        },
-        "minCpuPlatform": "Intel Skylake",
-        "guestAccelerators": [
-          {
-            "acceleratorType": "zones/us-east1-c/acceleratorTypes/nvidia-tesla-v100",
             "acceleratorCount": 4
           }
         ],
@@ -505,7 +533,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for machine learning and other high GPU tasks",
   "emailOnError": true,
-  "lastModified": "2025-08-14T14:04:55.407Z",
+  "lastModified": "2025-10-28T09:52:37.619Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
