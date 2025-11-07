@@ -10,276 +10,6 @@
     "scalingRatio": 1,
     "launchConfigs": [
       {
-        "zone": "us-central1-c",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 20,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
-            }
-          }
-        ],
-        "region": "us-central1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-central1-c/machineTypes/c3d-standard-30-lssd",
-        "workerConfig": {
-          "capacity": 1,
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 120
-          },
-          "artifacts": {
-            "skipCompressionExtensions": [
-              ".7z",
-              ".bz2",
-              ".deb",
-              ".dmg",
-              ".flv",
-              ".gif",
-              ".gz",
-              ".jpeg",
-              ".jpg",
-              ".png",
-              ".swf",
-              ".tbz",
-              ".tgz",
-              ".webp",
-              ".whl",
-              ".woff",
-              ".woff2",
-              ".xz",
-              ".zip",
-              ".zst",
-              "lz4"
-            ]
-          },
-          "deviceManagement": {
-            "kvm": {
-              "enabled": false
-            },
-            "hostSharedMemory": {
-              "enabled": false
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-318875dcccd7ab30e49c",
-          "capacityPerInstance": 1
-        },
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "zone": "us-central1-f",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 20,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
-            }
-          }
-        ],
-        "region": "us-central1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-central1-f/machineTypes/c3d-standard-30-lssd",
-        "workerConfig": {
-          "capacity": 1,
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 120
-          },
-          "artifacts": {
-            "skipCompressionExtensions": [
-              ".7z",
-              ".bz2",
-              ".deb",
-              ".dmg",
-              ".flv",
-              ".gif",
-              ".gz",
-              ".jpeg",
-              ".jpg",
-              ".png",
-              ".swf",
-              ".tbz",
-              ".tgz",
-              ".webp",
-              ".whl",
-              ".woff",
-              ".woff2",
-              ".xz",
-              ".zip",
-              ".zst",
-              "lz4"
-            ]
-          },
-          "deviceManagement": {
-            "kvm": {
-              "enabled": false
-            },
-            "hostSharedMemory": {
-              "enabled": false
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-5594716897b9b87e3576",
-          "capacityPerInstance": 1
-        },
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "zone": "us-central1-b",
-        "disks": [
-          {
-            "boot": true,
-            "type": "PERSISTENT",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskSizeGb": 20,
-              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
-            }
-          },
-          {
-            "type": "SCRATCH",
-            "interface": "NVME",
-            "autoDelete": true,
-            "initializeParams": {
-              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
-            }
-          }
-        ],
-        "region": "us-central1",
-        "scheduling": {
-          "onHostMaintenance": "terminate",
-          "provisioningModel": "SPOT",
-          "instanceTerminationAction": "DELETE"
-        },
-        "machineType": "zones/us-central1-b/machineTypes/c3d-standard-30-lssd",
-        "workerConfig": {
-          "capacity": 1,
-          "shutdown": {
-            "enabled": true,
-            "afterIdleSeconds": 120
-          },
-          "artifacts": {
-            "skipCompressionExtensions": [
-              ".7z",
-              ".bz2",
-              ".deb",
-              ".dmg",
-              ".flv",
-              ".gif",
-              ".gz",
-              ".jpeg",
-              ".jpg",
-              ".png",
-              ".swf",
-              ".tbz",
-              ".tgz",
-              ".webp",
-              ".whl",
-              ".woff",
-              ".woff2",
-              ".xz",
-              ".zip",
-              ".zst",
-              "lz4"
-            ]
-          },
-          "deviceManagement": {
-            "kvm": {
-              "enabled": false
-            },
-            "hostSharedMemory": {
-              "enabled": false
-            }
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-16a864cb8e13aac3a556",
-          "capacityPerInstance": 1
-        },
-        "networkInterfaces": [
-          {
-            "accessConfigs": [
-              {
-                "type": "ONE_TO_ONE_NAT"
-              }
-            ]
-          }
-        ]
-      },
-      {
         "zone": "us-central1-a",
         "disks": [
           {
@@ -287,7 +17,7 @@
             "type": "PERSISTENT",
             "autoDelete": true,
             "initializeParams": {
-              "diskSizeGb": 20,
+              "diskSizeGb": 60,
               "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
             }
           },
@@ -356,7 +86,277 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-77f8d1942358eb15a598",
+          "launchConfigId": "lc-8ff26de8ea23f893ceaa",
+          "capacityPerInstance": 1
+        },
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-central1-b",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-b/diskTypes/local-ssd"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-central1-b/machineTypes/c3d-standard-30-lssd",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-88f6a7019f44d9302dda",
+          "capacityPerInstance": 1
+        },
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-central1-c",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-c/diskTypes/local-ssd"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-central1-c/machineTypes/c3d-standard-30-lssd",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-f93e5d8b91a0c8385734",
+          "capacityPerInstance": 1
+        },
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-central1-f",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 60,
+              "sourceImage": "projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
+            }
+          },
+          {
+            "type": "SCRATCH",
+            "interface": "NVME",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskType": "zones/us-central1-f/diskTypes/local-ssd"
+            }
+          }
+        ],
+        "region": "us-central1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-central1-f/machineTypes/c3d-standard-30-lssd",
+        "workerConfig": {
+          "capacity": 1,
+          "shutdown": {
+            "enabled": true,
+            "afterIdleSeconds": 120
+          },
+          "artifacts": {
+            "skipCompressionExtensions": [
+              ".7z",
+              ".bz2",
+              ".deb",
+              ".dmg",
+              ".flv",
+              ".gif",
+              ".gz",
+              ".jpeg",
+              ".jpg",
+              ".png",
+              ".swf",
+              ".tbz",
+              ".tgz",
+              ".webp",
+              ".whl",
+              ".woff",
+              ".woff2",
+              ".xz",
+              ".zip",
+              ".zst",
+              "lz4"
+            ]
+          },
+          "deviceManagement": {
+            "kvm": {
+              "enabled": false
+            },
+            "hostSharedMemory": {
+              "enabled": false
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-85162344e6e4ab1cc04a",
           "capacityPerInstance": 1
         },
         "networkInterfaces": [
@@ -375,7 +375,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for Firefox automation.",
   "emailOnError": true,
-  "lastModified": "2025-10-16T17:13:55.369Z",
+  "lastModified": "2025-11-04T14:09:20.706Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,
