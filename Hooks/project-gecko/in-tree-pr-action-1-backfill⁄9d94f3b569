@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-pr-action-1-merge-automation/00ff2c3d1e",
+  "hookId": "in-tree-pr-action-1-backfill/9d94f3b569",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task merge-automation at level 1, with `.taskcluster.yml` hash 00ff2c3d1e.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task backfill at level 1, with `.taskcluster.yml` hash 9d94f3b569.\n\nFor (project, branch) combinations:\nstaging-firefox, branch: 'tc-github'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-pr-action-1-merge-automation/00ff2c3d1e",
+    "name": "project-gecko/in-tree-pr-action-1-backfill/9d94f3b569",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -343,7 +343,7 @@
             "then": "low"
           },
           "requires": "all-completed",
-          "workerType": "decision-gcp",
+          "workerType": "decision",
           "schedulerId": "${trustDomain}-level-${repository.level}",
           "taskGroupId": {
             "$if": "tasks_for == \"action\"",
@@ -394,8 +394,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:merge-automation",
-        "action_perm": "merge-automation",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:backfill",
+        "action_perm": "backfill",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
