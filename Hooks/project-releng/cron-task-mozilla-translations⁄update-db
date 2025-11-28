@@ -1,0 +1,68 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-mozilla-translations/update-db",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-mozilla-translations/update-db",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-mozilla-translations/update-db"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:b85b7e401f2581bedef95c2a37a3201713f9c0fb@sha256:6c9263f4ff761dc7ce91fe5fbbd7359a15b8b19ee6fd61fbf2fcf78d38c5ff30",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://github.com/mozilla/translations",
+        "--project",
+        "translations",
+        "--level",
+        "1",
+        "--repository-type",
+        "git",
+        "--branch",
+        "main",
+        "--trust-domain",
+        "translations",
+        "--github-token-secret",
+        "project/releng/mobile/github-cron-token",
+        "--force-run=update-db"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://github.com/mozilla/translations",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-translations/update-db",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-mozilla-translations/update-db"
+    },
+    "priority": "normal",
+    "workerType": "build-decision",
+    "schedulerId": "translations-level-1",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}

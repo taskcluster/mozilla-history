@@ -18,6 +18,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "centralindia",
+        "priority": "spot",
+        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-gecko-1/providers/Microsoft.Network/virtualNetworks/vn-central-india-gecko-1/subnets/sn-central-india-gecko-1",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -34,7 +42,7 @@
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
               "numberOfTasksToRun": 0,
               "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win2022642009alpha-1.0.0.md"
+                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win2022-64-2009-alpha-1.0.0.md"
               },
               "disableOOMProtection": true,
               "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
@@ -47,32 +55,34 @@
             }
           }
         },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_D32ads_v6"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022642009alpha/images/win2022642009alpha/versions/1.0.0"
-            },
-            "location": {
-              "value": "centralindia"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-gecko-1/providers/Microsoft.Network/virtualNetworks/vn-central-india-gecko-1/subnets/sn-central-india-gecko-1"
+        "workerManager": {
+          "launchConfigId": "lc-c447715fb06a7858887a",
+          "capacityPerInstance": 1
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "caching": "ReadOnly",
+            "createOption": "FromImage",
+            "diffDiskSettings": {
+              "option": "Local"
             }
           },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          "imageReference": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009_alpha/images/win2022_64_2009_alpha/versions/1.0.0"
           }
         },
-        "workerManager": {
-          "launchConfigId": "lc-93045513b03667fb2657",
-          "capacityPerInstance": 1
+        "hardwareProfile": {
+          "vmSize": "Standard_D96ads_v5"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
         }
       }
     ]
@@ -81,7 +91,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2025-11-12T18:25:32.096Z",
+  "lastModified": "2025-11-24T21:15:54.263Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,
