@@ -217,7 +217,7 @@
         ]
       },
       {
-        "zone": "us-west1-a",
+        "zone": "us-east1-b",
         "disks": [
           {
             "boot": true,
@@ -229,13 +229,13 @@
             }
           }
         ],
-        "region": "us-west1",
+        "region": "us-east1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-a/machineTypes/c4d-standard-8",
+        "machineType": "zones/us-east1-b/machineTypes/c4d-standard-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -272,7 +272,7 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-89c7d63a77f9f9017e70",
+          "launchConfigId": "lc-fccddaa74ba8d8f79e60",
           "capacityPerInstance": 1
         },
         "networkInterfaces": [
@@ -286,7 +286,7 @@
         ]
       },
       {
-        "zone": "us-west1-b",
+        "zone": "us-east1-c",
         "disks": [
           {
             "boot": true,
@@ -298,13 +298,13 @@
             }
           }
         ],
-        "region": "us-west1",
+        "region": "us-east1",
         "scheduling": {
           "onHostMaintenance": "terminate",
           "provisioningModel": "SPOT",
           "instanceTerminationAction": "DELETE"
         },
-        "machineType": "zones/us-west1-b/machineTypes/c4d-standard-8",
+        "machineType": "zones/us-east1-c/machineTypes/c4d-standard-8",
         "workerConfig": {
           "genericWorker": {
             "config": {
@@ -341,7 +341,76 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-58dd1fbb9d95820148ac",
+          "launchConfigId": "lc-9b3b71fd8d530596b15a",
+          "capacityPerInstance": 1
+        },
+        "networkInterfaces": [
+          {
+            "accessConfigs": [
+              {
+                "type": "ONE_TO_ONE_NAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "zone": "us-east1-d",
+        "disks": [
+          {
+            "boot": true,
+            "type": "PERSISTENT",
+            "autoDelete": true,
+            "initializeParams": {
+              "diskSizeGb": 75,
+              "sourceImage": "projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2025-11-14"
+            }
+          }
+        ],
+        "region": "us-east1",
+        "scheduling": {
+          "onHostMaintenance": "terminate",
+          "provisioningModel": "SPOT",
+          "instanceTerminationAction": "DELETE"
+        },
+        "machineType": "zones/us-east1-d/machineTypes/c4d-standard-8",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "cachesDir": "/home/generic-worker/caches",
+              "d2gConfig": {
+                "allowKVM": false,
+                "allowGPUs": false,
+                "enableD2G": true,
+                "allowPrivileged": false,
+                "allowInteractive": true,
+                "allowLoopbackAudio": false,
+                "allowLoopbackVideo": true,
+                "allowHostSharedMemory": false
+              },
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "/home/generic-worker/downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 300,
+              "enableInteractive": true,
+              "livelogExecutable": "/usr/local/bin/livelog",
+              "numberOfTasksToRun": 0,
+              "taskclusterProxyPort": 80,
+              "disableNativePayloads": true,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "/etc/generic-worker/ed25519_key",
+              "enableRunTaskAsCurrentUser": false,
+              "taskclusterProxyExecutable": "/usr/local/bin/taskcluster-proxy",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-0e5318e1e8458a06b749",
           "capacityPerInstance": 1
         },
         "networkInterfaces": [
@@ -360,7 +429,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nWorker for Firefox automation",
   "emailOnError": false,
-  "lastModified": "2025-11-18T12:31:58.705Z",
+  "lastModified": "2025-12-08T20:47:28.591Z",
   "owner": "release+tc-workers@mozilla.com",
   "providerId": "fxci-level1-gcp",
   "requestedCapacity": 0,

@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "in-tree-action-3-generic/07ce59fe6f",
+  "hookId": "in-tree-pr-action-1-generic/bb14ce9692",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 07ce59fe6f.\n\nFor (project, branch) combinations:\nfxci-config, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task generic at level 1, with `.taskcluster.yml` hash bb14ce9692.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-releng/in-tree-action-3-generic/07ce59fe6f",
+    "name": "project-releng/in-tree-pr-action-1-generic/bb14ce9692",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -284,7 +284,7 @@
                 "then": "low"
               },
               "requires": "all-completed",
-              "workerType": "decision-gcp",
+              "workerType": "decision",
               "schedulerId": "${trustDomain}-level-${level}",
               "taskGroupId": {
                 "$if": "tasks_for == \"action\"",
@@ -435,7 +435,7 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:generic",
         "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
@@ -446,7 +446,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "action",
+      "tasks_for": "pr-action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },
