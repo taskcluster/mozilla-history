@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-releng",
-  "hookId": "in-tree-pr-action-1-generic/63a4801838",
+  "hookId": "in-tree-action-1-generic/addedbcc36",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task generic at level 1, with `.taskcluster.yml` hash 63a4801838.\n\nFor (project, branch) combinations:\nwinsign, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash addedbcc36.\n\nFor (project, branch) combinations:\nwinsign, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-releng/in-tree-pr-action-1-generic/63a4801838",
+    "name": "project-releng/in-tree-action-1-generic/addedbcc36",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -28,6 +28,44 @@
                   "createdForUser": "${ownerEmail}"
                 }
               }
+            },
+            "extra": {
+              "$merge": [
+                {
+                  "$if": "tasks_for in [\"action\", \"pr-action\"]",
+                  "then": {
+                    "action": {
+                      "name": "${action.name}",
+                      "context": {
+                        "input": {
+                          "$eval": "input"
+                        },
+                        "taskId": {
+                          "$eval": "taskId"
+                        },
+                        "clientId": {
+                          "$eval": "clientId"
+                        },
+                        "taskGroupId": "${action.taskGroupId}"
+                      }
+                    },
+                    "parent": "${action.taskGroupId}"
+                  }
+                },
+                {
+                  "$if": "tasks_for == \"cron\"",
+                  "then": {
+                    "cron": {
+                      "$json": {
+                        "$eval": "cron"
+                      }
+                    }
+                  }
+                },
+                {
+                  "tasks_for": "${tasks_for}"
+                }
+              ]
             },
             "routes": {
               "$flatten": [
@@ -123,44 +161,6 @@
                     }
                   ]
                 },
-                "extra": {
-                  "$merge": [
-                    {
-                      "$if": "tasks_for in [\"action\", \"pr-action\"]",
-                      "then": {
-                        "action": {
-                          "name": "${action.name}",
-                          "context": {
-                            "input": {
-                              "$eval": "input"
-                            },
-                            "taskId": {
-                              "$eval": "taskId"
-                            },
-                            "clientId": {
-                              "$eval": "clientId"
-                            },
-                            "taskGroupId": "${action.taskGroupId}"
-                          }
-                        },
-                        "parent": "${action.taskGroupId}"
-                      }
-                    },
-                    {
-                      "$if": "tasks_for == \"cron\"",
-                      "then": {
-                        "cron": {
-                          "$json": {
-                            "$eval": "cron"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "tasks_for": "${tasks_for}"
-                    }
-                  ]
-                },
                 "image": "mozillareleases/taskgraph:decision-v17.0.0",
                 "command": [
                   "run-task",
@@ -253,7 +253,7 @@
               }
             },
             "requires": "all-completed",
-            "workerType": "decision-gcp",
+            "workerType": "decision",
             "schedulerId": "${trustDomain}-level-${level}",
             "taskGroupId": {
               "$if": "tasks_for in [\"action\", \"pr-action\"]",
@@ -396,7 +396,7 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
         "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
@@ -407,7 +407,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "pr-action",
+      "tasks_for": "action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },

@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-mozilla",
-  "hookId": "in-tree-action-1-generic/abf650a94c",
+  "hookId": "in-tree-action-1-generic/1419148780",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash abf650a94c.\n\nFor (project, branch) combinations:\nsimple-github, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 1419148780.\n\nFor (project, branch) combinations:\nsimple-github, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-mozilla/in-tree-action-1-generic/abf650a94c",
+    "name": "project-mozilla/in-tree-action-1-generic/1419148780",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -110,8 +110,7 @@
                       "${normProjectUpper}_HEAD_REV": "${head_sha}",
                       "${normProjectUpper}_BASE_REPOSITORY": "${baseRepoUrl}",
                       "${normProjectUpper}_HEAD_REPOSITORY": "${repoUrl}",
-                      "${normProjectUpper}_REPOSITORY_TYPE": "git",
-                      "${normProjectUpper}_PIP_REQUIREMENTS": "taskcluster/requirements.txt"
+                      "${normProjectUpper}_REPOSITORY_TYPE": "git"
                     },
                     {
                       "$if": "isPullRequest",
@@ -179,7 +178,7 @@
                     }
                   ]
                 },
-                "image": "mozillareleases/taskgraph:decision-c4ac262880970ca484105929e02dd12f00214d5f2603ab6ce4c0d17de5cd0280@sha256:2dd667994aa13fccdcdcede85c570a5eb4a5247e42875a9e95a135ef774ee469",
+                "image": "mozillareleases/taskgraph:decision-v18.0.3@sha256:c98a061f7f5058b14d0f7cce4fee0cdd2103a48413e85deb948a5fbf0b092458",
                 "command": [
                   "run-task",
                   "--${normProject}-checkout=/builds/worker/checkouts/src",
@@ -189,8 +188,8 @@
                   {
                     "in": {
                       "$if": "tasks_for == \"action\"",
-                      "else": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --owner='${ownerEmail}' --level='${level}' --repository-type=git --tasks-for='${tasks_for}' --base-repository='${baseRepoUrl}' --base-ref='${short_base_ref}' --base-rev='${base_sha}' --head-repository='${repoUrl}' --head-ref='${short_head_ref}' --head-rev='${head_sha}' ${extraArgs}\n",
-                      "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ~/.local/bin/taskgraph action-callback\n"
+                      "else": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --owner='${ownerEmail}' --level='${level}' --repository-type=git --tasks-for='${tasks_for}' --base-repository='${baseRepoUrl}' --base-ref='${short_base_ref}' --base-rev='${base_sha}' --head-repository='${repoUrl}' --head-ref='${short_head_ref}' --head-rev='${head_sha}' ${extraArgs}\n",
+                      "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                     },
                     "$let": {
                       "extraArgs": {

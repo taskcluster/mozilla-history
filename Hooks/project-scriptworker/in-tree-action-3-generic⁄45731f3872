@@ -1,16 +1,16 @@
 {
-  "hookGroupId": "project-releng",
-  "hookId": "in-tree-action-3-generic/2335dcb5b6",
+  "hookGroupId": "project-scriptworker",
+  "hookId": "in-tree-action-3-generic/45731f3872",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 2335dcb5b6.\n\nFor (project, branch) combinations:\nshipit, branch: 'production'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 45731f3872.\n\nFor (project, branch) combinations:\nscriptworker, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-releng/in-tree-action-3-generic/2335dcb5b6",
+    "name": "project-scriptworker/in-tree-action-3-generic/45731f3872",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
-      "$if": "(tasks_for == \"github-pull-request\" \u0026\u0026 event.action in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for in [\"action\", \"cron\"]) || (tasks_for == \"github-push\" \u0026\u0026 event.ref in [\"refs/heads/main\", \"refs/heads/production\", \"refs/heads/dev\"])\n",
+      "$if": "(tasks_for == \"github-pull-request\" \u0026\u0026 event.action in [\"opened\", \"reopened\", \"synchronize\"]) || (tasks_for in [\"action\", \"cron\"]) || (tasks_for == \"github-push\" \u0026\u0026 event.ref == \"refs/heads/main\")\n",
       "then": {
         "in": {
           "in": {
@@ -133,19 +133,19 @@
                   {
                     "REPOSITORIES": {
                       "$json": {
-                        "${repo.name}": "${repo.description}"
+                        "scriptworker": "Scriptworker"
                       }
                     },
-                    "${repo.prefix}_HEAD_REF": "${head_branch}",
-                    "${repo.prefix}_HEAD_REV": "${head_sha}",
-                    "${repo.prefix}_BASE_REPOSITORY": "${baseRepoUrl}",
-                    "${repo.prefix}_HEAD_REPOSITORY": "${repoUrl}",
-                    "${repo.prefix}_REPOSITORY_TYPE": "git"
+                    "SCRIPTWORKER_HEAD_REF": "${head_branch}",
+                    "SCRIPTWORKER_HEAD_REV": "${head_sha}",
+                    "SCRIPTWORKER_BASE_REPOSITORY": "${baseRepoUrl}",
+                    "SCRIPTWORKER_HEAD_REPOSITORY": "${repoUrl}",
+                    "SCRIPTWORKER_REPOSITORY_TYPE": "git"
                   },
                   {
                     "$if": "tasks_for in [\"github-pull-request\"]",
                     "then": {
-                      "${repo.prefix}_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
+                      "SCRIPTWORKER_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
                     }
                   },
                   {
@@ -167,10 +167,10 @@
                   }
                 ]
               },
-              "image": "mozillareleases/taskgraph:decision-v14.4.1@sha256:d5116d01d51856be2c143f260d0ba44f9b07576aa7104744bb94335534de2638",
+              "image": "mozillareleases/taskgraph:decision-v7.2.1@sha256:6ff20f06a760af0d47d3f54c8c334a1b20afbbc54d7b36b49a542ce828762ff8",
               "command": [
-                "/usr/local/bin/run-task",
-                "--${repo.name}-checkout=/builds/worker/checkouts/src",
+                "run-task",
+                "--scriptworker-checkout=/builds/worker/checkouts/src",
                 "--task-cwd=/builds/worker/checkouts/src",
                 "--",
                 "bash",
@@ -178,7 +178,7 @@
                 {
                   "in": {
                     "$if": "tasks_for == \"action\"",
-                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"${'$'+repo.prefix}_BASE_REPOSITORY\" --head-repository=\"${'$'+repo.prefix}_HEAD_REPOSITORY\" --head-ref=\"${'$'+repo.prefix}_HEAD_REF\" --head-rev=\"${'$'+repo.prefix}_HEAD_REV\" --repository-type=\"${'$'+repo.prefix}_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
+                    "else": "ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph decision --pushlog-id='0' --pushdate='0' --project='${project}' --message=\"\" --owner='${ownerEmail}' --level='${level}' --base-repository=\"$SCRIPTWORKER_BASE_REPOSITORY\" --head-repository=\"$SCRIPTWORKER_HEAD_REPOSITORY\" --head-ref=\"$SCRIPTWORKER_HEAD_REF\" --head-rev=\"$SCRIPTWORKER_HEAD_REV\" --repository-type=\"$SCRIPTWORKER_REPOSITORY_TYPE\" --tasks-for='${tasks_for}' ${extraArgs}\n",
                     "then": "cd /builds/worker/checkouts/src \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 taskgraph action-callback\n"
                   },
                   "$let": {
@@ -228,7 +228,7 @@
                     "$if": "tasks_for == \"action\"",
                     "else": {
                       "name": "Decision Task for cron job ${cron.job_name}",
-                      "description": "Created by a [cron task](https://firefox-ci-tc.services.mozilla.com/tasks/${cron.task_id})"
+                      "description": "Created by a [cron task](https://tools.taskcluster.net/tasks/${cron.task_id})"
                     },
                     "then": {
                       "name": "Action: ${action.title}",
@@ -244,7 +244,7 @@
             },
             "priority": "lowest",
             "requires": "all-completed",
-            "workerType": "decision-gcp",
+            "workerType": "decision",
             "schedulerId": "${trustDomain}-level-${level}",
             "taskGroupId": {
               "$if": "tasks_for == \"action\"",
@@ -255,19 +255,13 @@
           },
           "$let": {
             "level": {
-              "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == repo.canonicalUrl",
+              "$if": "tasks_for in [\"github-push\", \"cron\", \"action\"] \u0026\u0026 repoUrl == \"https://github.com/mozilla-releng/scriptworker\"",
               "else": 1,
               "then": 3
             }
           }
         },
         "$let": {
-          "repo": {
-            "name": "shipit",
-            "prefix": "SHIPIT",
-            "description": "Shipit",
-            "canonicalUrl": "https://github.com/mozilla-releng/shipit"
-          },
           "project": {
             "$if": "tasks_for == \"github-push\"",
             "else": {
@@ -350,7 +344,7 @@
             },
             "then": "${event.pull_request.head.ref}"
           },
-          "trustDomain": "releng"
+          "trustDomain": "scriptworker"
         }
       }
     },
