@@ -1,16 +1,16 @@
 {
-  "hookGroupId": "project-enterprise",
-  "hookId": "in-tree-action-3-purge-caches/0fc4db0bae",
+  "hookGroupId": "project-gecko",
+  "hookId": "in-tree-action-3-generic/a7a1964520",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task purge-caches at level 3, with `.taskcluster.yml` hash 0fc4db0bae.\n\nFor (project, branch) combinations:\nenterprise-firefox, branch: 'enterprise-main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash a7a1964520.\n\nFor (project, branch) combinations:\nautoland, branch: 'default'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
     "emailOnError": true,
-    "name": "project-enterprise/in-tree-action-3-purge-caches/0fc4db0bae",
+    "name": "project-gecko/in-tree-action-3-generic/a7a1964520",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
-      "$if": "tasks_for in [\"hg-push\", \"cron\"] || (tasks_for == \"action\" \u0026\u0026 parameters[\"repository_type\"] == \"hg\")",
+      "$if": "tasks_for in [\"hg-push\", \"action\", \"cron\"]",
       "then": {
         "in": {
           "tags": {
@@ -225,8 +225,7 @@
                   "TASKCLUSTER_VOLUMES": "/builds/worker/artifacts",
                   "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
                   "GECKO_HEAD_REPOSITORY": "${repoUrl}",
-                  "PYTHONDONTWRITEBYTECODE": "1",
-                  "MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE": "system"
+                  "PYTHONDONTWRITEBYTECODE": "1"
                 },
                 {
                   "$if": "tasks_for == \"action\"",
@@ -394,8 +393,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:purge-caches",
-        "action_perm": "purge-caches",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },

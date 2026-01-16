@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-3-backfill/5ad9ebbbba",
+  "hookId": "in-tree-action-3-backfill/a7a1964520",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task backfill at level 3, with `.taskcluster.yml` hash 5ad9ebbbba.\n\nFor (project, branch) combinations:\nmozilla-central, branch: 'default'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task backfill at level 3, with `.taskcluster.yml` hash a7a1964520.\n\nFor (project, branch) combinations:\nautoland, branch: 'default'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-3-backfill/5ad9ebbbba",
+    "name": "project-gecko/in-tree-action-3-backfill/a7a1964520",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -225,8 +225,7 @@
                   "TASKCLUSTER_VOLUMES": "/builds/worker/artifacts",
                   "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
                   "GECKO_HEAD_REPOSITORY": "${repoUrl}",
-                  "PYTHONDONTWRITEBYTECODE": "1",
-                  "MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE": "system"
+                  "PYTHONDONTWRITEBYTECODE": "1"
                 },
                 {
                   "$if": "tasks_for == \"action\"",
@@ -250,9 +249,9 @@
             "cache": {
               "${trustDomain}-level-${repository.level}-checkouts-sparse-v4": "/builds/worker/checkouts"
             },
-            "image": "mozillareleases/gecko_decision:5.0.0@sha256:9e000c9fd31ee1723927aeea2b82b95ff2ecf32ebdb7a5d893300281a1452670",
+            "image": "mozillareleases/gecko_decision:5.1.0@sha256:8879ecb7f859e1001b0aa67de440a18c3a896446bfd0e2e87688bb367e590667",
             "command": [
-              "/builds/worker/bin/run-task",
+              "/builds/worker/bin/run-task-hg",
               "--gecko-checkout=/builds/worker/checkouts/gecko",
               "--gecko-sparse-profile=build/sparse-profiles/taskgraph",
               "--",
@@ -266,11 +265,13 @@
                 },
                 "$let": {
                   "extraArgs": {
-                    "$switch": {
-                      "$default": "",
-                      "tasks_for == \"cron\"": "${cron.quoted_args}",
-                      "repository.project in [\"autoland\", \"try\"]": "--no-verify"
-                    }
+                    "$if": "tasks_for == \"cron\"",
+                    "else": {
+                      "$if": "repository.project in [\"autoland\", \"try\"]",
+                      "else": "",
+                      "then": "--no-verify"
+                    },
+                    "then": "${cron.quoted_args}"
                   }
                 }
               }
@@ -341,7 +342,7 @@
             "then": "low"
           },
           "requires": "all-completed",
-          "workerType": "decision-gcp",
+          "workerType": "decision",
           "schedulerId": "${trustDomain}-level-${repository.level}",
           "taskGroupId": {
             "$if": "tasks_for == \"action\"",

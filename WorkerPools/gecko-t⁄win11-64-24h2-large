@@ -3,80 +3,12 @@
     "lifecycle": {
       "registrationTimeout": 1800,
       "reregistrationTimeout": 345600,
-      "queueInactivityTimeout": 7200
+      "queueInactivityTimeout": 14400
     },
     "maxCapacity": 100,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
-      {
-        "tags": {
-          "deploymentId": "79dd0f2",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
-        "location": "canadacentral",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "D:\\",
-              "cachesDir": "D:\\caches",
-              "workerType": "win11-64-24h2-large",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "D:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "gecko-t",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win11-64-24h2-1.0.8.md"
-              },
-              "disableOOMProtection": true,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "enableRunTaskAsCurrentUser": false,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_E8ads_v5"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2/images/win11_64_24h2/versions/1.0.8"
-            },
-            "location": {
-              "value": "canadacentral"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-canada-central-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-canada-central-gecko-t/subnets/sn-canada-central-gecko-t"
-            }
-          },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
-          }
-        },
-        "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-97f65f2093237d0de8cf",
-          "capacityPerInstance": 1
-        }
-      },
       {
         "tags": {
           "deploymentId": "79dd0f2",
@@ -697,6 +629,74 @@
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
+        "location": "canadacentral",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
+              "workerType": "win11-64-24h2-large",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "D:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "provisionerId": "gecko-t",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 150,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "workerTypeMetaData": {
+                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win11-64-24h2-1.0.8.md"
+              },
+              "disableOOMProtection": true,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "enableRunTaskAsCurrentUser": false,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_E8ads_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2/images/win11_64_24h2/versions/1.0.8"
+            },
+            "location": {
+              "value": "canadacentral"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-canada-central-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-canada-central-gecko-t/subnets/sn-canada-central-gecko-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
+        "workerManager": {
+          "initialWeight": 1,
+          "launchConfigId": "lc-97f65f2093237d0de8cf",
+          "capacityPerInstance": 1
+        }
+      },
+      {
+        "tags": {
+          "deploymentId": "79dd0f2",
+          "sourceBranch": "windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
         "location": "westus3",
         "workerConfig": {
           "genericWorker": {
@@ -763,7 +763,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2025-12-08T16:40:51.853Z",
+  "lastModified": "2026-01-13T10:53:58.510Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,

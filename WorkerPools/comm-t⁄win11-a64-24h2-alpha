@@ -3,86 +3,12 @@
     "lifecycle": {
       "registrationTimeout": 1800,
       "reregistrationTimeout": 345600,
-      "queueInactivityTimeout": 7200
+      "queueInactivityTimeout": 14400
     },
     "maxCapacity": 500,
     "minCapacity": 0,
     "scalingRatio": 1,
     "launchConfigs": [
-      {
-        "tags": {
-          "deploymentId": "alpha",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
-        "location": "centralindia",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-comm-t/providers/Microsoft.Network/virtualNetworks/vn-central-india-comm-t/subnets/sn-central-india-comm-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
-              "workerType": "win11-a64-24h2-alpha",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "comm-t",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win11-a64-24h2-tester-alpha-1.0.0.md"
-              },
-              "disableOOMProtection": true,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "enableRunTaskAsCurrentUser": false,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-bd0a235c90261b86c751",
-          "capacityPerInstance": 1
-        },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_24h2_tester_alpha/images/win11_a64_24h2_tester_alpha/versions/1.0.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D8ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
-      },
       {
         "tags": {
           "deploymentId": "alpha",
@@ -133,6 +59,80 @@
         "workerManager": {
           "initialWeight": 1,
           "launchConfigId": "lc-cc6fb402cd498feec651",
+          "capacityPerInstance": 1
+        },
+        "billingProfile": {
+          "maxPrice": -1
+        },
+        "evictionPolicy": "Delete",
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Windows",
+            "createOption": "FromImage"
+          },
+          "imageReference": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_24h2_tester_alpha/images/win11_a64_24h2_tester_alpha/versions/1.0.0"
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "Standard_D8ps_v5"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": false
+          }
+        }
+      },
+      {
+        "tags": {
+          "deploymentId": "alpha",
+          "sourceBranch": "windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "centralindia",
+        "priority": "spot",
+        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-comm-t/providers/Microsoft.Network/virtualNetworks/vn-central-india-comm-t/subnets/sn-central-india-comm-t",
+        "osProfile": {
+          "windowsConfiguration": {
+            "timeZone": "UTC",
+            "enableAutomaticUpdates": false
+          }
+        },
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "C:\\",
+              "cachesDir": "C:\\caches",
+              "workerType": "win11-a64-24h2-alpha",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "C:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "provisionerId": "comm-t",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 150,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "workerTypeMetaData": {
+                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win11-a64-24h2-tester-alpha-1.0.0.md"
+              },
+              "disableOOMProtection": true,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "enableRunTaskAsCurrentUser": false,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "workerManager": {
+          "initialWeight": 1,
+          "launchConfigId": "lc-bd0a235c90261b86c751",
           "capacityPerInstance": 1
         },
         "billingProfile": {
@@ -385,7 +385,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2025-12-10T00:43:29.262Z",
+  "lastModified": "2026-01-13T10:54:02.778Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,
