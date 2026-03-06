@@ -1,10 +1,10 @@
 {
-  "hookGroupId": "project-adhoc",
-  "hookId": "in-tree-action-1-release-promotion/649c08c2f2",
+  "hookGroupId": "project-releng",
+  "hookId": "in-tree-action-3-generic/a7ec86c0bb",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash 649c08c2f2.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash a7ec86c0bb.\n\nFor (project, branch) combinations:\ntooltool, branch: 'master'\ntooltool, branch: 'staging'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-adhoc/in-tree-action-1-release-promotion/649c08c2f2",
+    "name": "project-releng/in-tree-action-3-generic/a7ec86c0bb",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -12,7 +12,7 @@
     "in": {
       "in": {
         "in": {
-          "$if": "tasks_for in [\"action\", \"pr-action\", \"cron\"] || (tasks_for == \"github-push\" \u0026\u0026 short_head_ref == \"main\") || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+          "$if": "tasks_for in [\"action\", \"pr-action\", \"cron\"] || (tasks_for == \"github-push\" \u0026\u0026 short_head_ref in [\"main\", \"master\", \"staging\", \"production\"]) || (isPullRequest \u0026\u0026 pullRequestAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
           "then": {
             "tags": {
               "$switch": {
@@ -125,21 +125,21 @@
                     {
                       "REPOSITORIES": {
                         "$json": {
-                          "adhoc": "${normProject}"
+                          "${normProject}": "${normProject}"
                         }
                       },
-                      "ADHOC_BASE_REF": "${base_ref}",
-                      "ADHOC_BASE_REV": "${base_sha}",
-                      "ADHOC_HEAD_REF": "${head_ref}",
-                      "ADHOC_HEAD_REV": "${head_sha}",
-                      "ADHOC_BASE_REPOSITORY": "${baseRepoUrl}",
-                      "ADHOC_HEAD_REPOSITORY": "${repoUrl}",
-                      "ADHOC_REPOSITORY_TYPE": "git"
+                      "${normProjectUpper}_BASE_REF": "${short_base_ref}",
+                      "${normProjectUpper}_BASE_REV": "${base_sha}",
+                      "${normProjectUpper}_HEAD_REF": "${short_head_ref}",
+                      "${normProjectUpper}_HEAD_REV": "${head_sha}",
+                      "${normProjectUpper}_BASE_REPOSITORY": "${baseRepoUrl}",
+                      "${normProjectUpper}_HEAD_REPOSITORY": "${repoUrl}",
+                      "${normProjectUpper}_REPOSITORY_TYPE": "git"
                     },
                     {
                       "$if": "isPullRequest",
                       "then": {
-                        "ADHOC_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
+                        "${normProjectUpper}_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
                       }
                     },
                     {
@@ -161,10 +161,13 @@
                     }
                   ]
                 },
-                "image": "mozillareleases/taskgraph:decision-v19.2.0@sha256:8d13af901bf38feaf5fd8d4353ee57de6e7c0967bb4a27b6eabbb5491ff0bb0c",
+                "cache": {
+                  "${trustDomain}-project-${project}-level-${level}-checkouts-v2": "/builds/worker/checkouts"
+                },
+                "image": "mozillareleases/taskgraph:decision-v19.2.1@sha256:6cf28e0019ac35234e3ad4dc42586161fb77e6791fd593b8440a53f2f8aff8db",
                 "command": [
                   "run-task",
-                  "--adhoc-checkout=/builds/worker/checkouts/src",
+                  "--${normProject}-checkout=/builds/worker/checkouts/src",
                   "--",
                   "bash",
                   "-cx",
@@ -184,7 +187,6 @@
                   }
                 ],
                 "features": {
-                  "chainOfTrust": true,
                   "taskclusterProxy": true
                 },
                 "artifacts": {
@@ -208,6 +210,9 @@
               "$let": {
                 "normProject": {
                   "$eval": "join(split(project, \"-\"), \"_\")"
+                },
+                "normProjectUpper": {
+                  "$eval": "uppercase(join(split(project, \"-\"), \"_\"))"
                 }
               }
             },
@@ -264,7 +269,7 @@
         },
         "$let": {
           "level": {
-            "$if": "isPullRequest || tasks_for == \"pr-action\" || repoUrl != \"https://github.com/mozilla-releng/adhoc-signing\"",
+            "$if": "isPullRequest || tasks_for == \"pr-action\"",
             "else": "3",
             "then": "1"
           },
@@ -365,7 +370,7 @@
             "tasks_for in [\"cron\", \"action\", \"pr-action\"]": "${push.branch}"
           }
         },
-        "trustDomain": "adhoc",
+        "trustDomain": "releng",
         "isPullRequest": {
           "$eval": "tasks_for[:19] == \"github-pull-request\""
         },
@@ -394,8 +399,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
-        "action_perm": "release-promotion",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
