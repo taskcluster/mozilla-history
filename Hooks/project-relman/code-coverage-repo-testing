@@ -17,11 +17,11 @@
   "task": {
     "$merge": [
       {
-        "$if": "'taskGroupId' in payload",
+        "$if": "'coverageIngestionTaskGroupId' in payload",
         "else": {},
         "then": {
           "taskGroupId": {
-            "$eval": "payload.taskGroupId"
+            "$eval": "payload.coverageIngestionTaskGroupId"
           }
         }
       },
@@ -52,7 +52,7 @@
                 "$if": "firedBy == 'pulseMessage'",
                 "else": {},
                 "then": {
-                  "TASK_GROUP_ID": {
+                  "TESTS_TASK_GROUP_ID": {
                     "$eval": "payload.status.taskGroupId"
                   }
                 }
