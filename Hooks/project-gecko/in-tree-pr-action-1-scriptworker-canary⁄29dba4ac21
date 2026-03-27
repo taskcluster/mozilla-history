@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-1-generic/131134a3ea",
+  "hookId": "in-tree-pr-action-1-scriptworker-canary/29dba4ac21",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 131134a3ea.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task scriptworker-canary at level 1, with `.taskcluster.yml` hash 29dba4ac21.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-1-generic/131134a3ea",
+    "name": "project-gecko/in-tree-pr-action-1-scriptworker-canary/29dba4ac21",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -220,13 +220,10 @@
                   "GECKO_HEAD_REF": "${push.revision}",
                   "GECKO_HEAD_REV": "${push.revision}",
                   "MOZ_AUTOMATION": "1",
-                  "MOZ_UPLOAD_DIR": "/builds/worker/artifacts",
                   "TASKCLUSTER_CACHES": "/builds/worker/checkouts",
-                  "TASKCLUSTER_VOLUMES": "/builds/worker/artifacts",
                   "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
                   "GECKO_HEAD_REPOSITORY": "${repoUrl}",
-                  "PYTHONDONTWRITEBYTECODE": "1",
-                  "MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE": "system"
+                  "PYTHONDONTWRITEBYTECODE": "1"
                 },
                 {
                   "$if": "tasks_for == \"action\"",
@@ -248,9 +245,9 @@
               ]
             },
             "cache": {
-              "${trustDomain}-level-${repository.level}-checkouts-sparse-v4": "/builds/worker/checkouts"
+              "${trustDomain}-level-${repository.level}-checkouts-sparse-v3": "/builds/worker/checkouts"
             },
-            "image": "mozillareleases/gecko_decision:5.0.0@sha256:9e000c9fd31ee1723927aeea2b82b95ff2ecf32ebdb7a5d893300281a1452670",
+            "image": "mozillareleases/gecko_decision:4.0.0@sha256:9f69fe08c28e3cb3cc296451f0a2735df6e25d0e3c877ea735ef1b7f0b345b06",
             "command": [
               "/builds/worker/bin/run-task",
               "--gecko-checkout=/builds/worker/checkouts/gecko",
@@ -267,11 +264,7 @@
                 "$let": {
                   "extraArgs": {
                     "$if": "tasks_for == \"cron\"",
-                    "else": {
-                      "$if": "repository.project in [\"autoland\", \"try\"]",
-                      "else": "",
-                      "then": "--no-verify"
-                    },
+                    "else": "",
                     "then": "${cron.quoted_args}"
                   }
                 }
@@ -300,7 +293,7 @@
             "maxRunTime": 3600
           },
           "retries": {
-            "$if": "tasks_for == 'hg-push' \u0026\u0026 repository.level != '1'",
+            "$if": "tasks_for == 'hg-push'",
             "else": 5,
             "then": 0
           },
@@ -394,8 +387,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:scriptworker-canary",
+        "action_perm": "scriptworker-canary",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
@@ -405,7 +398,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "action",
+      "tasks_for": "pr-action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },
