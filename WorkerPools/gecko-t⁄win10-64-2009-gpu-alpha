@@ -17,74 +17,6 @@
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "westus3",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "D:\\",
-              "cachesDir": "D:\\caches",
-              "workerType": "win10-64-2009-gpu-alpha",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "D:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "gecko-t",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win10-64-2009-alpha-1.0.0.md"
-              },
-              "disableOOMProtection": true,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "enableRunTaskAsCurrentUser": false,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_NV12ads_A10_v5"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win10_64_2009_alpha/images/win10_64_2009_alpha/versions/1.0.0"
-            },
-            "location": {
-              "value": "westus3"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-3-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-west-us-3-gecko-t/subnets/sn-west-us-3-gecko-t"
-            }
-          },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
-          }
-        },
-        "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-7cd6e42d5fc6709d9406",
-          "capacityPerInstance": 1
-        }
-      },
-      {
-        "tags": {
-          "deploymentId": "alpha",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
         "location": "eastus",
         "workerConfig": {
           "genericWorker": {
@@ -141,9 +73,10 @@
         },
         "workerManager": {
           "initialWeight": 1,
-          "launchConfigId": "lc-6d0ed7ec7780ee757fe6",
+          "launchConfigId": "lc-69fa39ab686367b480cd",
           "capacityPerInstance": 1
-        }
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win10-64-2009-gpu-alpha"
       },
       {
         "tags": {
@@ -209,9 +142,10 @@
         },
         "workerManager": {
           "initialWeight": 0.8,
-          "launchConfigId": "lc-b817f4da40641aadb49e",
+          "launchConfigId": "lc-f1c842da24d9e76248d9",
           "capacityPerInstance": 1
-        }
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win10-64-2009-gpu-alpha"
       },
       {
         "tags": {
@@ -277,9 +211,10 @@
         },
         "workerManager": {
           "initialWeight": 0.5,
-          "launchConfigId": "lc-f6d154f1918010e21f9c",
+          "launchConfigId": "lc-dc8a7c934bf3e24d1dad",
           "capacityPerInstance": 1
-        }
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win10-64-2009-gpu-alpha"
       },
       {
         "tags": {
@@ -345,9 +280,79 @@
         },
         "workerManager": {
           "initialWeight": 0.8,
-          "launchConfigId": "lc-082efdcff39a9bc784ba",
+          "launchConfigId": "lc-d3f8242d75634367d4ee",
           "capacityPerInstance": 1
-        }
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win10-64-2009-gpu-alpha"
+      },
+      {
+        "tags": {
+          "deploymentId": "alpha",
+          "sourceBranch": "windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "westus3",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
+              "workerType": "win10-64-2009-gpu-alpha",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "D:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "provisionerId": "gecko-t",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 150,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "workerTypeMetaData": {
+                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win10-64-2009-alpha-1.0.0.md"
+              },
+              "disableOOMProtection": true,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "enableRunTaskAsCurrentUser": false,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_NV12ads_A10_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win10_64_2009_alpha/images/win10_64_2009_alpha/versions/1.0.0"
+            },
+            "location": {
+              "value": "westus3"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-3-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-west-us-3-gecko-t/subnets/sn-west-us-3-gecko-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
+        "workerManager": {
+          "initialWeight": 1,
+          "launchConfigId": "lc-f98f85903fd7fd9ea4f7",
+          "capacityPerInstance": 1
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win10-64-2009-gpu-alpha"
       }
     ]
   },
@@ -355,7 +360,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2026-03-26T13:32:57.236Z",
+  "lastModified": "2026-04-08T13:19:47.112Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,

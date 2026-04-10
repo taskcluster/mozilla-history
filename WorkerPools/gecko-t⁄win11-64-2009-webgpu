@@ -73,77 +73,10 @@
         },
         "workerManager": {
           "initialWeight": 1,
-          "launchConfigId": "lc-1dbacc26fe0453b8ab0c",
+          "launchConfigId": "lc-d128a3b0012892cb85a0",
           "capacityPerInstance": 1
-        }
-      },
-      {
-        "tags": {
-          "deploymentId": "96de7f5",
-          "sourceBranch": "cloud_windows",
-          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "westus3",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "D:\\",
-              "cachesDir": "D:\\caches",
-              "workerType": "win11-64-2009-webgpu",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "D:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "provisionerId": "gecko-t",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win11-64-2009-1.3.0.md"
-              },
-              "disableOOMProtection": true,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "enableRunTaskAsCurrentUser": false,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_NV12ads_A10_v5"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_2009/images/win11_64_2009/versions/1.3.0"
-            },
-            "location": {
-              "value": "westus3"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-3-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-west-us-3-gecko-t/subnets/sn-west-us-3-gecko-t"
-            }
-          },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
-          }
-        },
-        "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-2cc3315b4e750d7fdc76",
-          "capacityPerInstance": 1
-        }
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win11-64-2009-webgpu"
       },
       {
         "tags": {
@@ -209,9 +142,10 @@
         },
         "workerManager": {
           "initialWeight": 0.8,
-          "launchConfigId": "lc-6a2d570df3c6c6c12197",
+          "launchConfigId": "lc-b539f266a8c2a70e2d10",
           "capacityPerInstance": 1
-        }
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win11-64-2009-webgpu"
       },
       {
         "tags": {
@@ -277,9 +211,10 @@
         },
         "workerManager": {
           "initialWeight": 0.5,
-          "launchConfigId": "lc-010b0dabe3532eec1862",
+          "launchConfigId": "lc-a090619d18ba228be765",
           "capacityPerInstance": 1
-        }
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win11-64-2009-webgpu"
       },
       {
         "tags": {
@@ -345,9 +280,79 @@
         },
         "workerManager": {
           "initialWeight": 1,
-          "launchConfigId": "lc-d998cdfa372efb83326f",
+          "launchConfigId": "lc-73461e4fa673b3307381",
           "capacityPerInstance": 1
-        }
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win11-64-2009-webgpu"
+      },
+      {
+        "tags": {
+          "deploymentId": "96de7f5",
+          "sourceBranch": "cloud_windows",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
+          "sourceRepository": "ronin_puppet",
+          "sourceOrganisation": "mozilla-platform-ops"
+        },
+        "location": "westus3",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
+              "workerType": "win11-64-2009-webgpu",
+              "wstAudience": "firefoxcitc",
+              "downloadsDir": "D:\\downloads",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "provisionerId": "gecko-t",
+              "sentryProject": "generic-worker",
+              "disableReboots": false,
+              "cleanUpTaskDirs": true,
+              "idleTimeoutSecs": 150,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "numberOfTasksToRun": 0,
+              "workerTypeMetaData": {
+                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win11-64-2009-1.3.0.md"
+              },
+              "disableOOMProtection": true,
+              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
+              "taskclusterProxyPort": 80,
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
+              "enableRunTaskAsCurrentUser": false,
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_NV12ads_A10_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_2009/images/win11_64_2009/versions/1.3.0"
+            },
+            "location": {
+              "value": "westus3"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-3-gecko-t/providers/Microsoft.Network/virtualNetworks/vn-west-us-3-gecko-t/subnets/sn-west-us-3-gecko-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
+        "workerManager": {
+          "initialWeight": 1,
+          "launchConfigId": "lc-2c157c4ed8c5b52fd606",
+          "capacityPerInstance": 1
+        },
+        "armDeploymentResourceGroup": "rg-tc-gecko-t-win11-64-2009-webgpu"
       }
     ]
   },
@@ -355,7 +360,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2026-03-26T13:32:59.831Z",
+  "lastModified": "2026-04-08T13:19:53.024Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,
