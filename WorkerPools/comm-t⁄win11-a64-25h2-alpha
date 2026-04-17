@@ -18,22 +18,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "centralindia",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-comm-t/providers/Microsoft.Network/virtualNetworks/vn-central-india-comm-t/subnets/sn-central-india-comm-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-25h2-alpha",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "comm-t",
               "sentryProject": "generic-worker",
@@ -56,32 +48,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D8pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
+            },
+            "location": {
+              "value": "centralindia"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-comm-t/providers/Microsoft.Network/virtualNetworks/vn-central-india-comm-t/subnets/sn-central-india-comm-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
           "initialWeight": 1,
-          "launchConfigId": "lc-089da32265977188e7ea",
+          "launchConfigId": "lc-cabda47d31e7c9c7995c",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D8ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-comm-t-win11-a64-25h2-alpha"
       },
       {
         "tags": {
@@ -92,22 +87,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "centralus",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-comm-t/providers/Microsoft.Network/virtualNetworks/vn-central-us-comm-t/subnets/sn-central-us-comm-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-25h2-alpha",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "comm-t",
               "sentryProject": "generic-worker",
@@ -130,32 +117,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D8pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
+            },
+            "location": {
+              "value": "centralus"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-comm-t/providers/Microsoft.Network/virtualNetworks/vn-central-us-comm-t/subnets/sn-central-us-comm-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-382cb423cac3985ec010",
+          "initialWeight": 0.6,
+          "launchConfigId": "lc-dede2162e324885fa86e",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D8ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-comm-t-win11-a64-25h2-alpha"
       },
       {
         "tags": {
@@ -166,22 +156,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "eastus2",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-east-us-2-comm-t/providers/Microsoft.Network/virtualNetworks/vn-east-us-2-comm-t/subnets/sn-east-us-2-comm-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-25h2-alpha",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "comm-t",
               "sentryProject": "generic-worker",
@@ -204,32 +186,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D8pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
+            },
+            "location": {
+              "value": "eastus2"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-east-us-2-comm-t/providers/Microsoft.Network/virtualNetworks/vn-east-us-2-comm-t/subnets/sn-east-us-2-comm-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-8db64ccf5ba748bebd67",
+          "initialWeight": 0.8,
+          "launchConfigId": "lc-75a076d5b5c08d35868a",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D8ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-comm-t-win11-a64-25h2-alpha"
       },
       {
         "tags": {
@@ -240,22 +225,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "northcentralus",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-north-central-us-comm-t/providers/Microsoft.Network/virtualNetworks/vn-north-central-us-comm-t/subnets/sn-north-central-us-comm-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-25h2-alpha",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "comm-t",
               "sentryProject": "generic-worker",
@@ -278,32 +255,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D8pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
+            },
+            "location": {
+              "value": "northcentralus"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-north-central-us-comm-t/providers/Microsoft.Network/virtualNetworks/vn-north-central-us-comm-t/subnets/sn-north-central-us-comm-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-091c03df36c185f8dd48",
+          "initialWeight": 0.7,
+          "launchConfigId": "lc-dba87bb2f0a4cb497243",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D8ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-comm-t-win11-a64-25h2-alpha"
       },
       {
         "tags": {
@@ -314,22 +294,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "uksouth",
-        "priority": "spot",
-        "subnetId": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-uk-south-comm-t/providers/Microsoft.Network/virtualNetworks/vn-uk-south-comm-t/subnets/sn-uk-south-comm-t",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-25h2-alpha",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "comm-t",
               "sentryProject": "generic-worker",
@@ -352,32 +324,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D8pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
+            },
+            "location": {
+              "value": "uksouth"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-uk-south-comm-t/providers/Microsoft.Network/virtualNetworks/vn-uk-south-comm-t/subnets/sn-uk-south-comm-t"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-faca94d7aa41be36877b",
+          "initialWeight": 0.9,
+          "launchConfigId": "lc-e134cdf54d8183a5d0a7",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D8ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-comm-t-win11-a64-25h2-alpha"
       }
     ]
   },
@@ -385,7 +360,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2026-03-11T15:20:20.679Z",
+  "lastModified": "2026-04-10T16:01:06.309Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,

@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-taskgraph",
-  "hookId": "in-tree-action-3-generic/0330f3a0ae",
+  "hookId": "in-tree-pr-action-1-generic/c4caa52df4",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 0330f3a0ae.\n\nFor (project, branch) combinations:\ntaskgraph, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nPR action task generic at level 1, with `.taskcluster.yml` hash c4caa52df4.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-taskgraph/in-tree-action-3-generic/0330f3a0ae",
+    "name": "project-taskgraph/in-tree-pr-action-1-generic/c4caa52df4",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -216,7 +216,11 @@
                   "$let": {
                     "extraArgs": {
                       "$if": "tasks_for == \"cron\"",
-                      "else": "",
+                      "else": {
+                        "$if": "tasks_for == \"github-pull-request\"",
+                        "else": "",
+                        "then": "--allow-parameter-override"
+                      },
                       "then": "${cron.quoted_args}"
                     }
                   }
@@ -428,7 +432,7 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.base_url[8:]}:action:generic",
         "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
@@ -439,7 +443,7 @@
       "ownTaskId": {
         "$eval": "taskId"
       },
-      "tasks_for": "action",
+      "tasks_for": "pr-action",
       "parameters": {
         "$eval": "payload.decision['parameters']"
       },

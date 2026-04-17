@@ -18,22 +18,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "centralindia",
-        "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-central-india-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-central-india-vpn-3/subnets/sn-central-india-vpn-3",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-24h2-builder",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "mozillavpn-3",
               "sentryProject": "generic-worker",
@@ -56,35 +48,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D16pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
+            },
+            "location": {
+              "value": "centralindia"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-central-india-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-central-india-vpn-3/subnets/sn-central-india-vpn-3"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
           "initialWeight": 1,
-          "launchConfigId": "lc-0cdca16e0a215904902f",
+          "launchConfigId": "lc-702f0a9f4e4af889b57b",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "managedDisk": {
-              "storageAccountType": "Premium_LRS"
-            },
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D16ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-mozillavpn-3-win11-a64-24h2-builder"
       },
       {
         "tags": {
@@ -95,22 +87,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "centralus",
-        "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-central-us-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-central-us-vpn-3/subnets/sn-central-us-vpn-3",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-24h2-builder",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "mozillavpn-3",
               "sentryProject": "generic-worker",
@@ -133,35 +117,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D16pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
+            },
+            "location": {
+              "value": "centralus"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-central-us-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-central-us-vpn-3/subnets/sn-central-us-vpn-3"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
           "initialWeight": 0.8,
-          "launchConfigId": "lc-502ff4479fa543d452a4",
+          "launchConfigId": "lc-d0a40af95c64d76865a3",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "managedDisk": {
-              "storageAccountType": "Premium_LRS"
-            },
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D16ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-mozillavpn-3-win11-a64-24h2-builder"
       },
       {
         "tags": {
@@ -172,22 +156,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "eastus2",
-        "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-east-us-2-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-east-us-2-vpn-3/subnets/sn-east-us-2-vpn-3",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-24h2-builder",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "mozillavpn-3",
               "sentryProject": "generic-worker",
@@ -210,35 +186,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D16pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
+            },
+            "location": {
+              "value": "eastus2"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-east-us-2-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-east-us-2-vpn-3/subnets/sn-east-us-2-vpn-3"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
           "initialWeight": 0.9,
-          "launchConfigId": "lc-cd3d2e03f9e55da4474a",
+          "launchConfigId": "lc-883f8d52e43b63c1215c",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "managedDisk": {
-              "storageAccountType": "Premium_LRS"
-            },
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D16ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-mozillavpn-3-win11-a64-24h2-builder"
       },
       {
         "tags": {
@@ -249,22 +225,14 @@
           "sourceOrganisation": "mozilla-platform-ops"
         },
         "location": "northcentralus",
-        "priority": "spot",
-        "subnetId": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-north-central-us-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-north-central-us-vpn-3/subnets/sn-north-central-us-vpn-3",
-        "osProfile": {
-          "windowsConfiguration": {
-            "timeZone": "UTC",
-            "enableAutomaticUpdates": false
-          }
-        },
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\",
-              "cachesDir": "C:\\caches",
+              "tasksDir": "D:\\",
+              "cachesDir": "D:\\caches",
               "workerType": "win11-a64-24h2-builder",
               "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
+              "downloadsDir": "D:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
               "provisionerId": "mozillavpn-3",
               "sentryProject": "generic-worker",
@@ -287,35 +255,35 @@
             }
           }
         },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_D16pds_v5"
+            },
+            "imageId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
+            },
+            "location": {
+              "value": "northcentralus"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-north-central-us-vpn-3/providers/Microsoft.Network/virtualNetworks/vn-north-central-us-vpn-3/subnets/sn-north-central-us-vpn-3"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
         "workerManager": {
           "initialWeight": 0.9,
-          "launchConfigId": "lc-118e80b3d02fefc30dab",
+          "launchConfigId": "lc-8ca5f282d3e74e773ac7",
           "capacityPerInstance": 1
         },
-        "billingProfile": {
-          "maxPrice": -1
-        },
-        "evictionPolicy": "Delete",
-        "storageProfile": {
-          "osDisk": {
-            "osType": "Windows",
-            "managedDisk": {
-              "storageAccountType": "Premium_LRS"
-            },
-            "createOption": "FromImage"
-          },
-          "imageReference": {
-            "id": "/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_24h2_builder/images/trusted_win11_a64_24h2_builder/versions/1.3.0"
-          }
-        },
-        "hardwareProfile": {
-          "vmSize": "Standard_D16ps_v5"
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": false
-          }
-        }
+        "armDeploymentResourceGroup": "rg-tc-mozillavpn-3-win11-a64-24h2-builder"
       }
     ]
   },
@@ -323,7 +291,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2026-03-05T14:52:20.692Z",
+  "lastModified": "2026-04-10T16:01:04.405Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure_trusted",
   "requestedCapacity": 0,

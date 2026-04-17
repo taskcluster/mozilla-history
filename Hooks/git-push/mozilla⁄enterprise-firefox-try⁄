@@ -1,0 +1,113 @@
+{
+  "hookGroupId": "git-push",
+  "hookId": "mozilla/enterprise-firefox-try/",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nOn-push task for branch `*` of repository https://github.com/mozilla/enterprise-firefox-try.\n\nThis hook is triggered manually by in-repo tooling and creates a decision task.\n",
+    "name": "git-push/mozilla/enterprise-firefox-try/",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "index.git-push.v1.enterprise-firefox-try.revision.${payload.sha}"
+    ],
+    "scopes": [
+      "assume:repo:github.com/mozilla/enterprise-firefox-try:branch:*"
+    ],
+    "expires": {
+      "$fromNow": "3 days"
+    },
+    "payload": {
+      "env": {
+        "HOOK_PAYLOAD": {
+          "$json": {
+            "$eval": "payload"
+          }
+        }
+      },
+      "image": "mozillareleases/build-decision:bd900d7a313c796d48da21fdb54ae35db812e3dc@sha256:2a7e477efee5e8b356ea3b642e30b3b5cb48ffe81b0e72bb223b4522b59345d5",
+      "command": [
+        "git-push",
+        "--repo-url",
+        "https://github.com/mozilla/enterprise-firefox-try",
+        "--project",
+        "enterprise-firefox-try",
+        "--level",
+        "1",
+        "--trust-domain",
+        "enterprise",
+        "--repository-type",
+        "git"
+      ],
+      "features": {
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "30 minutes"
+    },
+    "metadata": {
+      "in": {
+        "name": "On-Push task for https://github.com/mozilla/enterprise-firefox-try",
+        "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+        "source": "https://firefox-ci-tc.services.mozilla.com/hooks/git-push/mozilla/enterprise-firefox-try/",
+        "description": "${description}"
+      },
+      "$let": {
+        "description": {
+          "$if": "firedBy == \"triggerHook\"",
+          "else": "Fired by ${firedBy}",
+          "then": "Fired by triggerHook call from ${clientId}"
+        }
+      }
+    },
+    "priority": "highest",
+    "workerType": "build-decision",
+    "schedulerId": "enterprise-level-1",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "required": [
+      "base_sha",
+      "owner",
+      "ref",
+      "sha"
+    ],
+    "properties": {
+      "ref": {
+        "type": "string",
+        "description": "The git ref that was pushed (e.g. refs/heads/main)."
+      },
+      "sha": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{40}$",
+        "description": "The commit SHA after the push."
+      },
+      "owner": {
+        "type": "string",
+        "format": "email",
+        "default": "nobody@mozilla.com",
+        "description": "The email address of the user who pushed."
+      },
+      "base_ref": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "default": null,
+        "description": "The base ref for the push, if any."
+      },
+      "base_sha": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{40}$",
+        "description": "The commit SHA before the push."
+      }
+    },
+    "additionalProperties": false
+  }
+}

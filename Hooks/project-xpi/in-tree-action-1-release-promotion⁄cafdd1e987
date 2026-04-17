@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-xpi",
-  "hookId": "in-tree-action-1-generic/413d26f9d7",
+  "hookId": "in-tree-action-1-release-promotion/cafdd1e987",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash 413d26f9d7.\n\nFor (project, branch) combinations:\nstaging-xpi-manifest, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task release-promotion at level 1, with `.taskcluster.yml` hash cafdd1e987.\n\nFor (project, branch) combinations:\nstaging-xpi-manifest, branch: 'main'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-xpi/in-tree-action-1-generic/413d26f9d7",
+    "name": "project-xpi/in-tree-action-1-release-promotion/cafdd1e987",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -245,7 +245,7 @@
             },
             "priority": "lowest",
             "requires": "all-completed",
-            "workerType": "decision-gcp",
+            "workerType": "decision",
             "schedulerId": "${trustDomain}-level-${level}",
             "taskGroupId": {
               "$if": "tasks_for == \"action\"",
@@ -365,8 +365,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:release-promotion",
+        "action_perm": "release-promotion",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
