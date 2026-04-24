@@ -1,17 +1,17 @@
 {
-  "hookGroupId": "project-gecko",
-  "hookId": "in-tree-action-3-generic/e5a76d797a",
+  "hookGroupId": "project-enterprise",
+  "hookId": "in-tree-action-1-retrigger-decision/36b34780ab",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash e5a76d797a.\n\nFor (project, branch) combinations:\nmozilla-central, branch: 'default'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task retrigger-decision at level 1, with `.taskcluster.yml` hash 36b34780ab.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-gecko/in-tree-action-3-generic/e5a76d797a",
+    "name": "project-enterprise/in-tree-action-1-retrigger-decision/36b34780ab",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
   "task": {
     "in": {
       "$switch": {
-        "tasks_for in [\"hg-push\", \"cron\"] || (tasks_for == \"action\" \u0026\u0026 parameters[\"repository_type\"] == \"hg\")": {
+        "tasks_for == \"hg-push\" || (tasks_for == \"action\" \u0026\u0026 parameters[\"repository_type\"] == \"hg\") || (tasks_for == \"cron\" \u0026\u0026 repository[\"type\"] == \"hg\")": {
           "in": {
             "tags": {
               "$merge": [
@@ -234,8 +234,7 @@
                     "TASKCLUSTER_VOLUMES": "/builds/worker/artifacts",
                     "GECKO_BASE_REPOSITORY": "https://hg.mozilla.org/mozilla-unified",
                     "GECKO_HEAD_REPOSITORY": "${repoUrl}",
-                    "PYTHONDONTWRITEBYTECODE": "1",
-                    "MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE": "system"
+                    "PYTHONDONTWRITEBYTECODE": "1"
                   },
                   {
                     "$if": "tasks_for == \"action\"",
@@ -390,16 +389,16 @@
             "treeherder_link": "[Treeherder job](https://treeherder.mozilla.org/#/jobs?repo=${repository.project}\u0026revision=${push.revision}\u0026selectedTaskRun=${ownTaskId})"
           }
         },
-        "tasks_for[:6] == \"github\" || (tasks_for in [\"action\", \"pr-action\"] \u0026\u0026 parameters[\"repository_type\"] == \"git\")": {
+        "tasks_for[:6] == \"github\" || (tasks_for in [\"action\", \"pr-action\"] \u0026\u0026 parameters[\"repository_type\"] == \"git\") || (tasks_for == \"cron\" \u0026\u0026 repository[\"type\"] == \"git\")": {
           "in": {
             "in": {
-              "$if": "eventType == \"action\" || (eventType == \"push\" \u0026\u0026 shortRef == \"main\") || (isPullRequest \u0026\u0026 eventAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+              "$if": "eventType in [\"action\", \"cron\"] || (eventType == \"push\" \u0026\u0026 shortRef in [\"enterprise-main\", \"enterprise-beta\", \"enterprise-release\"]) || (eventType == \"push\" \u0026\u0026 project == \"enterprise-firefox-try\") || (isPullRequest \u0026\u0026 eventAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
               "then": {
                 "in": {
                   "tags": {
                     "$merge": [
                       {
-                        "project": "${repository.project}",
+                        "project": "${project}",
                         "trust-domain": "${trustDomain}",
                         "createdForUser": "${ownerEmail}",
                         "worker-implementation": "docker-worker"
@@ -408,6 +407,9 @@
                         "$switch": {
                           "$default": {
                             "kind": "decision-task"
+                          },
+                          "eventType == \"cron\"": {
+                            "kind": "cron-task"
                           },
                           "eventType == \"action\"": {
                             "kind": "action-callback"
@@ -430,6 +432,10 @@
                               "$switch": {
                                 "$default": {
                                   "symbol": "D"
+                                },
+                                "eventType == \"cron\"": {
+                                  "symbol": "${cron.job_symbol}",
+                                  "groupSymbol": "cron"
                                 },
                                 "eventType == \"action\"": {
                                   "symbol": "${action.symbol}",
@@ -463,6 +469,16 @@
                         }
                       },
                       {
+                        "$if": "tasks_for == \"cron\"",
+                        "then": {
+                          "cron": {
+                            "$json": {
+                              "$eval": "cron"
+                            }
+                          }
+                        }
+                      },
+                      {
                         "tasks_for": "${tasks_for}"
                       }
                     ]
@@ -472,14 +488,32 @@
                       "checks",
                       {
                         "$switch": {
+                          "isPullRequest": [
+                            "tc-treeherder.v2.${project}-pr.${headRev}",
+                            "index.${trustDomain}.v2.${project}-pr.revision.${headRev}.taskgraph.decision"
+                          ],
+                          "eventType == \"cron\"": [
+                            "index.${trustDomain}.v2.${project}.latest.taskgraph.decision-${cron.job_name}",
+                            "index.${trustDomain}.v2.${project}.revision.${headRev}.taskgraph.decision-${cron.job_name}",
+                            "index.${trustDomain}.v2.${project}.revision.${headRev}.cron.${ownTaskId}"
+                          ],
                           "eventType == \"push\"": [
-                            "tc-treeherder.v2.${project}.${headRev}",
+                            {
+                              "$switch": {
+                                "$default": "tc-treeherder.v2.${project}.${headRev}",
+                                "project == \"enterprise-firefox\"": "tc-treeherder.v2.${shortRef}.${headRev}"
+                              }
+                            },
                             "index.${trustDomain}.v2.${project}.latest.taskgraph.decision",
                             "index.${trustDomain}.v2.${project}.revision.${headRev}.taskgraph.decision"
                           ],
                           "tasks_for == \"action\"": [
-                            "tc-treeherder.v2.${project}.${headRev}",
+                            "tc-treeherder.v2.${shortRef}.${headRev}",
                             "index.${trustDomain}.v2.${project}.revision.${headRev}.taskgraph.actions.${ownTaskId}"
+                          ],
+                          "tasks_for == \"pr-action\"": [
+                            "tc-treeherder.v2.${project}-pr.${headRev}",
+                            "index.${trustDomain}.v2.${project}-pr.revision.${headRev}.taskgraph.actions.${ownTaskId}"
                           ]
                         }
                       }
@@ -490,11 +524,14 @@
                       "isPullRequest": [
                         "assume:repo:${baseRepoUrl[8:]}:${eventType}"
                       ],
+                      "eventType == \"cron\"": [
+                        "assume:repo:${repoUrl[8:]}:cron:${cron.job_name}"
+                      ],
                       "eventType == \"push\"": [
                         "assume:repo:${repoUrl[8:]}:branch:${shortRef}"
                       ],
                       "eventType == \"action\"": [
-                        "assume:repo:${repoUrl[8:]}:action:${action.action_perm}"
+                        "assume:repo:${baseRepoUrl[8:]}:${tasks_for}:${action.action_perm}"
                       ]
                     }
                   },
@@ -527,8 +564,13 @@
                           "GECKO_BASE_REPOSITORY": "${baseRepoUrl}",
                           "GECKO_HEAD_REPOSITORY": "${repoUrl}",
                           "GECKO_REPOSITORY_TYPE": "git",
-                          "PYTHONDONTWRITEBYTECODE": "1",
-                          "MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE": "system"
+                          "PYTHONDONTWRITEBYTECODE": "1"
+                        },
+                        {
+                          "$if": "isPullRequest",
+                          "then": {
+                            "GECKO_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
+                          }
                         },
                         {
                           "$if": "eventType == \"action\"",
@@ -561,9 +603,18 @@
                       "bash",
                       "-cx",
                       {
-                        "$if": "eventType == \"action\"",
-                        "else": "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph decision \\\n --pushlog-id='0' \\\n --pushdate='0' \\\n --project='${project}' \\\n --owner='${ownerEmail}' \\\n --level='${level}' \\\n --repository-type=git \\\n --tasks-for='${tasks_for}' \\\n --base-repository='${baseRepoUrl}' \\\n --base-rev='${baseRev}' \\\n --head-repository='${repoUrl}' \\\n --head-ref='${ref}' \\\n --head-rev='${headRev}'\n",
-                        "then": "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph action-callback\n"
+                        "in": {
+                          "$if": "eventType == \"action\"",
+                          "else": "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph decision \\\n --pushlog-id='0' \\\n --pushdate='0' \\\n --project='${project}' \\\n --owner='${ownerEmail}' \\\n --level='${level}' \\\n --repository-type=git \\\n --tasks-for='${tasks_for}' \\\n --base-repository='${baseRepoUrl}' \\\n --base-rev='${baseRev}' \\\n --head-repository='${repoUrl}' \\\n --head-ref='${ref}' \\\n --head-rev='${headRev}' \\\n ${extraArgs}\n",
+                          "then": "cd /builds/worker/checkouts/gecko \u0026\u0026 ln -s /builds/worker/artifacts artifacts \u0026\u0026 ./mach --log-no-times taskgraph action-callback\n"
+                        },
+                        "$let": {
+                          "extraArgs": {
+                            "$if": "tasks_for == \"cron\"",
+                            "else": "",
+                            "then": "${cron.quoted_args}"
+                          }
+                        }
                       }
                     ],
                     "features": {
@@ -604,6 +655,10 @@
                             "name": "Decision Task (${eventType})",
                             "description": "The task that creates all of the other tasks in the task graph"
                           },
+                          "eventType == \"cron\"": {
+                            "name": "Decision Task (cron: ${cron.job_name})",
+                            "description": "Created by a [cron task](https://firefox-ci-tc.services.mozilla.com/tasks/${cron.task_id})"
+                          },
                           "tasks_for == \"action\"": {
                             "name": "Action: ${action.title}",
                             "description": "${action.description}\n\nAction triggered by clientID `${clientId}`\n"
@@ -617,13 +672,11 @@
                     ]
                   },
                   "priority": {
-                    "$if": "tasks_for == 'cron'",
-                    "else": {
-                      "$if": "tasks_for == 'github-push'",
-                      "else": "lowest",
-                      "then": "very-low"
-                    },
-                    "then": "low"
+                    "$switch": {
+                      "$default": "very-low",
+                      "eventType == \"cron\"": "low",
+                      "eventType == \"action\"": "lowest"
+                    }
                   },
                   "requires": "all-completed",
                   "workerType": "decision",
@@ -638,7 +691,7 @@
                 },
                 "$let": {
                   "level": {
-                    "$if": "(tasks_for == \"action\" || eventType == \"push\") \u0026\u0026 repoUrl == \"https://github.com/mozilla-firefox/firefox\" \u0026\u0026 shortRef == \"main\"",
+                    "$if": "(tasks_for == \"action\" || eventType in [\"cron\", \"push\"]) \u0026\u0026 repoUrl == \"https://github.com/mozilla/enterprise-firefox\" \u0026\u0026 project == \"enterprise-firefox\"",
                     "else": 1,
                     "then": 3
                   }
@@ -658,21 +711,42 @@
           "$let": {
             "$merge": [
               {
-                "trustDomain": "gecko",
+                "eventType": "${tasks_for}",
+                "eventAction": null,
+                "trustDomain": "enterprise",
                 "isPullRequest": false
               },
               {
-                "$if": "tasks_for[:6] == \"github\"",
-                "then": {
-                  "eventType": "${tasks_for[7:]}",
-                  "ownTaskId": {
-                    "$eval": "as_slugid(\"decision_task\")"
+                "$switch": {
+                  "tasks_for[:6] == \"github\"": {
+                    "eventType": "${tasks_for[7:]}",
+                    "ownTaskId": {
+                      "$eval": "as_slugid(\"decision_task\")"
+                    },
+                    "eventAction": "${event[\"action\"]}"
                   },
-                  "eventAction": "${event[\"action\"]}"
+                  "tasks_for in [\"action\", \"cron\", \"pr-action\"]": {
+                    "ref": {
+                      "$if": "push.branch[:11] == \"refs/heads/\"",
+                      "else": "refs/heads/${push.branch}",
+                      "then": "${push.branch}"
+                    },
+                    "baseRev": "${push.revision}",
+                    "headRev": "${push.revision}",
+                    "project": "${repository.project}",
+                    "repoUrl": "${repository.url}",
+                    "ownTaskId": "${ownTaskId}",
+                    "ownerEmail": "${tasks_for}@noreply.mozilla.org",
+                    "baseRepoUrl": "${repository.url}"
+                  }
                 }
               },
               {
                 "$switch": {
+                  "tasks_for == \"pr-action\"": {
+                    "eventType": "action",
+                    "baseRepoUrl": "${repository.base_url}"
+                  },
                   "tasks_for == \"github-push\"": {
                     "ref": "${event.ref}",
                     "baseRev": "${event.before}",
@@ -681,18 +755,6 @@
                     "repoUrl": "${event.repository.html_url}",
                     "ownerEmail": "${event.pusher.email}",
                     "baseRepoUrl": "${event.repository.html_url}"
-                  },
-                  "tasks_for in [\"action\", \"pr-action\"]": {
-                    "ref": "${push.branch}",
-                    "baseRev": "${push.revision}",
-                    "headRev": "${push.revision}",
-                    "project": "${repository.project}",
-                    "repoUrl": "${repository.url}",
-                    "eventType": "action",
-                    "ownTaskId": "${ownTaskId}",
-                    "ownerEmail": "${tasks_for}@noreply.mozilla.org",
-                    "baseRepoUrl": "${repository.url}",
-                    "eventAction": null
                   },
                   "tasks_for[:19] == \"github-pull-request\"": {
                     "ref": "refs/heads/${event.pull_request.head.ref}",
@@ -723,8 +785,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
-        "action_perm": "generic",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:retrigger-decision",
+        "action_perm": "retrigger-decision",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },

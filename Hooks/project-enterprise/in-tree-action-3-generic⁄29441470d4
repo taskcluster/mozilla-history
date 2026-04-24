@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-enterprise",
-  "hookId": "in-tree-action-1-generic/d813e3f04b",
+  "hookId": "in-tree-action-3-generic/29441470d4",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash d813e3f04b.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 3, with `.taskcluster.yml` hash 29441470d4.\n\nFor (project, branch) combinations:\nenterprise-firefox, branch: 'enterprise-release'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n\n\nThis hook is no longer current and is kept for historical purposes.",
     "emailOnError": true,
-    "name": "project-enterprise/in-tree-action-1-generic/d813e3f04b",
+    "name": "project-enterprise/in-tree-action-3-generic/29441470d4",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -392,7 +392,7 @@
         "tasks_for[:6] == \"github\" || (tasks_for in [\"action\", \"pr-action\"] \u0026\u0026 parameters[\"repository_type\"] == \"git\") || (tasks_for == \"cron\" \u0026\u0026 repository[\"type\"] == \"git\")": {
           "in": {
             "in": {
-              "$if": "eventType in [\"action\", \"cron\"] || (eventType == \"push\" \u0026\u0026 shortRef == \"enterprise-release\") || (isPullRequest \u0026\u0026 eventAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+              "$if": "eventType in [\"action\", \"cron\"] || (eventType == \"push\" \u0026\u0026 shortRef == \"enterprise-release\") || (eventType == \"push\" \u0026\u0026 project == \"enterprise-firefox-try\") || (isPullRequest \u0026\u0026 eventAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
               "then": {
                 "in": {
                   "tags": {
@@ -498,7 +498,12 @@
                             "index.${trustDomain}.v2.${project}.revision.${headRev}.cron.${ownTaskId}"
                           ],
                           "eventType == \"push\"": [
-                            "tc-treeherder.v2.${shortRef}.${headRev}",
+                            {
+                              "$switch": {
+                                "$default": "tc-treeherder.v2.${project}.${headRev}",
+                                "project == \"enterprise-firefox\"": "tc-treeherder.v2.${shortRef}.${headRev}"
+                              }
+                            },
                             "index.${trustDomain}.v2.${project}.latest.taskgraph.decision",
                             "index.${trustDomain}.v2.${project}.revision.${headRev}.taskgraph.decision"
                           ],

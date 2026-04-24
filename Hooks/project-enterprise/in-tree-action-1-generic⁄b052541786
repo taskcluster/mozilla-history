@@ -1,10 +1,10 @@
 {
   "hookGroupId": "project-enterprise",
-  "hookId": "in-tree-action-3-purge-caches/d813e3f04b",
+  "hookId": "in-tree-action-1-generic/b052541786",
   "metadata": {
-    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task purge-caches at level 3, with `.taskcluster.yml` hash d813e3f04b.\n\nFor (project, branch) combinations:\nenterprise-firefox, branch: 'enterprise-release'\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nAction task generic at level 1, with `.taskcluster.yml` hash b052541786.\n\nFor (project, branch) combinations:\n\n\nThis hook is fired in response to actions defined in a\nGecko decision task's `actions.json`.\n",
     "emailOnError": true,
-    "name": "project-enterprise/in-tree-action-3-purge-caches/d813e3f04b",
+    "name": "project-enterprise/in-tree-action-1-generic/b052541786",
     "owner": "taskcluster-notifications@mozilla.com"
   },
   "schedule": [],
@@ -392,7 +392,7 @@
         "tasks_for[:6] == \"github\" || (tasks_for in [\"action\", \"pr-action\"] \u0026\u0026 parameters[\"repository_type\"] == \"git\") || (tasks_for == \"cron\" \u0026\u0026 repository[\"type\"] == \"git\")": {
           "in": {
             "in": {
-              "$if": "eventType in [\"action\", \"cron\"] || (eventType == \"push\" \u0026\u0026 shortRef == \"enterprise-release\") || (isPullRequest \u0026\u0026 eventAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
+              "$if": "eventType in [\"action\", \"cron\"] || (eventType == \"push\" \u0026\u0026 shortRef in [\"enterprise-main\", \"enterprise-beta\", \"enterprise-release\"]) || (eventType == \"push\" \u0026\u0026 project == \"enterprise-firefox-try\") || (isPullRequest \u0026\u0026 eventAction in [\"opened\", \"reopened\", \"synchronize\"])\n",
               "then": {
                 "in": {
                   "tags": {
@@ -498,7 +498,12 @@
                             "index.${trustDomain}.v2.${project}.revision.${headRev}.cron.${ownTaskId}"
                           ],
                           "eventType == \"push\"": [
-                            "tc-treeherder.v2.${shortRef}.${headRev}",
+                            {
+                              "$switch": {
+                                "$default": "tc-treeherder.v2.${project}.${headRev}",
+                                "project == \"enterprise-firefox\"": "tc-treeherder.v2.${shortRef}.${headRev}"
+                              }
+                            },
                             "index.${trustDomain}.v2.${project}.latest.taskgraph.decision",
                             "index.${trustDomain}.v2.${project}.revision.${headRev}.taskgraph.decision"
                           ],
@@ -562,26 +567,24 @@
                           "PYTHONDONTWRITEBYTECODE": "1"
                         },
                         {
-                          "$if": "isPullRequest",
-                          "then": {
-                            "GECKO_PULL_REQUEST_NUMBER": "${event.pull_request.number}"
-                          }
-                        },
-                        {
-                          "$if": "eventType == \"action\"",
-                          "then": {
-                            "ACTION_INPUT": {
-                              "$json": {
-                                "$eval": "input"
-                              }
+                          "$switch": {
+                            "isPullRequest": {
+                              "GECKO_PULL_REQUEST_NUMBER": "${prNumber}"
                             },
-                            "ACTION_TASK_ID": {
-                              "$json": {
-                                "$eval": "taskId"
-                              }
-                            },
-                            "ACTION_CALLBACK": "${action.cb_name}",
-                            "ACTION_TASK_GROUP_ID": "${action.taskGroupId}"
+                            "eventType == \"action\"": {
+                              "ACTION_INPUT": {
+                                "$json": {
+                                  "$eval": "input"
+                                }
+                              },
+                              "ACTION_TASK_ID": {
+                                "$json": {
+                                  "$eval": "taskId"
+                                }
+                              },
+                              "ACTION_CALLBACK": "${action.cb_name}",
+                              "ACTION_TASK_GROUP_ID": "${action.taskGroupId}"
+                            }
                           }
                         }
                       ]
@@ -686,7 +689,7 @@
                 },
                 "$let": {
                   "level": {
-                    "$if": "(tasks_for == \"action\" || eventType in [\"cron\", \"push\"]) \u0026\u0026 repoUrl == \"https://github.com/mozilla/enterprise-firefox\" \u0026\u0026 shortRef == \"enterprise-release\"",
+                    "$if": "(tasks_for == \"action\" || eventType in [\"cron\", \"push\"]) \u0026\u0026 repoUrl == \"https://github.com/mozilla/enterprise-firefox\" \u0026\u0026 project == \"enterprise-firefox\"",
                     "else": 1,
                     "then": 3
                   }
@@ -706,6 +709,7 @@
           "$let": {
             "$merge": [
               {
+                "prNumber": null,
                 "eventType": "${tasks_for}",
                 "eventAction": null,
                 "trustDomain": "enterprise",
@@ -757,6 +761,7 @@
                     "headRev": "${event.pull_request.head.sha}",
                     "project": "${event.pull_request.base.repo.name}",
                     "repoUrl": "${event.pull_request.head.repo.html_url}",
+                    "prNumber": "${event.pull_request.number}",
                     "ownerEmail": "${event.pull_request.user.login}@users.noreply.github.com",
                     "baseRepoUrl": "${event.pull_request.base.repo.html_url}",
                     "isPullRequest": true
@@ -780,8 +785,8 @@
         "title": "${payload.decision.action.title}",
         "symbol": "${payload.decision.action.symbol}",
         "cb_name": "${payload.decision.action.cb_name}",
-        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:purge-caches",
-        "action_perm": "purge-caches",
+        "repo_scope": "assume:repo:${payload.decision.repository.url[8:]}:action:generic",
+        "action_perm": "generic",
         "description": "${payload.decision.action.description}",
         "taskGroupId": "${payload.decision.action.taskGroupId}"
       },
