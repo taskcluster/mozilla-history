@@ -43,12 +43,21 @@ type reportData struct {
 	Sections          [5]reportSection
 }
 
+// Keep offline report rendering usable without Taskcluster configuration.
+func reportTaskclusterRootURL() string {
+	root := os.Getenv("TASKCLUSTER_ROOT_URL")
+	if root == "" {
+		root = "https://firefox-ci-tc.services.mozilla.com"
+	}
+	return strings.TrimRight(root, "/")
+}
+
 func (w WorkerInfo) WorkerPoolURL() string {
 	parts := strings.SplitN(w.WorkerPoolID, "/", 2)
 	if len(parts) != 2 {
 		return ""
 	}
-	return "https://firefox-ci-tc.services.mozilla.com/provisioners/" +
+	return reportTaskclusterRootURL() + "/provisioners/" +
 		url.PathEscape(parts[0]) + "/worker-types/" + url.PathEscape(parts[1]) +
 		"?sortBy=Last%20Active&sortDirection=desc"
 }
@@ -442,7 +451,7 @@ func renderReadmeAt(snapshot WorkerSnapshot, reportGeneratedAt time.Time) string
 	data := reportData{Sections: sections}
 	data.Revision, data.RevisionURL = reportRevision(".")
 	if snapshot.TaskGroupID != "" {
-		data.TaskGroupURL = "https://firefox-ci-tc.services.mozilla.com/tasks/groups/" + url.PathEscape(snapshot.TaskGroupID)
+		data.TaskGroupURL = reportTaskclusterRootURL() + "/tasks/groups/" + url.PathEscape(snapshot.TaskGroupID)
 	}
 	if !snapshot.GeneratedAt.IsZero() {
 		data.GeneratedAt = snapshot.GeneratedAt.UTC().Format(timestampFormat)

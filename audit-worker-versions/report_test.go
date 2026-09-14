@@ -84,10 +84,36 @@ func TestRenderRevisionBesideGenerationTime(t *testing.T) {
 }
 
 func TestWorkerPoolURL(t *testing.T) {
+	t.Setenv("TASKCLUSTER_ROOT_URL", "")
 	worker := WorkerInfo{WorkerPoolID: "releng-hardware/gecko-t-win7-32-hw"}
 	want := "https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-win7-32-hw?sortBy=Last%20Active&sortDirection=desc"
 	if got := worker.WorkerPoolURL(); got != want {
 		t.Fatalf("WorkerPoolURL() = %q, want %q", got, want)
+	}
+}
+
+func TestRenderReadmeTaskclusterRootURL(t *testing.T) {
+	for _, root := range []string{"", "https://stage.taskcluster.nonprod.cloudops.mozgcp.net", "https://stage.taskcluster.nonprod.cloudops.mozgcp.net/"} {
+		t.Run(root, func(t *testing.T) {
+			t.Setenv("TASKCLUSTER_ROOT_URL", root)
+			wantRoot := strings.TrimRight(root, "/")
+			if wantRoot == "" {
+				wantRoot = "https://firefox-ci-tc.services.mozilla.com"
+			}
+			got := renderReadmeAt(WorkerSnapshot{
+				TaskGroupID:    "probe/group",
+				ProbeStartedAt: time.Date(2026, time.September, 9, 7, 58, 29, 0, time.UTC),
+				Workers:        []WorkerInfo{{WorkerPoolID: "example/pool name", Implementation: "generic-worker", Details: map[string]string{"revision": "1234567890"}}},
+			}, time.Now())
+			for _, path := range []string{
+				"/provisioners/example/worker-types/pool%20name?sortBy=Last%20Active&sortDirection=desc",
+				"/tasks/groups/probe%2Fgroup",
+			} {
+				if !strings.Contains(got, "("+wantRoot+path+")") {
+					t.Errorf("report missing link %q", wantRoot+path)
+				}
+			}
+		})
 	}
 }
 
@@ -110,6 +136,7 @@ func TestSortedVersionCountsUsesDescendingNaturalOrder(t *testing.T) {
 }
 
 func TestRenderReadmeIncludesLinksAndSubheadings(t *testing.T) {
+	t.Setenv("TASKCLUSTER_ROOT_URL", "")
 	workers := []WorkerInfo{{
 		WorkerPoolID:          "example/pool",
 		Implementation:        "generic-worker",
