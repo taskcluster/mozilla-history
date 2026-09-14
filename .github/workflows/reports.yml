@@ -32,13 +32,14 @@ jobs:
       REPORT_SCHEDULER_ID: smoketest
       REPORT_PREFIX: https://github.com/${{ github.repository }}/blob/${{ github.event.repository.default_branch }}/WorkerVersions/
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v6
+          persist-credentials: false
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version: 'stable'
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '24'
       - name: Validate publishing branch
@@ -90,15 +91,18 @@ jobs:
           git diff --stat "$GITHUB_SHA" HEAD >> "$GITHUB_STEP_SUMMARY"
           git diff --binary "$GITHUB_SHA" HEAD > "$RUNNER_TEMP/reports.patch"
       - name: Upload reviewable report changes
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: report-changes
           path: ${{ runner.temp }}/reports.patch
       - name: Publish reports
         if: env.DRY_RUN != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          # Supply credentials only to this push, without storing them in Git configuration.
           # A normal push rejects concurrent remote changes; never force or rebase stale reports.
-          git push origin "HEAD:refs/heads/$DEFAULT_BRANCH"
+          git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin "HEAD:refs/heads/$DEFAULT_BRANCH"
       - name: Record outcome
         if: always()
         env:
@@ -113,4 +117,4 @@ jobs:
       contents: read
       pages: write
       id-token: write
-    uses: ./.github/workflows/pages.yml
+    uses: $/.github/workflows/pages.yml
