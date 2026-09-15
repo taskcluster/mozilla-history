@@ -119,6 +119,68 @@ of the checkout's report. These helpers are separate from production publishing.
 
 ## Production Automation
 
+### GitHub Actions (NAS replacement)
+
+`.github/workflows/reports.yml` runs on Mondays at 07:23 UTC when enabled,
+or manually through **Actions → Mozilla history
+reports → Run workflow**. Install it on the default branch to enable dispatch
+and scheduling. Both production and forks skip scheduled report jobs unless the
+repository variable `ENABLE_SCHEDULED_REPORTS` is set to `true`. Add it under
+**Settings → Secrets and variables → Actions → Variables → New repository
+variable** to enable weekly runs. Set it to `false` or remove it to disable
+scheduled report jobs. Manual runs remain available regardless of this setting,
+including publishing when dry_run is disabled.
+
+Configure repository Actions secrets `TASKCLUSTER_CLIENT_ID` and
+`TASKCLUSTER_ACCESS_TOKEN` with a dedicated Taskcluster client approved by the
+team. It needs permission to create lowest-priority probe tasks on the audited
+pools using scheduler `smoketest`, seal their task groups, and read the required
+configuration and artifacts. Have the Taskcluster owners scope this client to
+those operations; do not copy an unrestricted personal token into CI.
+
+The job tests and builds the Go tools, snapshots configuration, creates the
+existing intentionally malformed probes, waits 90 minutes, and collects reports.
+It commits only `Clients`, `Hooks`, `Roles`, `WorkerPools`, `WorkerVersions`, and
+`docs/history.json`. History is rebuilt after committing the worker snapshot.
+An unchanged snapshot is successful. One report job runs at a time; a concurrent
+remote push causes publication to fail safely rather than overwrite changes.
+Publishing requires the default branch and branch rules permitting the Actions
+bot's normal push using `GITHUB_TOKEN` (`contents: write`).
+
+Manual runs default to **dry_run=true**: they create real probes and generate a
+reviewable `report-changes` patch artifact, but do not push or deploy. Review the
+patch and task group in the run summary before running with dry_run disabled.
+Failures appear in Actions logs and run status; maintainers should enable Actions
+failure notifications. The job has a 150-minute timeout. If a run fails after
+creating probes, inspect its task group before retrying (a retry creates new
+probes). Keep the NAS job disabled during tests to avoid duplicate probes, and
+retire it after a successful publishing run in the team repository.
+
+### Testing GitHub Pages on a fork
+
+Set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**.
+Run **Publish report to GitHub Pages** on the desired branch to deploy its
+`docs/` site; this does not require Taskcluster secrets or create probes.
+The deployment URL appears on the Actions environment. `docs/index.html` is
+the landing page, and `migration.html` remains alongside it at the site root.
+There is no redirect through `/docs/`. The published report retains its existing
+behavior of loading current worker data from upstream GitHub; history comes
+from the deployed checkout's `docs/history.json`. Use the local or Quick preview
+to view the checkout's own worker snapshot.
+
+Set repository variable `PUBLISH_REPORT_PAGES=true` to deploy Pages automatically
+after a successful non-dry report run. The report workflow calls the Pages
+workflow directly because pushes made with `GITHUB_TOKEN` do not trigger other
+push workflows. Leave this unset if the team uses a different publishing setup.
+Quick deployment remains a separate operation.
+
+GitHub schedules run on the default branch and can be delayed; public-repository
+schedules are disabled after 60 days without repository activity. See
+[GitHub schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
+and [GITHUB_TOKEN event behavior](https://docs.github.com/en/actions/concepts/security/github_token).
+
+### Legacy NAS scripts
+
 The existing `run-reports.sh` and `audit.sh` scripts implement the repository's
 production publishing workflow. They include git and production-site behavior;
 use `fetch_and_generate.py` for local refreshes.
