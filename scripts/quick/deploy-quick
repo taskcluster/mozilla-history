@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+confirmed=false
+case "${1:-}" in
+  --confirm) confirmed=true ;;
+  -h|--help)
+    echo "Usage: $0 [--confirm]"
+    echo "Deploy the Quick preview; --confirm skips interactive approval."
+    exit 0
+    ;;
+  '') ;;
+  *) echo "Usage: $0 [--confirm]" >&2; exit 2 ;;
+esac
+if [[ $# -gt 1 ]]; then
+  echo "Usage: $0 [--confirm]" >&2
+  exit 2
+fi
+
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+source "$script_dir/deploy-common.sh"
+deploy_preview "" "$confirmed"

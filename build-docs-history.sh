@@ -12,6 +12,7 @@
 		process.exit(1)
 	}
 	const runStats = (data) => {
+		const workers = Array.isArray(data) ? data : data.workers
 		const implementations = {}
 		const versions = {}
 		const imagesets = {}
@@ -20,7 +21,7 @@
 		// indistinguishable once merged into a single bucket
 		const versionsByImplementation = {}
 		const inc = (dict, key) => dict[key] = (dict[key] || 0) + 1
-		data.forEach(worker => {
+		workers.forEach(worker => {
 			inc(implementations, worker.Implementation)
 			inc(versions, worker.Version)
 			inc(imagesets, worker.Imageset)
@@ -60,7 +61,7 @@ do
 	revdate=$(git show --no-patch --no-notes --date=short --pretty='%cd' "$rev")
 	echo "Fetching ${revdate} version ${rev}"
 	git show "${rev}:${WORKERS_FILE}" > "${PUBLIC_DIR}/data/${revdate}.json"
-done < <(git rev-list master -- "${WORKERS_FILE}")
+done < <(git rev-list --reverse HEAD -- "${WORKERS_FILE}")
 
 node -e "${nodescript}" "${PWD}" ${PUBLIC_DIR}/data/*.json > $HISTORICAL_DATA
 rm -rf "${PUBLIC_DIR}/data/"

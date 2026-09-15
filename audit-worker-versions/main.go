@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -13,7 +12,6 @@ import (
 	"sort"
 	"strings"
 	"sync"
-	"text/template"
 	"time"
 
 	"github.com/taskcluster/httpbackoff/v3"
@@ -29,15 +27,78 @@ type (
 )
 
 type WorkerInfo struct {
-	WorkerPoolID   string
-	Implementation string
-	Version        string
-	Details        map[string]string
-	hasNoArtifacts bool
-	isUnknown      bool
-	Imageset       string
-	TotalWorkers   int
-	TotalCapacity  int
+	WorkerPoolID             string
+	Implementation           string
+	Version                  string
+	Details                  map[string]string
+	hasNoArtifacts           bool
+	isUnknown                bool
+	Imageset                 string
+	ImageStatus              string `json:",omitempty"`
+	ProviderID               string `json:",omitempty"`
+	ConfiguredMinCapacity    *int   `json:",omitempty"`
+	ConfiguredMaxCapacity    *int   `json:",omitempty"`
+	CapacityPerWorker        *int   `json:",omitempty"`
+	ConfiguredMinWorkers     *int   `json:",omitempty"`
+	ConfiguredMaxWorkers     *int   `json:",omitempty"`
+	WorkerManagerLookupError string `json:",omitempty"`
+	// Retained only to recognize snapshots created before configured capacity
+	// fields were collected. New snapshots leave these fields unset.
+	LegacyTotalWorkers  *int `json:"TotalWorkers,omitempty"`
+	LegacyTotalCapacity *int `json:"TotalCapacity,omitempty"`
+}
+
+const (
+	imageStatusKnown         = "known"
+	imageStatusNotApplicable = "not-applicable"
+	imageStatusNotDetermined = "not-determined"
+	imageStatusUnavailable   = "unavailable"
+	standaloneProviderID     = "standalone"
+	standaloneWorkerState    = "standalone"
+)
+
+type workerManagerClient interface {
+	WorkerPool(workerPoolID string) (*tcworkermanager.WorkerPoolFullDefinition, error)
+	ListWorkers(provisionerID, workerType, continuationToken, limit, quarantined, workerState string) (*tcworkermanager.ListWorkersResponse, error)
+}
+
+type WorkerSnapshot struct {
+	GeneratedAt    time.Time    `json:"generatedAt"`
+	ProbeStartedAt time.Time    `json:"probeStartedAt"`
+	TaskGroupID    string       `json:"taskGroupId"`
+	Workers        []WorkerInfo `json:"workers"`
+}
+
+type taskGroupProgress struct {
+	Total    int
+	Terminal int
+	States   map[string]int
+}
+
+func (progress taskGroupProgress) complete() bool {
+	return progress.Total > 0 && progress.Terminal == progress.Total
+}
+
+func isTerminalTaskState(state string) bool {
+	switch state {
+	case "completed", "failed", "exception":
+		return true
+	default:
+		return false
+	}
+}
+
+func summarizeTaskGroup(tasks []tcqueue.TaskDefinitionAndStatus) taskGroupProgress {
+	progress := taskGroupProgress{States: map[string]int{}}
+	for _, task := range tasks {
+		state := task.Status.State
+		progress.Total++
+		progress.States[state]++
+		if isTerminalTaskState(state) {
+			progress.Terminal++
+		}
+	}
+	return progress
 }
 
 func (w *WorkerInfo) String() string {
@@ -66,37 +127,57 @@ func (w *WorkerInfo) String() string {
 	return strings.Trim(info, " ")
 }
 
-func GetImageset(wp *tcworkermanager.WorkerPoolFullDefinition) string {
-	var p = wp.ProviderID
-	if p == "test-provisioner" || p == "no-provisioning-nope" || p == "dummy-test-provisioner" || p == "test-dummy-provisioner" {
-		return "unknown"
-	}
+type workerPoolLaunchConfig struct {
+	// AWS
+	LaunchConfig struct {
+		ImageId string
+	} `json:"launchConfig"`
 
-	type LaunchConfig struct {
-		// AWS
-		LaunchConfig struct {
-			ImageId string
-		} `json:"launchConfig"`
+	// GCP
+	Disks []struct {
+		InitializeParams struct {
+			SourceImage string `json:"sourceImage"`
+		} `json:"initializeParams"`
+	} `json:"disks"`
 
-		// GCP
-		Disks []struct {
-			InitializeParams struct {
-				SourceImage string `json:"sourceImage"`
-			} `json:"initializeParams"`
-		} `json:"disks"`
+	// Azure
+	StorageProfile struct {
+		ImageReference struct {
+			Id string `json:"id"`
+		} `json:"imageReference"`
+	} `json:"storageProfile"`
+	ArmDeployment struct {
+		Parameters struct {
+			ImageID struct {
+				Value string `json:"value"`
+			} `json:"imageId"`
+		} `json:"parameters"`
+	} `json:"armDeployment"`
 
-		// Azure
-		StorageProfile struct {
-			ImageReference struct {
-				Id string `json:"id"`
-			} `json:"imageReference"`
-		} `json:"storageProfile"`
-	}
-	type Config struct {
-		LaunchConfigs []LaunchConfig `json:"launchConfigs"`
-	}
-	var cfg Config
+	// Older Worker Manager configurations stored this directly on the
+	// launch config. Newer configurations nest it under workerManager.
+	CapacityPerInstance *int `json:"capacityPerInstance"`
+	WorkerManager       struct {
+		CapacityPerInstance *int `json:"capacityPerInstance"`
+	} `json:"workerManager"`
+}
+
+type workerPoolConfig struct {
+	MinCapacity   *int                     `json:"minCapacity"`
+	MaxCapacity   *int                     `json:"maxCapacity"`
+	LaunchConfigs []workerPoolLaunchConfig `json:"launchConfigs"`
+}
+
+func parseWorkerPoolConfig(wp *tcworkermanager.WorkerPoolFullDefinition) (workerPoolConfig, error) {
+	var cfg workerPoolConfig
 	if err := json.Unmarshal(wp.Config, &cfg); err != nil {
+		return workerPoolConfig{}, err
+	}
+	return cfg, nil
+}
+
+func getImageset(providerID string, cfg workerPoolConfig) string {
+	if providerID == "test-provisioner" || providerID == "no-provisioning-nope" || providerID == "dummy-test-provisioner" || providerID == "test-dummy-provisioner" {
 		return "unknown"
 	}
 
@@ -107,6 +188,7 @@ func GetImageset(wp *tcworkermanager.WorkerPoolFullDefinition) string {
 			imagesMap[disk.InitializeParams.SourceImage] = struct{}{}
 		}
 		imagesMap[launchCfg.StorageProfile.ImageReference.Id] = struct{}{}
+		imagesMap[launchCfg.ArmDeployment.Parameters.ImageID.Value] = struct{}{}
 	}
 	// remove empty image name ""
 	delete(imagesMap, "")
@@ -122,57 +204,99 @@ func GetImageset(wp *tcworkermanager.WorkerPoolFullDefinition) string {
 	return sortedImages
 }
 
-var (
-	// Templates for README file
-	readmeTpl string = `
-{{- define "row" -}}
-## {{ .Title }}
+func ceilDivide(value, divisor int) int {
+	return (value + divisor - 1) / divisor
+}
 
-Total: ` + "`" + `{{ .Count }}` + "`" + `
-{{ if gt (len .Versions) 1 }}
-Count by version:
+func enrichWorkerInfo(workerInfo *WorkerInfo, wp *tcworkermanager.WorkerPoolFullDefinition) {
+	workerInfo.ProviderID = wp.ProviderID
+	cfg, err := parseWorkerPoolConfig(wp)
+	if err != nil {
+		workerInfo.Imageset = "unknown"
+		workerInfo.ImageStatus = imageStatusUnavailable
+		workerInfo.WorkerManagerLookupError = "Could not parse Worker Manager configuration: " + err.Error()
+		return
+	}
 
-| Version | Count |
-| :--- | ---: |
-{{ range .Versions -}}
-| {{ .Key }} | {{ .Value }} |
-{{ end }}
-{{- end }}
-{{ if gt (len .Images) 1 }}
-Count by image:
+	workerInfo.Imageset = getImageset(wp.ProviderID, cfg)
+	workerInfo.ImageStatus = imageStatusKnown
+	if workerInfo.Imageset == "unknown" {
+		workerInfo.ImageStatus = imageStatusNotDetermined
+	}
+	workerInfo.ConfiguredMinCapacity = cfg.MinCapacity
+	workerInfo.ConfiguredMaxCapacity = cfg.MaxCapacity
 
-| Version | Count |
-| :--- | ---: |
-{{ range .Images -}}
-| {{ .Key }} | {{ .Value }} |
-{{ end }}
-{{- end }}
-{{if .Count }}
-| Worker Pool | Implementation | Version {{ if .FullColumns }}| Engine | Revision | OS | Arch | GO {{ end }}| Total Workers | Total Capacity |
-| --- | --- | --- {{ if .FullColumns }}| --- | --- | --- | --- | --- {{ end }}| ---: | ---: |
-{{ range .Filtered -}}
-| **{{ .WorkerPoolID }}** | {{ .Implementation }} | {{ or .Version .Details.error }} {{ if $.FullColumns }}| {{ or .Details.engine "-" }} | {{ or (slice .Details.revision 0 10) "-" }} | {{ or .Details.os "-" }} | {{ or .Details.arch "-" }} | {{ or .Details.go "-" }} {{ end }}| {{ .TotalWorkers }} | {{ .TotalCapacity }} |
-{{end}}
-{{- end -}}
-{{end}}
+	capacities := map[int]struct{}{}
+	for _, launchConfig := range cfg.LaunchConfigs {
+		capacity := launchConfig.CapacityPerInstance
+		if launchConfig.WorkerManager.CapacityPerInstance != nil {
+			capacity = launchConfig.WorkerManager.CapacityPerInstance
+		}
+		if capacity != nil && *capacity > 0 {
+			capacities[*capacity] = struct{}{}
+		}
+	}
 
-# Worker Pool Versions
+	if len(capacities) != 1 || cfg.MinCapacity == nil || cfg.MaxCapacity == nil {
+		return
+	}
+	for capacity := range capacities {
+		capacityPerWorker := capacity
+		minWorkers := ceilDivide(*cfg.MinCapacity, capacity)
+		maxWorkers := ceilDivide(*cfg.MaxCapacity, capacity)
+		workerInfo.CapacityPerWorker = &capacityPerWorker
+		workerInfo.ConfiguredMinWorkers = &minWorkers
+		workerInfo.ConfiguredMaxWorkers = &maxWorkers
+	}
+}
 
-{{ range . }}
-{{ template "row" . }}
-{{ end }}
+func workerPoolIsStandalone(workermanager workerManagerClient, workerPoolID string) (bool, error) {
+	parts := strings.SplitN(workerPoolID, "/", 2)
+	if len(parts) != 2 {
+		return false, fmt.Errorf("invalid worker pool ID %q", workerPoolID)
+	}
 
-[^1]: Those are the pools whose tasks were claimed and resolved by a worker as expected, but the worker did not publish either artifact ` + "`public/logs/live_backing.log` nor `public/logs/chain_of_trust.log`" + `, which is the source used to identify the worker implementation.
+	foundStandaloneWorker := false
+	continuationToken := ""
+	for {
+		workers, err := workermanager.ListWorkers(parts[0], parts[1], continuationToken, "", "", "")
+		if err != nil {
+			return false, err
+		}
+		for _, worker := range workers.Workers {
+			if worker.State == standaloneWorkerState {
+				foundStandaloneWorker = true
+			}
+		}
+		continuationToken = workers.ContinuationToken
+		if continuationToken == "" {
+			break
+		}
+	}
+	return foundStandaloneWorker, nil
+}
 
-[^2]: Probing task remains pending after two hours. Those are the pools that were not able to start any worker to claim the task within two hours.
-`
-)
+func lookupAndEnrichWorkerInfo(workerInfo *WorkerInfo, workermanager workerManagerClient) {
+	workerPool, lookupErr := workermanager.WorkerPool(workerInfo.WorkerPoolID)
+	if lookupErr == nil {
+		enrichWorkerInfo(workerInfo, workerPool)
+		return
+	}
 
-func renderTemplate(data interface{}) string {
-	t := template.Must(template.New("").Parse(readmeTpl))
-	var content bytes.Buffer
-	t.Execute(&content, data)
-	return content.String()
+	standalone, standaloneErr := workerPoolIsStandalone(workermanager, workerInfo.WorkerPoolID)
+	if standaloneErr == nil && standalone {
+		workerInfo.ProviderID = standaloneProviderID
+		workerInfo.Imageset = "unknown"
+		workerInfo.ImageStatus = imageStatusNotApplicable
+		return
+	}
+
+	workerInfo.Imageset = "unknown"
+	workerInfo.ImageStatus = imageStatusUnavailable
+	workerInfo.WorkerManagerLookupError = lookupErr.Error()
+	if standaloneErr != nil {
+		workerInfo.WorkerManagerLookupError += "; could not check for standalone workers: " + standaloneErr.Error()
+	}
 }
 
 var (
@@ -181,7 +305,7 @@ var (
 )
 
 var (
-  outputDir = "WorkerVersions"
+	outputDir = "WorkerVersions"
 )
 
 func FilenameEscape(raw string) (escaped string) {
@@ -195,7 +319,6 @@ func EmptyDirectory(dir string) {
 	}
 }
 
-
 func WriteFile(path string, content []byte) {
 	err := os.MkdirAll(filepath.Dir(path), 0755)
 	if err != nil {
@@ -204,12 +327,13 @@ func WriteFile(path string, content []byte) {
 
 	err = os.WriteFile(path, content, 0644)
 	if err != nil {
-	  log.Fatalf("Error:\n%v", err)
+		log.Fatalf("Error:\n%v", err)
 	}
 }
 
 // Call with no arguments -> New task group generated
 // Call with one argument (taskGroupID) -> Report generated for previously created task group
+// Call with "status taskGroupID" -> Task group progress reported
 //
 // Expected workflow for this tool is to:
 // 1. Run without arguments to generate probing tasks and get taskGroupId
@@ -217,8 +341,34 @@ func WriteFile(path string, content []byte) {
 //
 // Files are written to the WorkerVersions directory
 func main() {
+	if len(os.Args) >= 2 && os.Args[1] == "render" {
+		if len(os.Args) < 3 || len(os.Args) > 4 {
+			log.Fatal("Usage: audit-worker-versions render INPUT_JSON [OUTPUT_MARKDOWN]")
+		}
+		snapshot, err := readSnapshot(os.Args[2])
+		fatalOnError(err)
+		contents := renderReadme(snapshot)
+		if len(os.Args) == 4 {
+			WriteFile(os.Args[3], []byte(contents))
+		} else {
+			fmt.Print(contents)
+		}
+		return
+	}
 
 	queue := tcqueue.NewFromEnv()
+	if len(os.Args) >= 2 && os.Args[1] == "status" {
+		if len(os.Args) != 3 {
+			log.Fatal("Usage: audit-worker-versions status TASK_GROUP_ID")
+		}
+		progress, err := taskGroupStatus(queue, os.Args[2])
+		fatalOnError(err)
+		printTaskGroupProgress(os.Args[2], progress)
+		if !progress.complete() {
+			os.Exit(3)
+		}
+		return
+	}
 
 	switch len(os.Args) {
 	case 1:
@@ -233,10 +383,51 @@ func main() {
 		if len(taskIDs) == 0 {
 			log.Fatalf("No tasks with taskGroupId %q", taskGroupID)
 		}
-		inspect(queue, taskIDs)
+		inspect(queue, taskGroupID, taskIDs)
 	default:
 		log.Fatalf("Expected zero or one program arguments, but have %v: %q", len(os.Args)-1, os.Args[1:])
 	}
+}
+
+func taskGroupStatus(queue *tcqueue.Queue, taskGroupID string) (taskGroupProgress, error) {
+	tasks := []tcqueue.TaskDefinitionAndStatus{}
+	continuationToken := ""
+	for {
+		response, err := queue.ListTaskGroup(taskGroupID, continuationToken, "")
+		if err != nil {
+			return taskGroupProgress{}, err
+		}
+		tasks = append(tasks, response.Tasks...)
+		continuationToken = response.ContinuationToken
+		if continuationToken == "" {
+			break
+		}
+	}
+	if len(tasks) == 0 {
+		return taskGroupProgress{}, fmt.Errorf("no tasks with taskGroupId %q", taskGroupID)
+	}
+	return summarizeTaskGroup(tasks), nil
+}
+
+func printTaskGroupProgress(taskGroupID string, progress taskGroupProgress) {
+	stateOrder := []string{"completed", "failed", "exception", "running", "pending", "unscheduled"}
+	states := make([]string, 0, len(progress.States))
+	knownStates := map[string]bool{}
+	for _, state := range stateOrder {
+		knownStates[state] = true
+		if count := progress.States[state]; count > 0 {
+			states = append(states, fmt.Sprintf("%s=%d", state, count))
+		}
+	}
+	extraStates := []string{}
+	for state, count := range progress.States {
+		if !knownStates[state] {
+			extraStates = append(extraStates, fmt.Sprintf("%s=%d", state, count))
+		}
+	}
+	sort.Strings(extraStates)
+	states = append(states, extraStates...)
+	fmt.Printf("Task group %s: %d/%d terminal (%s)\n", taskGroupID, progress.Terminal, progress.Total, strings.Join(states, ", "))
 }
 
 func createTasks(queue *tcqueue.Queue, taskGroupID string) {
@@ -326,8 +517,10 @@ func createTasks(queue *tcqueue.Queue, taskGroupID string) {
 	log.Printf("Task group sealed at: %v", tg.Sealed)
 }
 
-func inspect(queue *tcqueue.Queue, taskIDs []string) {
+func inspect(queue *tcqueue.Queue, taskGroupID string, taskIDs []string) {
 	EmptyDirectory(outputDir)
+	probeTask, err := queue.Task(taskIDs[0])
+	fatalOnError(err)
 	workermanager := tcworkermanager.NewFromEnv()
 	wp := workerpool.New(50)
 	workers := make([]WorkerInfo, 0)
@@ -342,16 +535,7 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 						panic(err)
 					}
 					workerPoolID, workerInfo := show(queue, statusResponse)
-					workerPool, err := workermanager.WorkerPool(workerPoolID)
-					if err != nil {
-						fmt.Println("Could not fetch workerPool " + workerPoolID)
-					} else {
-						workerInfo.Imageset = GetImageset(workerPool)
-						workerInfo.TotalWorkers = int(workerPool.RunningCount) + int(workerPool.StoppedCount) +
-							int(workerPool.StoppingCount) + int(workerPool.RequestedCount)
-						workerInfo.TotalCapacity = int(workerPool.RunningCapacity) + int(workerPool.StoppedCapacity) +
-							int(workerPool.StoppingCapacity) + int(workerPool.RequestedCapacity)
-					}
+					lookupAndEnrichWorkerInfo(&workerInfo, workermanager)
 					filename := filepath.Join(outputDir, FilenameEscape(workerPoolID))
 					WriteFile(filename, append([]byte(workerInfo.String()), '\n'))
 					fmt.Printf("%-70s %s\n", workerPoolID+":", &workerInfo)
@@ -365,79 +549,27 @@ func inspect(queue *tcqueue.Queue, taskIDs []string) {
 		workers = append(workers, result.(WorkerInfo))
 	})
 
+	snapshot := WorkerSnapshot{
+		GeneratedAt:    time.Now().UTC(),
+		ProbeStartedAt: time.Time(probeTask.Created).UTC(),
+		TaskGroupID:    taskGroupID,
+		Workers:        workers,
+	}
+
 	fmt.Printf("\nWriting README.md\n")
-	writeReadme(workers)
+	writeReadme(snapshot)
 	fmt.Println("Writing workers.json")
-	writeSnapshot(workers)
+	writeSnapshot(snapshot)
 }
 
-func generateReadmeSection(title string, workers []WorkerInfo, filter func(WorkerInfo) bool) map[string]interface{} {
-	filtered := make([]WorkerInfo, 0)
-	versions := make(map[string]int)
-	imagesets := make(map[string]int)
-
-	for _, w := range workers {
-		if filter(w) {
-			filtered = append(filtered, w)
-			versions[w.Version]++
-			imagesets[w.Imageset]++
-		}
-	}
-
-	sort.Slice(filtered, func(i, j int) bool {
-		return strings.Compare(filtered[i].WorkerPoolID, filtered[j].WorkerPoolID) < 0
-	})
-
-	type kv struct {
-		Key   string
-		Value int
-	}
-	var sortedVersions []kv
-	for k, v := range versions {
-		sortedVersions = append(sortedVersions, kv{k, v})
-	}
-	sort.Slice(sortedVersions, func(i, j int) bool {
-		return strings.Compare(sortedVersions[i].Key, sortedVersions[j].Key) < 0
-	})
-
-	var images []kv
-	for k, v := range imagesets {
-		images = append(images, kv{k, v})
-	}
-
-	return map[string]interface{}{
-		"FullColumns": title == "Generic Worker",
-		"Filtered":    filtered,
-		"Count":       len(filtered),
-		"Versions":    sortedVersions,
-		"Images":      images,
-		"Title":       title,
-	}
-}
-
-func writeReadme(workers []WorkerInfo) {
-	filename := filepath.Join(outputDir, "README.md")
-
-	sections := [5]map[string]interface{}{
-		generateReadmeSection("Generic Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "generic-worker" }),
-		generateReadmeSection("Docker Worker", workers, func(w WorkerInfo) bool { return w.Implementation == "docker-worker" }),
-		generateReadmeSection("Script Worker", workers, func(w WorkerInfo) bool { return strings.Contains(w.Implementation, "Scriptworker") }),
-		generateReadmeSection("No artifacts found [^1]", workers, func(w WorkerInfo) bool { return w.hasNoArtifacts }),
-		generateReadmeSection("Version not determined [^2]", workers, func(w WorkerInfo) bool { return w.isUnknown }),
-	}
-
-	contents := renderTemplate(sections)
-	WriteFile(filename, []byte(contents))
-}
-
-func writeSnapshot(workers []WorkerInfo) {
+func writeSnapshot(snapshot WorkerSnapshot) {
 	filename := filepath.Join(outputDir, "workers.json")
 
-	sort.Slice(workers, func(i, j int) bool {
-		return strings.Compare(workers[i].WorkerPoolID, workers[j].WorkerPoolID) <= 0
+	sort.Slice(snapshot.Workers, func(i, j int) bool {
+		return strings.Compare(snapshot.Workers[i].WorkerPoolID, snapshot.Workers[j].WorkerPoolID) <= 0
 	})
 
-	contents, err := json.MarshalIndent(workers, "", " ")
+	contents, err := json.MarshalIndent(snapshot, "", " ")
 	if err != nil {
 		log.Fatalf("Error:\n%v", err)
 	}
@@ -564,11 +696,8 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID str
 	if workerInfo.Details == nil {
 		workerInfo.Details = map[string]string{}
 	}
-	if t.Status.State == "pending" {
-		// We schedule task with deadline for 3h and running report generation anywhere before that time
-		// In case some pools were not able to claim task within 3h we would consider this pool to have unknown workers
-		// which could probably tell that something is wrong with configuration of this pool
-		workerInfo.Details["error"] = "Version not determined; task not (yet) claimed"
+	if !taskWasClaimed(t.Status.Runs) {
+		workerInfo.Details["error"] = "Version not determined; task was not claimed"
 		workerInfo.isUnknown = true
 		return
 	}
@@ -668,6 +797,15 @@ func show(queue *tcqueue.Queue, t *tcqueue.TaskStatusResponse) (workerPoolID str
 		workerInfo.isUnknown = true
 	}
 	return
+}
+
+func taskWasClaimed(runs []tcqueue.RunInformation) bool {
+	for _, run := range runs {
+		if run.WorkerID != "" || run.WorkerGroup != "" || !time.Time(run.Started).IsZero() {
+			return true
+		}
+	}
+	return false
 }
 
 func taskIDsForTaskGroup(queue *tcqueue.Queue, taskGroupID string) []string {

@@ -18,38 +18,235 @@
     }
 
     main {
-      margin: 20px 40px;
+      margin: 20px 0;
     }
 
-    .content {
-      margin-right: 250px;
+    .report-layout {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
     }
 
-    @media screen and (max-width: 1400px) {
-      .content {
-        margin-right: auto;
-      }
+    .content-column {
+      min-width: 0;
+      box-sizing: border-box;
+      padding-right: 40px;
     }
 
     .toc {
-      position: fixed;
-      right: 15px;
-      top: 5px;
-      background: #fff;
-      padding: 15px 25px;
-      border: 1px solid #eee;
-      /* above the sticky table headers/columns from table-utils.js */
-      z-index: 10;
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      box-sizing: border-box;
+      padding: 0 20px 12px 40px;
+      border-right: 1px solid #d0d7de;
+    }
+
+    .toc-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 8px;
+    }
+
+    .toc-title {
+      padding-top: 16px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .toc-title::after {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      border-bottom: 2px solid #d0d7de;
+      content: "";
+    }
+
+    .toc-toggle {
+      flex: none;
+      display: inline-flex;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      background: #f6f8fa;
+      color: #24292f;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .toc-toggle svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .toc-toggle .toc-expand-icon,
+    .toc-toggle[aria-expanded="false"] .toc-collapse-icon {
+      display: none;
+    }
+
+    .toc-toggle[aria-expanded="false"] .toc-expand-icon {
+      display: block;
+    }
+
+    .report-layout:not(.toc-collapsed) .toc-toggle {
+      margin-top: 11px;
+    }
+
+    .toc-toggle:hover {
+      background: #eef1f4;
+    }
+
+    .toc-toggle:focus-visible {
+      outline: 2px solid #0969da;
+      outline-offset: 2px;
+    }
+
+    .report-layout.toc-collapsed {
+      grid-template-columns: 32px minmax(0, 1fr);
+      column-gap: 16px;
+      padding-left: 20px;
+    }
+
+    .report-layout.toc-collapsed .toc {
+      width: 32px;
+      top: 31px;
+      padding: 0;
+      overflow: visible;
+      border-right: 0;
+    }
+
+    .report-layout.toc-collapsed .toc-title {
+      display: none;
+    }
+
+    .report-layout.toc-collapsed .toc-header {
+      padding-bottom: 0;
+    }
+
+    .report-layout.toc-collapsed .content-column {
+      padding-left: 20px;
+    }
+
+    @media screen and (max-width: 900px) {
+      main {
+        margin: 16px;
+      }
+
+      .report-layout,
+      .report-layout.toc-collapsed {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        padding-left: 0;
+      }
+
+      .report-layout .toc {
+        position: static;
+        width: 100%;
+        margin-left: 0;
+        max-height: none;
+        overflow: visible;
+        padding: 0 0 12px;
+        border-right: 0;
+        border-bottom: 1px solid #d0d7de;
+      }
+
+      .toc-title {
+        padding-top: 6px;
+      }
+
+      .report-layout.toc-collapsed .toc {
+        width: 32px;
+        top: auto;
+        padding: 0;
+        border-bottom: 0;
+      }
+
+      .report-layout .content-column,
+      .report-layout.toc-collapsed .content-column {
+        padding-right: 0;
+        padding-left: 0;
+      }
     }
 
     .toc ul {
-      margin-left: 20px;
-      padding-left: 0;
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
     }
 
     .toc ul ul {
-      margin-left: auto;
-      padding-left: 15px;
+      margin-top: 3px;
+      padding-left: 12px;
+    }
+
+    .toc li + li {
+      margin-top: 4px;
+    }
+
+    .toc li li + li {
+      margin-top: 2px;
+    }
+
+    .toc a {
+      color: #24292f;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+
+    .toc > ul > li > a {
+      font-weight: 600;
+    }
+
+    .toc ul ul a {
+      color: #57606a;
+      font-size: 0.92em;
+    }
+
+    @media screen and (min-width: 901px) {
+      .toc a {
+        white-space: nowrap;
+      }
+    }
+
+    .heading-permalink {
+      margin-left: 0.35em;
+      color: #57606a;
+      font-size: 0.75em;
+      font-weight: 400;
+      opacity: 0.35;
+      text-decoration: none;
+    }
+
+    h2:hover > .heading-permalink,
+    h3:hover > .heading-permalink,
+    .heading-permalink:hover,
+    .heading-permalink:focus-visible {
+      opacity: 1;
+    }
+
+    .heading-permalink:hover {
+      color: #0969da;
+      text-decoration: none;
+    }
+
+    .heading-permalink:focus-visible {
+      outline: 2px solid #0969da;
+      outline-offset: 2px;
+    }
+
+    @media (hover: none) {
+      .heading-permalink {
+        opacity: 0.65;
+      }
     }
 
     .row {
@@ -74,10 +271,22 @@
       width: 70%;
     }
 
+    .stale-probe-notice {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0 1rem;
+      background: #fff8e6;
+      border: 1px solid #e6cb83;
+      border-radius: 6px;
+      color: #684b10;
+    }
+
     .source {
       margin: 0 0 10px;
-      color: #656d76;
-      font-size: 14px;
+      color: inherit;
+      font-size: inherit;
     }
 
     .source span + span::before {
@@ -194,40 +403,35 @@
 <body>
 
   <div class="markdown-body">
-    <main>
-      <div id="toc" class="toc">
-        <legend>TOC</legend>
-        <ul>
-          <li><a href="#generic-worker">Generic Worker</a></li>
-          <li><a href="#docker-worker">Docker Worker</a></li>
-          <li><a href="#script-worker">Script Worker</a></li>
-          <li><a href="#no-artifacts-found-1">No artifacts</a></li>
-          <li><a href="#version-not-determined-2">Version not determined</a></li>
-          <li><a href="#history">History</a>
-            <ul>
-              <li><a href="#history-implementations">Implementations</a></li>
-              <li><a href="#history-versions">Versions</a></li>
-            </ul>
-          </li>
-          <li><a href="#graphs">Graphs</a></li>
-          <li><a href="./migration.html">Migration timeline &rarr;</a></li>
-        </ul>
-      </div>
-      <p class="source" id="source"></p>
-      <p class="info">Looking for the big picture? The <a href="./migration.html">docker-worker &rarr;
-        generic-worker migration timeline</a> animates the fleet balance and the version rollout month by
-        month.</p>
-      <p class="info"><strong>Disclaimer:</strong> Values below represent <strong>worker pools</strong>.<br />
-        They do not contain number of unique imagesets used for those pools, or how many tasks are being executed by those
-        worker pools.</p>
-      <div class="content" id="content"></div>
-      <div class="history" id="history"></div>
-      <div class="graphs" id="graphs">
-        <p class="info"><strong>Disclaimer:</strong> Those values represent number of worker pools, and not number of
-          workers. This also doesn't include total number of tasks run on those worker pools.</p>
-        <p class="info" id="graph-status">Loading charts&hellip;</p>
-        <div id="graph-implementations"></div>
-        <div id="graph-versions"></div>
+    <main id="report-layout" class="report-layout">
+      <nav id="toc" class="toc" aria-label="Table of contents">
+        <div class="toc-header">
+          <strong class="toc-title">Contents</strong>
+          <button id="toc-toggle" class="toc-toggle" type="button" aria-expanded="true"
+            aria-controls="toc-list" aria-label="Collapse table of contents"
+            title="Collapse table of contents">
+            <svg class="toc-collapse-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M10.8 2.7a1 1 0 0 1 0 1.4L6.9 8l3.9 3.9a1 1 0 1 1-1.4 1.4L4.8 8.7a1 1 0 0 1 0-1.4l4.6-4.6a1 1 0 0 1 1.4 0Z"/>
+            </svg>
+            <svg class="toc-expand-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M5.2 2.7a1 1 0 0 0 0 1.4L9.1 8l-3.9 3.9a1 1 0 1 0 1.4 1.4l4.6-4.6a1 1 0 0 0 0-1.4L6.6 2.7a1 1 0 0 0-1.4 0Z"/>
+            </svg>
+          </button>
+        </div>
+        <ul id="toc-list"></ul>
+      </nav>
+      <div class="content-column">
+        <div class="content" id="content"></div>
+        <div class="history" id="history-content"></div>
+        <div class="graphs" id="graphs-content">
+          <h2>Graphs</h2>
+          <p class="info">Each point shows the number of worker pools observed in a snapshot.</p>
+          <p class="info" id="graph-status">Loading charts&hellip;</p>
+          <h3>Worker pools by implementation</h3>
+          <div id="graph-implementations"></div>
+          <h3>Worker pools by version</h3>
+          <div id="graph-versions"></div>
+        </div>
       </div>
     </main>
   </div>
@@ -238,14 +442,29 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/gh/tofsjonas/sortable/sortable.min.js"></script>
   <script type="module">
+    import { decorateSortableTables } from './table-sort.js'
     import { enhanceTables } from './table-utils.js'
+    import { staleProbeAge } from './report-freshness.js'
 
     // Resolve against the directory, so both /<repo>/ and /<repo>/index.html work.
     const baseUrl = new URL('.', window.location.href)
-    // On GitHub Pages the first path segment is the repository name; fall back
-    // to mozilla-history when served from a bare host (local preview).
-    const repo = baseUrl.pathname.split('/').filter(Boolean)[0] || 'mozilla-history'
-    const readmeUrl = `https://raw.githubusercontent.com/taskcluster/${repo}/master/WorkerVersions/README.md`
+    // On GitHub Pages the first path segment is the repository name. Quick and
+    // local previews use /docs/, so fall back to mozilla-history there.
+    const pathRepo = baseUrl.pathname.split('/').filter(Boolean)[0] || ''
+    const repo = pathRepo.endsWith('-history') ? pathRepo : 'mozilla-history'
+    const query = new URLSearchParams(window.location.search)
+    const loopbackHost = ['127.0.0.1', 'localhost', '[::1]'].includes(window.location.hostname)
+    const bundledReport = query.has('local') || (
+      !query.has('remote') && (
+        loopbackHost || window.location.hostname.endsWith('.quick.mozilla.cloud') ||
+        (window.location.hostname.endsWith('.github.io') && baseUrl.pathname.endsWith('/docs/'))
+      )
+    )
+    const reportBaseUrl = bundledReport
+      ? new URL('../WorkerVersions/', baseUrl)
+      : new URL(`https://raw.githubusercontent.com/taskcluster/${repo}/master/WorkerVersions/`)
+    const readmeUrl = new URL('README.md', reportBaseUrl)
+    const workersUrl = new URL('workers.json', reportBaseUrl)
     const historyUrl = new URL('history.json', baseUrl)
     const plotlyUrl = 'https://cdn.plot.ly/plotly-2.18.0.min.js'
 
@@ -255,6 +474,7 @@
     // Versions charted individually; the rest are summed into one trace.
     const CHARTED_VERSIONS = 10
     const HEAT_STEPS = 5
+    const TOC_STORAGE_KEY = 'mozilla-history:toc-collapsed'
     const RANGES = [
       { id: '1y', label: 'Last year', days: 365 },
       { id: '3y', label: 'Last 3 years', days: 3 * 365 },
@@ -275,26 +495,10 @@
       return versionCollator.compare(b, a)
     }
 
-    function versionSortKey(version) {
-      const value = version.trim().toLowerCase()
-      const prefix = /^v?\d/i.test(value) ? '1:' : '0:'
-      return prefix + value.replace(/\d+/g, part => part.padStart(12, '0'))
-    }
-
-    function makeTableSortable(table) {
-      const headers = [...table.querySelectorAll('thead th')]
-      headers.forEach((header, column) => {
-        if (header.textContent.trim().toLowerCase() !== 'version') return
-        table.querySelectorAll('tbody tr').forEach(row => {
-          const cell = row.cells[column]
-          if (cell) cell.dataset.sort = versionSortKey(cell.textContent)
-        })
-      })
-      table.classList.add('sortable')
-    }
-
     async function fetchOk(url) {
-      const res = await fetch(url)
+      // These reports are replaced at stable URLs. Always revalidate so a
+      // newly deployed page cannot be paired with a stale cached snapshot.
+      const res = await fetch(url, { cache: 'no-cache' })
       if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`)
       return res
     }
@@ -318,19 +522,61 @@
       })
     }
 
+    function renderStaleProbeNotice(reportTiming) {
+      document.getElementById('stale-probe-notice')?.remove()
+      const age = staleProbeAge(reportTiming.textContent)
+      if (!age) return
+      const notice = document.createElement('p')
+      notice.id = 'stale-probe-notice'
+      notice.className = 'stale-probe-notice'
+      notice.setAttribute('role', 'status')
+      notice.innerHTML = `<span aria-hidden="true">⚠</span><span>Latest probe started <strong>${age}</strong>. Worker information may be out of date.</span>`
+      reportTiming.after(notice)
+    }
+
     function renderSource() {
       const repoUrl = `https://github.com/taskcluster/${repo}`
-      document.getElementById('source').innerHTML =
-        `<span>Source: <a href="${repoUrl}">taskcluster/${repo}</a></span>` +
-        `<span>Report: <a href="${repoUrl}/blob/master/WorkerVersions/README.md">WorkerVersions/README.md</a></span>` +
-        `<span>Raw data: <a href="${historyUrl}">history.json</a></span>` +
-        `<span id="source-updated"></span>`
+      const context = document.createElement('div')
+      context.className = 'report-context'
+      context.innerHTML = `<p class="source" id="source">` +
+        `<span>Source code: <a href="${repoUrl}">GitHub</a></span>` +
+        `<span>Downloads: <a href="${readmeUrl}">Current worker-pool report (Markdown)</a> · ` +
+        `<a href="${workersUrl}">Current worker-pool data (JSON)</a> · ` +
+        `<a href="${historyUrl}">Historical worker-pool data (JSON)</a></span></p>`
+
+      const content = document.getElementById('content')
+      const reportTiming = [...content.querySelectorAll('p')]
+        .find(paragraph => paragraph.textContent.startsWith('Probe run started:'))
+      const coverage = document.createElement(reportTiming ? 'span' : 'p')
+      coverage.id = 'history-coverage'
+      if (reportTiming) {
+        renderStaleProbeNotice(reportTiming)
+        const trailingText = reportTiming.lastChild
+        const hasRevision = /\([a-f0-9]{9,40}(?:-dirty)?\)\s*$/.test(reportTiming.textContent)
+        if (hasRevision && trailingText?.nodeType === Node.TEXT_NODE) {
+          const closingParen = trailingText.splitText(trailingText.textContent.lastIndexOf(')'))
+          reportTiming.insertBefore(coverage, closingParen)
+          coverage.dataset.withRevision = 'true'
+        } else reportTiming.append(coverage)
+      }
+      else {
+        coverage.className = 'source'
+        context.prepend(coverage)
+      }
+
+      const firstSection = content.querySelector('h2')
+      if (firstSection) firstSection.before(context)
+      else content.append(context)
     }
 
     function renderSourceUpdated(data) {
       const dates = Object.keys(data).sort()
-      document.getElementById('source-updated').textContent =
-        `${dates.length} weekly snapshots, ${dates[0]} to ${dates[dates.length - 1]}`
+      const coverage = document.getElementById('history-coverage')
+      if (!coverage) return
+      const summary = `${dates.length} snapshots from ${dates[0]} to ${dates[dates.length - 1]}`
+      coverage.textContent = coverage.tagName === 'SPAN'
+        ? coverage.dataset.withRevision === 'true' ? `, ${summary}` : ` (${summary})`
+        : `History: ${summary}.`
     }
 
     async function loadReadme() {
@@ -340,6 +586,140 @@
         ghCompatibleHeaderId: true,
         tables: true,
       })).makeHtml(text)
+      // Markdown needs an absolute link on GitHub; the website has its own timeline.
+      document.querySelectorAll(
+        '#content a[href="https://taskcluster.github.io/mozilla-history/migration.html"]',
+      ).forEach(link => { link.href = new URL('./migration.html', baseUrl).href })
+    }
+
+    function slugify(value) {
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+    }
+
+    function storedTocPreference() {
+      try {
+        const value = window.localStorage.getItem(TOC_STORAGE_KEY)
+        if (value === 'true') return true
+        if (value === 'false') return false
+        return null
+      } catch (error) {
+        return null
+      }
+    }
+
+    function setTocCollapsed(collapsed, persist = true) {
+      const layout = document.getElementById('report-layout')
+      const toggle = document.getElementById('toc-toggle')
+      const list = document.getElementById('toc-list')
+
+      layout.classList.toggle('toc-collapsed', collapsed)
+      list.hidden = collapsed
+      toggle.setAttribute('aria-expanded', String(!collapsed))
+      const action = collapsed ? 'Expand' : 'Collapse'
+      toggle.setAttribute('aria-label', `${action} table of contents`)
+      toggle.title = `${action} table of contents`
+
+      if (!persist) return
+      try {
+        window.localStorage.setItem(TOC_STORAGE_KEY, String(collapsed))
+      } catch (error) {
+        // Storage can be unavailable in privacy modes; the control still works.
+      }
+    }
+
+    function initTableOfContents() {
+      const toggle = document.getElementById('toc-toggle')
+      const preference = storedTocPreference()
+      const collapsed = preference ?? window.matchMedia('(max-width: 900px)').matches
+      setTocCollapsed(collapsed, false)
+      toggle.addEventListener('click', () => {
+        setTocCollapsed(toggle.getAttribute('aria-expanded') === 'true')
+      })
+    }
+
+    function tableOfContentsLabel(heading, label) {
+      if (heading.tagName === 'H1') return 'Overview'
+      if (heading.tagName !== 'H3') return label
+      if (label === 'Worker pools') return 'Pool details'
+      if (label.startsWith('Worker pools by ')) {
+        return `By ${label.slice('Worker pools by '.length)}`
+      }
+      return label
+    }
+
+    function buildTableOfContents() {
+      const headings = document.querySelectorAll([
+        '#content h1',
+        '#content h2',
+        '#content h3',
+        '#history-content h2',
+        '#history-content h3',
+        '#graphs-content h2',
+        '#graphs-content h3',
+      ].join(', '))
+      const toc = document.getElementById('toc-list')
+      const usedIds = new Set()
+      let sectionId = ''
+      let sectionItem = null
+      let subsectionList = null
+
+      toc.replaceChildren()
+      headings.forEach(heading => {
+        heading.querySelector(':scope > .heading-permalink')?.remove()
+        const label = heading.textContent.trim()
+        const baseId = slugify(label)
+        const candidateId = heading.tagName === 'H3' && sectionId
+          ? `${sectionId}-${baseId}`
+          : baseId
+        let id = candidateId
+        let suffix = 2
+        while (usedIds.has(id)) {
+          id = `${candidateId}-${suffix}`
+          suffix += 1
+        }
+        usedIds.add(id)
+        heading.id = id
+
+        if (heading.tagName !== 'H1') {
+          const permalink = document.createElement('a')
+          permalink.className = 'heading-permalink'
+          permalink.href = `#${id}`
+          permalink.textContent = '#'
+          permalink.setAttribute('aria-label', `Link to ${label}`)
+          permalink.title = `Permalink to ${label}`
+          heading.appendChild(permalink)
+        }
+
+        const item = document.createElement('li')
+        const link = document.createElement('a')
+        link.href = `#${id}`
+        link.textContent = tableOfContentsLabel(heading, label)
+        item.appendChild(link)
+
+        if (heading.tagName === 'H1') {
+          toc.appendChild(item)
+          return
+        }
+
+        if (heading.tagName === 'H2') {
+          sectionId = id
+          sectionItem = item
+          subsectionList = null
+          toc.appendChild(item)
+          return
+        }
+
+        if (!sectionItem) return
+        if (!subsectionList) {
+          subsectionList = document.createElement('ul')
+          sectionItem.appendChild(subsectionList)
+        }
+        subsectionList.appendChild(item)
+      })
     }
 
     function distinctVersions(data) {
@@ -424,12 +804,15 @@
 
     function renderHistory() {
       const dates = datesDescending(history)
-      document.getElementById('history').innerHTML = `<h2 id="history">History</h2>` +
+      document.getElementById('history-content').innerHTML = `<h2>History</h2>` +
         historyControls(history) +
-        `<h3 id="history-implementations">Implementations</h3>` +
+        `<h3>Implementations</h3>` +
         historyTable(history, dates, 'implementations') +
-        `<h3 id="history-versions">Versions</h3>` +
-        historyTable(history, dates, 'versions')
+        `<h3>Versions</h3>` +
+        historyTable(history, dates, 'versions') +
+        `<h3>Worker Migration</h3>
+        <p>The <a href="./migration.html">worker migration timeline</a> shows the transition from
+          docker-worker to generic-worker and generic-worker version adoption over time.</p>`
 
       document.getElementById('history-range').addEventListener('change', event => {
         rangeId = event.target.value
@@ -441,21 +824,29 @@
         if (plotly) renderGraphs()
       })
 
-      enhance(document.getElementById('history'))
+      enhance(document.getElementById('history-content'))
+      buildTableOfContents()
     }
 
     function renderGraphs() {
       const dates = Object.keys(history).sort()
+      const lineTrace = (name, y, extra = {}) => ({
+        x: dates,
+        y,
+        name,
+        type: 'scatter',
+        mode: 'lines',
+        hovertemplate: '<b>%{fullData.name}</b><br>Date: %{x}<br>Worker pools: %{y}<extra></extra>',
+        ...extra,
+      })
       const implementationTraces = [
         ['Generic worker', 'generic-worker'],
         ['Docker worker', 'docker-worker'],
         ['Unknown', '']
-      ].map(([name, implementation]) => ({
-        x: dates,
-        y: dates.map(date => history[date].implementations[implementation] || 0),
+      ].map(([name, implementation]) => lineTrace(
         name,
-        type: 'line',
-      }))
+        dates.map(date => history[date].implementations[implementation] || 0),
+      ))
 
       // get unique versions, most used first
       const allVersions = [... new Set(dates.map(date => Object.keys(history[date].versions)).flat())]
@@ -466,37 +857,39 @@
       const charted = showAllVersions ? ranked : ranked.slice(0, CHARTED_VERSIONS)
       const rest = showAllVersions ? [] : ranked.slice(CHARTED_VERSIONS)
 
-      const versionTraces = charted.sort(compareVersionsDescending).map((version) => ({
-        x: dates,
-        y: dates.map(date => history[date].versions[version] || 0),
-        name: version,
-        type: 'line',
-      }))
-      if (rest.length) versionTraces.push({
-        x: dates,
-        y: dates.map(date => rest.reduce((sum, v) => sum + (history[date].versions[v] || 0), 0)),
-        name: `other (${rest.length})`,
-        type: 'line',
-        line: { dash: 'dot', color: '#888' },
-      })
+      const versionTraces = charted.sort(compareVersionsDescending).map(version => lineTrace(
+        version || 'unknown',
+        dates.map(date => history[date].versions[version] || 0),
+      ))
+      if (rest.length) versionTraces.push(lineTrace(
+        `other (${rest.length})`,
+        dates.map(date => rest.reduce((sum, v) => sum + (history[date].versions[v] || 0), 0)),
+        { line: { dash: 'dot', color: '#888' } },
+      ))
 
-      const layout = {
-        barmode: 'group',
-      }
-      plotly.newPlot('graph-implementations', implementationTraces, {
-        ...layout,
-        title: 'Worker Implementations',
+      const layout = (title, legendTitle) => ({
+        hovermode: 'closest',
+        title,
+        legend: { title: { text: legendTitle } },
+        xaxis: { title: { text: 'Snapshot date' } },
+        yaxis: { title: { text: 'Worker pools' }, rangemode: 'tozero' },
       })
-      plotly.newPlot('graph-versions', versionTraces, {
-        ...layout,
-        title: 'Worker Versions',
-      })
+      plotly.newPlot(
+        'graph-implementations',
+        implementationTraces,
+        layout('Worker pools by implementation', 'Implementation'),
+      )
+      plotly.newPlot(
+        'graph-versions',
+        versionTraces,
+        layout('Worker pools by version', 'Version'),
+      )
     }
 
     // Plotly is over a megabyte, and the charts sit below the tables. Fetch it
     // only once the graphs are close to being looked at.
     function loadGraphsWhenVisible() {
-      const graphs = document.getElementById('graphs')
+      const graphs = document.getElementById('graphs-content')
       const observer = new IntersectionObserver(async (entries) => {
         if (!entries.some(entry => entry.isIntersecting)) return
         observer.disconnect()
@@ -514,22 +907,21 @@
     }
 
     function enhance(root) {
-      root.querySelectorAll('table').forEach(makeTableSortable)
+      decorateSortableTables(root)
       // sticky headers/first column, row & column hover highlighting, filters
       enhanceTables(root)
     }
 
     async function init() {
-      renderSource()
-
       // Each stage renders into its own container, so one failure must not
       // take the rest of the page with it.
       const stages = [
         ['the worker pool report', document.getElementById('content'), async () => {
           await loadReadme()
+          renderSource()
           enhance(document.getElementById('content'))
         }],
-        ['the history data', document.getElementById('history'), async () => {
+        ['the history data', document.getElementById('history-content'), async () => {
           history = await (await fetchOk(historyUrl)).json()
           renderSourceUpdated(history)
           renderHistory()
@@ -543,8 +935,10 @@
           showError(container, what, error)
         }
       }
+      buildTableOfContents()
     }
 
+    initTableOfContents()
     init()
   </script>
 </body>
