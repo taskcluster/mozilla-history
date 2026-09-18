@@ -1,0 +1,71 @@
+{
+  "hookGroupId": "project-releng",
+  "hookId": "cron-task-taskcluster-taskcluster/azure-attested-document",
+  "metadata": {
+    "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nFIXME",
+    "emailOnError": true,
+    "name": "project-releng/cron-task-taskcluster-taskcluster/azure-attested-document",
+    "owner": "release+tc-hooks@mozilla.com"
+  },
+  "schedule": [],
+  "task": {
+    "tags": {},
+    "extra": {},
+    "routes": [
+      "notify.email.release+failedcron@mozilla.com.on-failed",
+      "notify.email.release+exceptioncron@mozilla.com.on-exception"
+    ],
+    "scopes": [
+      "assume:hook-id:project-releng/cron-task-taskcluster-taskcluster/azure-attested-document"
+    ],
+    "expires": {
+      "$fromNow": "7 days"
+    },
+    "payload": {
+      "env": {},
+      "image": "mozillareleases/build-decision:bd900d7a313c796d48da21fdb54ae35db812e3dc@sha256:2a7e477efee5e8b356ea3b642e30b3b5cb48ffe81b0e72bb223b4522b59345d5",
+      "command": [
+        "cron",
+        "--repo-url",
+        "https://github.com/taskcluster/taskcluster",
+        "--project",
+        "taskcluster",
+        "--level",
+        "3",
+        "--repository-type",
+        "git",
+        "--branch",
+        "main",
+        "--trust-domain",
+        "taskcluster",
+        "--github-token-secret",
+        "project/releng/mobile/github-cron-token",
+        "--force-run=azure-attested-document"
+      ],
+      "features": {
+        "chainOfTrust": true,
+        "taskclusterProxy": true
+      },
+      "maxRunTime": 600
+    },
+    "retries": 5,
+    "deadline": {
+      "$fromNow": "1 hour"
+    },
+    "metadata": {
+      "name": "Cron task for https://github.com/taskcluster/taskcluster",
+      "owner": "mozilla-taskcluster-maintenance@mozilla.com",
+      "source": "https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-taskcluster-taskcluster/azure-attested-document",
+      "description": "See https://firefox-ci-tc.services.mozilla.com/hooks/#project-releng/cron-task-taskcluster-taskcluster/azure-attested-document"
+    },
+    "priority": "lowest",
+    "workerType": "build-decision",
+    "schedulerId": "taskcluster-level-3",
+    "provisionerId": "infra"
+  },
+  "triggerSchema": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  }
+}
