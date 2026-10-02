@@ -13,55 +13,6 @@
         "tags": {
           "deploymentId": "fuzzing"
         },
-        "location": "centralus",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "wstAudience": "firefoxcitc",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": false,
-              "idleTimeoutSecs": 300,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_F16s_v2"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-ae2249752bf34390a775-centralus-fuzzing"
-            },
-            "location": {
-              "value": "centralus"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-proj-taskcluster/providers/Microsoft.Network/virtualNetworks/vn-central-us-proj-taskcluster/subnets/sn-central-us-proj-taskcluster"
-            }
-          },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-f3622840382b3d43c4c8",
-          "capacityPerInstance": 1
-        },
-        "armDeploymentResourceGroup": "rg-tc-proj-taskcluster-gw-windows-2022-gui"
-      },
-      {
-        "tags": {
-          "deploymentId": "fuzzing"
-        },
         "location": "eastus",
         "workerConfig": {
           "genericWorker": {
@@ -106,6 +57,55 @@
           "capacityPerInstance": 1
         },
         "armDeploymentResourceGroup": "rg-tc-proj-taskcluster-gw-windows-2022-gui"
+      },
+      {
+        "tags": {
+          "deploymentId": "fuzzing"
+        },
+        "location": "centralus",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": false,
+              "idleTimeoutSecs": 300,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": true
+            }
+          }
+        },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_F16s_v2"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-ae2249752bf34390a775-centralus-fuzzing"
+            },
+            "location": {
+              "value": "centralus"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-proj-taskcluster/providers/Microsoft.Network/virtualNetworks/vn-central-us-proj-taskcluster/subnets/sn-central-us-proj-taskcluster"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-f3622840382b3d43c4c8",
+          "capacityPerInstance": 1
+        },
+        "armDeploymentResourceGroup": "rg-tc-proj-taskcluster-gw-windows-2022-gui"
       }
     ]
   },
@@ -113,7 +113,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nTaskcluster generic-worker Windows 2022 GUI pool",
   "emailOnError": true,
-  "lastModified": "2026-09-16T18:39:04.208Z",
+  "lastModified": "2026-09-30T19:14:14.590Z",
   "owner": "taskcluster-notifications+workers@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,

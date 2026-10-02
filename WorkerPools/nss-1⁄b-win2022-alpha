@@ -12,23 +12,22 @@
       {
         "tags": {
           "deploymentId": "alpha",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
+          "sourceBranch": "master",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "centralindia",
+        "location": "southcentralus",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\Users",
+              "tasksDir": "C:\\tasks",
               "cachesDir": "C:\\caches",
               "wstAudience": "firefoxcitc",
               "downloadsDir": "C:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
               "sentryProject": "generic-worker",
-              "disableReboots": true,
+              "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 150,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
@@ -51,19 +50,19 @@
           "mode": "Incremental",
           "parameters": {
             "vmSize": {
-              "value": "Standard_D32ads_v5"
+              "value": "Standard_D32ads_v7"
             },
             "imageId": {
               "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009_alpha/images/win2022_64_2009_alpha/versions/1.0.0"
             },
             "location": {
-              "value": "centralindia"
+              "value": "southcentralus"
             },
             "priority": {
               "value": "Spot"
             },
             "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-nss-1/providers/Microsoft.Network/virtualNetworks/vn-central-india-nss-1/subnets/sn-central-india-nss-1"
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-south-central-us-nss-1/providers/Microsoft.Network/virtualNetworks/vn-south-central-us-nss-1/subnets/sn-south-central-us-nss-1"
             },
             "osDiskCaching": {
               "value": "ReadOnly"
@@ -72,13 +71,13 @@
               "value": "Local"
             },
             "diffDiskPlacement": {
-              "value": "ResourceDisk"
+              "value": "NvmeDisk"
             },
             "enableFullCaching": {
-              "value": true
+              "value": false
             },
             "osDiskStorageAccountType": {
-              "value": "StandardSSD_LRS"
+              "value": "Standard_LRS"
             }
           },
           "templateLink": {
@@ -86,7 +85,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-745500785800540e2a6f",
+          "initialWeight": 0.8,
+          "launchConfigId": "lc-82143e4b97c43517cc04",
           "capacityPerInstance": 1
         },
         "armDeploymentResourceGroup": "rg-tc-nss-1-b-win2022-alpha"
@@ -94,23 +94,22 @@
       {
         "tags": {
           "deploymentId": "alpha",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
+          "sourceBranch": "master",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
-        "location": "centralus",
+        "location": "westus3",
         "workerConfig": {
           "genericWorker": {
             "config": {
-              "tasksDir": "C:\\Users",
+              "tasksDir": "C:\\tasks",
               "cachesDir": "C:\\caches",
               "wstAudience": "firefoxcitc",
               "downloadsDir": "C:\\downloads",
               "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
               "sentryProject": "generic-worker",
-              "disableReboots": true,
+              "disableReboots": false,
               "cleanUpTaskDirs": true,
               "idleTimeoutSecs": 150,
               "livelogExecutable": "C:\\generic-worker\\livelog.exe",
@@ -133,19 +132,19 @@
           "mode": "Incremental",
           "parameters": {
             "vmSize": {
-              "value": "Standard_D32ads_v5"
+              "value": "Standard_D32ads_v7"
             },
             "imageId": {
               "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009_alpha/images/win2022_64_2009_alpha/versions/1.0.0"
             },
             "location": {
-              "value": "centralus"
+              "value": "westus3"
             },
             "priority": {
               "value": "Spot"
             },
             "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-nss-1/providers/Microsoft.Network/virtualNetworks/vn-central-us-nss-1/subnets/sn-central-us-nss-1"
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-west-us-3-nss-1/providers/Microsoft.Network/virtualNetworks/vn-west-us-3-nss-1/subnets/sn-west-us-3-nss-1"
             },
             "osDiskCaching": {
               "value": "ReadOnly"
@@ -154,13 +153,13 @@
               "value": "Local"
             },
             "diffDiskPlacement": {
-              "value": "ResourceDisk"
+              "value": "NvmeDisk"
             },
             "enableFullCaching": {
-              "value": true
+              "value": false
             },
             "osDiskStorageAccountType": {
-              "value": "StandardSSD_LRS"
+              "value": "Standard_LRS"
             }
           },
           "templateLink": {
@@ -168,89 +167,8 @@
           }
         },
         "workerManager": {
-          "launchConfigId": "lc-702ed1cc701a2f574deb",
-          "capacityPerInstance": 1
-        },
-        "armDeploymentResourceGroup": "rg-tc-nss-1-b-win2022-alpha"
-      },
-      {
-        "tags": {
-          "deploymentId": "alpha",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
-        "location": "northcentralus",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "C:\\Users",
-              "cachesDir": "C:\\caches",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "headlessTasks": true,
-              "sentryProject": "generic-worker",
-              "disableReboots": true,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win2022-64-2009-alpha-1.0.0.md"
-              },
-              "disableOOMProtection": true,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "enableRunTaskAsCurrentUser": false,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_D32ads_v5"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009_alpha/images/win2022_64_2009_alpha/versions/1.0.0"
-            },
-            "location": {
-              "value": "northcentralus"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-north-central-us-nss-1/providers/Microsoft.Network/virtualNetworks/vn-north-central-us-nss-1/subnets/sn-north-central-us-nss-1"
-            },
-            "osDiskCaching": {
-              "value": "ReadOnly"
-            },
-            "diffDiskOption": {
-              "value": "Local"
-            },
-            "diffDiskPlacement": {
-              "value": "ResourceDisk"
-            },
-            "enableFullCaching": {
-              "value": true
-            },
-            "osDiskStorageAccountType": {
-              "value": "StandardSSD_LRS"
-            }
-          },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template-alpha/versions/1.0"
-          }
-        },
-        "workerManager": {
-          "launchConfigId": "lc-e9b56d163ad234a8773e",
+          "initialWeight": 0.9,
+          "launchConfigId": "lc-f573fa7f190580984701",
           "capacityPerInstance": 1
         },
         "armDeploymentResourceGroup": "rg-tc-nss-1-b-win2022-alpha"
@@ -261,7 +179,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2026-09-21T20:44:11.787Z",
+  "lastModified": "2026-10-01T13:20:29.270Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,

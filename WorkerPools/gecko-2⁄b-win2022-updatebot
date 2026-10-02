@@ -12,174 +12,8 @@
       {
         "tags": {
           "deploymentId": "084c19f",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
-        "location": "centralindia",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "C:\\Users",
-              "cachesDir": "C:\\caches",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "enableInteractive": true,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win2022-64-2009-1.3.10.md"
-              },
-              "disableOOMProtection": true,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "enableRunTaskAsCurrentUser": false,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_D32ads_v5"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009/images/win2022_64_2009/versions/1.3.10"
-            },
-            "location": {
-              "value": "centralindia"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-india-gecko-2/providers/Microsoft.Network/virtualNetworks/vn-central-india-gecko-2/subnets/sn-central-india-gecko-2"
-            },
-            "osDiskCaching": {
-              "value": "ReadOnly"
-            },
-            "diffDiskOption": {
-              "value": "Local"
-            },
-            "diffDiskPlacement": {
-              "value": "ResourceDisk"
-            },
-            "enableFullCaching": {
-              "value": true
-            },
-            "osDiskStorageAccountType": {
-              "value": "StandardSSD_LRS"
-            }
-          },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1"
-          }
-        },
-        "workerManager": {
-          "initialWeight": 1,
-          "launchConfigId": "lc-8e85c8df6cddda06c56e",
-          "capacityPerInstance": 1
-        },
-        "armDeploymentResourceGroup": "rg-tc-gecko-2-b-win2022-updatebot"
-      },
-      {
-        "tags": {
-          "deploymentId": "084c19f",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
-          "sourceRepository": "ronin_puppet",
-          "sourceOrganisation": "mozilla-platform-ops"
-        },
-        "location": "northcentralus",
-        "workerConfig": {
-          "genericWorker": {
-            "config": {
-              "tasksDir": "C:\\Users",
-              "cachesDir": "C:\\caches",
-              "wstAudience": "firefoxcitc",
-              "downloadsDir": "C:\\downloads",
-              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
-              "sentryProject": "generic-worker",
-              "disableReboots": false,
-              "cleanUpTaskDirs": true,
-              "idleTimeoutSecs": 150,
-              "enableInteractive": true,
-              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
-              "numberOfTasksToRun": 0,
-              "workerTypeMetaData": {
-                "sbom": "https://github.com/mozilla-platform-ops/worker-images/blob/main/sboms/win2022-64-2009-1.3.10.md"
-              },
-              "disableOOMProtection": true,
-              "runAfterUserCreation": "C:\\generic-worker\\task-user-init.cmd",
-              "taskclusterProxyPort": 80,
-              "shutdownMachineOnIdle": true,
-              "ed25519SigningKeyLocation": "C:\\generic-worker\\ed25519-private.key",
-              "enableRunTaskAsCurrentUser": false,
-              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
-              "shutdownMachineOnInternalError": true
-            }
-          }
-        },
-        "armDeployment": {
-          "mode": "Incremental",
-          "parameters": {
-            "vmSize": {
-              "value": "Standard_D32ads_v5"
-            },
-            "imageId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009/images/win2022_64_2009/versions/1.3.10"
-            },
-            "location": {
-              "value": "northcentralus"
-            },
-            "priority": {
-              "value": "Spot"
-            },
-            "subnetId": {
-              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-north-central-us-gecko-2/providers/Microsoft.Network/virtualNetworks/vn-north-central-us-gecko-2/subnets/sn-north-central-us-gecko-2"
-            },
-            "osDiskCaching": {
-              "value": "ReadOnly"
-            },
-            "diffDiskOption": {
-              "value": "Local"
-            },
-            "diffDiskPlacement": {
-              "value": "ResourceDisk"
-            },
-            "enableFullCaching": {
-              "value": true
-            },
-            "osDiskStorageAccountType": {
-              "value": "StandardSSD_LRS"
-            }
-          },
-          "templateLink": {
-            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/2.1"
-          }
-        },
-        "workerManager": {
-          "initialWeight": 0.9,
-          "launchConfigId": "lc-b18496eef7d32e28f8d3",
-          "capacityPerInstance": 1
-        },
-        "armDeploymentResourceGroup": "rg-tc-gecko-2-b-win2022-updatebot"
-      },
-      {
-        "tags": {
-          "deploymentId": "084c19f",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
+          "sourceBranch": "master",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
@@ -217,7 +51,7 @@
           "mode": "Incremental",
           "parameters": {
             "vmSize": {
-              "value": "Standard_D32ads_v5"
+              "value": "Standard_D32ads_v7"
             },
             "imageId": {
               "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009/images/win2022_64_2009/versions/1.3.10"
@@ -238,7 +72,7 @@
               "value": "Local"
             },
             "diffDiskPlacement": {
-              "value": "ResourceDisk"
+              "value": "NvmeDisk"
             },
             "enableFullCaching": {
               "value": true
@@ -253,7 +87,7 @@
         },
         "workerManager": {
           "initialWeight": 0.8,
-          "launchConfigId": "lc-e9091ff08131b667e88e",
+          "launchConfigId": "lc-7de666fbf6992dd93432",
           "capacityPerInstance": 1
         },
         "armDeploymentResourceGroup": "rg-tc-gecko-2-b-win2022-updatebot"
@@ -261,8 +95,8 @@
       {
         "tags": {
           "deploymentId": "084c19f",
-          "sourceBranch": "windows",
-          "sourceScript": "provisioners/windows/azure/2022-azure-bootstrap.ps1",
+          "sourceBranch": "master",
+          "sourceScript": "provisioners/windows/azure/azure-bootstrap.ps1",
           "sourceRepository": "ronin_puppet",
           "sourceOrganisation": "mozilla-platform-ops"
         },
@@ -300,7 +134,7 @@
           "mode": "Incremental",
           "parameters": {
             "vmSize": {
-              "value": "Standard_D32ads_v5"
+              "value": "Standard_D32ads_v7"
             },
             "imageId": {
               "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009/images/win2022_64_2009/versions/1.3.10"
@@ -321,7 +155,7 @@
               "value": "Local"
             },
             "diffDiskPlacement": {
-              "value": "ResourceDisk"
+              "value": "NvmeDisk"
             },
             "enableFullCaching": {
               "value": true
@@ -336,7 +170,7 @@
         },
         "workerManager": {
           "initialWeight": 0.9,
-          "launchConfigId": "lc-86c39d37bd3c35940b91",
+          "launchConfigId": "lc-63aa47682c8ac40b066b",
           "capacityPerInstance": 1
         },
         "armDeploymentResourceGroup": "rg-tc-gecko-2-b-win2022-updatebot"
@@ -347,7 +181,7 @@
   "currentCapacity": 0,
   "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\n",
   "emailOnError": true,
-  "lastModified": "2026-09-24T13:09:44.750Z",
+  "lastModified": "2026-09-29T15:48:14.586Z",
   "owner": "relops-azure-provisioning@mozilla.com",
   "providerId": "azure2",
   "requestedCapacity": 0,
