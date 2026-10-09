@@ -2,6 +2,10 @@
   "bindings": [
     {
       "exchange": "exchange/taskcluster-queue/v1/task-completed",
+      "routingKeyPattern": "route.project.relman.codereview-build-test.v1.try_ending"
+    },
+    {
+      "exchange": "exchange/taskcluster-queue/v1/task-completed",
       "routingKeyPattern": "route.project.relman.codereview.v1.try_ending"
     },
     {
@@ -53,6 +57,9 @@
             "$if": "firedBy == 'triggerHookWithToken'",
             "else": {},
             "then": {
+              "ANALYSIS_MODE": {
+                "$eval": "payload.analysis_mode"
+              },
               "PHABRICATOR_BUILD_TARGET": {
                 "$eval": "payload.build_target_phid"
               }
@@ -62,21 +69,23 @@
             "$if": "firedBy == 'pulseMessage'",
             "else": {},
             "then": {
-              "$if": "\"runId\" in payload \u0026\u0026 \"status\" in payload",
-              "else": {
-                "GENERIC_TASK_GROUP_ID": {
-                  "$eval": "payload.taskGroupId"
-                }
-              },
-              "then": {
-                "TRY_RUN_ID": {
-                  "$eval": "str(payload.runId)"
+              "$switch": {
+                "$default": {
+                  "GENERIC_TASK_GROUP_ID": {
+                    "$eval": "payload.taskGroupId"
+                  }
                 },
-                "TRY_TASK_ID": {
-                  "$eval": "payload.status.taskId"
+                "\"task\" in payload \u0026\u0026 \"tags\" in payload[\"task\"] \u0026\u0026 \"label\" in payload[\"task\"][\"tags\"] \u0026\u0026 payload[\"task\"][\"tags\"][\"label\"] == \"code-review-issues\"": {
+                  "ANALYSIS_MODE": "Lint",
+                  "TRY_TASK_GROUP_ID": {
+                    "$eval": "payload.status.taskGroupId"
+                  }
                 },
-                "TRY_TASK_GROUP_ID": {
-                  "$eval": "payload.status.taskGroupId"
+                "\"task\" in payload \u0026\u0026 \"tags\" in payload[\"task\"] \u0026\u0026 \"label\" in payload[\"task\"][\"tags\"] \u0026\u0026 payload[\"task\"][\"tags\"][\"label\"] == \"code-review-build-test\"": {
+                  "ANALYSIS_MODE": "BuildTest",
+                  "TRY_TASK_GROUP_ID": {
+                    "$eval": "payload.status.taskGroupId"
+                  }
                 }
               }
             }
@@ -128,26 +137,40 @@
   "triggerSchema": {
     "type": "object",
     "properties": {
-      "runId": {
-        "type": "integer",
-        "description": "Taskcluster Task Run ID triggering the hook (should be a Try Task run)"
+      "task": {
+        "type": "object",
+        "required": [
+          "tags"
+        ],
+        "properties": {
+          "tags": {
+            "type": "object",
+            "required": [
+              "label"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        }
       },
       "status": {
         "type": "object",
         "required": [
-          "taskId",
           "taskGroupId"
         ],
         "properties": {
-          "taskId": {
-            "type": "string",
-            "description": "Taskcluster Task ID triggering the hook (should be a Try Task)"
-          },
           "taskGroupId": {
             "type": "string",
             "description": "Taskcluster Task Group ID triggering the hook (should be a Try Task Group)"
           }
         }
+      },
+      "analysis_mode": {
+        "type": "string",
+        "description": "The type of code analysis to do; must be a valid AnalysisMode in code-review-bot"
       },
       "build_target_phid": {
         "type": "string",
