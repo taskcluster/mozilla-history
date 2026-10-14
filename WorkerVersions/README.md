@@ -1,637 +1,726 @@
-
-
 # Worker Pool Versions
+
+This report shows the latest detailed inventory of Firefox CI worker pools alongside historical trends from earlier snapshots.
+
+- **Implementation and version** are inferred from the failure log produced when each pool receives an intentionally malformed probe task.
+- **Image and capacity metadata** come from Worker Manager.
+- **Summary values** are counts of worker pools, not individual workers or tasks.
+
+
+Probe run started: **2026-10-14 22:22 UTC** ([Taskcluster task group](https://firefox-ci-tc.services.mozilla.com/tasks/groups/YjTPwJTbST-dyE5n7khhYw)) · Results collected: **2026-10-14 23:53 UTC** · Report generated: **2026-10-14 23:53 UTC** ([a5d8ffe51-dirty](https://github.com/taskcluster/mozilla-history/commit/a5d8ffe51900e78c4d1b78850487b331d2c9d384))
+
 
 
 ## Generic Worker
 
-Total: `416`
+These pools use generic-worker to execute tasks. Recent versions also support docker-worker payloads and Docker container execution through d2g. [Documentation](https://docs.taskcluster.net/docs/reference/workers/generic-worker) · [Source](https://github.com/taskcluster/taskcluster/tree/main/workers/generic-worker).
 
-Count by version:
 
-| Version | Count |
+Total generic-worker pools: `411`
+
+### Worker pools by version
+
+_Source: version information parsed from the log artifact produced when each worker claims an intentionally malformed probe task. The task is expected to fail with a malformed-payload exception; known worker implementations and versions are identified from their distinct log output._
+
+| Version | Worker pools |
 | :--- | ---: |
-| 100.5.0 | 2 |
-| 109.0.0 | 1 |
-| 110.0.0 | 3 |
+| 113.1.1 | 11 |
 | 110.1.0 | 335 |
-| 113.0.0 | 11 |
-| 36.0.0 | 3 |
-| 45.0.0 | 1 |
-| 60.3.4 | 14 |
-| 61.0.0 | 2 |
-| 64.3.0 | 21 |
-| 67.1.0 | 1 |
-| 84.1.2 | 7 |
-| 88.0.2 | 3 |
-| 91.0.2 | 3 |
+| 110.0.0 | 2 |
+| 109.0.0 | 1 |
+| 100.5.0 | 3 |
 | 96.2.3 | 9 |
+| 91.0.2 | 2 |
+| 88.0.2 | 3 |
+| 87.0.0 | 1 |
+| 84.1.2 | 7 |
+| 67.1.0 | 1 |
+| 65.1.0 | 1 |
+| 64.3.0 | 21 |
+| 61.0.0 | 2 |
+| 60.3.4 | 8 |
+| 45.0.0 | 1 |
+| 36.0.0 | 3 |
 
 
-Count by image:
+### Worker pools by image
 
-| Version | Count |
+_Source: image references in each pool's live Worker Manager launch configuration at report time. A value may represent multiple configured images. Standalone pools do not have a Worker Manager-managed image._
+
+| Image | Worker pools |
 | :--- | ---: |
-| projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-09-18t05-46-31z | 2 |
+| <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win11_a64_25h2_builder/images/trusted_win11_a64_25h2_builder/versions/1.0.12">Azure gallery trusted_win11_a64_25h2_builder@1.0.12</abbr> | 4 |
+| <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2022_64_2009/images/trusted_win2022_64_2009/versions/1.3.12">Azure gallery trusted_win2022_64_2009@1.3.12</abbr> | 8 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win10_64_2009/images/win10_64_2009/versions/1.4.3">Azure gallery win10_64_2009@1.4.3</abbr> | 5 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win10_64_2009_alpha/images/win10_64_2009_alpha/versions/1.0.0">Azure gallery win10_64_2009_alpha@1.0.0</abbr> | 4 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_2009/images/win11_64_2009/versions/1.3.0">Azure gallery win11_64_2009@1.3.0</abbr> | 6 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_2009_alpha/images/win11_64_2009_alpha/versions/1.0.0">Azure gallery win11_64_2009_alpha@1.0.0</abbr> | 3 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2/images/win11_64_24h2/versions/1.3.12">Azure gallery win11_64_24h2@1.3.12</abbr> | 14 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2_alpha/images/win11_64_24h2_alpha/versions/1.0.0">Azure gallery win11_64_24h2_alpha@1.0.0</abbr> | 9 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_25h2/images/win11_64_25h2/versions/1.0.12">Azure gallery win11_64_25h2@1.0.12</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_25h2/images/win11_64_25h2/versions/1.0.13">Azure gallery win11_64_25h2@1.0.13</abbr> | 18 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_25h2_alpha/images/win11_64_25h2_alpha/versions/1.0.0">Azure gallery win11_64_25h2_alpha@1.0.0</abbr> | 10 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_builder/images/win11_a64_25h2_builder/versions/1.0.12">Azure gallery win11_a64_25h2_builder@1.0.12</abbr> | 4 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_builder_alpha/images/win11_a64_25h2_builder_alpha/versions/1.0.0">Azure gallery win11_a64_25h2_builder_alpha@1.0.0</abbr> | 2 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester/images/win11_a64_25h2_tester/versions/1.0.12">Azure gallery win11_a64_25h2_tester@1.0.12</abbr> | 4 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_a64_25h2_tester_alpha/images/win11_a64_25h2_tester_alpha/versions/1.0.0">Azure gallery win11_a64_25h2_tester_alpha@1.0.0</abbr> | 4 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009/images/win2022_64_2009/versions/1.3.12">Azure gallery win2022_64_2009@1.3.12</abbr> | 10 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009_alpha/images/win2022_64_2009_alpha/versions/1.0.0">Azure gallery win2022_64_2009_alpha@1.0.0</abbr> | 3 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2025_64_24h2_alpha/images/win2025_64_24h2_alpha/versions/1.0.0">Azure gallery win2025_64_24h2_alpha@1.0.0</abbr> | 5 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2025_64_24h2_core_alpha/images/win2025_64_24h2_core_alpha/versions/1.0.0">Azure gallery win2025_64_24h2_core_alpha@1.0.0</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-059fc28bd9074bb8ab3c-centralus-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-0d17e90b4e8444bd8548-eastus-fuzzing">Azure image set fuzzing (centralus, eastus)</abbr> | 4 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-016b00f8bdd14b669a31-eastus-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-27793c0117444180b916-westus2-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-d04b4d09807944788e8f-southcentralus-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-dd4773c4763e418a9074-eastus2-fuzzing">Azure image set fuzzing (eastus, eastus2, southcentralus, westus2)</abbr> | 2 |
+| Image not determined | 1 |
+| Not applicable (standalone) | 28 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2026-09-30 | 60 |
-|  | 33 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-alpha | 1 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-alpha | 4 |
-| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-dc8b8fa453dc44228536 | 4 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-09-30 | 128 |
-| projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-arm64-gui-googlecompute-2024-09-18t19-02-58z | 2 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha | 6 |
-| unknown | 122 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha-tc | 7 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-2026-09-30 | 8 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-arm64-gui-googlecompute-2024-09-18t14-57-52z | 5 |
+| projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-arm64-gui-googlecompute-2024-09-18t19-02-58z | 2 |
+| projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-09-18t05-46-31z | 2 |
+| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-00bd1fca7052440ba8db | 4 |
 | projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2026-09-30 | 5 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-alpha | 4 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-09-30 | 128 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha | 6 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-alpha-tc | 7 |
 | projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-2026-09-30 | 16 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2025-01-13t22-33-40z | 2 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z | 10 |
 | projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-arm64-headless-googlecompute-alpha | 1 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-arm64-gui-googlecompute-2024-09-18t14-57-52z | 5 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2024-08-22t22-48-09z | 10 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-gui-googlecompute-2025-01-13t22-33-40z | 2 |
 
 
-| Worker Pool | Implementation | Version | Engine | Revision | OS | Arch | GO | Total Workers | Total Capacity |
-| --- | --- | --- | --- | --- | --- | --- | --- | ---: | ---: |
-| **adhoc-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 17 | 17 |
-| **adhoc-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 84 | 84 |
-| **adhoc-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 7 | 7 |
-| **adhoc-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 7 | 7 |
-| **app-services-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 787 | 787 |
-| **app-services-1/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **app-services-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 12 | 12 |
-| **app-services-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 8 | 8 |
-| **app-services-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 910 | 910 |
-| **app-services-3/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **app-services-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 24 | 24 |
-| **app-services-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 4 | 4 |
-| **code-analysis-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **code-analysis-1/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **code-analysis-1/linux-gw-gcp** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 26 | 26 |
-| **code-analysis-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **code-analysis-3/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **code-analysis-3/linux-gw-gcp** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 16 | 16 |
-| **code-coverage/bot** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 296 | 296 |
-| **code-review/bot** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 10679 | 10679 |
-| **comm-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 517 | 517 |
-| **comm-1/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 4 | 4 |
-| **comm-1/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1477 | 1477 |
-| **comm-1/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-1/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-1/b-linux-gcp-aarch64** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 6 | 6 |
-| **comm-1/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-1/b-linux-xlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3 | 3 |
-| **comm-1/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 4 | 4 |
-| **comm-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 292 | 292 |
-| **comm-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 4 | 4 |
-| **comm-1/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **comm-2/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-2/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **comm-2/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-2/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-2/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3 | 3 |
-| **comm-2/b-linux-gcp-aarch64** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 4 | 4 |
-| **comm-2/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-2/b-linux-xlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-2/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-2/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-2/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **comm-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 5860 | 5860 |
-| **comm-3/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **comm-3/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 4000 | 4000 |
-| **comm-3/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 105 | 105 |
-| **comm-3/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 11 | 11 |
-| **comm-3/b-linux-gcp-aarch64** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 5 | 5 |
-| **comm-3/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-3/b-linux-xlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3 | 3 |
-| **comm-3/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 812 | 812 |
-| **comm-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 194 | 194 |
-| **comm-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 39 | 39 |
-| **comm-3/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **comm-t/misc** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 206 | 206 |
-| **comm-t/t-linux-arm64-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **comm-t/t-linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-t/t-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3012 | 3012 |
-| **comm-t/t-linux-docker-noscratch** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **comm-t/t-linux-docker-noscratch-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 6331 | 6331 |
-| **comm-t/win11-64-2009** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 2 | 2 |
-| **comm-t/win11-64-2009-ssd** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 2 | 2 |
-| **comm-t/win11-64-24h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **comm-t/win11-64-24h2-ssd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **comm-t/win11-64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 6055 | 6055 |
-| **comm-t/win11-64-25h2-ssd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **comm-t/win11-a64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **comm-t/win11-a64-25h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **enterprise-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3366 | 3366 |
-| **enterprise-1/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 17 | 17 |
-| **enterprise-1/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1104 | 1104 |
-| **enterprise-1/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 27 | 27 |
-| **enterprise-1/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2116 | 2116 |
-| **enterprise-1/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 283 | 283 |
-| **enterprise-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 190 | 190 |
-| **enterprise-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 85 | 85 |
-| **enterprise-1/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 19 | 19 |
-| **enterprise-1/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **enterprise-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 6702 | 6702 |
-| **enterprise-3/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 118 | 118 |
-| **enterprise-3/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1654 | 1654 |
-| **enterprise-3/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 131 | 131 |
-| **enterprise-3/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1699 | 1699 |
-| **enterprise-3/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 769 | 769 |
-| **enterprise-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 77 | 77 |
-| **enterprise-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 95 | 95 |
-| **enterprise-3/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 16 | 16 |
-| **enterprise-3/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/misc** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 412 | 412 |
-| **enterprise-t/t-linux-2204-wayland** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 764 | 764 |
-| **enterprise-t/t-linux-2204-wayland-snap** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 2 | 2 |
-| **enterprise-t/t-linux-2404-wayland-snap** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/t-linux-2404-wayland-snap-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/t-linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/t-linux-docker-16c32gb-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 956 | 956 |
-| **enterprise-t/t-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 6775 | 6775 |
-| **enterprise-t/t-linux-docker-kvm** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/t-linux-docker-noscratch-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 10813 | 10813 |
-| **enterprise-t/t-linux-xlarge-2204-wayland** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 2 | 2 |
-| **enterprise-t/win10-64-2009** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 493 | 493 |
-| **enterprise-t/win11-64-24h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-24h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-24h2-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-24h2-source** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-24h2-source-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 5020 | 5020 |
-| **enterprise-t/win11-64-25h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-25h2-gpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 214 | 214 |
-| **enterprise-t/win11-64-25h2-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-25h2-privileged** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-25h2-source** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 444 | 444 |
-| **enterprise-t/win11-64-25h2-source-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **enterprise-t/win11-64-25h2-webgpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 10436 | 10436 |
-| **gecko-1/b-linux-2204-kvm-gcp** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 2 | 2 |
-| **gecko-1/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 365 | 365 |
-| **gecko-1/b-linux-docker-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-1/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 15717 | 15717 |
-| **gecko-1/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1671 | 1671 |
-| **gecko-1/b-linux-docker-updatebot-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-1/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2034 | 2034 |
-| **gecko-1/b-linux-gcp-aarch64** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 18 | 18 |
-| **gecko-1/b-linux-kvm** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 162 | 162 |
-| **gecko-1/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 4 | 4 |
-| **gecko-1/b-linux-medium** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 14308 | 14308 |
-| **gecko-1/b-linux-xlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 26 | 26 |
-| **gecko-1/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 1033 | 1033 |
-| **gecko-1/b-win2022-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 16 | 16 |
-| **gecko-1/b-win2022-updatebot** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-1/b-win2022-xxlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 14 | 14 |
-| **gecko-1/b-win2025-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 432 | 432 |
-| **gecko-1/b-win2025-core-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 23 | 23 |
-| **gecko-1/b-win2025-gpu-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 60 | 60 |
-| **gecko-1/b-win2025-large-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 1 | 1 |
-| **gecko-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1198 | 1198 |
-| **gecko-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 388 | 388 |
-| **gecko-1/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 79 | 79 |
-| **gecko-1/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 22 | 22 |
-| **gecko-1/win11-a64-25h2-builder-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 8 | 8 |
-| **gecko-2/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 55 | 55 |
-| **gecko-2/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 9 | 9 |
-| **gecko-2/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 186 | 186 |
-| **gecko-2/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 30 | 30 |
-| **gecko-2/b-linux-docker-updatebot-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-2/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 60 | 60 |
-| **gecko-2/b-linux-gcp-aarch64** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 21 | 21 |
-| **gecko-2/b-linux-kvm** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 14 | 14 |
-| **gecko-2/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-2/b-linux-medium** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 141 | 141 |
-| **gecko-2/b-linux-xlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3 | 3 |
-| **gecko-2/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 7 | 7 |
-| **gecko-2/b-win2022-updatebot** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 4 | 4 |
-| **gecko-2/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 13 | 13 |
-| **gecko-2/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-2/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **gecko-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 34432 | 34432 |
-| **gecko-3/b-linux-2204-kvm-gcp** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 2 | 2 |
-| **gecko-3/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 268 | 268 |
-| **gecko-3/b-linux-docker-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-3/b-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 37171 | 37171 |
-| **gecko-3/b-linux-docker-large-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3740 | 3740 |
-| **gecko-3/b-linux-docker-updatebot-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 57 | 57 |
-| **gecko-3/b-linux-docker-xlarge-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 4864 | 4864 |
-| **gecko-3/b-linux-gcp-aarch64** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 4 | 4 |
-| **gecko-3/b-linux-kvm** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 604 | 604 |
-| **gecko-3/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-3/b-linux-medium** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 32258 | 32258 |
-| **gecko-3/b-linux-xlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 39 | 39 |
-| **gecko-3/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 5753 | 5753 |
-| **gecko-3/b-win2022-updatebot** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-3/b-win2022-xxlarge** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 12 | 12 |
-| **gecko-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 5346 | 5346 |
-| **gecko-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 206 | 206 |
-| **gecko-3/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 56 | 56 |
-| **gecko-3/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 105 | 105 |
-| **gecko-t/misc** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2164 | 2164 |
-| **gecko-t/t-linux-2204-wayland** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 10324 | 10324 |
-| **gecko-t/t-linux-2204-wayland-arm64-relsre** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 2 | 2 |
-| **gecko-t/t-linux-2204-wayland-relsre** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 2 | 2 |
-| **gecko-t/t-linux-2204-wayland-root-exp** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 2 | 2 |
-| **gecko-t/t-linux-2204-wayland-snap** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 90 | 90 |
-| **gecko-t/t-linux-2404-headless-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-2404-headless-arm64-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-2404-headless-ssd-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-2404-wayland** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-2404-wayland-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-2404-wayland-snap** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 93 | 93 |
-| **gecko-t/t-linux-2404-wayland-snap-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-arm64-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 40 | 40 |
-| **gecko-t/t-linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 906 | 906 |
-| **gecko-t/t-linux-docker-16c32gb-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3858 | 3858 |
-| **gecko-t/t-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 56351 | 56351 |
-| **gecko-t/t-linux-docker-amd-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-docker-kvm** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 93749 | 93749 |
-| **gecko-t/t-linux-docker-kvm-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-docker-noscratch** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 5248 | 5248 |
-| **gecko-t/t-linux-docker-noscratch-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 292968 | 292968 |
-| **gecko-t/t-linux-docker-noscratch-amd-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/t-linux-xlarge-2204-wayland** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 6997 | 6997 |
-| **gecko-t/t-linux-xlarge-2404-wayland** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win10-64-2009** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 5352 | 5352 |
-| **gecko-t/win10-64-2009-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 1443 | 1443 |
-| **gecko-t/win10-64-2009-gpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 1264 | 1264 |
-| **gecko-t/win10-64-2009-gpu-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 42 | 42 |
-| **gecko-t/win10-64-2009-source** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 104 | 104 |
-| **gecko-t/win10-64-2009-source-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win10-64-2009-webgpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 3 | 3 |
-| **gecko-t/win10-64-2009-webgpu-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-2009** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 2225 | 2225 |
-| **gecko-t/win11-64-2009-alpha** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 2 | 2 |
-| **gecko-t/win11-64-2009-source** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 13 | 13 |
-| **gecko-t/win11-64-2009-source-alpha** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 3 | 3 |
-| **gecko-t/win11-64-2009-ssd** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 2 | 2 |
-| **gecko-t/win11-64-2009-webgpu** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 3 | 3 |
-| **gecko-t/win11-64-2009-webgpu-alpha** | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 2 | 2 |
-| **gecko-t/win11-64-24h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 5745 | 5745 |
-| **gecko-t/win11-64-24h2-gpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 5 | 5 |
-| **gecko-t/win11-64-24h2-gpu-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 599 | 599 |
-| **gecko-t/win11-64-24h2-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-large-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-privileged** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-privileged-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-source** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-source-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 214 | 214 |
-| **gecko-t/win11-64-24h2-ssd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-unprivileged** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-unprivileged-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-webgpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-24h2-webgpu-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 108902 | 108902 |
-| **gecko-t/win11-64-25h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2713 | 2713 |
-| **gecko-t/win11-64-25h2-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-25h2-bug2078361** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 6 | 6 |
-| **gecko-t/win11-64-25h2-gpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 24113 | 24113 |
-| **gecko-t/win11-64-25h2-gpu-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 788 | 788 |
-| **gecko-t/win11-64-25h2-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 13443 | 13443 |
-| **gecko-t/win11-64-25h2-large-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 1195 | 1195 |
-| **gecko-t/win11-64-25h2-privileged** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 854 | 854 |
-| **gecko-t/win11-64-25h2-privileged-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-25h2-source** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 1875 | 1875 |
-| **gecko-t/win11-64-25h2-source-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 93 | 93 |
-| **gecko-t/win11-64-25h2-ssd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-25h2-ssd-gpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-25h2-unprivileged** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-25h2-unprivileged-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **gecko-t/win11-64-25h2-webgpu** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 4244 | 4244 |
-| **gecko-t/win11-64-25h2-webgpu-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 91 | 91 |
-| **gecko-t/win11-a64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 323 | 323 |
-| **gecko-t/win11-a64-25h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 190 | 190 |
-| **glean-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 51 | 51 |
-| **glean-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 9 | 9 |
-| **glean-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **glean-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 27 | 27 |
-| **glean-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 8 | 8 |
-| **glean-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **infra/build-decision-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **mobile-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 186 | 186 |
-| **mobile-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 32 | 32 |
-| **mobile-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **mobile-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 276 | 276 |
-| **mobile-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 149 | 149 |
-| **mobile-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **mozilla-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **mozilla-1/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **mozilla-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 15 | 15 |
-| **mozilla-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 84 | 84 |
-| **mozilla-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **mozilla-3/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **mozilla-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 459 | 459 |
-| **mozilla-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 11 | 11 |
-| **mozilla-t/pre-commit** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 16 | 16 |
-| **mozilla-t/t-linux-2204-wayland** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 3 | 3 |
-| **mozilla-t/t-linux-2204-wayland-relsre** | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 2 | 2 |
-| **mozilla-t/t-linux-2404-wayland** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 891 | 891 |
-| **mozilla-t/t-linux-2404-wayland-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 6 | 6 |
-| **mozilla-t/t-linux-arm64-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **mozilla-t/t-linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 308 | 308 |
-| **mozilla-t/t-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **mozilla-t/t-linux-docker-noscratch** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 34 | 34 |
-| **mozilla-t/t-linux-docker-noscratch-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **mozillavpn-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 198 | 198 |
-| **mozillavpn-1/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 190 | 190 |
-| **mozillavpn-1/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 70 | 70 |
-| **mozillavpn-1/b-win2022-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 4 | 4 |
-| **mozillavpn-1/b-win2025-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 389 | 389 |
-| **mozillavpn-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 12 | 12 |
-| **mozillavpn-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 45 | 45 |
-| **mozillavpn-1/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 7 | 7 |
-| **mozillavpn-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 141 | 141 |
-| **mozillavpn-3/b-linux-large** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 156 | 156 |
-| **mozillavpn-3/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 34 | 34 |
-| **mozillavpn-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 24 | 24 |
-| **mozillavpn-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 4 | 4 |
-| **mozillavpn-3/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **nss-1/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 694 | 694 |
-| **nss-1/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 375 | 375 |
-| **nss-1/b-win2022-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 2 | 2 |
-| **nss-1/b-win2025-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 389 | 389 |
-| **nss-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 28 | 28 |
-| **nss-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **nss-1/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **nss-1/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 856 | 856 |
-| **nss-1/win11-a64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 3 | 3 |
-| **nss-1/win11-a64-25h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **nss-1/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 12 | 12 |
-| **nss-1/win11-a64-25h2-builder-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **nss-3/b-linux-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 1282 | 1282 |
-| **nss-3/b-win2022** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 333 | 333 |
-| **nss-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 17 | 17 |
-| **nss-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **nss-3/images-aarch64** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2 | 2 |
-| **nss-3/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1202 | 1202 |
-| **nss-3/win11-a64-25h2-builder** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **nss-t/t-linux-arm64-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 2315 | 2315 |
-| **nss-t/t-linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2414 | 2414 |
-| **nss-t/t-linux-docker-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **nss-t/win11-a64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 148 | 148 |
-| **nss-t/win11-a64-25h2-alpha** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 2 | 2 |
-| **proj-autophone/gecko-t-bitbar-gw-perf-a55** | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | 0 | 0 |
-| **proj-autophone/gecko-t-bitbar-gw-perf-p6** | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | 0 | 0 |
-| **proj-autophone/gecko-t-bitbar-gw-perf-s24** | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | 0 | 0 |
-| **proj-fuzzing/bugmon-processor-windows** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | windows | amd64 | 1.27.1 | 2 | 2 |
-| **proj-fuzzing/ci-windows** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | windows | amd64 | 1.27.1 | 2 | 2 |
-| **proj-fuzzing/grizzly-reduce-worker-windows** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | windows | amd64 | 1.27.1 | 3 | 3 |
-| **proj-fuzzing/grizzly-reduce-worker-windows-ngpu** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | windows | amd64 | 1.27.1 | 2 | 2 |
-| **proj-taskcluster/ci** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | linux | amd64 | 1.27.1 | 114 | 114 |
-| **proj-taskcluster/gw-ci-macos** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | darwin | arm64 | 1.27.1 | 2 | 2 |
-| **proj-taskcluster/gw-ubuntu-24-04** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | linux | amd64 | 1.27.1 | 4173 | 4173 |
-| **proj-taskcluster/gw-ubuntu-24-04-gui** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | linux | amd64 | 1.27.1 | 211 | 211 |
-| **proj-taskcluster/gw-windows-2022** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | windows | amd64 | 1.27.1 | 117 | 117 |
-| **proj-taskcluster/gw-windows-2022-gui** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | windows | amd64 | 1.27.1 | 112 | 112 |
-| **proj-taskcluster/release** | generic-worker | 113.0.0 | multiuser | d75cfe5b0d | linux | amd64 | 1.27.1 | 5 | 5 |
-| **releng-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 108 | 108 |
-| **releng-1/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 89 | 89 |
-| **releng-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 63 | 63 |
-| **releng-3/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 95 | 95 |
-| **releng-hardware/applicationservices-b-1-osx1015** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/applicationservices-b-3-osx1015** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/enterprise-1-b-osx-arm64** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/enterprise-3-b-osx-arm64** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/gecko-1-b-osx-1015** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/gecko-1-b-osx-arm64** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/gecko-3-b-osx-1015** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/gecko-3-b-osx-arm64** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/gecko-t-linux-netperf-2404** | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | 0 | 0 |
-| **releng-hardware/gecko-t-linux-talos-1804** | generic-worker | 61.0.0 | simple | 3bd4419b4b | linux | amd64 | 1.22.1 | 0 | 0 |
-| **releng-hardware/gecko-t-linux-talos-1804-relops-aje** | generic-worker | 61.0.0 | simple | 3bd4419b4b | linux | amd64 | 1.22.1 | 0 | 0 |
-| **releng-hardware/gecko-t-linux-talos-2404** | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | 0 | 0 |
-| **releng-hardware/gecko-t-linux-talos-2404-relops-aje** | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-1015-r8** | generic-worker | 60.3.4 | simple | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-1015-r8-staging** | generic-worker | 67.1.0 | insecure | 0e62d3bf79 | darwin | amd64 | 1.22.4 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-1400-r8** | generic-worker | 60.3.4 | simple | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-1400-r8-staging** | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | amd64 | 1.26.4 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-1500-m-vms** | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-1500-m4** | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-1500-m4-staging** | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | arm64 | 1.26.4 | 0 | 0 |
-| **releng-hardware/gecko-t-osx-2700-m4** | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | 0 | 0 |
-| **releng-hardware/gecko-t-win7-32-hw** | generic-worker | 45.0.0 | multiuser | 988e8100b3 | windows | 386 | 1.19.3 | 0 | 0 |
-| **releng-hardware/mozillavpn-b-1-osx** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/mozillavpn-b-3-osx** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/nss-1-b-osx-1015** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/nss-3-b-osx-1015** | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | 0 | 0 |
-| **releng-hardware/win11-64-24h2-hw** | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | 0 | 0 |
-| **releng-hardware/win11-64-24h2-hw-alpha** | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | 0 | 0 |
-| **releng-hardware/win11-64-24h2-hw-perf-debug** | generic-worker | 109.0.0 | multiuser | 5b6d78a2d7 | windows | amd64 | 1.27.1 | 0 | 0 |
-| **releng-hardware/win11-64-24h2-hw-ref-alpha** | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | 0 | 0 |
-| **releng-t/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 421 | 421 |
-| **relops-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **relops-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **relops-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 60 | 60 |
-| **relops-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **reviewer-assignment/bot** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 16 | 16 |
-| **scriptworker-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 26 | 26 |
-| **scriptworker-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 189 | 189 |
-| **scriptworker-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 21 | 21 |
-| **scriptworker-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 155 | 155 |
-| **taskgraph-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 51 | 51 |
-| **taskgraph-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 65 | 65 |
-| **taskgraph-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 25 | 25 |
-| **taskgraph-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 24 | 24 |
-| **taskgraph-t/linux-docker** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 401 | 401 |
-| **taskgraph-t/win11-64-24h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 34 | 34 |
-| **taskgraph-t/win11-64-25h2** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 23 | 23 |
-| **translations-1/b-linux-large-gcp-1tb-32-256-d2g** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-large-gcp-1tb-32-256-std-d2g** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-large-gcp-1tb-64-512-d2g** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-large-gcp-1tb-64-512-std-d2g** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-large-gcp-d2g** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 14 | 14 |
-| **translations-1/b-linux-large-gcp-d2g-1tb** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-large-gcp-d2g-1tb-standard** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-large-gcp-d2g-300gb** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 12 | 12 |
-| **translations-1/b-linux-v100-gpu-d2g-4** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-1tb** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-1tb-alpha** | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-1tb-standard** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-1tb-std-alpha** | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-2tb** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3 | 3 |
-| **translations-1/b-linux-v100-gpu-d2g-4-2tb-alpha** | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-300gb** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-300gb-alpha** | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-4-300gb-standard** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 3 | 3 |
-| **translations-1/b-linux-v100-gpu-d2g-4-300gb-std-alpha** | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 3 | 3 |
-| **translations-1/b-linux-v100-gpu-d2g-4-alpha** | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 2 | 2 |
-| **translations-1/b-linux-v100-gpu-d2g-alpha** | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 2 | 2 |
-| **translations-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 19 | 19 |
-| **translations-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **translations-t/t-linux-gw-noscratch-amd** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
-| **xpi-1/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 188 | 188 |
-| **xpi-1/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 66 | 66 |
-| **xpi-1/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 11 | 11 |
-| **xpi-3/b-linux** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 5 | 5 |
-| **xpi-3/decision** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 6 | 6 |
-| **xpi-3/images** | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 2 | 2 |
+### Worker pools
+
+_Configured capacity is the pool's autoscaling range in concurrent task slots. The configured worker range is derived from those bounds and the slots per worker, rounding up. An em dash means the configuration is unavailable or a worker count cannot be derived._
+
+
+| Worker Pool | Implementation | Version | Engine | Revision | OS | Arch | GO | Configured Workers | Configured Capacity | Slots per Worker |
+| --- | --- | --- | --- | --- | --- | --- | --- | ---: | ---: | ---: |
+| [**adhoc-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/adhoc-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**adhoc-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/adhoc-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**adhoc-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/adhoc-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**adhoc-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/adhoc-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**app-services-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**app-services-1/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-1/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**app-services-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–4 | 1–4 | 1 |
+| [**app-services-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**app-services-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**app-services-3/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-3/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**app-services-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**app-services-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/app-services-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**code-analysis-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-analysis-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**code-analysis-1/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-analysis-1/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**code-analysis-1/linux-gw-gcp**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-analysis-1/worker-types/linux-gw-gcp?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**code-analysis-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-analysis-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**code-analysis-3/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-analysis-3/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**code-analysis-3/linux-gw-gcp**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-analysis-3/worker-types/linux-gw-gcp?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**code-coverage/bot**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-coverage/worker-types/bot?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–20 | 0–20 | 1 |
+| [**code-review/bot**](https://firefox-ci-tc.services.mozilla.com/provisioners/code-review/worker-types/bot?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–20 | 1–20 | 1 |
+| [**comm-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-1/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**comm-1/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-1/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-1/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-1/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**comm-1/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–20 | 0–20 | 1 |
+| [**comm-1/b-linux-xlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-linux-xlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–20 | 0–20 | 1 |
+| [**comm-1/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**comm-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**comm-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**comm-1/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**comm-2/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-2/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**comm-2/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-2/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-2/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-2/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**comm-2/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–20 | 0–20 | 1 |
+| [**comm-2/b-linux-xlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/b-linux-xlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–20 | 0–20 | 1 |
+| [**comm-2/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**comm-2/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**comm-2/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-2/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**comm-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-3/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**comm-3/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-3/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-3/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–300 | 0–300 | 1 |
+| [**comm-3/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**comm-3/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–20 | 0–20 | 1 |
+| [**comm-3/b-linux-xlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-linux-xlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–20 | 0–20 | 1 |
+| [**comm-3/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**comm-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**comm-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**comm-3/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**comm-t/misc**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/misc?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–32 | 0–32 | 1 |
+| [**comm-t/t-linux-arm64-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/t-linux-arm64-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**comm-t/t-linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/t-linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**comm-t/t-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/t-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**comm-t/t-linux-docker-noscratch**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/t-linux-docker-noscratch?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**comm-t/t-linux-docker-noscratch-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/t-linux-docker-noscratch-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**comm-t/win11-64-2009**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-64-2009?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–600 | 0–600 | 1 |
+| [**comm-t/win11-64-2009-ssd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-64-2009-ssd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–50 | 0–50 | 1 |
+| [**comm-t/win11-64-24h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-64-24h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–600 | 0–600 | 1 |
+| [**comm-t/win11-64-24h2-ssd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-64-24h2-ssd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**comm-t/win11-64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–600 | 0–600 | 1 |
+| [**comm-t/win11-64-25h2-ssd**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-64-25h2-ssd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**comm-t/win11-a64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-a64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**comm-t/win11-a64-25h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-t/worker-types/win11-a64-25h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**enterprise-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-1/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**enterprise-1/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-1/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-1/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-1/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**enterprise-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–10 | 1–10 | 1 |
+| [**enterprise-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**enterprise-1/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**enterprise-1/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**enterprise-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-3/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**enterprise-3/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-3/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-3/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-3/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**enterprise-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**enterprise-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**enterprise-3/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**enterprise-3/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**enterprise-t/misc**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/misc?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–32 | 0–32 | 1 |
+| [**enterprise-t/t-linux-2204-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-2204-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–100 | 0–100 | 1 |
+| [**enterprise-t/t-linux-2204-wayland-snap**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-2204-wayland-snap?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–100 | 0–100 | 1 |
+| [**enterprise-t/t-linux-2404-wayland-snap**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-2404-wayland-snap?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-t/t-linux-2404-wayland-snap-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-2404-wayland-snap-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**enterprise-t/t-linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-t/t-linux-docker-16c32gb-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-docker-16c32gb-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-t/t-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/t-linux-docker-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-docker-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**enterprise-t/t-linux-docker-noscratch-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-docker-noscratch-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/t-linux-xlarge-2204-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/t-linux-xlarge-2204-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–100 | 0–100 | 1 |
+| [**enterprise-t/win10-64-2009**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win10-64-2009?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-24h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-24h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-24h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-24h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-24h2-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-24h2-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-24h2-source**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-24h2-source?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-24h2-source-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-24h2-source-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2-gpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2-privileged**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2-privileged?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2-source**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2-source?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2-source-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2-source-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**enterprise-t/win11-64-25h2-webgpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-t/worker-types/win11-64-25h2-webgpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**gecko-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-linux-2204-kvm-gcp**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-2204-kvm-gcp?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-1/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-1/b-linux-docker-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**gecko-1/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-1/b-linux-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**gecko-1/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-linux-medium**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-medium?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**gecko-1/b-linux-xlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-xlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2022-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2022-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**gecko-1/b-win2022-updatebot**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2022-updatebot?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2022-xxlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2022-xxlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2025-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-1/b-win2025-core-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-core-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-1/b-win2025-gpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-gpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-1/b-win2025-large-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-large-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 5–40 | 5–40 | 1 |
+| [**gecko-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**gecko-1/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-1/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–250 | 0–250 | 1 |
+| [**gecko-1/win11-a64-25h2-builder-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/win11-a64-25h2-builder-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–250 | 0–250 | 1 |
+| [**gecko-2/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-2/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-2/b-linux-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**gecko-2/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-linux-medium**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-medium?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**gecko-2/b-linux-xlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-xlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-2/b-win2022-updatebot**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-win2022-updatebot?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-2/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**gecko-2/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**gecko-2/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-linux-2204-kvm-gcp**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-2204-kvm-gcp?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-3/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-3/b-linux-docker-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**gecko-3/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-3/b-linux-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**gecko-3/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-linux-medium**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-medium?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**gecko-3/b-linux-xlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-xlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2022-updatebot**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2022-updatebot?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2022-xxlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2022-xxlarge?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–20 | 1–20 | 1 |
+| [**gecko-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
+| [**gecko-3/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-3/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–250 | 0–250 | 1 |
+| [**gecko-t/misc**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/misc?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–32 | 0–32 | 1 |
+| [**gecko-t/t-linux-2204-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2204-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-2204-wayland-arm64-relsre**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2204-wayland-arm64-relsre?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-t/t-linux-2204-wayland-relsre**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2204-wayland-relsre?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-t/t-linux-2204-wayland-root-exp**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2204-wayland-root-exp?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**gecko-t/t-linux-2204-wayland-snap**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2204-wayland-snap?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-2404-headless-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-headless-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-2404-headless-arm64-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-headless-arm64-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-2404-headless-ssd-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-headless-ssd-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-t/t-linux-2404-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-2404-wayland-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-wayland-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-t/t-linux-2404-wayland-snap**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-wayland-snap?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-2404-wayland-snap-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-wayland-snap-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**gecko-t/t-linux-arm64-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-arm64-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–2500 | 0–2500 | 1 |
+| [**gecko-t/t-linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–2500 | 0–2500 | 1 |
+| [**gecko-t/t-linux-docker-16c32gb-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-16c32gb-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–2500 | 0–2500 | 1 |
+| [**gecko-t/t-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–2500 | 0–2500 | 1 |
+| [**gecko-t/t-linux-docker-amd-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-amd-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-docker-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1600 | 0–1600 | 1 |
+| [**gecko-t/t-linux-docker-kvm-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-kvm-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-docker-noscratch**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-noscratch?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–2500 | 0–2500 | 1 |
+| [**gecko-t/t-linux-docker-noscratch-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-noscratch-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–2500 | 0–2500 | 1 |
+| [**gecko-t/t-linux-docker-noscratch-amd-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-docker-noscratch-amd-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-xlarge-2204-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-xlarge-2204-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–100 | 0–100 | 1 |
+| [**gecko-t/t-linux-xlarge-2404-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-xlarge-2404-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win10-64-2009**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–600 | 0–600 | 1 |
+| [**gecko-t/win10-64-2009-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-t/win10-64-2009-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009-gpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win10-64-2009-gpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009-gpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win10-64-2009-source**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009-source?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win10-64-2009-source-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009-source-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win10-64-2009-webgpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009-webgpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win10-64-2009-webgpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win10-64-2009-webgpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-2009**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–1200 | 0–1200 | 1 |
+| [**gecko-t/win11-64-2009-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–500 | 0–500 | 1 |
+| [**gecko-t/win11-64-2009-source**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009-source?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-2009-source-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009-source-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-2009-ssd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009-ssd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-2009-webgpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009-webgpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-2009-webgpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009-webgpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–1200 | 0–1200 | 1 |
+| [**gecko-t/win11-64-24h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-t/win11-64-24h2-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-gpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–600 | 0–600 | 1 |
+| [**gecko-t/win11-64-24h2-gpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-gpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-large-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-large-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-privileged**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-privileged?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-privileged-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-privileged-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-source**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-source?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-source-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-source-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-ssd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-ssd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-unprivileged**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-unprivileged?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-unprivileged-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-unprivileged-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-webgpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-webgpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-24h2-webgpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-webgpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–1200 | 0–1200 | 1 |
+| [**gecko-t/win11-64-25h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-t/win11-64-25h2-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–250 | 0–250 | 1 |
+| [**gecko-t/win11-64-25h2-bug2078361**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-bug2078361?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–2 | 0–2 | 1 |
+| [**gecko-t/win11-64-25h2-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-gpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–600 | 0–600 | 1 |
+| [**gecko-t/win11-64-25h2-gpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-gpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–150 | 0–150 | 1 |
+| [**gecko-t/win11-64-25h2-large-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-large-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-privileged**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-privileged?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-privileged-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-privileged-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-source**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-source?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-source-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-source-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-ssd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-ssd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-ssd-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-ssd-gpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-unprivileged**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-unprivileged?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-unprivileged-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-unprivileged-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-webgpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-webgpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-64-25h2-webgpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-25h2-webgpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**gecko-t/win11-a64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-a64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**gecko-t/win11-a64-25h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-a64-25h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–500 | 0–500 | 1 |
+| [**glean-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/glean-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**glean-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/glean-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–4 | 1–4 | 1 |
+| [**glean-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/glean-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**glean-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/glean-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**glean-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/glean-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**glean-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/glean-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**infra/build-decision-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/infra/worker-types/build-decision-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–12 | 0–12 | 1 |
+| [**mobile-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/mobile-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**mobile-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/mobile-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–4 | 1–4 | 1 |
+| [**mobile-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/mobile-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mobile-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/mobile-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**mobile-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/mobile-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**mobile-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/mobile-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozilla-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozilla-1/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-1/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**mozilla-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–4 | 1–4 | 1 |
+| [**mozilla-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozilla-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozilla-3/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-3/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**mozilla-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**mozilla-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozilla-t/pre-commit**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/pre-commit?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–10 | 1–10 | 1 |
+| [**mozilla-t/t-linux-2204-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-2204-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–100 | 0–100 | 1 |
+| [**mozilla-t/t-linux-2204-wayland-relsre**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-2204-wayland-relsre?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | amd64 | 1.22.2 | 0–10 | 0–10 | 1 |
+| [**mozilla-t/t-linux-2404-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-2404-wayland?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**mozilla-t/t-linux-2404-wayland-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-2404-wayland-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozilla-t/t-linux-arm64-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-arm64-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**mozilla-t/t-linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**mozilla-t/t-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**mozilla-t/t-linux-docker-noscratch**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-docker-noscratch?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**mozilla-t/t-linux-docker-noscratch-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-t/worker-types/t-linux-docker-noscratch-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**mozillavpn-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozillavpn-1/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozillavpn-1/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**mozillavpn-1/b-win2022-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/b-win2022-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**mozillavpn-1/b-win2025-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/b-win2025-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**mozillavpn-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–4 | 1–4 | 1 |
+| [**mozillavpn-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozillavpn-1/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozillavpn-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozillavpn-3/b-linux-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-3/worker-types/b-linux-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozillavpn-3/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-3/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**mozillavpn-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**mozillavpn-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**mozillavpn-3/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-3/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**nss-1/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**nss-1/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**nss-1/b-win2022-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/b-win2022-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**nss-1/b-win2025-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/b-win2025-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**nss-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**nss-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**nss-1/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**nss-1/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**nss-1/win11-a64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/win11-a64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**nss-1/win11-a64-25h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/win11-a64-25h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**nss-1/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**nss-1/win11-a64-25h2-builder-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/win11-a64-25h2-builder-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**nss-3/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**nss-3/b-win2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/b-win2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**nss-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**nss-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**nss-3/images-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/images-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**nss-3/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**nss-3/win11-a64-25h2-builder**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/win11-a64-25h2-builder?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–25 | 0–25 | 1 |
+| [**nss-t/t-linux-arm64-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/t-linux-arm64-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**nss-t/t-linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/t-linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**nss-t/t-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/t-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**nss-t/win11-a64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/win11-a64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**nss-t/win11-a64-25h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/win11-a64-25h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**proj-autophone/gecko-t-bitbar-gw-perf-a55**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-bitbar-gw-perf-a55?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | — | — | — |
+| [**proj-autophone/gecko-t-bitbar-gw-perf-p6**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-bitbar-gw-perf-p6?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | — | — | — |
+| [**proj-autophone/gecko-t-bitbar-gw-perf-s24**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-bitbar-gw-perf-s24?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | — | — | — |
+| [**proj-autophone/gecko-t-lambda-perf-a55**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-lambda-perf-a55?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 87.0.0 | insecure | 99a1fcafbb | linux | amd64 | 1.24.5 | — | — | — |
+| [**proj-fuzzing/bugmon-processor-windows**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/bugmon-processor-windows?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–20 | 0–20 | 1 |
+| [**proj-fuzzing/ci-windows**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/ci-windows?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
+| [**proj-fuzzing/grizzly-reduce-worker-windows**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/grizzly-reduce-worker-windows?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
+| [**proj-fuzzing/grizzly-reduce-worker-windows-ngpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/grizzly-reduce-worker-windows-ngpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
+| [**proj-taskcluster/ci**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/ci?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
+| [**proj-taskcluster/gw-ci-macos**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ci-macos?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | darwin | arm64 | 1.27.2 | — | — | — |
+| [**proj-taskcluster/gw-ubuntu-24-04**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ubuntu-24-04?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–50 | 0–50 | 1 |
+| [**proj-taskcluster/gw-ubuntu-24-04-gui**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ubuntu-24-04-gui?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–20 | 0–20 | 1 |
+| [**proj-taskcluster/gw-windows-2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-windows-2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
+| [**proj-taskcluster/gw-windows-2022-gui**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-windows-2022-gui?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
+| [**proj-taskcluster/release**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/release?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–1 | 0–1 | 1 |
+| [**releng-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**releng-1/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-1/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**releng-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**releng-3/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-3/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**releng-hardware/applicationservices-b-1-osx1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/applicationservices-b-1-osx1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/applicationservices-b-3-osx1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/applicationservices-b-3-osx1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/enterprise-1-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/enterprise-1-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | — | — | — |
+| [**releng-hardware/enterprise-3-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/enterprise-3-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | — | — | — |
+| [**releng-hardware/gecko-1-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-1-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | — | — | — |
+| [**releng-hardware/gecko-3-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-3-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/gecko-t-linux-netperf-1804**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-netperf-1804?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 65.1.0 | insecure | 1a085daa37 | linux | amd64 | 1.22.3 | — | — | — |
+| [**releng-hardware/gecko-t-linux-netperf-2404**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-netperf-2404?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | — | — | — |
+| [**releng-hardware/gecko-t-linux-talos-1804**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-1804?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 61.0.0 | simple | 3bd4419b4b | linux | amd64 | 1.22.1 | — | — | — |
+| [**releng-hardware/gecko-t-linux-talos-1804-relops-aje**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-1804-relops-aje?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 61.0.0 | simple | 3bd4419b4b | linux | amd64 | 1.22.1 | — | — | — |
+| [**releng-hardware/gecko-t-linux-talos-2404**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-2404?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | — | — | — |
+| [**releng-hardware/gecko-t-linux-talos-2404-relops-aje**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-2404-relops-aje?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | — | — | — |
+| [**releng-hardware/gecko-t-osx-1015-r8-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1015-r8-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 67.1.0 | insecure | 0e62d3bf79 | darwin | amd64 | 1.22.4 | — | — | — |
+| [**releng-hardware/gecko-t-osx-1400-r8**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1400-r8?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | amd64 | 1.26.4 | — | — | — |
+| [**releng-hardware/gecko-t-osx-1400-r8-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1400-r8-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | amd64 | 1.26.4 | — | — | — |
+| [**releng-hardware/gecko-t-osx-1500-m-vms**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1500-m-vms?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | — | — | — |
+| [**releng-hardware/gecko-t-osx-1500-m4-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1500-m4-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | arm64 | 1.26.4 | — | — | — |
+| [**releng-hardware/gecko-t-osx-2700-m4**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-2700-m4?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | — | — | — |
+| [**releng-hardware/gecko-t-win7-32-hw**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-win7-32-hw?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 45.0.0 | multiuser | 988e8100b3 | windows | 386 | 1.19.3 | — | — | — |
+| [**releng-hardware/mozillavpn-b-1-osx**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/mozillavpn-b-1-osx?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/mozillavpn-b-3-osx**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/mozillavpn-b-3-osx?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/win11-64-24h2-hw-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | — | — | — |
+| [**releng-hardware/win11-64-24h2-hw-perf-debug**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-perf-debug?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 109.0.0 | multiuser | 5b6d78a2d7 | windows | amd64 | 1.27.1 | — | — | — |
+| [**releng-hardware/win11-64-24h2-hw-ref-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-ref-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | — | — | — |
+| [**releng-t/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-t/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**relops-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/relops-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**relops-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/relops-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**relops-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/relops-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**relops-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/relops-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**reviewer-assignment/bot**](https://firefox-ci-tc.services.mozilla.com/provisioners/reviewer-assignment/worker-types/bot?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–20 | 1–20 | 1 |
+| [**scriptworker-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**scriptworker-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**scriptworker-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**scriptworker-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**taskgraph-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/taskgraph-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**taskgraph-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/taskgraph-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**taskgraph-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/taskgraph-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**taskgraph-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/taskgraph-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**taskgraph-t/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/taskgraph-t/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**taskgraph-t/win11-64-24h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/taskgraph-t/worker-types/win11-64-24h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**taskgraph-t/win11-64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/taskgraph-t/worker-types/win11-64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–5 | 0–5 | 1 |
+| [**translations-1/b-linux-large-gcp-1tb-32-256-d2g**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-1tb-32-256-d2g?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**translations-1/b-linux-large-gcp-1tb-32-256-std-d2g**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-1tb-32-256-std-d2g?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–16 | 0–16 | 1 |
+| [**translations-1/b-linux-large-gcp-1tb-64-512-d2g**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-1tb-64-512-d2g?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**translations-1/b-linux-large-gcp-1tb-64-512-std-d2g**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-1tb-64-512-std-d2g?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–8 | 0–8 | 1 |
+| [**translations-1/b-linux-large-gcp-d2g**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-d2g?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**translations-1/b-linux-large-gcp-d2g-1tb**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-d2g-1tb?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**translations-1/b-linux-large-gcp-d2g-1tb-standard**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-d2g-1tb-standard?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**translations-1/b-linux-large-gcp-d2g-300gb**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-large-gcp-d2g-300gb?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–200 | 0–200 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-1tb**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-1tb?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-1tb-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-1tb-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-1tb-standard**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-1tb-standard?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-1tb-std-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-1tb-std-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 0–50 | 0–50 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-2tb**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-2tb?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-2tb-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-2tb-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-300gb**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-300gb?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-300gb-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-300gb-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-300gb-standard**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-300gb-standard?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-300gb-std-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-300gb-std-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 0–50 | 0–50 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-4-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-4-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 0–128 | 0–128 | 1 |
+| [**translations-1/b-linux-v100-gpu-d2g-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/b-linux-v100-gpu-d2g-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 84.1.2 | multiuser | 4a139f395a | linux | amd64 | 1.24.4 | 0–200 | 0–200 | 1 |
+| [**translations-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 1–4 | 1–4 | 1 |
+| [**translations-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**translations-t/t-linux-gw-noscratch-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/translations-t/worker-types/t-linux-gw-noscratch-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**xpi-1/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/xpi-1/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**xpi-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/xpi-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**xpi-1/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/xpi-1/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
+| [**xpi-3/b-linux**](https://firefox-ci-tc.services.mozilla.com/provisioners/xpi-3/worker-types/b-linux?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
+| [**xpi-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/xpi-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
+| [**xpi-3/images**](https://firefox-ci-tc.services.mozilla.com/provisioners/xpi-3/worker-types/images?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
 
 
 ## Docker Worker
 
-Total: `2`
+These pools use docker-worker to run tasks inside Docker containers. Docker-worker is fully deprecated, and its source repository has been removed. See the [worker migration timeline](https://taskcluster.github.io/mozilla-history/migration.html) for the transition to generic-worker.
 
-Count by version:
 
-| Version | Count |
+Total docker-worker pools: `2`
+
+### Worker pools by version
+
+_Source: version information parsed from the log artifact produced when each worker claims an intentionally malformed probe task. The task is expected to fail with a malformed-payload exception; known worker implementations and versions are identified from their distinct log output._
+
+| Version | Worker pools |
 | :--- | ---: |
-| 38.0.5 | 1 |
 | 44.23.4 | 1 |
+| 38.0.5 | 1 |
 
 
-Count by image:
+### Worker pools by image
 
-| Version | Count |
+_Source: image references in each pool's live Worker Manager launch configuration at report time. A value may represent multiple configured images. Standalone pools do not have a Worker Manager-managed image._
+
+| Image | Worker pools |
 | :--- | ---: |
+| <abbr title="ami-03e4f8db63254ce7e&#10;ami-0a6e926238859761c&#10;ami-0b5dd0bbb670ec80e">ami-03e4f8db63254ce7e, ami-0a6e926238859761c, ami-0b5dd0bbb670ec80e</abbr> | 1 |
 | projects/taskcluster-imaging/global/images/docker-firefoxci-gcp-l1-googlecompute-2025-06-13t18-31-38z | 1 |
-| ami-03e4f8db63254ce7e,ami-0a6e926238859761c,ami-0b5dd0bbb670ec80e | 1 |
 
 
-| Worker Pool | Implementation | Version | Total Workers | Total Capacity |
-| --- | --- | --- | ---: | ---: |
-| **infra/build-decision** | docker-worker | 38.0.5 | 2 | 16 |
-| **proj-fuzzing/bugmon-pernosco** | docker-worker | 44.23.4 | 2 | 2 |
+### Worker pools
+
+_Configured capacity is the pool's autoscaling range in concurrent task slots. The configured worker range is derived from those bounds and the slots per worker, rounding up. An em dash means the configuration is unavailable or a worker count cannot be derived._
+
+
+| Worker Pool | Implementation | Version | Configured Workers | Configured Capacity | Slots per Worker |
+| --- | --- | --- | ---: | ---: | ---: |
+| [**infra/build-decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/infra/worker-types/build-decision?sortBy=Last%20Active&sortDirection=desc) | docker-worker | 38.0.5 | 1–2 | 1–16 | 8 |
+| [**proj-fuzzing/bugmon-pernosco**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/bugmon-pernosco?sortBy=Last%20Active&sortDirection=desc) | docker-worker | 44.23.4 | 0–10 | 0–10 | 1 |
 
 
 ## Script Worker
 
-Total: `45`
+
+Total scriptworker pools: `49`
 
 
 
-| Worker Pool | Implementation | Version | Total Workers | Total Capacity |
-| --- | --- | --- | ---: | ---: |
-| **scriptworker-k8s/app-services-3-beetmover** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/app-services-3-shipit** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/app-services-3-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/comm-3-balrog** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/comm-3-beetmover** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/comm-3-bouncer** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/comm-3-lando** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/comm-3-shipit** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/comm-3-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/comm-t-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/enterprise-3-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/enterprise-t-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-1-balrog** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-1-beetmover** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-1-beetmover-dev** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-1-bouncer** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-1-lando** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-addon** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-balrog** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-beetmover** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-bouncer** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-lando** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-pushapk** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-shipit** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-3-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/gecko-t-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/mobile-3-bitrise** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/mobile-3-pushapk** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/mobile-3-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/mobile-t-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/mozillavpn-1-beetmover** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/mozillavpn-3-beetmover** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/mozillavpn-3-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/translations-1-beetmover** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-k8s/xpi-t-signing** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/adhoc-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/comm-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/dep-adhoc-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/dep-comm-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/dep-enterprise-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/dep-gecko-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/dep-mozillavpn-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/enterprise-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/gecko-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
-| **scriptworker-prov-v1/mozillavpn-signing-mac14m2** | Scriptworker | <no value> | 0 | 0 |
+### Worker pools
+
+_Configured capacity is the pool's autoscaling range in concurrent task slots. The configured worker range is derived from those bounds and the slots per worker, rounding up. An em dash means the configuration is unavailable or a worker count cannot be derived._
 
 
-## No artifacts found [^1]
+| Worker Pool | Implementation | Version | Configured Workers | Configured Capacity | Slots per Worker |
+| --- | --- | --- | ---: | ---: | ---: |
+| [**scriptworker-k8s/adhoc-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/adhoc-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/app-services-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/app-services-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/app-services-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/app-services-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-balrog**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-balrog?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-bouncer**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-bouncer?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-lando**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-lando?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-pushflatpak**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-pushflatpak?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-pushmsix**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-pushmsix?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-shipit**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-shipit?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/comm-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/enterprise-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/enterprise-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/enterprise-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/enterprise-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-1-balrog**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-balrog?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-1-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-1-beetmover-dev**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-beetmover-dev?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-1-bouncer**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-bouncer?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-1-lando**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-lando?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-addon**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-addon?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-balrog**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-balrog?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-bouncer**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-bouncer?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-lando**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-lando?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-pushapk**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-pushapk?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-pushflatpak**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-pushflatpak?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-pushmsix**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-pushmsix?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-shipit**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-shipit?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/gecko-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/mobile-3-bitrise**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mobile-3-bitrise?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/mobile-3-pushapk**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mobile-3-pushapk?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/mobile-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mobile-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/mobile-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mobile-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/mozillavpn-1-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mozillavpn-1-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/mozillavpn-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mozillavpn-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/mozillavpn-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mozillavpn-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/translations-1-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/translations-1-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-k8s/xpi-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/xpi-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/adhoc-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/adhoc-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/comm-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/comm-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/dep-adhoc-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/dep-adhoc-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/dep-comm-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/dep-comm-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/dep-enterprise-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/dep-enterprise-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/dep-gecko-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/dep-gecko-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/dep-mozillavpn-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/dep-mozillavpn-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/enterprise-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/enterprise-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/gecko-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/gecko-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
+| [**scriptworker-prov-v1/mozillavpn-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/mozillavpn-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 
-Total: `2`
+
+## Unknown implementation
+
+These pools claimed and resolved the probe task, but did not publish a worker log artifact. Their worker implementation and version could therefore not be identified.
 
 
-
-| Worker Pool | Implementation | Version | Total Workers | Total Capacity |
-| --- | --- | --- | ---: | ---: |
-| **built-in/fail** |  | No artifacts found | 0 | 0 |
-| **built-in/succeed** |  | No artifacts found | 0 | 0 |
+Total pools with unknown implementation: `4`
 
 
-## Version not determined [^2]
+### Worker pools by image
 
-Total: `44`
+_Source: image references in each pool's live Worker Manager launch configuration at report time. A value may represent multiple configured images. Standalone pools do not have a Worker Manager-managed image._
 
-
-Count by image:
-
-| Version | Count |
+| Image | Worker pools |
 | :--- | ---: |
-| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-0f74b8027af7419c91af | 1 |
-| unknown | 29 |
-| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-googlecompute-alpha | 1 |
-|  | 3 |
-| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-dc8b8fa453dc44228536 | 7 |
+| Not applicable (standalone) | 2 |
 | projects/taskcluster-imaging/global/images/generic-2204-wayland-vm-gcp-googlecompute-2023-09-22t17-39-37z | 2 |
+
+
+### Worker pools
+
+_Configured capacity is the pool's autoscaling range in concurrent task slots. The configured worker range is derived from those bounds and the slots per worker, rounding up. An em dash means the configuration is unavailable or a worker count cannot be derived._
+
+
+| Worker Pool | Implementation | Version | Configured Workers | Configured Capacity | Slots per Worker |
+| --- | --- | --- | ---: | ---: | ---: |
+| [**built-in/fail**](https://firefox-ci-tc.services.mozilla.com/provisioners/built-in/worker-types/fail?sortBy=Last%20Active&sortDirection=desc) |  | No artifacts found | — | — | — |
+| [**built-in/succeed**](https://firefox-ci-tc.services.mozilla.com/provisioners/built-in/worker-types/succeed?sortBy=Last%20Active&sortDirection=desc) |  | No artifacts found | — | — | — |
+| [**gecko-t/t-linux-vm-2204-wayland**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-vm-2204-wayland?sortBy=Last%20Active&sortDirection=desc) |  | No artifacts found | 0–500 | 0–500 | 1 |
+| [**gecko-t/t-linux-vm-2204-wayland-snap**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-vm-2204-wayland-snap?sortBy=Last%20Active&sortDirection=desc) |  | No artifacts found | 0–500 | 0–500 | 1 |
+
+
+## Unresponsive
+
+These pools did not claim the probe task, so their worker implementation and version could not be determined.
+
+
+Total unresponsive worker pools: `47`
+
+
+### Worker pools by image
+
+_Source: image references in each pool's live Worker Manager launch configuration at report time. A value may represent multiple configured images. Standalone pools do not have a Worker Manager-managed image._
+
+| Image | Worker pools |
+| :--- | ---: |
+| <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2022_64_2009/images/trusted_win2022_64_2009/versions/1.3.12">Azure gallery trusted_win2022_64_2009@1.3.12</abbr> | 1 |
+| <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2025_64_24h2/images/trusted_win2025_64_24h2/versions/1.0.0">Azure gallery trusted_win2025_64_24h2@1.0.0</abbr> | 12 |
+| <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2025_64_24h2_core/images/trusted_win2025_64_24h2_core/versions/1.0.0">Azure gallery trusted_win2025_64_24h2_core@1.0.0</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009/images/win2022_64_2009/versions/1.3.12">Azure gallery win2022_64_2009@1.3.12</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2025_64_24h2/images/win2025_64_24h2/versions/1.0.0">Azure gallery win2025_64_24h2@1.0.0</abbr> | 14 |
+| Not applicable (standalone) | 8 |
 | ami-02619e55246806e8d | 1 |
+| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-00bd1fca7052440ba8db | 7 |
+| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-ed626229ee5844439d7c | 1 |
+| projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-googlecompute-alpha | 1 |
 
 
-| Worker Pool | Implementation | Version | Total Workers | Total Capacity |
-| --- | --- | --- | ---: | ---: |
-| **comm-1/b-win2025** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **comm-3/b-win2025** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **enterprise-1/b-win2025** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **enterprise-3/b-win2025** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-1/b-win2022-headless** |  | Version not determined; task not (yet) claimed | 2 | 2 |
-| **gecko-1/b-win2025** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-1/b-win2025-gpu** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **gecko-1/b-win2025-headless** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-1/b-win2025-large** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **gecko-1/b-win2025-updatebot** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-1/b-win2025-xxlarge** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-2/b-win2025** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-2/b-win2025-gpu** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **gecko-2/b-win2025-updatebot** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-3/b-win2022-headless** |  | Version not determined; task not (yet) claimed | 2 | 2 |
-| **gecko-3/b-win2025** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-3/b-win2025-core-alpha** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **gecko-3/b-win2025-gpu** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **gecko-3/b-win2025-gpu-alpha** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **gecko-3/b-win2025-headless** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-3/b-win2025-large** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **gecko-3/b-win2025-updatebot** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-3/b-win2025-xxlarge** |  | Version not determined; task not (yet) claimed | 74 | 74 |
-| **gecko-t/t-linux-2404-relsre** |  | Version not determined; task not (yet) claimed | 3 | 3 |
-| **gecko-t/t-linux-vm-2204-wayland** |  | Version not determined; task not (yet) claimed | 5 | 5 |
-| **gecko-t/t-linux-vm-2204-wayland-snap** |  | Version not determined; task not (yet) claimed | 2 | 2 |
-| **mozilla-1/b-win2025** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **mozilla-3/b-win2025** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **mozillavpn-1/b-win2025** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **mozillavpn-3/b-win2025** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **nss-1/b-win2025** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **nss-3/b-win2025** |  | Version not determined; task not (yet) claimed | 73 | 73 |
-| **proj-autophone/gecko-t-lambda-perf-a55** |  | Version not determined; task not (yet) claimed | 0 | 0 |
-| **proj-fuzzing/bugmon-monitor** |  | Version not determined; task not (yet) claimed | 93 | 93 |
-| **proj-fuzzing/bugmon-pernosco-staging** |  | Version not determined; task not (yet) claimed | 4 | 4 |
-| **proj-fuzzing/bugmon-processor** |  | Version not determined; task not (yet) claimed | 3 | 3 |
-| **proj-fuzzing/ci** |  | Version not determined; task not (yet) claimed | 85 | 85 |
-| **proj-fuzzing/ci-arm64** |  | Version not determined; task not (yet) claimed | 4 | 4 |
-| **proj-fuzzing/decision** |  | Version not determined; task not (yet) claimed | 246 | 246 |
-| **proj-fuzzing/grizzly-reduce-worker** |  | Version not determined; task not (yet) claimed | 4 | 4 |
-| **proj-fuzzing/grizzly-reduce-worker-android** |  | Version not determined; task not (yet) claimed | 3 | 3 |
-| **proj-fuzzing/nss-corpus-update-worker** |  | Version not determined; task not (yet) claimed | 5 | 5 |
-| **releng-hardware/gecko-t-linux-netperf-1804** |  | Version not determined; task not (yet) claimed | 0 | 0 |
-| **releng-hardware/win11-64-24h2-hw-ref** |  | Version not determined; task not (yet) claimed | 0 | 0 |
+### Worker pools
+
+_Configured capacity is the pool's autoscaling range in concurrent task slots. The configured worker range is derived from those bounds and the slots per worker, rounding up. An em dash means the configuration is unavailable or a worker count cannot be derived._
 
 
-
-[^1]: Those are the pools whose tasks were claimed and resolved by a worker as expected, but the worker did not publish either artifact `public/logs/live_backing.log` nor `public/logs/chain_of_trust.log`, which is the source used to identify the worker implementation.
-
-[^2]: Probing task remains pending after two hours. Those are the pools that were not able to start any worker to claim the task within two hours.
+| Worker Pool | Implementation | Version | Configured Workers | Configured Capacity | Slots per Worker |
+| --- | --- | --- | ---: | ---: | ---: |
+| [**comm-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**comm-3/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/comm-3/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–50 | 0–50 | 1 |
+| [**enterprise-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**enterprise-3/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/enterprise-3/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**gecko-1/b-win2022-headless**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2022-headless?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2025-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-gpu?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2025-headless**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-headless?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2025-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-large?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2025-updatebot**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-updatebot?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-1/b-win2025-xxlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-win2025-xxlarge?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-2/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-2/b-win2025-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-win2025-gpu?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-2/b-win2025-updatebot**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-win2025-updatebot?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2022-headless**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2022-headless?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2025-core-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-core-alpha?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–10 | 0–10 | 1 |
+| [**gecko-3/b-win2025-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-gpu?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2025-gpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-gpu-alpha?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–10 | 0–10 | 1 |
+| [**gecko-3/b-win2025-headless**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-headless?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2025-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-large?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2025-updatebot**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-updatebot?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-3/b-win2025-xxlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-xxlarge?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
+| [**gecko-t/t-linux-2404-relsre**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-relsre?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–10 | 0–10 | 1 |
+| [**mozilla-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**mozilla-3/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-3/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**mozillavpn-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**mozillavpn-3/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-3/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**nss-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**nss-3/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-3/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
+| [**proj-fuzzing/bugmon-monitor**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/bugmon-monitor?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–5 | 0–5 | 1 |
+| [**proj-fuzzing/bugmon-pernosco-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/bugmon-pernosco-staging?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–5 | 0–5 | 1 |
+| [**proj-fuzzing/bugmon-processor**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/bugmon-processor?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–20 | 0–20 | 1 |
+| [**proj-fuzzing/ci**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/ci?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–20 | 0–20 | 1 |
+| [**proj-fuzzing/ci-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/ci-arm64?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–10 | 0–10 | 1 |
+| [**proj-fuzzing/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–5 | 0–5 | 1 |
+| [**proj-fuzzing/grizzly-reduce-worker**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/grizzly-reduce-worker?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–20 | 0–20 | 1 |
+| [**proj-fuzzing/grizzly-reduce-worker-android**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/grizzly-reduce-worker-android?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–10 | 0–10 | 1 |
+| [**proj-fuzzing/nss-corpus-update-worker**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/nss-corpus-update-worker?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–5 | 0–5 | 1 |
+| [**releng-hardware/gecko-1-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-1-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
+| [**releng-hardware/gecko-3-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-3-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
+| [**releng-hardware/gecko-t-osx-1015-r8**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1015-r8?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
+| [**releng-hardware/gecko-t-osx-1500-m4**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1500-m4?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
+| [**releng-hardware/nss-1-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/nss-1-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
+| [**releng-hardware/nss-3-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/nss-3-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
+| [**releng-hardware/win11-64-24h2-hw**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
+| [**releng-hardware/win11-64-24h2-hw-ref**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-ref?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
