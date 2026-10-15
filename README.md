@@ -45,11 +45,6 @@ mozilla-history
 This will populate subdirectories `Hooks`, `Roles` and `WorkerPools`
 of the current directory.
 
-Client enumeration and snapshots are disabled to avoid publishing client
-metadata. Previously committed client snapshots have been removed from the
-current tree, but remain in Git history. The reporting client does not need
-the `auth:list-clients` scope.
-
 ## Refreshing All Local Data
 
 For a complete local refresh, run:
