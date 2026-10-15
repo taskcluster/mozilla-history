@@ -417,7 +417,13 @@ func reportRevision(dir string) (revision, revisionURL string) {
 	if err != nil || len(sha) < 9 {
 		return "", ""
 	}
-	status, err := git("status", "--porcelain", "--untracked-files=all", "--", ":/", ":(top,exclude)WorkerVersions/**", ":(top,exclude).beads/**", ":(top,exclude)docs/history.json")
+	// Snapshot refreshes happen before report generation and are committed later.
+	// Only changes outside generated data should mark the source revision dirty.
+	status, err := git("status", "--porcelain", "--untracked-files=all", "--", ":/",
+		":(top,exclude)Clients/**", ":(top,exclude)Hooks/**",
+		":(top,exclude)Roles/**", ":(top,exclude)WorkerPools/**",
+		":(top,exclude)WorkerVersions/**", ":(top,exclude).beads/**",
+		":(top,exclude)docs/history.json")
 	if err != nil {
 		return "", "" // Do not claim a clean revision if status is unavailable.
 	}
