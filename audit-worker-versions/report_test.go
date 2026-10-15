@@ -41,6 +41,11 @@ func TestReportRevision(t *testing.T) {
 	git("remote", "add", "origin", "git@github.com:example/reports.git")
 	write("source.go", "original")
 	write("WorkerVersions/README.md", "original report")
+	snapshotDirs := []string{"Clients", "Hooks", "Roles", "WorkerPools"}
+	for _, directory := range snapshotDirs {
+		write(directory+"/existing.json", "original")
+		write(directory+"/obsolete.json", "original")
+	}
 	git("add", ".")
 	git("commit", "-m", "initial")
 	sha := git("rev-parse", "HEAD")
@@ -56,6 +61,15 @@ func TestReportRevision(t *testing.T) {
 	write("WorkerVersions/workers.json", "{}")
 	write(".beads/issues.jsonl", "{}")
 	write("docs/history.json", "{}")
+	for _, directory := range snapshotDirs {
+		write(directory+"/existing.json", "refreshed")
+		write(directory+"/nested/new.json", "{}")
+		if err := os.Remove(filepath.Join(dir, directory, "obsolete.json")); err != nil {
+			t.Fatal(err)
+		}
+		check("")
+	}
+	git("add", "-A")
 	check("")
 	write("source.go", "modified")
 	check("-dirty")
