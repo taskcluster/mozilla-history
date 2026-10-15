@@ -109,12 +109,3 @@ jobs:
           RESULT: ${{ job.status }}
         run: |
           echo "Report job: $RESULT. Dry run: $DRY_RUN." >> "$GITHUB_STEP_SUMMARY"
-
-  pages:
-    needs: reports
-    if: vars.PUBLISH_REPORT_PAGES == 'true' && (github.event_name != 'workflow_dispatch' || !inputs.dry_run)
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    uses: $/.github/workflows/pages.yml

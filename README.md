@@ -156,34 +156,47 @@ creating probes, inspect its task group before retrying (a retry creates new
 probes). Keep the NAS job disabled during tests to avoid duplicate probes, and
 retire it after a successful publishing run in the team repository.
 
-### Testing GitHub Pages on a fork
-
-Set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**.
-Run **Publish report to GitHub Pages** on the desired branch to deploy its
-`docs/` site; this does not require Taskcluster secrets or create probes.
-The deployment URL appears on the Actions environment. `docs/index.html` is
-the landing page, and `migration.html` remains alongside it at the site root.
-There is no redirect through `/docs/`. The published report retains its existing
-behavior of loading current worker data from upstream GitHub; history comes
-from the deployed checkout's `docs/history.json`. Use the local or Quick preview
-to view the checkout's own worker snapshot.
-
-Set repository variable `PUBLISH_REPORT_PAGES=true` to deploy Pages automatically
-after a successful non-dry report run. The report workflow calls the Pages
-workflow directly because pushes made with `GITHUB_TOKEN` do not trigger other
-push workflows. Leave this unset if the team uses a different publishing setup.
-Quick deployment remains a separate operation.
-
 GitHub schedules run on the default branch and can be delayed; public-repository
 schedules are disabled after 60 days without repository activity. See
-[GitHub schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
-and [GITHUB_TOKEN event behavior](https://docs.github.com/en/actions/concepts/security/github_token).
+[GitHub schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+
+### GitHub Pages publishing
+
+The production site is <https://taskcluster.github.io/mozilla-history/>.
+The repository's **Settings → Pages → Build and deployment** configuration is:
+
+- **Source:** Deploy from a branch
+- **Branch:** `master`
+- **Folder:** `/docs`
+
+The report workflow generates snapshots, commits them, rebuilds
+`docs/history.json`, and pushes the commits to `master`. GitHub's built-in Pages
+deployment publishes `/docs` from that branch. This path was verified with the
+October 14, 2026 report run: the report workflow's push was followed by a
+successful `pages build and deployment` run for the history commit. No separate
+repository Pages workflow or publishing variable is needed.
+
+`docs/index.html` becomes the site's landing page; `docs/migration.html` is
+available as `migration.html` at the site root. The current worker report loads
+`WorkerVersions/README.md` and `WorkerVersions/workers.json` directly from the
+upstream repository, while historical charts load the deployed
+`docs/history.json`. A fresh current report alone does not confirm that Pages
+has deployed the latest history.
+
+After publishing reports, check **Actions → pages build and deployment** for a
+successful deployment of the new history commit. Then check the live
+[history.json](https://taskcluster.github.io/mozilla-history/history.json) for
+the new snapshot date.
+
+Forks can configure the same branch-based Pages source to publish their `docs/`
+directory, but the current worker report still loads upstream data. Use the
+local or Quick preview to view the checkout's own worker snapshot.
 
 ### Legacy NAS scripts
 
-The existing `run-reports.sh` and `audit.sh` scripts implement the repository's
-production publishing workflow. They include git and production-site behavior;
-use `fetch_and_generate.py` for local refreshes.
+The existing `run-reports.sh` and `audit.sh` scripts were used by the NAS job,
+which has been replaced by the report workflow above. They include git and
+production-site behavior; use `fetch_and_generate.py` for local refreshes.
 
 ### Prerequisites
 - Valid Taskcluster credentials must be set in the environment variables:
