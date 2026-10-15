@@ -41,7 +41,7 @@ func TestReportRevision(t *testing.T) {
 	git("remote", "add", "origin", "git@github.com:example/reports.git")
 	write("source.go", "original")
 	write("WorkerVersions/README.md", "original report")
-	snapshotDirs := []string{"Clients", "Hooks", "Roles", "WorkerPools"}
+	snapshotDirs := []string{"Hooks", "Roles", "WorkerPools"}
 	for _, directory := range snapshotDirs {
 		write(directory+"/existing.json", "original")
 		write(directory+"/obsolete.json", "original")

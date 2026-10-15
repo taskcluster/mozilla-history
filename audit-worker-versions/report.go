@@ -420,7 +420,7 @@ func reportRevision(dir string) (revision, revisionURL string) {
 	// Snapshot refreshes happen before report generation and are committed later.
 	// Only changes outside generated data should mark the source revision dirty.
 	status, err := git("status", "--porcelain", "--untracked-files=all", "--", ":/",
-		":(top,exclude)Clients/**", ":(top,exclude)Hooks/**",
+		":(top,exclude)Hooks/**",
 		":(top,exclude)Roles/**", ":(top,exclude)WorkerPools/**",
 		":(top,exclude)WorkerVersions/**", ":(top,exclude).beads/**",
 		":(top,exclude)docs/history.json")

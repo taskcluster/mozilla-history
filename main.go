@@ -8,10 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/taskcluster/mozilla-history/workerpool"
-	tcclient "github.com/taskcluster/taskcluster/v47/clients/client-go"
 	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcauth"
 	"github.com/taskcluster/taskcluster/v47/clients/client-go/tchooks"
 	"github.com/taskcluster/taskcluster/v47/clients/client-go/tcsecrets"
@@ -19,18 +17,9 @@ import (
 )
 
 var (
-	auth     *tcauth.Auth   = tcauth.NewFromEnv()
-	hooks    *tchooks.Hooks = tchooks.NewFromEnv()
-	fakeDate time.Time
+	auth  *tcauth.Auth   = tcauth.NewFromEnv()
+	hooks *tchooks.Hooks = tchooks.NewFromEnv()
 )
-
-func init() {
-	var err error
-	fakeDate, err = time.Parse("Jan 2, 2006 at 3:04pm -0700", "Aug 19, 1977 at 5:00pm +0100")
-	if err != nil {
-		panic(err)
-	}
-}
 
 func FilenameEscape(raw string) (escaped string) {
 	return strings.Replace(strings.Replace(raw, "*", "★", -1), "/", "⁄", -1)
@@ -45,7 +34,6 @@ func main() {
 		wp.AddWork(result.(func(*workerpool.SubmitterContext)))
 	})
 	wp.AddWork(FetchRoles)
-	wp.AddWork(FetchClients)
 	wp.AddWork(FetchWorkerPools)
 	// https://bugzil.la/1572135 - ** don't ** log hashed secrets
 	// Note, secrets are json blobs rather than plain strings, so rainbow table
@@ -108,29 +96,6 @@ func FetchRoles(context *workerpool.SubmitterContext) {
 			)
 		}
 		continuationToken = roles.ContinuationToken
-		if continuationToken == "" {
-			break
-		}
-	}
-}
-
-func FetchClients(context *workerpool.SubmitterContext) {
-	EmptyDirectory("Clients")
-	continuationToken := ""
-	for {
-		clients, err := auth.ListClients(continuationToken, "", "")
-		if err != nil {
-			panic(err)
-		}
-		for _, client := range clients.Clients {
-			client.LastDateUsed = tcclient.Time(fakeDate)
-			context.RequestChannel <- WriteEntityToFileAsJSON(
-				client,
-				filepath.Join("Clients", FilenameEscape(client.ClientID)),
-				"Fetched client "+client.ClientID,
-			)
-		}
-		continuationToken = clients.ContinuationToken
 		if continuationToken == "" {
 			break
 		}

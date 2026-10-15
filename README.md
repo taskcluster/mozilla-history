@@ -2,7 +2,6 @@
 Taskcluster history from https://firefox-ci-tc.services.mozilla.com deployment
 for:
 
-* [Clients](/Clients)
 * [Hooks](/Hooks)
 * [Roles](/Roles)
 * [Worker Pools](/WorkerPools)
@@ -43,8 +42,13 @@ export TASKCLUSTER_ROOT_URL='https://firefox-ci-tc.services.mozilla.com'
 mozilla-history
 ```
 
-This will populate subdirectories `Clients`, `Hooks`, `Roles` and `WorkerPools`
+This will populate subdirectories `Hooks`, `Roles` and `WorkerPools`
 of the current directory.
+
+Client enumeration and snapshots are disabled to avoid publishing client
+metadata. Previously committed client snapshots have been removed from the
+current tree, but remain in Git history. The reporting client does not need
+the `auth:list-clients` scope.
 
 ## Refreshing All Local Data
 
@@ -59,8 +63,8 @@ When `~/.tc_token` exists, the script loads its JSON `clientId` and
 `TASKCLUSTER_ACCESS_TOKEN` from the environment. The token file takes
 precedence so stale exported credentials cannot silently override it.
 
-The script builds temporary copies of the Go tools, refreshes `Clients`,
-`Hooks`, `Roles`, and `WorkerPools`, schedules worker-version probes, polls their
+The script builds temporary copies of the Go tools, refreshes `Hooks`, `Roles`,
+and `WorkerPools`, schedules worker-version probes, polls their
 sealed task group until every task reaches a terminal state, writes
 `WorkerVersions`, and stops. It does not pull, commit, push, or deploy anything.
 Review the generated changes before committing them.
@@ -140,7 +144,7 @@ those operations; do not copy an unrestricted personal token into CI.
 
 The job tests and builds the Go tools, snapshots configuration, creates the
 existing intentionally malformed probes, waits 90 minutes, and collects reports.
-It commits only `Clients`, `Hooks`, `Roles`, `WorkerPools`, `WorkerVersions`, and
+It commits only `Hooks`, `Roles`, `WorkerPools`, `WorkerVersions`, and
 `docs/history.json`. History is rebuilt after committing the worker snapshot.
 An unchanged snapshot is successful. One report job runs at a time; a concurrent
 remote push causes publication to fail safely rather than overwrite changes.
