@@ -73,8 +73,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          # Clients can be absent when there are no visible clients.
-          for directory in Clients Hooks Roles WorkerPools WorkerVersions; do
+          for directory in Hooks Roles WorkerPools WorkerVersions; do
             if [[ -d "$directory" ]] || git ls-files --error-unmatch "$directory" >/dev/null 2>&1; then
               git add -A -- "$directory"
             fi
