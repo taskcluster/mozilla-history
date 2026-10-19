@@ -7,7 +7,7 @@ This report shows the latest detailed inventory of Firefox CI worker pools along
 - **Summary values** are counts of worker pools, not individual workers or tasks.
 
 
-Probe run started: **2026-10-14 22:22 UTC** ([Taskcluster task group](https://firefox-ci-tc.services.mozilla.com/tasks/groups/YjTPwJTbST-dyE5n7khhYw)) · Results collected: **2026-10-14 23:53 UTC** · Report generated: **2026-10-14 23:53 UTC** ([a5d8ffe51-dirty](https://github.com/taskcluster/mozilla-history/commit/a5d8ffe51900e78c4d1b78850487b331d2c9d384))
+Probe run started: **2026-10-19 07:50 UTC** ([Taskcluster task group](https://firefox-ci-tc.services.mozilla.com/tasks/groups/IIYeBq66QgaJnRv7ghziNw)) · Results collected: **2026-10-19 09:21 UTC** · Report generated: **2026-10-19 09:21 UTC** ([92096f8ac](https://github.com/taskcluster/mozilla-history/commit/92096f8ac79f68d8de275080e3ef6c18a94f34d2))
 
 
 
@@ -16,7 +16,7 @@ Probe run started: **2026-10-14 22:22 UTC** ([Taskcluster task group](https://fi
 These pools use generic-worker to execute tasks. Recent versions also support docker-worker payloads and Docker container execution through d2g. [Documentation](https://docs.taskcluster.net/docs/reference/workers/generic-worker) · [Source](https://github.com/taskcluster/taskcluster/tree/main/workers/generic-worker).
 
 
-Total generic-worker pools: `411`
+Total generic-worker pools: `418`
 
 ### Worker pools by version
 
@@ -24,23 +24,24 @@ _Source: version information parsed from the log artifact produced when each wor
 
 | Version | Worker pools |
 | :--- | ---: |
+| 113.1.3 | 4 |
 | 113.1.1 | 11 |
-| 110.1.0 | 335 |
-| 110.0.0 | 2 |
+| 110.1.0 | 333 |
+| 110.0.0 | 4 |
 | 109.0.0 | 1 |
 | 100.5.0 | 3 |
 | 96.2.3 | 9 |
-| 91.0.2 | 2 |
-| 88.0.2 | 3 |
+| 91.0.2 | 3 |
+| 88.0.2 | 2 |
 | 87.0.0 | 1 |
 | 84.1.2 | 7 |
 | 67.1.0 | 1 |
 | 65.1.0 | 1 |
 | 64.3.0 | 21 |
-| 61.0.0 | 2 |
-| 60.3.4 | 8 |
+| 61.0.0 | 1 |
+| 60.3.4 | 13 |
 | 45.0.0 | 1 |
-| 36.0.0 | 3 |
+| 36.0.0 | 2 |
 
 
 ### Worker pools by image
@@ -55,8 +56,8 @@ _Source: image references in each pool's live Worker Manager launch configuratio
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win10_64_2009_alpha/images/win10_64_2009_alpha/versions/1.0.0">Azure gallery win10_64_2009_alpha@1.0.0</abbr> | 4 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_2009/images/win11_64_2009/versions/1.3.0">Azure gallery win11_64_2009@1.3.0</abbr> | 6 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_2009_alpha/images/win11_64_2009_alpha/versions/1.0.0">Azure gallery win11_64_2009_alpha@1.0.0</abbr> | 3 |
-| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2/images/win11_64_24h2/versions/1.3.12">Azure gallery win11_64_24h2@1.3.12</abbr> | 14 |
-| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2_alpha/images/win11_64_24h2_alpha/versions/1.0.0">Azure gallery win11_64_24h2_alpha@1.0.0</abbr> | 9 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2/images/win11_64_24h2/versions/1.3.12">Azure gallery win11_64_24h2@1.3.12</abbr> | 13 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2_alpha/images/win11_64_24h2_alpha/versions/1.0.0">Azure gallery win11_64_24h2_alpha@1.0.0</abbr> | 8 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_25h2/images/win11_64_25h2/versions/1.0.12">Azure gallery win11_64_25h2@1.0.12</abbr> | 1 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_25h2/images/win11_64_25h2/versions/1.0.13">Azure gallery win11_64_25h2@1.0.13</abbr> | 18 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_25h2_alpha/images/win11_64_25h2_alpha/versions/1.0.0">Azure gallery win11_64_25h2_alpha@1.0.0</abbr> | 10 |
@@ -68,16 +69,20 @@ _Source: image references in each pool's live Worker Manager launch configuratio
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009_alpha/images/win2022_64_2009_alpha/versions/1.0.0">Azure gallery win2022_64_2009_alpha@1.0.0</abbr> | 3 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2025_64_24h2_alpha/images/win2025_64_24h2_alpha/versions/1.0.0">Azure gallery win2025_64_24h2_alpha@1.0.0</abbr> | 5 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2025_64_24h2_core_alpha/images/win2025_64_24h2_core_alpha/versions/1.0.0">Azure gallery win2025_64_24h2_core_alpha@1.0.0</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-0edd661c032f4d818b6a-eastus">Azure image imageset-0edd661c032f4d818b6a-eastus</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-a146f88d8b09433487f6-eastus&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-cc6b9caa8a1349f1959b-centralus">Azure image imageset-a146f88d8b09433487f6-eastus, Azure image imageset-cc6b9caa8a1349f1959b-centralus</abbr> | 1 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-059fc28bd9074bb8ab3c-centralus-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-0d17e90b4e8444bd8548-eastus-fuzzing">Azure image set fuzzing (centralus, eastus)</abbr> | 4 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-016b00f8bdd14b669a31-eastus-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-27793c0117444180b916-westus2-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-d04b4d09807944788e8f-southcentralus-fuzzing&#10;/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-dd4773c4763e418a9074-eastus2-fuzzing">Azure image set fuzzing (eastus, eastus2, southcentralus, westus2)</abbr> | 2 |
 | Image not determined | 1 |
-| Not applicable (standalone) | 28 |
+| Not applicable (standalone) | 33 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-2026-09-30 | 60 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-amd64-headless-googlecompute-alpha | 1 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-2404-arm64-headless-googlecompute-2026-09-30 | 8 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-arm64-gui-googlecompute-2024-09-18t19-02-58z | 2 |
 | projects/fxci-production-level3-workers/global/images/gw-fxci-gcp-l3-gui-googlecompute-2024-09-18t05-46-31z | 2 |
 | projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-00bd1fca7052440ba8db | 4 |
+| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-staging-a761a11d0fc34e43a432 | 1 |
+| projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-staging-4c1f7784852840058344 | 1 |
 | projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-2026-09-30 | 5 |
 | projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-gui-googlecompute-alpha | 4 |
 | projects/taskcluster-imaging/global/images/gw-fxci-gcp-l1-2404-amd64-headless-googlecompute-2026-09-30 | 128 |
@@ -217,7 +222,7 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**gecko-1/b-linux-docker-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
 | [**gecko-1/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
 | [**gecko-1/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
-| [**gecko-1/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-1/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–5 | 0–5 | 1 |
 | [**gecko-1/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
 | [**gecko-1/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
 | [**gecko-1/b-linux-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-1/worker-types/b-linux-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
@@ -241,7 +246,7 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**gecko-2/b-linux-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | arm64 | 1.27.1 | 0–10 | 0–10 | 1 |
 | [**gecko-2/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
 | [**gecko-2/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
-| [**gecko-2/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-2/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–5 | 0–5 | 1 |
 | [**gecko-2/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
 | [**gecko-2/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
 | [**gecko-2/b-linux-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-2/worker-types/b-linux-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
@@ -259,7 +264,7 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**gecko-3/b-linux-docker-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–50 | 0–50 | 1 |
 | [**gecko-3/b-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
 | [**gecko-3/b-linux-docker-large-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-large-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
-| [**gecko-3/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
+| [**gecko-3/b-linux-docker-updatebot-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-updatebot-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–5 | 0–5 | 1 |
 | [**gecko-3/b-linux-docker-xlarge-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-docker-xlarge-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–1000 | 0–1000 | 1 |
 | [**gecko-3/b-linux-gcp-aarch64**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-gcp-aarch64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 64.3.0 | multiuser | b66b6614b9 | linux | arm64 | 1.22.2 | 0–10 | 0–10 | 1 |
 | [**gecko-3/b-linux-kvm**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-linux-kvm?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–30 | 0–30 | 1 |
@@ -315,8 +320,6 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**gecko-t/win11-64-2009-webgpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-2009-webgpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 96.2.3 | multiuser | 7e335dd50c | windows | amd64 | 1.25.7 | 0–100 | 0–100 | 1 |
 | [**gecko-t/win11-64-24h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–1200 | 0–1200 | 1 |
 | [**gecko-t/win11-64-24h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–500 | 0–500 | 1 |
-| [**gecko-t/win11-64-24h2-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-gpu?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–600 | 0–600 | 1 |
-| [**gecko-t/win11-64-24h2-gpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-gpu-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
 | [**gecko-t/win11-64-24h2-large**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-large?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
 | [**gecko-t/win11-64-24h2-large-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-large-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
 | [**gecko-t/win11-64-24h2-privileged**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-privileged?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
@@ -417,7 +420,6 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**nss-t/t-linux-docker-amd**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/t-linux-docker-amd?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–100 | 0–100 | 1 |
 | [**nss-t/win11-a64-25h2**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/win11-a64-25h2?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–50 | 0–50 | 1 |
 | [**nss-t/win11-a64-25h2-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/nss-t/worker-types/win11-a64-25h2-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | windows | arm64 | 1.27.1 | 0–50 | 0–50 | 1 |
-| [**proj-autophone/gecko-t-bitbar-gw-perf-a55**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-bitbar-gw-perf-a55?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | — | — | — |
 | [**proj-autophone/gecko-t-bitbar-gw-perf-p6**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-bitbar-gw-perf-p6?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | — | — | — |
 | [**proj-autophone/gecko-t-bitbar-gw-perf-s24**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-bitbar-gw-perf-s24?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 36.0.0 | simple | b9cb11293f | linux | amd64 | 1.13.7 | — | — | — |
 | [**proj-autophone/gecko-t-lambda-perf-a55**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-autophone/worker-types/gecko-t-lambda-perf-a55?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 87.0.0 | insecure | 99a1fcafbb | linux | amd64 | 1.24.5 | — | — | — |
@@ -429,9 +431,13 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**proj-taskcluster/gw-ci-macos**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ci-macos?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | darwin | arm64 | 1.27.2 | — | — | — |
 | [**proj-taskcluster/gw-ubuntu-24-04**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ubuntu-24-04?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–50 | 0–50 | 1 |
 | [**proj-taskcluster/gw-ubuntu-24-04-gui**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ubuntu-24-04-gui?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–20 | 0–20 | 1 |
+| [**proj-taskcluster/gw-ubuntu-arm64-staging-google**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ubuntu-arm64-staging-google?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.3 | multiuser | 03d177cc5e | linux | arm64 | 1.27.2 | 0–1 | 0–1 | 1 |
+| [**proj-taskcluster/gw-ubuntu-staging-google**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-ubuntu-staging-google?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.3 | multiuser | 03d177cc5e | linux | amd64 | 1.27.2 | 0–1 | 0–1 | 1 |
 | [**proj-taskcluster/gw-windows-2022**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-windows-2022?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
+| [**proj-taskcluster/gw-windows-2022-gpu-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-windows-2022-gpu-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.3 | multiuser | 03d177cc5e | windows | amd64 | 1.27.2 | 0–1 | 0–1 | 1 |
 | [**proj-taskcluster/gw-windows-2022-gui**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-windows-2022-gui?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | windows | amd64 | 1.27.2 | 0–10 | 0–10 | 1 |
-| [**proj-taskcluster/release**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/release?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–1 | 0–1 | 1 |
+| [**proj-taskcluster/gw-windows-2022-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/gw-windows-2022-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.3 | multiuser | 03d177cc5e | windows | amd64 | 1.27.2 | 0–1 | 0–1 | 1 |
+| [**proj-taskcluster/release**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-taskcluster/worker-types/release?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 113.1.1 | multiuser | 2c7fa7800d | linux | amd64 | 1.27.2 | 0–15 | 0–15 | 1 |
 | [**releng-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
 | [**releng-1/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-1/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
 | [**releng-3/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-3/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
@@ -440,25 +446,31 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**releng-hardware/applicationservices-b-3-osx1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/applicationservices-b-3-osx1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
 | [**releng-hardware/enterprise-1-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/enterprise-1-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | — | — | — |
 | [**releng-hardware/enterprise-3-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/enterprise-3-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | — | — | — |
+| [**releng-hardware/gecko-1-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-1-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
 | [**releng-hardware/gecko-1-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-1-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | — | — | — |
 | [**releng-hardware/gecko-3-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-3-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/gecko-3-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-3-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | arm64 | 1.22.0 | — | — | — |
 | [**releng-hardware/gecko-t-linux-netperf-1804**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-netperf-1804?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 65.1.0 | insecure | 1a085daa37 | linux | amd64 | 1.22.3 | — | — | — |
 | [**releng-hardware/gecko-t-linux-netperf-2404**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-netperf-2404?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | — | — | — |
 | [**releng-hardware/gecko-t-linux-talos-1804**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-1804?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 61.0.0 | simple | 3bd4419b4b | linux | amd64 | 1.22.1 | — | — | — |
-| [**releng-hardware/gecko-t-linux-talos-1804-relops-aje**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-1804-relops-aje?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 61.0.0 | simple | 3bd4419b4b | linux | amd64 | 1.22.1 | — | — | — |
 | [**releng-hardware/gecko-t-linux-talos-2404**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-2404?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | — | — | — |
-| [**releng-hardware/gecko-t-linux-talos-2404-relops-aje**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-linux-talos-2404-relops-aje?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 88.0.2 | insecure | fcaf4a25fc | linux | amd64 | 1.24.5 | — | — | — |
+| [**releng-hardware/gecko-t-osx-1015-r8**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1015-r8?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | simple | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
 | [**releng-hardware/gecko-t-osx-1015-r8-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1015-r8-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 67.1.0 | insecure | 0e62d3bf79 | darwin | amd64 | 1.22.4 | — | — | — |
 | [**releng-hardware/gecko-t-osx-1400-r8**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1400-r8?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | amd64 | 1.26.4 | — | — | — |
 | [**releng-hardware/gecko-t-osx-1400-r8-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1400-r8-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | amd64 | 1.26.4 | — | — | — |
 | [**releng-hardware/gecko-t-osx-1500-m-vms**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1500-m-vms?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | — | — | — |
+| [**releng-hardware/gecko-t-osx-1500-m4**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1500-m4?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | — | — | — |
 | [**releng-hardware/gecko-t-osx-1500-m4-staging**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1500-m4-staging?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 100.5.0 | multiuser | f5fc37cc8f | darwin | arm64 | 1.26.4 | — | — | — |
 | [**releng-hardware/gecko-t-osx-2700-m4**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-2700-m4?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 91.0.2 | multiuser | 06628b3721 | darwin | arm64 | 1.25.3 | — | — | — |
 | [**releng-hardware/gecko-t-win7-32-hw**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-win7-32-hw?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 45.0.0 | multiuser | 988e8100b3 | windows | 386 | 1.19.3 | — | — | — |
 | [**releng-hardware/mozillavpn-b-1-osx**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/mozillavpn-b-1-osx?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
 | [**releng-hardware/mozillavpn-b-3-osx**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/mozillavpn-b-3-osx?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/nss-1-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/nss-1-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/nss-3-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/nss-3-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 60.3.4 | multiuser | 943a6f2b0d | darwin | amd64 | 1.22.0 | — | — | — |
+| [**releng-hardware/win11-64-24h2-hw**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | — | — | — |
 | [**releng-hardware/win11-64-24h2-hw-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | — | — | — |
 | [**releng-hardware/win11-64-24h2-hw-perf-debug**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-perf-debug?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 109.0.0 | multiuser | 5b6d78a2d7 | windows | amd64 | 1.27.1 | — | — | — |
+| [**releng-hardware/win11-64-24h2-hw-ref**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-ref?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | — | — | — |
 | [**releng-hardware/win11-64-24h2-hw-ref-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-ref-alpha?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.0.0 | multiuser | 906277e693 | windows | amd64 | 1.27.1 | — | — | — |
 | [**releng-t/linux-docker**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-t/worker-types/linux-docker?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–10 | 0–10 | 1 |
 | [**relops-1/decision**](https://firefox-ci-tc.services.mozilla.com/provisioners/relops-1/worker-types/decision?sortBy=Last%20Active&sortDirection=desc) | generic-worker | 110.1.0 | multiuser | 8522ee4ea6 | linux | amd64 | 1.27.1 | 0–4 | 0–4 | 1 |
@@ -551,7 +563,7 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 ## Script Worker
 
 
-Total scriptworker pools: `49`
+Total scriptworker pools: `33`
 
 
 
@@ -562,33 +574,20 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 
 | Worker Pool | Implementation | Version | Configured Workers | Configured Capacity | Slots per Worker |
 | --- | --- | --- | ---: | ---: | ---: |
-| [**scriptworker-k8s/adhoc-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/adhoc-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/app-services-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/app-services-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/app-services-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/app-services-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/comm-3-balrog**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-balrog?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/comm-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/comm-3-bouncer**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-bouncer?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/comm-3-lando**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-lando?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/comm-3-pushflatpak**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-pushflatpak?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/comm-3-pushmsix**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-pushmsix?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/comm-3-shipit**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-shipit?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/comm-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/comm-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/comm-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/enterprise-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/enterprise-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/enterprise-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/enterprise-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/gecko-1-balrog**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-balrog?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-1-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/gecko-1-beetmover-dev**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-beetmover-dev?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/gecko-1-bouncer**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-bouncer?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/gecko-1-lando**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-1-lando?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/gecko-3-addon**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-addon?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-3-balrog**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-balrog?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-3-bouncer**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-bouncer?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-3-lando**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-lando?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-3-pushapk**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-pushapk?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/gecko-3-pushflatpak**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-pushflatpak?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/gecko-3-pushmsix**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-pushmsix?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-3-shipit**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-shipit?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/gecko-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/gecko-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
@@ -596,9 +595,6 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**scriptworker-k8s/mobile-3-pushapk**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mobile-3-pushapk?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/mobile-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mobile-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/mobile-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mobile-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/mozillavpn-1-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mozillavpn-1-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/mozillavpn-3-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mozillavpn-3-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
-| [**scriptworker-k8s/mozillavpn-3-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/mozillavpn-3-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/translations-1-beetmover**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/translations-1-beetmover?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-k8s/xpi-t-signing**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-k8s/worker-types/xpi-t-signing?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
 | [**scriptworker-prov-v1/adhoc-signing-mac14m2**](https://firefox-ci-tc.services.mozilla.com/provisioners/scriptworker-prov-v1/worker-types/adhoc-signing-mac14m2?sortBy=Last%20Active&sortDirection=desc) | Scriptworker | <no value> | — | — | — |
@@ -649,7 +645,7 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 These pools did not claim the probe task, so their worker implementation and version could not be determined.
 
 
-Total unresponsive worker pools: `47`
+Total unresponsive worker pools: `41`
 
 
 ### Worker pools by image
@@ -661,9 +657,10 @@ _Source: image references in each pool's live Worker Manager launch configuratio
 | <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2022_64_2009/images/trusted_win2022_64_2009/versions/1.3.12">Azure gallery trusted_win2022_64_2009@1.3.12</abbr> | 1 |
 | <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2025_64_24h2/images/trusted_win2025_64_24h2/versions/1.0.0">Azure gallery trusted_win2025_64_24h2@1.0.0</abbr> | 12 |
 | <abbr title="/subscriptions/a30e97ab-734a-4f3b-a0e4-c51c0bff0701/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/trusted_win2025_64_24h2_core/images/trusted_win2025_64_24h2_core/versions/1.0.0">Azure gallery trusted_win2025_64_24h2_core@1.0.0</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2/images/win11_64_24h2/versions/1.3.12">Azure gallery win11_64_24h2@1.3.12</abbr> | 1 |
+| <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win11_64_24h2_alpha/images/win11_64_24h2_alpha/versions/1.0.0">Azure gallery win11_64_24h2_alpha@1.0.0</abbr> | 1 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2022_64_2009/images/win2022_64_2009/versions/1.3.12">Azure gallery win2022_64_2009@1.3.12</abbr> | 1 |
 | <abbr title="/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/galleries/win2025_64_24h2/images/win2025_64_24h2/versions/1.0.0">Azure gallery win2025_64_24h2@1.0.0</abbr> | 14 |
-| Not applicable (standalone) | 8 |
 | ami-02619e55246806e8d | 1 |
 | projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-00bd1fca7052440ba8db | 7 |
 | projects/taskcluster-imaging/global/images/generic-worker-ubuntu-24-04-arm64-ed626229ee5844439d7c | 1 |
@@ -701,6 +698,8 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**gecko-3/b-win2025-updatebot**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-updatebot?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
 | [**gecko-3/b-win2025-xxlarge**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-3/worker-types/b-win2025-xxlarge?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–500 | 0–500 | 1 |
 | [**gecko-t/t-linux-2404-relsre**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/t-linux-2404-relsre?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–10 | 0–10 | 1 |
+| [**gecko-t/win11-64-24h2-gpu**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-gpu?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–600 | 0–600 | 1 |
+| [**gecko-t/win11-64-24h2-gpu-alpha**](https://firefox-ci-tc.services.mozilla.com/provisioners/gecko-t/worker-types/win11-64-24h2-gpu-alpha?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–100 | 0–100 | 1 |
 | [**mozilla-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
 | [**mozilla-3/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozilla-3/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
 | [**mozillavpn-1/b-win2025**](https://firefox-ci-tc.services.mozilla.com/provisioners/mozillavpn-1/worker-types/b-win2025?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–25 | 0–25 | 1 |
@@ -716,11 +715,3 @@ _Configured capacity is the pool's autoscaling range in concurrent task slots. T
 | [**proj-fuzzing/grizzly-reduce-worker**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/grizzly-reduce-worker?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–20 | 0–20 | 1 |
 | [**proj-fuzzing/grizzly-reduce-worker-android**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/grizzly-reduce-worker-android?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–10 | 0–10 | 1 |
 | [**proj-fuzzing/nss-corpus-update-worker**](https://firefox-ci-tc.services.mozilla.com/provisioners/proj-fuzzing/worker-types/nss-corpus-update-worker?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | 0–5 | 0–5 | 1 |
-| [**releng-hardware/gecko-1-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-1-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
-| [**releng-hardware/gecko-3-b-osx-arm64**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-3-b-osx-arm64?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
-| [**releng-hardware/gecko-t-osx-1015-r8**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1015-r8?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
-| [**releng-hardware/gecko-t-osx-1500-m4**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/gecko-t-osx-1500-m4?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
-| [**releng-hardware/nss-1-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/nss-1-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
-| [**releng-hardware/nss-3-b-osx-1015**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/nss-3-b-osx-1015?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
-| [**releng-hardware/win11-64-24h2-hw**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |
-| [**releng-hardware/win11-64-24h2-hw-ref**](https://firefox-ci-tc.services.mozilla.com/provisioners/releng-hardware/worker-types/win11-64-24h2-hw-ref?sortBy=Last%20Active&sortDirection=desc) |  | Version not determined; task was not claimed | — | — | — |

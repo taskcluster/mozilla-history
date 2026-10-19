@@ -1,0 +1,124 @@
+{
+  "config": {
+    "lifecycle": {
+      "registrationTimeout": 1800,
+      "reregistrationTimeout": 345600,
+      "queueInactivityTimeout": 14400
+    },
+    "maxCapacity": 1,
+    "minCapacity": 0,
+    "scalingRatio": 1,
+    "launchConfigs": [
+      {
+        "tags": {},
+        "location": "centralus",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": false
+            }
+          }
+        },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_F16s_v2"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-cc6b9caa8a1349f1959b-centralus"
+            },
+            "location": {
+              "value": "centralus"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-central-us-proj-taskcluster/providers/Microsoft.Network/virtualNetworks/vn-central-us-proj-taskcluster/subnets/sn-central-us-proj-taskcluster"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-b11d9283273cc5d0ce53",
+          "capacityPerInstance": 1
+        },
+        "armDeploymentResourceGroup": "rg-tc-proj-taskcluster-gw-windows-2022-staging"
+      },
+      {
+        "tags": {},
+        "location": "eastus",
+        "workerConfig": {
+          "genericWorker": {
+            "config": {
+              "wstAudience": "firefoxcitc",
+              "wstServerURL": "https://firefoxci-websocktunnel.services.mozilla.com/",
+              "headlessTasks": true,
+              "idleTimeoutSecs": 3600,
+              "livelogExecutable": "C:\\generic-worker\\livelog.exe",
+              "shutdownMachineOnIdle": true,
+              "ed25519SigningKeyLocation": "C:\\generic-worker\\generic-worker-ed25519-signing-key.key",
+              "taskclusterProxyExecutable": "C:\\generic-worker\\taskcluster-proxy.exe",
+              "shutdownMachineOnInternalError": false
+            }
+          }
+        },
+        "armDeployment": {
+          "mode": "Incremental",
+          "parameters": {
+            "vmSize": {
+              "value": "Standard_F16s_v2"
+            },
+            "imageId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-packer-worker-images/providers/Microsoft.Compute/images/imageset-a146f88d8b09433487f6-eastus"
+            },
+            "location": {
+              "value": "eastus"
+            },
+            "priority": {
+              "value": "Spot"
+            },
+            "subnetId": {
+              "value": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/rg-east-us-proj-taskcluster/providers/Microsoft.Network/virtualNetworks/vn-east-us-proj-taskcluster/subnets/sn-east-us-proj-taskcluster"
+            }
+          },
+          "templateLink": {
+            "id": "/subscriptions/108d46d5-fe9b-4850-9a7d-8c914aa6c1f0/resourceGroups/template-spec/providers/Microsoft.Resources/templateSpecs/taskcluster-arm-template/versions/1.0"
+          }
+        },
+        "workerManager": {
+          "launchConfigId": "lc-21c5a93af8a5a90e5371",
+          "capacityPerInstance": 1
+        },
+        "armDeploymentResourceGroup": "rg-tc-proj-taskcluster-gw-windows-2022-staging"
+      }
+    ]
+  },
+  "created": "2026-10-16T18:26:55.089Z",
+  "currentCapacity": 0,
+  "description": "*DO NOT EDIT* - This resource is configured automatically by [ci-admin](https://github.com/mozilla-releng/fxci-config).\n\nTaskcluster generic-worker Windows 2022 staging image pool",
+  "emailOnError": true,
+  "lastModified": "2026-10-16T22:47:54.089Z",
+  "owner": "taskcluster-notifications+workers@mozilla.com",
+  "providerId": "azure2",
+  "requestedCapacity": 0,
+  "requestedCount": 0,
+  "runningCapacity": 0,
+  "runningCount": 0,
+  "stoppedCapacity": 0,
+  "stoppedCount": 0,
+  "stoppingCapacity": 0,
+  "stoppingCount": 0,
+  "workerPoolId": "proj-taskcluster/gw-windows-2022-staging"
+}
