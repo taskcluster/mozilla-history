@@ -19,6 +19,22 @@ publishing workflows.
 Use these previews to share and review report changes behind Mozilla SSO.
 Neither helper collects new data, creates probes, or publishes GitHub Pages.
 
+## Retiring the previews
+
+To replace either preview with a small page pointing visitors to the main site,
+deploy `retired-site/` to that site's existing name. Quick replaces the site's
+deployed files, so the old report and saved worker data are removed from that
+site. For example, for the `aerickson` sites:
+
+```sh
+quick deploy scripts/quick/retired-site aerickson-mozilla-history
+quick deploy scripts/quick/retired-site aerickson-mozilla-history-staging
+```
+
+To bring a preview back later, run `scripts/quick/deploy-quick` or
+`scripts/quick/deploy-quick-staging` again. These continue to package the current
+report and saved worker data as before.
+
 ## Setup
 
 Install and configure Mozilla's Quick CLI for your account before using these
